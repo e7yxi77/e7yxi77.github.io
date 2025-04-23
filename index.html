@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국식 전자달력/시계</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: background-image 2s ease;
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+            color: white;
+            position: relative;
+            text-align: center;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.2);
+            z-index: -1;
+        }
+
+        .clock {
+            font-size: 8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
+        }
+
+        .date {
+            font-size: 2.4rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            line-height: 1.4;
+        }
+
+        .message {
+            font-size: 1.6rem;
+            margin: 30px auto;
+            font-weight: 400;
+            opacity: 0;
+            line-height: 1.8;
+            max-width: 800px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .message.show {
+            opacity: 1;
+        }
+
+        .control-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 12px;
+            color: white;
+            z-index: 100;
+            transition: opacity 0.5s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .control-panel.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .control-panel:hover {
+            opacity: 1;
+        }
+
+        .control-panel button {
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 8px;
+            border: none;
+            background: rgba(96, 165, 250, 0.8);
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .control-panel button:hover {
+            background: rgba(96, 165, 250, 1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="text-container">
+        <div class="clock" id="clock">00:00:00</div>
+        <div class="date" id="date">0000년 00월 00일 (요일)</div>
+    </div>
+
+    <div class="message" id="message"></div>
+
+    <div class="control-panel" id="control-panel">
+        <div>테스트 패널</div>
+        <button id="test-morning">아침(7시)</button>
+        <button id="test-day">낮(9시)</button>
+        <button id="test-evening">저녁(18시)</button>
+        <button id="test-night">밤(21시)</button>
+        <button id="test-alarm">알람 소리</button>
+    </div>
+
+    <audio id="alarm" src="sound.mp3" preload="auto"></audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const clockElement = document.getElementById('clock');
+            const dateElement = document.getElementById('date');
+            const messageElement = document.getElementById('message');
+            const bodyElement = document.body;
+            const alarmAudio = document.getElementById('alarm');
+            const controlPanel = document.getElementById('control-panel');
+            
+            let lastHour = -1;
+            let messageTimer = null;
+            let lastMouseMoveTime = Date.now();
+            let hideControlPanelTimeout;
+            
+            const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+            
+            // 메시지 텍스트에 자연스러운 줄바꿈 추가
+            const morningMessage = '좋은 아침입니다.\n새로운 하루가 시작되었습니다.\n이제 일어나서 오늘의 목표를 향해 한 걸음씩 나아가세요.\n오늘도 의미 있는 하루가 되기를 바랍니다.';
+            const dayMessage = '활기찬 낮입니다.\n오늘의 업무나 계획을 실행에 옮기세요.\n시간을 가치 있게 사용하고, 오늘을 멋지게 보내세요!';
+            const eveningMessage = '하루가 저물어 갑니다.\n오늘 하루의 성과를 돌아보고, 내일을 위한 준비를 해보세요.\n편안한 저녁 되세요.';
+            const nightMessage = '오늘 하루도 수고 많으셨습니다.\n모든 일들을 잘 마무리하셨기를 바랍니다.\n이제 편안한 시간으로 하루를 마치고, 충분한 휴식을 취하세요.\n좋은 밤 되세요.';
+            
+            function updateClock() {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const weekday = weekdays[now.getDay()];
+                
+                clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+                dateElement.textContent = `${year}년 ${month}월 ${day}일 (${weekday})`;
+                
+                const currentHour = now.getHours();
+                
+                if (currentHour !== lastHour) {
+                    lastHour = currentHour;
+                    
+                    // 시간대별 배경 및 메시지 설정
+                    updateTimeBasedBackground(currentHour);
+                }
+            }
+            
+            function updateTimeBasedBackground(hour) {
+                if (hour >= 7 && hour < 9) {
+                    setMorningMode();
+                    if (hour === 7) {
+                        showMessage(morningMessage);
+                        playAlarm();
+                    }
+                } else if (hour >= 9 && hour < 18) {
+                    setDayMode();
+                    showMessage(dayMessage);
+                    playAlarm();
+                } else if (hour >= 18 && hour < 21) {
+                    setEveningMode();
+                    showMessage(eveningMessage);
+                    playAlarm();
+                } else {
+                    setNightMode();
+                    if (hour === 21) {
+                        showMessage(nightMessage);
+                        playAlarm();
+                    }
+                }
+            }
+            
+            function setMorningMode() {
+                bodyElement.style.backgroundImage = "url('1.png')";
+            }
+            
+            function setDayMode() {
+                bodyElement.style.backgroundImage = "url('2.png')";
+            }
+            
+            function setEveningMode() {
+                bodyElement.style.backgroundImage = "url('3.png')";
+            }
+            
+            function setNightMode() {
+                bodyElement.style.backgroundImage = "url('4.png')";
+            }
+            
+            function showMessage(text) {
+                // 기존 타이머가 있으면 제거
+                if (messageTimer) {
+                    clearTimeout(messageTimer);
+                }
+                
+                // 줄바꿈을 HTML <br>로 변환
+                messageElement.innerHTML = text.replace(/\n/g, '<br>');
+                messageElement.classList.add('show');
+                
+                // 2분 후 메시지 숨기기
+                messageTimer = setTimeout(() => {
+                    hideMessage();
+                }, 2 * 60 * 1000);  // 2분 후 사라짐
+            }
+            
+            function hideMessage() {
+                messageElement.classList.remove('show');
+                messageTimer = null;
+            }
+            
+            function playAlarm() {
+                alarmAudio.play().catch(error => {
+                    console.log('알람 재생 실패:', error);
+                });
+            }
+            
+            function setupControlPanelAutoHide() {
+                document.addEventListener('mousemove', function() {
+                    lastMouseMoveTime = Date.now();
+                    controlPanel.classList.remove('hidden');
+                    
+                    clearTimeout(hideControlPanelTimeout);
+                    hideControlPanelTimeout = setTimeout(checkMouseInactivity, 1000);
+                });
+                
+                hideControlPanelTimeout = setTimeout(checkMouseInactivity, 1000);
+            }
+            
+            function checkMouseInactivity() {
+                const currentTime = Date.now();
+                const timeDiff = currentTime - lastMouseMoveTime;
+                
+                if (timeDiff >= 5000) {
+                    controlPanel.classList.add('hidden');
+                } else {
+                    hideControlPanelTimeout = setTimeout(checkMouseInactivity, 1000);
+                }
+            }
+            
+            // 테스트 버튼 설정
+            document.getElementById('test-morning').addEventListener('click', function() {
+                setMorningMode();
+                showMessage(morningMessage);
+                playAlarm();
+            });
+            
+            document.getElementById('test-day').addEventListener('click', function() {
+                setDayMode();
+                showMessage(dayMessage);
+                playAlarm();
+            });
+            
+            document.getElementById('test-evening').addEventListener('click', function() {
+                setEveningMode();
+                showMessage(eveningMessage);
+                playAlarm();
+            });
+            
+            document.getElementById('test-night').addEventListener('click', function() {
+                setNightMode();
+                showMessage(nightMessage);
+                playAlarm();
+            });
+            
+            document.getElementById('test-alarm').addEventListener('click', function() {
+                playAlarm();
+            });
+            
+            // 시계 시작
+            updateClock();
+            setInterval(updateClock, 1000);
+            
+            // 초기 시간에 따른 배경 설정
+            const initialHour = new Date().getHours();
+            updateTimeBasedBackground(initialHour);
+            
+            // 컨트롤 패널 자동 숨김 설정
+            setupControlPanelAutoHide();
+        });
+    </script>
+</body>
+</html>
