@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EY - 개발자/디자이너</title>
+    <title>EY</title>
     <style>
         /* 전체 스타일 */
         * {
@@ -102,15 +102,152 @@
             letter-spacing: 1px;
         }
 
-        /* 후원 섹션 */
-        .donation {
+        /* 탭 스타일 */
+        .tabs {
             width: 100%;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .tab-button {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            outline: none;
+        }
+
+        .tab-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-button.active {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tab-button.active::after {
+            transform: scaleX(1);
+        }
+
+        /* 컨텐츠 영역 스타일 */
+        .tab-content {
+            width: 100%;
+            display: none;
             padding: 30px 20px;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeIn 0.5s ease forwards;
         }
 
+        .tab-content.active {
+            display: block;
+        }
+
+        /* About Me 섹션 스타일 */
+        .about-me h2 {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 25px;
+            color: #f0f0f0;
+            position: relative;
+            display: inline-block;
+        }
+
+        .about-me-title {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .about-me-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .skill-group {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .skill-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #f0f0f0;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .skill-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-badge {
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-badge:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .skill-description {
+            margin-top: 20px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* 후원 섹션 스타일 */
         .donation h2 {
             font-size: 1.8rem;
             text-align: center;
@@ -193,36 +330,103 @@
             align-items: center;
         }
 
-        /* 반응형 스타일 */
-        @media (max-width: 768px) {
-            .glass-container {
-                width: 95%;
-                padding: 15px;
-            }
+        /* 프로젝트 섹션 스타일 */
+        .projects h2 {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 25px;
+            color: #f0f0f0;
+            position: relative;
+            display: inline-block;
+        }
 
-            .profile-image {
-                width: 150px;
-                height: 150px;
-            }
+        .projects-title {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-            .name {
-                font-size: 2.5rem;
-            }
+        .projects-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+        }
 
-            .title {
-                font-size: 1.2rem;
-            }
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
 
-            .donation-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-            .donation-icon {
-                margin-right: 0;
-                margin-bottom: 5px;
-            }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .project-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .project-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #f0f0f0;
+        }
+
+        .project-content {
+            padding: 20px;
+        }
+
+        .project-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .project-tag {
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         /* 애니메이션 */
@@ -231,8 +435,8 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .profile, .donation {
-            animation: fadeIn 1s ease forwards;
+        .profile, .tab-content.active {
+            animation: fadeIn 0.5s ease forwards;
         }
 
         /* 작은 글로우 효과들 */
@@ -258,6 +462,51 @@
             height: 150px;
             background: rgba(240, 219, 79, 0.1);
         }
+
+        /* 반응형 스타일 */
+        @media (max-width: 768px) {
+            .glass-container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .profile-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .name {
+                font-size: 2.5rem;
+            }
+
+            .title {
+                font-size: 1.2rem;
+            }
+
+            .tab-button {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+
+            .skill-group {
+                min-width: 100%;
+            }
+
+            .donation-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .donation-icon {
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+            
+            .projects-container {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
@@ -273,13 +522,154 @@
             <div class="profile">
                 <img src="https://i.pinimg.com/474x/81/8a/1b/818a1b89a57c2ee0fb7619b95e11aebd.jpg" alt="EY 프로필 사진" class="profile-image">
                 <h1 class="name">EY</h1>
-                <p class="title">개발자 / 디자이너</p>
+                <p class="title">학생ㅣ개발자 & 디자이너</p>
+            </div>
+
+            <!-- 탭 네비게이션 -->
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab('aboutMe')">About Me</button>
+                <button class="tab-button" onclick="openTab('projects')">Projects</button>
+                <button class="tab-button" onclick="openTab('donate')">Donate</button>
+            </div>
+
+            <!-- About Me 섹션 -->
+            <div id="aboutMe" class="tab-content about-me active">
+                <div class="about-me-title">
+                    <h2>About Me</h2>
+                </div>
+                
+                <div class="skills-container">
+                    <!-- 개발 영역 -->
+                    <div class="skill-group">
+                        <h3 class="skill-title">Software Development</h3>
+                        <div class="skill-list">
+                            <span class="skill-badge">C</span>
+                            <span class="skill-badge">C#</span>
+                            <span class="skill-badge">C++</span>
+                            <span class="skill-badge">HTML</span>
+                            <span class="skill-badge">CSS</span>
+                            <span class="skill-badge">JavaScript</span>
+                            <span class="skill-badge">Go</span>
+                            <span class="skill-badge">Python</span>
+                            <span class="skill-badge">Swift</span>
+                        </div>
+                        <p class="skill-description">
+                            시스템 수준의 저수준 언어부터 현대적인 웹 프레임워크까지 다양한 기술 스택을 활용한 개발 경험을 보유하고 있습니다.
+                        </p>
+                    </div>
+
+                    <!-- 보안 및 하드웨어 영역 -->
+                    <div class="skill-group">
+                        <h3 class="skill-title">Security & Hardware</h3>
+                        <div class="skill-list">
+                            <span class="skill-badge">Penetration Testing</span>
+                            <span class="skill-badge">Raspberry Pi</span>
+                            <span class="skill-badge">Arduino</span>
+                        </div>
+                        <p class="skill-description">
+                            모의해킹을 통한 보안 취약점 분석 및 IoT 하드웨어 기반 프로젝트에 관심이 많습니다. 이론적 지식과 실제
+                            구현 사이의 균형을 맞춰 실용적인 보안 솔루션을 개발합니다.
+                        </p>
+                    </div>
+
+                    <!-- 디자인 영역 -->
+                    <div class="skill-group">
+                        <h3 class="skill-title">Design & Graphics</h3>
+                        <div class="skill-list">
+                            <span class="skill-badge">Web Design</span>
+                            <span class="skill-badge">Adobe After Effects</span>
+                            <span class="skill-badge">Adobe Photoshop</span>
+                            <span class="skill-badge">Adobe Premiere Pro</span>
+                        </div>
+                        <p class="skill-description">
+                            사용자 친화적인 웹 인터페이스 설계와 함께 다양한 그래픽 툴을 활용한 모션 그래픽 제작 및 영상 편집 능력을 갖추고 있습니다. 기술적 전문성과 창의적 디자인 감각을 결합하여 독특하고 몰입감 있는 시각적 경험을 창출합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 프로젝트 섹션 -->
+            <div id="projects" class="tab-content projects">
+                <div class="projects-title">
+                    <h2>Side Projects</h2>
+                </div>
+                <div class="projects-container">
+                    <!-- Discord 봇 프로젝트 -->
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4.09C14.96 4.09 14.93 4.1 14.91 4.14C14.73 4.44 14.53 4.84 14.39 5.15C12.77 4.99 11.17 4.99 9.59 5.15C9.44 4.84 9.24 4.44 9.06 4.14C9.04 4.1 9.01 4.09 8.97 4.09C7.47 4.26 6.03 4.71 4.7 5.33C4.68 5.34 4.67 5.35 4.65 5.38C1.48 10.09 0.7 14.67 1.09 19.19C1.09 19.22 1.1 19.24 1.13 19.26C2.9 20.53 4.6 21.25 6.28 21.72C6.32 21.73 6.36 21.72 6.38 21.68C6.82 21.08 7.21 20.44 7.54 19.76C7.57 19.71 7.55 19.65 7.5 19.63C6.92 19.41 6.37 19.14 5.84 18.82C5.79 18.79 5.78 18.73 5.83 18.69C5.94 18.61 6.05 18.53 6.15 18.44C6.18 18.41 6.21 18.41 6.24 18.42C10.25 20.25 14.64 20.25 18.61 18.42C18.64 18.41 18.67 18.41 18.7 18.44C18.8 18.53 18.91 18.61 19.02 18.69C19.07 18.73 19.06 18.79 19.01 18.82C18.48 19.15 17.93 19.41 17.35 19.63C17.3 19.65 17.27 19.71 17.3 19.76C17.64 20.44 18.03 21.08 18.46 21.68C18.48 21.72 18.52 21.73 18.56 21.72C20.25 21.25 21.95 20.53 23.72 19.26C23.75 19.24 23.76 19.22 23.76 19.19C24.23 14.01 23.01 9.46 19.32 5.38C19.31 5.35 19.29 5.34 19.27 5.33ZM8.52 16.2C7.34 16.2 6.36 15.12 6.36 13.79C6.36 12.46 7.32 11.38 8.52 11.38C9.73 11.38 10.7 12.47 10.69 13.79C10.69 15.12 9.73 16.2 8.52 16.2ZM15.49 16.2C14.31 16.2 13.33 15.12 13.33 13.79C13.33 12.46 14.29 11.38 15.49 11.38C16.7 11.38 17.67 12.47 17.66 13.79C17.66 15.12 16.7 16.2 15.49 16.2Z" fill="#5865F2"/>
+                                </svg>
+                            </div>
+                            <h3 class="project-title">Discord 봇 개발</h3>
+                        </div>
+                        <div class="project-content">
+                            <p class="project-description">
+                                커뮤니티 관리와 사용자 경험 향상을 위한 맞춤형 Discord 봇을 개발했습니다. 이 봇은 자동 역할 할당, 커스텀 명령어, 이벤트 알림 등 다양한 기능을 제공합니다. 서버 내 상호작용을 자동화하고 유저 참여를 증가시키는 데 초점을 맞춰 설계했습니다.
+                            </p>
+                            <div class="project-tags">
+                                <span class="project-tag">Python</span>
+                                <span class="project-tag">Discord.js</span>
+                                <span class="project-tag">Node.js</span>
+                                <span class="project-tag">API</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Discord 서버 제작 프로젝트 -->
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4.09C14.96 4.09 14.93 4.1 14.91 4.14C14.73 4.44 14.53 4.84 14.39 5.15C12.77 4.99 11.17 4.99 9.59 5.15C9.44 4.84 9.24 4.44 9.06 4.14C9.04 4.1 9.01 4.09 8.97 4.09C7.47 4.26 6.03 4.71 4.7 5.33C4.68 5.34 4.67 5.35 4.65 5.38C1.48 10.09 0.7 14.67 1.09 19.19C1.09 19.22 1.1 19.24 1.13 19.26C2.9 20.53 4.6 21.25 6.28 21.72C6.32 21.73 6.36 21.72 6.38 21.68C6.82 21.08 7.21 20.44 7.54 19.76C7.57 19.71 7.55 19.65 7.5 19.63C6.92 19.41 6.37 19.14 5.84 18.82C5.79 18.79 5.78 18.73 5.83 18.69C5.94 18.61 6.05 18.53 6.15 18.44C6.18 18.41 6.21 18.41 6.24 18.42C10.25 20.25 14.64 20.25 18.61 18.42C18.64 18.41 18.67 18.41 18.7 18.44C18.8 18.53 18.91 18.61 19.02 18.69C19.07 18.73 19.06 18.79 19.01 18.82C18.48 19.15 17.93 19.41 17.35 19.63C17.3 19.65 17.27 19.71 17.3 19.76C17.64 20.44 18.03 21.08 18.46 21.68C18.48 21.72 18.52 21.73 18.56 21.72C20.25 21.25 21.95 20.53 23.72 19.26C23.75 19.24 23.76 19.22 23.76 19.19C24.23 14.01 23.01 9.46 19.32 5.38C19.31 5.35 19.29 5.34 19.27 5.33ZM8.52 16.2C7.34 16.2 6.36 15.12 6.36 13.79C6.36 12.46 7.32 11.38 8.52 11.38C9.73 11.38 10.7 12.47 10.69 13.79C10.69 15.12 9.73 16.2 8.52 16.2ZM15.49 16.2C14.31 16.2 13.33 15.12 13.33 13.79C13.33 12.46 14.29 11.38 15.49 11.38C16.7 11.38 17.67 12.47 17.66 13.79C17.66 15.12 16.7 16.2 15.49 16.2Z" fill="#7289DA"/>
+                                </svg>
+                            </div>
+                            <h3 class="project-title">Discord 서버 제작/운영</h3>
+                        </div>
+                        <div class="project-content">
+                            <p class="project-description">
+                                Discord 커뮤니티 서버를 구축하고 관리하고 있습니다. 자동화된 역할 시스템, 활동 기반 레벨링, 맞춤형 채널 구조를 통해 커뮤니티를 형성했습니다. 사용자 피드백을 바탕으로 지속적인 개선을 진행하고 있습니다.
+                            </p>
+                            <div class="project-tags">
+                                <span class="project-tag">커뮤니티 관리</span>
+                                <span class="project-tag">자동화</span>
+                                <span class="project-tag">UX 디자인</span>
+                                <span class="project-tag">모더레이션</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Apple Swift Student Challenge 프로젝트 -->
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09997 22C7.78997 22.05 6.79997 20.68 5.95997 19.47C4.24997 17 2.93997 12.45 4.69997 9.39C5.56997 7.87 7.12997 6.91 8.81997 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.09 6.7 11.95 6.61C11.8 5.46 12.35 4.26 13 3.5Z" fill="#FF5E3A"/>
+                                </svg>
+                            </div>
+                            <h3 class="project-title">Apple Swift Student Challenge</h3>
+                        </div>
+                        <div class="project-content">
+                            <p class="project-description">
+                                Apple의 연례 Swift Student Challenge에 참가하여 교육용 인터랙티브 앱을 개발할 예정입니다. 복잡한 프로그래밍 개념을 게임화하여 사용자 친화적인 학습 경험을 제공하는 Swift Playgrounds 프로젝트입니다.
+                            </p>
+                            <div class="project-tags">
+                                <span class="project-tag">Swift</span>
+                                <span class="project-tag">UIKit</span>
+                                <span class="project-tag">SwiftUI</span>
+                                <span class="project-tag">게임화</span>
+                                <span class="project-tag">교육</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- 후원 섹션 -->
-            <div class="donation">
+            <div id="donate" class="tab-content donation">
                 <div class="donation-title">
-                    <h2>후원하기</h2>
+                    <h2>Donate</h2>
                 </div>
                 <div class="donation-links">
                     <!-- 비트코인 -->
@@ -329,5 +719,32 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function openTab(tabName) {
+            // 모든 탭 컨텐츠 숨기기
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            // 모든 탭 버튼 비활성화
+            const tabButtons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            // 선택한 탭 활성화
+            document.getElementById(tabName).classList.add("active");
+            
+            // 클릭한 버튼 활성화 (이벤트 대상 찾기)
+            const buttons = document.querySelectorAll(".tab-button");
+            buttons.forEach(button => {
+                if (button.textContent === (tabName === 'aboutMe' ? 'About Me' : tabName === 'projects' ? 'Projects' : '후원하기')) {
+                    button.classList.add("active");
+                }
+            });
+        }
+    </script>
 </body>
 </html>
