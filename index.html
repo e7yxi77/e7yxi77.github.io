@@ -308,15 +308,332 @@
             <img src="https://cdn.imweb.me/upload/S201810155bc458fdaf30f/82bcd6cd44c0e.png" alt="Suzuki GSX-R125">
         </div>
 
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSX-R125 모금 캠페인</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-text {
+            font-size: 16px;
+            letter-spacing: 6px;
+            color: #000000;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #666666;
+            font-weight: 300;
+        }
+
+        .bike-image {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            text-align: center;
+        }
+
+        .bike-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .progress-section {
+            background: #ffffff;
+            border: 2px solid #000000;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .current-amount {
+            font-size: 42px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .goal-amount {
+            font-size: 20px;
+            color: #666666;
+        }
+
+        .percentage {
+            font-size: 28px;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 12px;
+            background: #e0e0e0;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #000000;
+            width: 23.08%;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: #f5f5f5;
+            border: 1px solid #000000;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #666666;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .account-section {
+            background: #000000;
+            color: #ffffff;
+            padding: 35px;
+            text-align: center;
+        }
+
+        .account-title {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 18px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .account-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .bank-name {
+            font-size: 16px;
+            color: #cccccc;
+        }
+
+        .copy-button {
+            margin-top: 20px;
+            padding: 12px 35px;
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .copy-button:hover {
+            background: #f0f0f0;
+        }
+
+        .copy-button:active {
+            background: #e0e0e0;
+        }
+
+        .specs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 50px 0;
+        }
+
+        .spec-card {
+            background: #ffffff;
+            border: 2px solid #000000;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .spec-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .spec-label {
+            font-size: 13px;
+            color: #666666;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .spec-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 15px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .current-amount {
+                font-size: 32px;
+            }
+
+            .goal-amount {
+                font-size: 16px;
+            }
+
+            .percentage {
+                font-size: 24px;
+            }
+
+            .progress-section {
+                padding: 25px 20px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .specs {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                margin: 30px 0;
+            }
+
+            .account-section {
+                padding: 25px 20px;
+            }
+
+            .account-number {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            .logo-text {
+                font-size: 14px;
+                letter-spacing: 4px;
+            }
+
+            .current-amount {
+                font-size: 28px;
+            }
+
+            .percentage {
+                font-size: 20px;
+            }
+
+            .stat-value {
+                font-size: 20px;
+            }
+
+            .account-number {
+                font-size: 18px;
+                letter-spacing: 1px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-text">SUZUKI</div>
+            <h1>GSX-R125</h1>
+            <p class="subtitle">꿈의 라이딩을 향한 여정</p>
+        </div>
+
+        <div class="bike-image">
+            <img src="https://cdn.imweb.me/upload/S201810155bc458fdaf30f/82bcd6cd44c0e.png" alt="Suzuki GSX-R125">
+        </div>
+
         <div class="specs">
             <div class="spec-card">
-                <div class="spec-icon">돈</div>
+                <div class="spec-icon">⚡</div>
+                <div class="spec-label">엔진</div>
+                <div class="spec-value">125cc</div>
             </div>
             <div class="spec-card">
-                <div class="spec-icon">줘</div>
+                <div class="spec-icon">💨</div>
+                <div class="spec-label">최고출력</div>
+                <div class="spec-value">15PS</div>
             </div>
             <div class="spec-card">
-                <div class="spec-icon">요</div>
+                <div class="spec-icon">⚖️</div>
+                <div class="spec-label">공차중량</div>
+                <div class="spec-value">134kg</div>
             </div>
         </div>
 
@@ -370,3 +687,4 @@
 </body>
 
 </html>
+
