@@ -144,16 +144,26 @@
         goTo(clamp(sectionIndex() + dir, 0, BLOCKS - 1));
     }
 
-    /* 트랙패드 관성으로 여러 칸이 넘어가지 않도록 한 동작에 한 번만 받습니다. */
-    var snapUntil = 0;
-    var SNAP_HOLD = 780;
+    /* 트랙패드는 한 번 밀면 관성으로 이벤트가 1~2초 동안 쏟아집니다.
+       이벤트가 끊길 때까지를 '한 동작'으로 보고 한 구간만 움직입니다. */
+    var gestureOn = false;      /* 지금 한 동작이 진행 중인지 */
+    var gestureTimer = null;    /* 이벤트가 멎으면 동작이 끝난 것으로 봅니다 */
+    var lastStepAt = 0;
+    var GESTURE_END = 200;      /* 이 시간 동안 이벤트가 없으면 동작 종료 */
+    var HOLD_MAX = 2600;        /* 손을 떼지 않고 계속 밀 때만 쓰는 안전장치.
+                                   트랙패드 관성(길어야 2초)보다 길게 잡아
+                                   한 번 밀기가 두 구간을 넘지 않게 합니다. */
 
     function snapStep(dir) {
         var now = new Date().getTime();
-        if (now < snapUntil) { return; }
-        var from = sectionIndex();
+
+        window.clearTimeout(gestureTimer);
+        gestureTimer = window.setTimeout(function () { gestureOn = false; }, GESTURE_END);
+
+        if (gestureOn && now - lastStepAt < HOLD_MAX) { return; }
+        gestureOn = true;
+        lastStepAt = now;
         step(dir);
-        if (sectionIndex() !== from) { snapUntil = now + SNAP_HOLD; }
     }
 
     function onWheel(e) {
@@ -185,7 +195,10 @@
     function onTouchEnd(e) {
         if (!engineOn) { return; }
         var d = touchFrom - touchY;
-        if (Math.abs(d) > 44) { snapStep(d > 0 ? 1 : -1); }
+        if (Math.abs(d) > 44) {
+            gestureOn = false;
+            snapStep(d > 0 ? 1 : -1);
+        }
     }
 
     function onKey(e) {

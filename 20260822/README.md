@@ -39,6 +39,10 @@ images/         로고와 사진 (아래 "이미지 교체" 참고)
 4. **Source** 를 `Deploy from a branch`, **Branch** 를 `main` / `/ (root)` 로 지정하고 저장합니다.
 5. 1~2분 뒤 `https://<계정>.github.io/<저장소>/` 에서 열립니다.
 
+> 현재 배포 주소는 **https://ey.io.kr/20260822/** 입니다.
+> (저장소 `e7yxi77/e7yxi77.github.io` 의 `20260822/` 폴더, 루트 `CNAME` 이 `ey.io.kr`)
+> 주소가 바뀌면 `index.html` 의 `canonical` · `og:url` · `og:image` · JSON-LD `url` 네 곳을 함께 고쳐야 합니다.
+
 ### 도메인을 연결하려면
 
 1. 저장소 루트에 `CNAME` 파일을 만들고 도메인만 한 줄 적습니다. 예: `harupet.co.kr`
