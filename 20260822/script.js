@@ -86,11 +86,31 @@
         if (navDown) { navDown.disabled = target > maxScroll - vh * 0.5; }
     }
 
+    /* 전환은 시간 기반이라 언제 끝나는지 정확히 알 수 있습니다. */
+    var ANIM_MS = 380;
+    var animFrom = 0;
+    var animStart = 0;
+    var animating = false;
+
+    function nowMs() { return new Date().getTime(); }
+
+    function startAnim() {
+        if (mqReduce.matches) { current = target; animating = false; return; }
+        animFrom = current;
+        animStart = nowMs();
+        animating = true;
+    }
+
     function loop() {
         if (!engineOn) { return; }
-        var ease = mqReduce.matches ? 1 : 0.09;
-        current += (target - current) * ease;
-        if (Math.abs(target - current) < 0.05) { current = target; }
+        if (animating) {
+            var t = (nowMs() - animStart) / ANIM_MS;
+            if (t >= 1) { t = 1; animating = false; }
+            var k = 1 - Math.pow(1 - t, 3);      /* 끝에서 부드럽게 멈춤 */
+            current = animFrom + (target - animFrom) * k;
+        } else {
+            current = target;
+        }
         applyTransforms();
         updateFrame(maxScroll > 0 ? current / maxScroll : 0);
         window.requestAnimationFrame(loop);
@@ -111,7 +131,8 @@
     function goTo(i) {
         dismissHint();
         if (engineOn) {
-            target = clamp(i * vh, 0, maxScroll);
+            var next = clamp(i * vh, 0, maxScroll);
+            if (next !== target) { target = next; startAnim(); }
         } else {
             var el = document.getElementById('block-' + i);
             if (el) { el.scrollIntoView({ behavior: mqReduce.matches ? 'auto' : 'smooth', block: 'start' }); }
@@ -146,22 +167,47 @@
 
     /* 트랙패드는 한 번 밀면 관성으로 이벤트가 1~2초 동안 쏟아집니다.
        이벤트가 끊길 때까지를 '한 동작'으로 보고 한 구간만 움직입니다. */
-    var gestureOn = false;      /* 지금 한 동작이 진행 중인지 */
-    var gestureTimer = null;    /* 이벤트가 멎으면 동작이 끝난 것으로 봅니다 */
+    /* 트랙패드 관성은 한 번 세게 튀었다가 서서히 잦아듭니다.
+       그 '잦아드는 꼬리'는 무시하고, 다시 세게 밀면 바로 받습니다.
+       그래서 연달아 밀어도 씹히지 않습니다. */
+    var locked = false;         /* 관성 꼬리를 무시하는 중 */
+    var peaked = false;         /* 세기가 한 번 꺾였는지 */
+    var prevAbs = 0;            /* 직전 이벤트의 세기 */
+    var idleTimer = null;
     var lastStepAt = 0;
-    var GESTURE_END = 200;      /* 이 시간 동안 이벤트가 없으면 동작 종료 */
-    var HOLD_MAX = 2600;        /* 손을 떼지 않고 계속 밀 때만 쓰는 안전장치.
-                                   트랙패드 관성(길어야 2초)보다 길게 잡아
-                                   한 번 밀기가 두 구간을 넘지 않게 합니다. */
+    var IDLE_END = 70;          /* 이벤트가 멎으면 곧바로 다음 동작을 받습니다 */
+    var MIN_GAP = 160;          /* 한 동작이 이어지는 중에만 쓰는 최소 간격 */
 
-    function snapStep(dir) {
-        var now = new Date().getTime();
+    function resetGesture() {
+        locked = false;
+        peaked = false;
+        prevAbs = 0;
+    }
 
-        window.clearTimeout(gestureTimer);
-        gestureTimer = window.setTimeout(function () { gestureOn = false; }, GESTURE_END);
+    function snapStep(dir, abs) {
+        var now = nowMs();
 
-        if (gestureOn && now - lastStepAt < HOLD_MAX) { return; }
-        gestureOn = true;
+        window.clearTimeout(idleTimer);
+        idleTimer = window.setTimeout(resetGesture, IDLE_END);
+
+        if (abs < prevAbs) { peaked = true; }
+
+        var fresh;
+        if (!locked) {
+            fresh = true;                                /* 손을 뗐다가 다시 민 것 → 곧바로 */
+        } else if (peaked && abs > prevAbs * 1.5 + 3) {
+            fresh = now - lastStepAt >= MIN_GAP;         /* 꼬리 중에 다시 세게 밈 */
+        } else if (abs >= 100 && abs === prevAbs) {
+            fresh = now - lastStepAt >= MIN_GAP;         /* 마우스 휠 (세기가 일정) */
+        } else {
+            fresh = false;                               /* 관성 꼬리 → 무시 */
+        }
+        prevAbs = abs;
+
+        if (!fresh) { return; }
+
+        locked = true;
+        peaked = false;
         lastStepAt = now;
         step(dir);
     }
@@ -175,7 +221,7 @@
         e.preventDefault();
         dismissHint();
         if (Math.abs(d) < 4) { return; }
-        snapStep(d > 0 ? 1 : -1);
+        snapStep(d > 0 ? 1 : -1, Math.abs(d));
     }
 
     var touchY = 0;
@@ -196,8 +242,8 @@
         if (!engineOn) { return; }
         var d = touchFrom - touchY;
         if (Math.abs(d) > 44) {
-            gestureOn = false;
-            snapStep(d > 0 ? 1 : -1);
+            resetGesture();
+            snapStep(d > 0 ? 1 : -1, Math.abs(d));
         }
     }
 
