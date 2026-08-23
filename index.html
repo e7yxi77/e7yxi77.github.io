@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<!--
+  ================================================================
+  하루펫 (하루펫택시) — 반려동물 전용 이동 서비스
+  정적 사이트 · 백엔드 없음 · GitHub Pages 배포용
+
+  [ 이미지 교체 안내 ]
+  모든 사진은 /images 폴더의 파일만 바꾸면 됩니다.
+  파일 이름을 그대로 유지하면 HTML을 수정할 필요가 없습니다.
+  자세한 내용은 README.md 의 "이미지 교체" 항목을 확인하세요.
+  ================================================================
+-->
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>하루펫택시 | 반려동물의 안전한 이동 파트너 · 전국 펫택시</title>
+    <meta name="description" content="하루펫택시는 병원·미용·공항·이사·장례식장까지 반려동물 전용 차량으로 안전하게 이동합니다. 수도권 단거리부터 지방 장거리까지 365일 운행. 예약 문의 010-7987-3460">
+    <meta name="author" content="하루펫">
+    <meta name="theme-color" content="#E7832E">
+    <link rel="canonical" href="https://talk.naver.com/profile/w5xpj1">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="하루펫택시">
+    <meta property="og:title" content="하루펫택시 | 반려동물의 안전한 이동 파트너">
+    <meta property="og:description" content="전국 어디든 운행가능, 반려동물 단독운송 Ok. 병원·미용·공항·장거리 이동까지 안전하게 모십니다.">
+    <meta property="og:image" content="images/og-image.jpg">
+    <meta property="og:locale" content="ko_KR">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+    <link rel="apple-touch-icon" href="images/favicon-180.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- 자바스크립트를 끈 환경에서는 위아래로 이어지는 한 줄 문서로 보여줍니다. -->
+    <noscript><style>
+        html, body { height: auto; overflow: visible; }
+        .panel { position: static; width: 100%; height: auto; }
+        .t-right { left: auto; }
+        .panel-inner, .t-right .panel-inner { max-height: none; overflow: visible; }
+        .panel-media .media > img { height: 60vh; }
+        .roadline, .frame-nav, .frame-hint, .frame-index { display: none; }
+        .pane { display: block; }
+    </style></noscript>
+</head>
+<body>
+    <a class="skip-link" href="#block-1">본문 바로가기</a>
+
+    <!-- ============================================================ -->
+    <!-- 고정 프레임 — 브랜드 · 상시 노출 CTA · 구간 표시              -->
+    <!-- ============================================================ -->
+    <div class="frame">
+        <a class="frame-brand" href="#block-0" aria-label="하루펫택시 홈">
+            <img src="images/haru-wordmark.png" alt="하루펫" width="112" height="35">
+            <span class="frame-brand-sub">펫택시</span>
+        </a>
+
+        <div class="frame-actions">
+            <a class="frame-link" href="https://talk.naver.com/profile/w5xpj1/form/1" target="_blank" rel="noopener">
+                <span class="frame-link-full">견적 신청서</span>
+                <span class="frame-link-short">견적</span>
+            </a>
+            <a class="frame-link is-talk" href="https://talk.naver.com/ct/w5xpj1" target="_blank" rel="noopener">
+                <span class="frame-link-full">네이버 톡톡</span>
+                <span class="frame-link-short">톡톡</span>
+            </a>
+            <a class="frame-call" href="tel:010-7987-3460">
+                <span class="ico-phone" aria-hidden="true"></span>
+                <span class="frame-call-num">010-7987-3460</span>
+                <span class="frame-call-short">전화 예약</span>
+            </a>
+        </div>
+
+        <p class="frame-index" aria-hidden="true">
+            <b id="frame-num">01</b><span class="of">/ 05</span>
+            <span class="frame-index-label" id="frame-label">하루펫 소개</span>
+        </p>
+
+        <div class="frame-nav">
+            <button class="nav-btn up" id="nav-up" aria-label="이전 구간" disabled><span class="chev" aria-hidden="true"></span></button>
+            <button class="nav-btn down" id="nav-down" aria-label="다음 구간"><span class="chev" aria-hidden="true"></span></button>
+        </div>
+
+        <p class="frame-hint" id="frame-hint" aria-hidden="true">한 번 스크롤하면 다음 구간으로 넘어갑니다</p>
+    </div>
+
+    <!-- 중앙 주행선: 스크롤 진행에 따라 발자국 마커가 내려갑니다 -->
+    <div class="roadline" aria-hidden="true"><span class="road-paw" id="road-paw"></span></div>
+
+    <main class="stage" id="stage">
+
+        <!-- ========================================================== -->
+        <!-- 구간 01 — 하루펫 소개                                       -->
+        <!-- ========================================================== -->
+        <section class="panel t-left" data-i="0" id="block-0" aria-labelledby="h-intro">
+            <div class="panel-inner">
+                <p class="eyebrow reveal">반려동물의 안전한 이동 파트너</p>
+                <h1 class="hero-title reveal" id="h-intro">
+                    소중한 우리 아이,<br>
+                    <em>안전하고 편안하게</em>
+                </h1>
+                <p class="lede reveal">하루펫택시는 반려동물만을 위한 전용 차량으로 이동합니다. 병원·미용·공항·이사부터 지방 장거리까지, 보호자 대신 아이 곁을 지키며 목적지 문 앞까지 모십니다.</p>
+
+                <div class="status reveal">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    <span class="status-txt">365일 운행 중</span>
+                    <span class="status-time" id="status-time">--:--</span>
+                </div>
+
+                <div class="stat-row reveal">
+                    <div class="stat"><span class="k">기본요금</span><span class="v">4,800<small>원</small></span></div>
+                    <div class="stat"><span class="k">운행 지역</span><span class="v">전국<small>단거리·장거리</small></span></div>
+                    <div class="stat"><span class="k">탑승 가능</span><span class="v">소형~대형<small>견·묘 모두</small></span></div>
+                </div>
+
+                <div class="cta-row reveal">
+                    <a class="btn btn-call" href="tel:010-7987-3460"><span class="ico-phone" aria-hidden="true"></span>전화로 예약하기</a>
+                    <button class="btn btn-ghost" type="button" data-goto="3">요금 확인하기</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel t-right panel-media" data-i="0" aria-label="하루펫택시 차량 사진">
+            <figure class="media">
+                <img src="images/photo-hero.jpg" alt="반려동물을 태우고 운행 중인 하루펫택시 차량" width="1200" height="1600" loading="eager">
+                <figcaption class="media-tag">
+                    <img src="images/haru-mark.png" alt="" width="26" height="26" aria-hidden="true">
+                    <span>반려동물 단독 운송 · 전국 운행</span>
+                </figcaption>
+            </figure>
+        </section>
+
+        <!-- ========================================================== -->
+        <!-- 구간 02 — 서비스 안내 (아코디언이 우측 사진을 바꿉니다)      -->
+        <!-- ========================================================== -->
+        <section class="panel t-left" data-i="1" id="block-1" aria-labelledby="h-service">
+            <div class="panel-inner">
+                <p class="eyebrow reveal">서비스 안내</p>
+                <h2 class="title reveal" id="h-service">어디로 가야 하나요?</h2>
+                <p class="lede short reveal">가는 곳에 따라 준비가 달라집니다. 아래에서 목적지를 선택하면 하루펫택시가 어떻게 이동하는지 보여드립니다.</p>
+
+                <div class="acc reveal" id="acc">
+                    <div class="acc-item is-open" data-photo="images/photo-service-hospital.jpg" data-chip="병원 이동">
+                        <h3><button class="acc-head" type="button" aria-expanded="true">
+                            <span class="acc-name">병원 이동</span>
+                            <span class="acc-note">진료 · 예방접종</span>
+                            <span class="acc-ico" aria-hidden="true"></span>
+                        </button></h3>
+                        <div class="acc-body"><div class="acc-body-in">
+                            <p>정기 검진부터 갑작스러운 진료까지, 보호자가 운전 걱정 없이 아이 곁에 있을 수 있도록 병원 문 앞까지 모십니다.</p>
+                        </div></div>
+                    </div>
+
+                    <div class="acc-item" data-photo="images/photo-service-care.jpg" data-chip="미용 · 호텔 · 유치원 이동">
+                        <h3><button class="acc-head" type="button" aria-expanded="false">
+                            <span class="acc-name">미용 · 호텔 · 유치원 이동</span>
+                            <span class="acc-note">등하원 · 왕복</span>
+                            <span class="acc-ico" aria-hidden="true"></span>
+                        </button></h3>
+                        <div class="acc-body"><div class="acc-body-in">
+                            <p>미용 예약 시간에 맞춰 데려다드리고, 끝나는 시간에 맞춰 다시 모셔옵니다. 애견호텔과 유치원 등하원도 함께합니다.</p>
+                        </div></div>
+                    </div>
+
+                    <div class="acc-item" data-photo="images/photo-service-moving.jpg" data-chip="이사 · 장거리 이동">
+                        <h3><button class="acc-head" type="button" aria-expanded="false">
+                            <span class="acc-name">이사 · 장거리 이동</span>
+                            <span class="acc-note">수도권 · 지방</span>
+                            <span class="acc-ico" aria-hidden="true"></span>
+                        </button></h3>
+                        <div class="acc-body"><div class="acc-body-in">
+                            <p>이사 당일 아이만 따로 이동해야 할 때, 수도권은 물론 지방까지 장거리로 운행합니다. 휴식 구간을 두고 천천히 이동합니다.</p>
+                        </div></div>
+                    </div>
+
+                    <div class="acc-item" data-photo="images/photo-service-airport.jpg" data-chip="여행 · 공항 이동">
+                        <h3><button class="acc-head" type="button" aria-expanded="false">
+                            <span class="acc-name">여행 · 공항 이동</span>
+                            <span class="acc-note">출국 · 입국</span>
+                            <span class="acc-ico" aria-hidden="true"></span>
+                        </button></h3>
+                        <div class="acc-body"><div class="acc-body-in">
+                            <p>여행이나 출장으로 공항에 가실 때, 출국·입국 시간에 맞춰 이동합니다. 도착 시간에 맞춘 픽업도 가능합니다.</p>
+                        </div></div>
+                    </div>
+
+                    <div class="acc-item" data-photo="images/photo-service-farewell.jpg" data-chip="장례식장 이동">
+                        <h3><button class="acc-head" type="button" aria-expanded="false">
+                            <span class="acc-name">장례식장 이동</span>
+                            <span class="acc-note">마지막 길</span>
+                            <span class="acc-ico" aria-hidden="true"></span>
+                        </button></h3>
+                        <div class="acc-body"><div class="acc-body-in">
+                            <p>가장 조심스러운 이동입니다. 사랑하는 아이와의 마지막 길, 조용하고 정중하게 끝까지 함께 모시겠습니다.</p>
+                        </div></div>
+                    </div>
+
+                    <div class="acc-item" data-photo="images/photo-service-shelter.jpg" data-chip="보호소 이동">
+                        <h3><button class="acc-head" type="button" aria-expanded="false">
+                            <span class="acc-name">보호소 이동</span>
+                            <span class="acc-note">구조 · 입소</span>
+                            <span class="acc-ico" aria-hidden="true"></span>
+                        </button></h3>
+                        <div class="acc-body"><div class="acc-body-in">
+                            <p>구조와 입소, 임시보호 이동처럼 도움이 필요한 순간에도 아이가 놀라지 않도록 안전하게 함께합니다.</p>
+                        </div></div>
+                    </div>
+                </div>
+
+                <ul class="feature-strip reveal">
+                    <li>단독 이동 · 동승 선택</li>
+                    <li>Door to Door</li>
+                    <li>실시간 위치 안내</li>
+                    <li>고양이 · 기타 반려동물</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="panel t-right panel-media" data-i="1" aria-label="선택한 목적지 사진">
+            <figure class="media">
+                <img src="images/photo-service-hospital.jpg" alt="병원 이동 서비스 사진" id="service-photo" width="1200" height="1600" loading="lazy">
+                <figcaption class="media-tag pin">
+                    <span class="pin-ico" aria-hidden="true"></span>
+                    <span id="service-chip">병원 이동</span>
+                </figcaption>
+            </figure>
+        </section>
+
+        <!-- ========================================================== -->
+        <!-- 구간 03 — 고객 후기                                         -->
+        <!-- ========================================================== -->
+        <section class="panel t-left panel-media" data-i="2" aria-label="이용 고객 반려동물 사진">
+            <figure class="media">
+                <img src="images/photo-review.jpg" alt="차창 밖을 바라보는 반려동물" width="1200" height="1600" loading="lazy">
+                <figcaption class="media-tag">
+                    <span class="stars" aria-hidden="true">★★★★★</span>
+                    <span>보호자 평점 5.0</span>
+                </figcaption>
+            </figure>
+        </section>
+
+        <section class="panel t-right" data-i="2" id="block-2" aria-labelledby="h-review">
+            <div class="panel-inner">
+                <p class="eyebrow reveal">고객 후기</p>
+                <h2 class="title reveal" id="h-review">먼저 타 본 보호자들의 이야기</h2>
+                <p class="lede short reveal">하루펫은 반려동물과 보호자의 행복한 이동을 위해 항상 최선을 다합니다.</p>
+
+                <div class="rev reveal" id="rev">
+                    <div class="rev-window">
+                        <ul class="rev-track" id="rev-track">
+                            <li class="rev-card">
+                                <p class="rev-stars" aria-label="별점 5점 만점에 5점"><span aria-hidden="true">★★★★★</span> <b>5.0</b></p>
+                                <blockquote>기사님이 정말 친절하시고 우리 강아지도 편안해했어요! 운전도 안전하게 해주셔서 너무 감사했습니다.</blockquote>
+                                <p class="rev-by">김*진 고객님<span>병원 이동</span></p>
+                            </li>
+                            <li class="rev-card">
+                                <p class="rev-stars" aria-label="별점 5점 만점에 5점"><span aria-hidden="true">★★★★★</span> <b>5.0</b></p>
+                                <blockquote>장거리 이동이 걱정됐는데 하루펫 덕분에 편안하게 다녀왔어요! 다음에도 또 이용할게요.</blockquote>
+                                <p class="rev-by">박*영 고객님<span>지방 장거리</span></p>
+                            </li>
+                            <li class="rev-card">
+                                <p class="rev-stars" aria-label="별점 5점 만점에 5점"><span aria-hidden="true">★★★★★</span> <b>5.0</b></p>
+                                <blockquote>고양이가 예민한데도 불구하고 조용하고 안전하게 이동해주셔서 너무 만족합니다. 정말 믿고 맡길 수 있어요!</blockquote>
+                                <p class="rev-by">이*민 고객님<span>고양이 이동</span></p>
+                            </li>
+                            <li class="rev-card">
+                                <p class="rev-stars" aria-label="별점 5점 만점에 5점"><span aria-hidden="true">★★★★★</span> <b>5.0</b></p>
+                                <blockquote>예약부터 이용까지 모두 매우 만족스러웠습니다. 친절함과 세심함에 감동했어요! 강력 추천합니다.</blockquote>
+                                <p class="rev-by">최*훈 고객님<span>왕복 이동</span></p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="rev-deck">
+                        <button class="rev-arw" id="rev-prev" type="button" aria-label="이전 후기"><span class="chev-l" aria-hidden="true"></span></button>
+                        <div class="rev-dots" id="rev-dots" role="tablist" aria-label="후기 선택"></div>
+                        <button class="rev-arw" id="rev-next" type="button" aria-label="다음 후기"><span class="chev-r" aria-hidden="true"></span></button>
+                        <button class="rev-play is-playing" id="rev-play" type="button" aria-pressed="true" aria-label="후기 자동 넘김 멈추기"><span class="ico-pause" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+
+                <p class="rev-foot reveal">여러분의 소중한 후기가 하루펫을 더욱 성장하게 합니다.</p>
+
+                <ul class="feature-strip reveal">
+                    <li>소형견 · 중형견 · 대형견 모두 탑승</li>
+                    <li>고양이 · 기타 반려동물 이동</li>
+                    <li>경험 많은 전문 기사 운행</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ========================================================== -->
+        <!-- 구간 04 — 요금 (좌측 조작 → 우측 미터 표시)                 -->
+        <!-- ========================================================== -->
+        <section class="panel t-left" data-i="3" id="block-3" aria-labelledby="h-fare">
+            <div class="panel-inner">
+                <p class="eyebrow reveal">요금 안내</p>
+                <h2 class="title reveal" id="h-fare">얼마쯤 나올까요?</h2>
+                <p class="lede short reveal">하루펫이 안내하는 요금표를 그대로 담았습니다. 아래에서 조건을 고르면 옆 미터에 예상 요금이 표시됩니다.</p>
+
+                <div class="tabs reveal" role="tablist" aria-label="요금 종류">
+                    <button class="tab is-on" id="tab-metro" role="tab" aria-selected="true" aria-controls="pane-metro" data-tab="metro" type="button">수도권 거리요금</button>
+                    <button class="tab" id="tab-local" role="tab" aria-selected="false" aria-controls="pane-local" data-tab="local" type="button">지방 장거리</button>
+                </div>
+
+                <!-- 수도권: 거리 슬라이더 -->
+                <div class="pane is-shown reveal" id="pane-metro" role="tabpanel" aria-labelledby="tab-metro">
+                    <label class="slider-label" for="km">이동 거리 <b><span id="km-out">10</span>km</b></label>
+                    <input class="slider" id="km" type="range" min="0" max="30" step="1" value="10"
+                           aria-label="이동 거리 (킬로미터)" aria-describedby="km-help">
+                    <div class="slider-ticks" aria-hidden="true"><span>0</span><span>10</span><span>20</span><span>30</span></div>
+                    <p class="pane-note" id="km-help">수도권은 단거리와 장거리 모두 운행합니다. 30km를 넘는 거리는 장거리 요금으로 상담해드립니다.</p>
+                </div>
+
+                <!-- 지방: 지역 + 요일 -->
+                <div class="pane reveal" id="pane-local" role="tabpanel" aria-labelledby="tab-local" hidden>
+                    <div class="chips" id="region-chips" role="group" aria-label="목적지 지역"></div>
+                    <div class="seg" role="group" aria-label="이용 요일">
+                        <button class="seg-btn is-on" data-day="weekday" type="button" aria-pressed="true">평일</button>
+                        <button class="seg-btn" data-day="weekend" type="button" aria-pressed="false">주말</button>
+                        <button class="seg-btn" data-day="normal" type="button" aria-pressed="false">할인 전</button>
+                    </div>
+                    <p class="pane-note">평일 지방 5만원 할인, 주말은 10만원까지 할인됩니다. 지방은 장거리 운행만 가능합니다.</p>
+                </div>
+
+                <p class="fare-disclaimer reveal">표시 금액은 <b>예상 금액</b>이며 최종 금액은 상담 시 안내해드립니다.<span class="fare-more"> 출발지·경유·대기 시간에 따라 달라질 수 있습니다. 2026년 9월 1일부터 적용되는 요금이며, 사전예약 시 최대 20% 할인 혜택이 있습니다.</span></p>
+            </div>
+        </section>
+
+        <section class="panel t-right panel-media" data-i="3" aria-label="예상 요금 미터">
+            <div class="meter">
+                <div class="meter-face">
+                    <p class="meter-label" id="meter-label">수도권 · 10km</p>
+                    <p class="meter-value">
+                        <span id="meter-num">12,800</span><small>원</small>
+                    </p>
+                    <p class="meter-sub" id="meter-sub">기본요금 4,800원 포함 · 일반택시보다 2,000원 저렴</p>
+                    <ul class="meter-chips" id="meter-chips">
+                        <li>단독 이동</li><li>동승 가능</li><li>Door to Door</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================== -->
+        <!-- 구간 05 — 예약 문의                                         -->
+        <!-- ========================================================== -->
+        <section class="panel t-left" data-i="4" id="block-4" aria-labelledby="h-contact">
+            <div class="panel-inner">
+                <p class="eyebrow reveal">예약 문의</p>
+                <h2 class="title reveal" id="h-contact">365일, 언제든지 연락 주세요</h2>
+
+                <ol class="steps reveal">
+                    <li><b>01</b><span class="step-t">문의</span><span class="step-d">전화 또는 네이버 톡톡으로 일정과 목적지를 알려주세요.</span></li>
+                    <li><b>02</b><span class="step-t">예약 확정</span><span class="step-d">차량과 시간, 예상 요금을 안내해드립니다.</span></li>
+                    <li><b>03</b><span class="step-t">픽업</span><span class="step-d">약속한 시간에 문 앞으로 찾아갑니다.</span></li>
+                    <li><b>04</b><span class="step-t">안전 이동</span><span class="step-d">이동 중 실시간 위치를 안내해드립니다.</span></li>
+                    <li><b>05</b><span class="step-t">도착</span><span class="step-d">목적지 도착 후 보호자님께 알려드립니다.</span></li>
+                </ol>
+
+                <p class="contact-extra reveal">장거리 상담 <a href="tel:010-8030-7236">010-8030-7236</a></p>
+
+                <div class="contact-grid reveal">
+                    <a class="contact-card call" href="tel:010-7987-3460">
+                        <span class="cc-k">예약 및 문의</span>
+                        <span class="cc-v">010-7987-3460</span>
+                        <span class="cc-d">전화 연결</span>
+                    </a>
+                    <a class="contact-card long" href="tel:010-8030-7236">
+                        <span class="cc-k">장거리 상담</span>
+                        <span class="cc-v">010-8030-7236</span>
+                        <span class="cc-d">지방 · 장거리 문의</span>
+                    </a>
+                    <a class="contact-card talk" href="https://talk.naver.com/ct/w5xpj1" target="_blank" rel="noopener">
+                        <span class="cc-k">네이버 톡톡</span>
+                        <span class="cc-v">채팅으로 문의</span>
+                        <span class="cc-d">talk.naver.com</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel t-right panel-media" data-i="4" aria-label="하루펫 위치 안내">
+            <div class="contact-side">
+                <figure class="contact-photo">
+                    <img src="images/photo-contact.jpg" alt="하루펫택시 차량 외관" width="1200" height="1600" loading="lazy">
+                </figure>
+                <div class="addr-card">
+                    <p class="addr-k">하루펫</p>
+                    <p class="addr-v">서울특별시 관악구 청룡길 78<br>(봉천동, 서울대입구아이원아파트) 1층</p>
+                    <a class="addr-link" href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B4%80%EC%95%85%EA%B5%AC%20%EC%B2%AD%EB%A3%A1%EA%B8%B8%2078" target="_blank" rel="noopener">네이버 지도에서 보기</a>
+                    <p class="addr-note">운행 지역 : 수도권 단거리 · 장거리 / 지방 장거리 · 전국</p>
+                    <p class="addr-copy">© 하루펫 · 반려동물의 안전한 이동 파트너</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "하루펫택시",
+      "alternateName": "하루펫",
+      "description": "반려동물 전용 이동 서비스. 병원, 미용, 공항, 이사, 장례식장 이동 및 지방 장거리 운행.",
+      "image": "images/og-image.jpg",
+      "telephone": "+82-10-7987-3460",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "청룡길 78 (봉천동, 서울대입구아이원아파트) 1층",
+        "addressLocality": "관악구",
+        "addressRegion": "서울특별시",
+        "addressCountry": "KR"
+      },
+      "areaServed": "대한민국",
+      "openingHours": "Mo-Su 00:00-23:59",
+      "sameAs": ["https://talk.naver.com/profile/w5xpj1"]
+    }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
