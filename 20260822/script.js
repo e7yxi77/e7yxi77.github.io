@@ -449,9 +449,8 @@
             '<p class="sheet-t"></p>' +
             '<p class="sheet-d"></p>' +
             '<div class="sheet-note">' +
-                '<span class="ic ic-phone" aria-hidden="true" style="margin-top:2px"></span>' +
-                '<span><b>모바일 환경에서만 이용 가능한 기능입니다.</b><br>' +
-                'PC 에서는 번호를 눌러 복사한 뒤 휴대폰으로 걸어 주세요.</span>' +
+                '<span class="ic ic-phone" aria-hidden="true"></span>' +
+                '<span>모바일에서만 바로 연결됩니다. 번호를 누르면 복사됩니다.</span>' +
             '</div>' +
             '<div class="branch"></div>';
         document.body.appendChild(sheet);
@@ -476,11 +475,9 @@
         sheetList.innerHTML = BRANCHES.map(function (b) {
             var href = (sms ? 'sms:' : 'tel:') + telDigits(b.tel);
             var inner =
-                '<span class="branch-ic" aria-hidden="true"><span class="ic ' + (sms ? 'ic-sms' : 'ic-phone') + '"></span></span>' +
                 '<span class="branch-b">' +
                     '<span class="branch-n">' + esc(b.name) +
                         (b.main ? '<span class="pill">대표</span>' : '') + '</span>' +
-                    '<span class="branch-d">' + esc(b.desc || '') + '</span>' +
                     '<span class="branch-tel">' + esc(b.tel) + '</span>' +
                 '</span>' +
                 '<span class="ic ic-arrow" aria-hidden="true"></span>';
