@@ -144,9 +144,9 @@
         while (node && node !== document.body) {
             if (node.classList && node.classList.contains('panel-inner')) {
                 var room = node.scrollHeight - node.clientHeight;
-                if (room > 2) {
-                    if (dir > 0 && node.scrollTop < room - 1) { return true; }
-                    if (dir < 0 && node.scrollTop > 1) { return true; }
+                if (room > 40) {   /* 몇 px 남짓한 넘침은 무시하고 구간을 넘깁니다 */
+                    if (dir > 0 && node.scrollTop < room - 2) { return true; }
+                    if (dir < 0 && node.scrollTop > 2) { return true; }
                 }
                 return false;
             }
@@ -167,21 +167,21 @@
 
     /* 트랙패드는 한 번 밀면 관성으로 이벤트가 1~2초 동안 쏟아집니다.
        이벤트가 끊길 때까지를 '한 동작'으로 보고 한 구간만 움직입니다. */
-    /* 트랙패드 관성은 한 번 세게 튀었다가 서서히 잦아듭니다.
-       그 '잦아드는 꼬리'는 무시하고, 다시 세게 밀면 바로 받습니다.
-       그래서 연달아 밀어도 씹히지 않습니다. */
-    var locked = false;         /* 관성 꼬리를 무시하는 중 */
-    var peaked = false;         /* 세기가 한 번 꺾였는지 */
-    var prevAbs = 0;            /* 직전 이벤트의 세기 */
-    var idleTimer = null;
+    /* 관성은 한 번 튄 뒤로는 계속 약해지기만 합니다.
+       그래서 "마지막 이동 이후 가장 셌던 세기"보다 더 세게 밀렸을 때만
+       한 칸 움직입니다. 기준값은 시간이 지나면 스스로 낮아지므로,
+       살짝만 다시 밀어도 곧바로 반응합니다. */
+    var peakSince = 0;          /* 마지막 이동 이후 최대 세기 (시간에 따라 감쇠) */
+    var lastEventAt = 0;
     var lastStepAt = 0;
-    var IDLE_END = 70;          /* 이벤트가 멎으면 곧바로 다음 동작을 받습니다 */
-    var MIN_GAP = 160;          /* 한 동작이 이어지는 중에만 쓰는 최소 간격 */
+    var idleTimer = null;
+    var IDLE_END = 90;          /* 이벤트가 멎으면 기준값을 지웁니다 */
+    var MIN_GAP = 130;          /* 한 동작이 여러 칸 넘기지 않게 하는 최소 간격 */
+    var DECAY = 0.998;          /* 기준값이 1ms 마다 낮아지는 비율 */
 
     function resetGesture() {
-        locked = false;
-        peaked = false;
-        prevAbs = 0;
+        peakSince = 0;
+        lastEventAt = 0;
     }
 
     function snapStep(dir, abs) {
@@ -190,25 +190,20 @@
         window.clearTimeout(idleTimer);
         idleTimer = window.setTimeout(resetGesture, IDLE_END);
 
-        if (abs < prevAbs) { peaked = true; }
-
-        var fresh;
-        if (!locked) {
-            fresh = true;                                /* 손을 뗐다가 다시 민 것 → 곧바로 */
-        } else if (peaked && abs > prevAbs * 1.5 + 3) {
-            fresh = now - lastStepAt >= MIN_GAP;         /* 꼬리 중에 다시 세게 밈 */
-        } else if (abs >= 100 && abs === prevAbs) {
-            fresh = now - lastStepAt >= MIN_GAP;         /* 마우스 휠 (세기가 일정) */
-        } else {
-            fresh = false;                               /* 관성 꼬리 → 무시 */
+        /* 시간이 흐른 만큼 기준값을 낮춥니다. */
+        if (lastEventAt) {
+            peakSince *= Math.pow(DECAY, Math.min(now - lastEventAt, 3000));
         }
-        prevAbs = abs;
+        lastEventAt = now;
 
-        if (!fresh) { return; }
+        var stronger = abs > peakSince + 1;
+        if (abs > peakSince) { peakSince = abs; }
 
-        locked = true;
-        peaked = false;
+        if (!stronger) { return; }              /* 잦아드는 관성 → 무시 */
+        if (now - lastStepAt < MIN_GAP) { return; }
+
         lastStepAt = now;
+        peakSince = abs;
         step(dir);
     }
 
@@ -243,6 +238,7 @@
         var d = touchFrom - touchY;
         if (Math.abs(d) > 44) {
             resetGesture();
+            lastStepAt = 0;
             snapStep(d > 0 ? 1 : -1, Math.abs(d));
         }
     }

@@ -944,6 +944,36 @@ ul, ol { list-style: none; }
     .meter-chips { margin-top: 14px; padding-top: 12px; }
 }
 
+/* 화면이 더 낮을 때 : 패널 안쪽에 스크롤이 생기지 않도록 더 조입니다. */
+@media (min-width: 901px) and (max-height: 760px) {
+    .panel-inner { padding-top: 84px; padding-bottom: 44px; }
+    .meter { padding-top: 82px; padding-bottom: 24px; }
+    .eyebrow { margin-bottom: 10px; }
+    .hero-title { font-size: clamp(1.8rem, 2.6vw, 2.4rem); margin-bottom: 12px; }
+    .title { font-size: clamp(1.4rem, 2vw, 1.8rem); margin-bottom: 8px; }
+    .lede { margin-bottom: 14px; line-height: 1.62; font-size: .92rem; }
+    .lede.short { margin-bottom: 12px; }
+    .acc-head { padding: 8px 4px; }
+    .acc-name { font-size: 15px; }
+    .acc-body-in { padding-bottom: 10px; }
+    .acc-body-in p { font-size: 13.5px; line-height: 1.68; }
+    .acc { margin-bottom: 14px; }
+    .feature-strip li { padding: 5px 11px; font-size: 11.5px; }
+    .rev-card { padding: 18px 22px 16px; }
+    .rev-card blockquote { min-height: 0; font-size: .98rem; line-height: 1.7; margin-bottom: 12px; }
+    .rev-by { padding-top: 10px; }
+    .rev-deck { margin-top: 10px; }
+    .rev-foot { margin-bottom: 12px; }
+    .steps li { padding: 6px 2px; }
+    .step-d { font-size: 12.5px; }
+    .steps { margin-bottom: 16px; }
+    .contact-card { padding: 12px 16px; }
+    .tabs { margin-bottom: 14px; }
+    .fare-disclaimer { padding-top: 10px; }
+    .meter-face { padding: 20px 24px; }
+    .meter-chips { margin-top: 12px; padding-top: 10px; }
+}
+
 /* ------------------------------------------------------------------ */
 /* 태블릿 · 모바일 — 스크롤 엔진을 끄고 일반 세로 스크롤로 전환          */
 /* ------------------------------------------------------------------ */
