@@ -58,18 +58,20 @@
                 <span class="nav-burger" aria-hidden="true"><i></i><i></i></span>
             </button>
         </div>
-        <div class="navpanel" id="navpanel">
-            <nav class="wrap navlist" id="tabs" aria-label="바로가기">
-                <a class="tab is-on" href="#home">홈</a>
-                <a class="tab" href="#car">차량</a>
-                <a class="tab" href="#clean">소독</a>
-                <a class="tab" href="#service">서비스</a>
-                <a class="tab" href="#picnic">펫크닉</a>
-                <a class="tab" href="#review">후기</a>
-                <a class="tab" href="quote.html">견적 요청</a>
-            </nav>
-        </div>
     </header>
+
+    <div class="navpanel" id="navpanel">
+        <nav class="wrap navlist" id="tabs" aria-label="바로가기">
+            <a class="tab is-on" href="#home">홈</a>
+            <a class="tab" href="#car">차량</a>
+            <a class="tab" href="#clean">소독</a>
+            <a class="tab" href="#service">서비스</a>
+            <a class="tab" href="#picnic">펫크닉</a>
+            <a class="tab" href="#review">후기</a>
+            <a class="tab" href="quote.html">견적 요청</a>
+        </nav>
+    </div>
+
 
     <!-- 카테고리 탭 (모바일에서 접을 수 있습니다) -->
     
@@ -81,12 +83,8 @@
                 <img src="images/car-01-white-exterior.jpg" alt="" width="1200" height="1600" fetchpriority="high">
             </div>
             <div class="hero-in">
-                <span class="hero-tag"><b></b>지금 배차 가능 · 24시간 연중무휴</span>
                 <h1 class="hero-h1">우리 아이 태울 차, <em>이 정도는 돼야죠</em></h1>
-                <p class="hero-p">
-                    매일 두 번, 한 시간씩 스팀·습식·연무로 싹 닦습니다.<br>
-                    남양주에서 전국 어디든, <b>톨비는 저희가 냅니다.</b>
-                </p>
+                <p class="hero-p">소독 안 된 차는 배차하지 않습니다.</p>
 
                 <ul class="hero-stats">
                     <li><span class="ic ic-clock" aria-hidden="true"></span><b>24시간</b><span>연중무휴</span></li>
@@ -109,13 +107,9 @@
                 <div class="sec-head rise">
                     <span class="eyebrow">Vehicle</span>
                     <h2 class="sec-title">차부터 보고 <em>정하세요</em></h2>
-                    <p class="sec-desc">
-                        PV5와 9인승 카니발, 두 대로 모십니다.
-                        지하주차장도 들어가고 캐리어 세 개 실어도 자리가 남습니다.
-                    </p>
+                    <p class="sec-desc">PV5와 9인승 카니발, 두 대로 모십니다.</p>
                 </div>
                 <div class="rail rise" id="car-rail"></div>
-                <span class="zoom-hint"><span class="ic ic-zoom" aria-hidden="true"></span>사진을 누르면 크게 보입니다</span>
             </div>
         </section>
 
@@ -127,24 +121,15 @@
                     <h2 class="sec-title">매일 두 번, 한 번에 <em>한 시간</em></h2>
                 </div>
 
-                <blockquote class="claim rise">
-                    <p>실제로 병균과 혹시 모를 진드기·모기들이 있는 펫택시를 타실 건가요.</p>
-                    <p class="lead"><em>저희는 양심을</em> 팔지 않습니다.</p>
-                    <p>매일 1시간씩 두 번 소독과 스팀청소, 습식 청소로 혹시 모를 감염을 예방합니다.</p>
-                </blockquote>
-
                 <div class="rail rise" id="clean-rail"></div>
-                <span class="zoom-hint"><span class="ic ic-zoom" aria-hidden="true"></span>사진을 누르면 크게 보입니다</span>
 
-                <ol class="routine rise">
-                    <li><b>01</b><div><span class="rt">고온 스팀</span><span class="rd">섬유 속까지 살균합니다</span></div></li>
-                    <li><b>02</b><div><span class="rt">습식 물청소</span><span class="rd">털과 오염물을 빨아냅니다</span></div></li>
-                    <li><b>03</b><div><span class="rt">연무 방역</span><span class="rd">손 안 닿는 틈까지 채웁니다</span></div></li>
-                    <li><b>04</b><div><span class="rt">건조 · 환기</span><span class="rd">냄새를 남기지 않습니다</span></div></li>
-                </ol>
-
-                <blockquote class="claim-solo rise">
-                    <p>저희는 소독 방역이 안 된 차들은 배차하지 않습니다.</p>
+                <blockquote class="claim rise">
+                    <div class="claim-body">
+                        <p>실제로 병균과 혹시 모를 진드기·모기들이 있는 펫택시를 타실 건가요.</p>
+                        <p class="lead"><em>저희는 양심을</em> 팔지 않습니다.</p>
+                        <p>매일 1시간씩 두 번 소독과 스팀청소, 습식 청소로 혹시 모를 감염을 예방합니다.</p>
+                        <p class="lead">저희는 소독 방역이 안 된 차들은 <em>배차하지 않습니다.</em></p>
+                    </div>
                 </blockquote>
             </div>
         </section>
@@ -155,14 +140,14 @@
                 <div class="sec-head rise">
                     <span class="eyebrow">Warning</span>
                     <h2 class="sec-title">안 보인다고 <em>없는 게 아닙니다</em></h2>
-                    <p class="sec-desc">털과 습기, 체온이 한꺼번에 모이는 자리가 시트입니다. 진드기가 제일 좋아하는 조건이죠.</p>
                 </div>
 
                 <div class="rail rise" id="germ-rail"></div>
-                <span class="zoom-hint"><span class="ic ic-zoom" aria-hidden="true"></span>사진을 누르면 크게 보입니다</span>
 
-                <blockquote class="germ-claim rise">
-                    <p><em>99프로는 청소를 대충하는</em> 펫택시를 이용하시는 분들은 예약을 삼가해 주시기 바랍니다.</p>
+                <blockquote class="claim claim-warn rise">
+                    <div class="claim-body">
+                        <p class="lead"><em>99프로는 청소를 대충하는</em> 펫택시를 이용하시는 분들은 예약을 삼가해 주시기 바랍니다.</p>
+                    </div>
                 </blockquote>
             </div>
         </section>
@@ -179,32 +164,32 @@
                     <a class="card" href="quote.html">
                         <span class="card-ic" aria-hidden="true"><span class="ic ic-hosp"></span></span>
                         <p class="card-t">병원 이동</p>
-                        <p class="card-d">진료 시간에 맞춰 문 앞까지. 왕복도 한 번에 잡아 드립니다.</p>
+                        <p class="card-d">진료 시간에 맞춰 문 앞까지</p>
                     </a>
                     <a class="card" href="quote.html">
                         <span class="card-ic" aria-hidden="true"><span class="ic ic-groom"></span></span>
                         <p class="card-t">미용 · 호텔 · 유치원</p>
-                        <p class="card-d">맡기고 찾아오는 길, 시간 맞춰 오갑니다.</p>
+                        <p class="card-d">맡기고 찾아오는 길까지</p>
                     </a>
                     <a class="card" href="quote.html">
                         <span class="card-ic" aria-hidden="true"><span class="ic ic-box"></span></span>
                         <p class="card-t">이사 · 장거리</p>
-                        <p class="card-d">이사 당일 아이만 따로. 지방도 톨비 없이 갑니다.</p>
+                        <p class="card-d">지방도 톨비 없이</p>
                     </a>
                     <a class="card" href="quote.html">
                         <span class="card-ic" aria-hidden="true"><span class="ic ic-plane"></span></span>
                         <p class="card-t">공항 · 여행</p>
-                        <p class="card-d">출국·입국 시간에 맞춰 미리 나가 대기합니다.</p>
+                        <p class="card-d">출국·입국 시간에 맞춰</p>
                     </a>
                     <a class="card" href="quote.html">
                         <span class="card-ic" aria-hidden="true"><span class="ic ic-leaf"></span></span>
                         <p class="card-t">장례식장</p>
-                        <p class="card-d">마지막 가는 길, 조용히 끝까지 모시겠습니다.</p>
+                        <p class="card-d">마지막 길, 조용히</p>
                     </a>
                     <a class="card" href="quote.html">
                         <span class="card-ic" aria-hidden="true"><span class="ic ic-home"></span></span>
                         <p class="card-t">보호소</p>
-                        <p class="card-d">구조와 입소, 임시보호 이동도 함께합니다.</p>
+                        <p class="card-d">구조 · 입소 · 임시보호</p>
                     </a>
                 </div>
             </div>
@@ -213,20 +198,16 @@
         <!-- 펫크닉 (부가 서비스) -->
         <section class="sec" id="picnic">
             <div class="wrap">
-                <div class="picnic-split rise">
-                    <div id="picnic-photo"></div>
-                    <div>
-                        <span class="eyebrow">Side Service</span>
-                        <h2 class="sec-title">가는 김에, <em>하루 놀다 올까요</em></h2>
-                        <p class="sec-desc">펫택시 <b>부가 서비스</b>입니다. 차를 그대로 쉼터로 펼쳐 드립니다.</p>
-                        <ul class="picnic-list">
-                            <li><span class="ic ic-check" aria-hidden="true"></span><span><b>운전도 주차도 저희가</b> — 보호자는 아이만 보시면 됩니다</span></li>
-                            <li><span class="ic ic-check" aria-hidden="true"></span><span><b>테마 코스</b> — 댕댕이스쿨 · 감성힐링 · 펫크닉</span></li>
-                            <li><span class="ic ic-check" aria-hidden="true"></span><span><b>보호자 점심 · 음료</b> 챙겨 드립니다</span></li>
-                            <li><span class="ic ic-check" aria-hidden="true"></span><span><b>날씨 보고 코스 조정</b> — 당일 기상에 맞춥니다</span></li>
-                        </ul>
-                    </div>
+                <div class="sec-head rise">
+                    <span class="eyebrow">Side Service</span>
+                    <h2 class="sec-title">가는 김에, <em>하루 놀다 올까요</em></h2>
+                    <p class="sec-desc">펫택시 <b>부가 서비스</b>입니다. 차를 그대로 쉼터로 펼쳐 드립니다.</p>
                 </div>
+                <ul class="picnic-list rise">
+                    <li><span class="ic ic-check" aria-hidden="true"></span>운전도 주차도 저희가</li>
+                    <li><span class="ic ic-check" aria-hidden="true"></span>댕댕이스쿨 · 감성힐링 · 펫크닉 코스</li>
+                    <li><span class="ic ic-check" aria-hidden="true"></span>보호자 점심 · 음료 제공</li>
+                </ul>
             </div>
         </section>
 
@@ -251,7 +232,6 @@
                 <div class="sec-head rise">
                     <span class="eyebrow">Trainer</span>
                     <h2 class="sec-title">겁 많은 아이도 <em>다룰 줄 압니다</em></h2>
-                    <p class="sec-desc">예민한 고양이, 나이 든 노령견. 어떻게 대해야 하는지 아는 행동교정 전문가가 함께합니다.</p>
                 </div>
 
                 <div class="trainer rise">

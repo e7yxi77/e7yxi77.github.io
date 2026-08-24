@@ -61,7 +61,10 @@ favicon.ico
 | `germ-01-tick-swarm.jpg` | 병균 · 피부 위의 진드기 |
 | `germ-02-dustmite.jpg` | 병균 · 집먼지진드기 |
 | `germ-03-tick.jpg` | 병균 · 진드기 확대 |
-| `picnic-01-tailgate.jpg` | 펫크닉 · 차박형 세팅 |
+| `germ-04-mite-red.jpg` | 병균 · 붉은 진드기 |
+| `germ-05-mite-yellow.jpg` | 병균 · 먼지진드기 |
+| `germ-06-spore.jpg` | 병균 · 곰팡이 포자 |
+| `picnic-01-tailgate.jpg` | 차량 · 차박형 피크닉 세팅 |
 | `og-image.jpg` | 카카오톡·네이버로 공유할 때 뜨는 썸네일 (1200 × 630) |
 | `favicon.svg` `favicon-*.png` | 브라우저 탭 아이콘 |
 
@@ -85,7 +88,7 @@ var CAR_PHOTOS = [
 
 > `cap` = 사진 위에 겹쳐 보이는 설명 · `alt` = 사진이 안 뜰 때 대신 나오는 글
 
-목록은 네 종류입니다 — `CAR_PHOTOS`(차량) · `CLEAN_PHOTOS`(소독) · `GERM_PHOTOS`(병균) · `PICNIC_PHOTOS`(펫크닉)
+목록은 세 종류입니다 — `CAR_PHOTOS`(차량) · `CLEAN_PHOTOS`(소독) · `GERM_PHOTOS`(병균)
 
 > **실수로 파일만 지워도 괜찮습니다.** 깨진 이미지 아이콘이 뜨지 않고 그 자리만 조용히 사라집니다.
 

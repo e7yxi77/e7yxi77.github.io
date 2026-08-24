@@ -267,13 +267,12 @@
 
     if (typeof CAR_PHOTOS !== 'undefined') { GROUPS.car = CAR_PHOTOS; }
     if (typeof CLEAN_PHOTOS !== 'undefined') { GROUPS.clean = CLEAN_PHOTOS; }
-    if (typeof PICNIC_PHOTOS !== 'undefined') { GROUPS.picnic = PICNIC_PHOTOS; }
     if (typeof GERM_PHOTOS !== 'undefined') { GROUPS.germ = GERM_PHOTOS; }
 
     var carRail = $('car-rail');
     if (carRail && GROUPS.car) {
         carRail.innerHTML = GROUPS.car.map(function (it, i) {
-            return '<div class="car-card">' + shotHTML(it, 'car', i) + '</div>';
+            return '<div class="photo-card">' + shotHTML(it, 'car', i) + '</div>';
         }).join('');
         wireShots(carRail);
     }
@@ -281,7 +280,7 @@
     var cleanRail = $('clean-rail');
     if (cleanRail && GROUPS.clean) {
         cleanRail.innerHTML = GROUPS.clean.map(function (it, i) {
-            return '<div class="clean-card">' + shotHTML(it, 'clean', i) + '</div>';
+            return '<div class="photo-card">' + shotHTML(it, 'clean', i) + '</div>';
         }).join('');
         wireShots(cleanRail);
     }
@@ -289,18 +288,11 @@
     var germRail = $('germ-rail');
     if (germRail && GROUPS.germ) {
         germRail.innerHTML = GROUPS.germ.map(function (it, i) {
-            return '<div class="germ-card">' + shotHTML(it, 'germ', i) + '</div>';
+            return '<div class="photo-card">' + shotHTML(it, 'germ', i) + '</div>';
         }).join('');
         wireShots(germRail);
     }
 
-    var picnicBox = $('picnic-photo');
-    if (picnicBox && GROUPS.picnic) {
-        picnicBox.innerHTML = GROUPS.picnic.map(function (it, i) {
-            return shotHTML(it, 'picnic', i);
-        }).join('');
-        wireShots(picnicBox);
-    }
 
     /* 페이지에 직접 적어 둔 사진에도 확대를 붙입니다 */
     wireShots(document);

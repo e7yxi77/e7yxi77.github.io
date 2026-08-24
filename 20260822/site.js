@@ -24,7 +24,7 @@ var BRANCHES = [
    - 사진을 바꾸려면 : images 폴더에 같은 이름으로 덮어쓰기 (여기 수정 불필요)
    - 사진을 빼려면   : 아래 줄 앞에 // 를 붙이거나 줄을 지우기
    - 사진을 넣으려면 : images 폴더에 파일을 넣고 아래에 한 줄 추가
-   cap = 사진 아래에 보이는 설명글
+   cap = 사진 위에 겹쳐 보이는 설명글
    ------------------------------------------------------------------ */
 
 var CAR_PHOTOS = [
@@ -43,29 +43,24 @@ var CAR_PHOTOS = [
    ------------------------------------------------------------------ */
 
 var CLEAN_PHOTOS = [
-    { src: 'images/clean-01-steam.jpg',     cap: '고온 스팀 살균',   sub: '섬유 깊은 곳까지', alt: '스팀 청소기로 차량 시트를 살균하는 모습' },
-    { src: 'images/clean-02-wet-vacuum.jpg', cap: '습식 물청소',      sub: '오염물째 흡입',    alt: '습식 청소기로 시트를 물청소하는 모습' },
-    { src: 'images/clean-03-fog-seat.jpg',   cap: '연무 방역',        sub: '좌석 구석까지',    alt: '연무 소독기로 좌석을 방역하는 모습' },
-    { src: 'images/clean-04-fog-cabin.jpg',  cap: '실내 전체 방역',   sub: '공기까지 소독',    alt: '차량 실내 전체를 연무 소독하는 모습' }
+    { src: 'images/clean-01-steam.jpg',      cap: '고온 스팀 살균', alt: '스팀 청소기로 차량 시트를 살균하는 모습' },
+    { src: 'images/clean-02-wet-vacuum.jpg', cap: '습식 물청소',    alt: '습식 청소기로 시트를 물청소하는 모습' },
+    { src: 'images/clean-03-fog-seat.jpg',   cap: '연무 방역',    alt: '연무 소독기로 좌석을 방역하는 모습' },
+    { src: 'images/clean-04-fog-cabin.jpg',  cap: '실내 전체 방역',    alt: '차량 실내 전체를 연무 소독하는 모습' }
 ];
 
 
-/* ------------------------------------------------------------------
-   4. 피크닉 사진
-   ------------------------------------------------------------------ */
-
-var PICNIC_PHOTOS = [
-    { src: 'images/picnic-01-tailgate.jpg', cap: '차박형 피크닉 세팅', alt: '테일게이트를 열고 야외 테이블을 편 피크닉 세팅' }
-];
-
 
 /* ------------------------------------------------------------------
-   5. 병균 · 진드기 사진   (규칙은 위와 같습니다)
+   4. 병균 · 진드기 사진   (규칙은 위와 같습니다)
    첫 번째가 큰 사진, 나머지가 아래 작은 사진으로 들어갑니다.
    ------------------------------------------------------------------ */
 
 var GERM_PHOTOS = [
-    { src: 'images/germ-01-tick-swarm.jpg', cap: '피부 위의 진드기',  sub: '실제 사진',     alt: '피부 위를 기어다니는 진드기 무리' },
-    { src: 'images/germ-02-dustmite.jpg',   cap: '집먼지진드기',      sub: '현미경 확대',   alt: '현미경으로 확대한 집먼지진드기' },
-    { src: 'images/germ-03-tick.jpg',       cap: '진드기',            sub: '현미경 확대',   alt: '현미경으로 확대한 진드기' }
+    { src: 'images/germ-01-tick-swarm.jpg',   cap: '피부 위의 진드기',   alt: '피부 위를 기어다니는 진드기 무리' },
+    { src: 'images/germ-02-dustmite.jpg',     cap: '집먼지진드기', alt: '현미경으로 확대한 집먼지진드기' },
+    { src: 'images/germ-03-tick.jpg',         cap: '진드기', alt: '현미경으로 확대한 진드기' },
+    { src: 'images/germ-04-mite-red.jpg',     cap: '붉은 진드기',   alt: '잎 위의 붉은 진드기' },
+    { src: 'images/germ-05-mite-yellow.jpg',  cap: '먼지진드기', alt: '현미경으로 확대한 먼지진드기' },
+    { src: 'images/germ-06-spore.jpg',        cap: '곰팡이 포자',   alt: '표면에 번식한 곰팡이 포자' }
 ];
