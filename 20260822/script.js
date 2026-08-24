@@ -268,6 +268,7 @@
     if (typeof CAR_PHOTOS !== 'undefined') { GROUPS.car = CAR_PHOTOS; }
     if (typeof CLEAN_PHOTOS !== 'undefined') { GROUPS.clean = CLEAN_PHOTOS; }
     if (typeof GERM_PHOTOS !== 'undefined') { GROUPS.germ = GERM_PHOTOS; }
+    if (typeof PICNIC_PHOTOS !== 'undefined') { GROUPS.picnic = PICNIC_PHOTOS; }
 
     var carRail = $('car-rail');
     if (carRail && GROUPS.car) {
@@ -283,6 +284,14 @@
             return '<div class="photo-card">' + shotHTML(it, 'clean', i) + '</div>';
         }).join('');
         wireShots(cleanRail);
+    }
+
+    var picnicGrid = $('picnic-grid');
+    if (picnicGrid && GROUPS.picnic) {
+        picnicGrid.innerHTML = GROUPS.picnic.map(function (it, i) {
+            return shotHTML(it, 'picnic', i);
+        }).join('');
+        wireShots(picnicGrid);
     }
 
     var germRail = $('germ-rail');
