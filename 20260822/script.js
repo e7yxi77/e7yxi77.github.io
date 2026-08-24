@@ -1,105 +1,576 @@
 /* ==================================================================
-   하루펫택시 — 인터랙션
+   편한 펫택시&피크닉 — 동작
+
    외부 라이브러리 없음 · 백엔드 없음 · 순수 자바스크립트
+   내용을 바꾸려면 site.js 와 reviews.js 를 고치세요. 이 파일은 동작만 담습니다.
    ================================================================== */
 
 (function () {
     'use strict';
 
-    /* ================================================================
-       설정 — 여기 두 곳만 바꾸면 후기와 리뷰 작성 링크가 갱신됩니다.
-       ================================================================ */
-
-    /* "리뷰 추가하기" 버튼이 여는 주소.
-       네이버 플레이스 리뷰 페이지가 준비되면 그 주소로 바꿔주세요. */
-    var REVIEW_WRITE_URL = 'https://talk.naver.com/ct/w5xpj1';
-
-    var REVIEWS = [
-        {
-            name: '김*진', score: 5, tag: '병원 이동', img: 'images/review-1.jpg',
-            text: '기사님이 정말 친절하시고 우리 강아지도 편안해했어요! 운전도 안전하게 해주셔서 너무 감사했습니다.'
-        },
-        {
-            name: '박*영', score: 5, tag: '지방 장거리', img: 'images/review-2.jpg',
-            text: '장거리 이동이 걱정됐는데 하루펫 덕분에 편안하게 다녀왔어요! 다음에도 또 이용할게요.'
-        },
-        {
-            name: '이*민', score: 5, tag: '고양이 이동', img: 'images/review-3.jpg',
-            text: '고양이가 예민한데도 불구하고 조용하고 안전하게 이동해주셔서 너무 만족합니다. 정말 믿고 맡길 수 있어요!'
-        },
-        {
-            name: '최*훈', score: 5, tag: '왕복 이용', img: 'images/review-4.jpg',
-            text: '예약부터 이용까지 모두 매우 만족스러웠습니다. 친절함과 세심함에 감동했어요! 강력 추천합니다.'
-        }
-    ];
-
+    /* ---------------------------------------------------------------- */
+    /* 도우미                                                            */
     /* ---------------------------------------------------------------- */
 
-    function $(id) { return document.getElementById(id); }
+    function $(id)  { return document.getElementById(id); }
     function all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
     function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
     function pad2(n) { return (n < 10 ? '0' : '') + n; }
-    function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-    function starRow(n) {
-        var s = '';
-        for (var i = 0; i < 5; i++) { s += i < n ? '★' : '☆'; }
-        return s;
+    function esc(t) {
+        return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
+    function telDigits(t) { return String(t).replace(/[^0-9]/g, ''); }
 
-    var mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    /* 모바일인지 — 전화 걸기·문자 보내기가 실제로 되는 환경인지 판단합니다 */
+    var isMobile = /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                   (window.matchMedia('(pointer: coarse)').matches &&
+                    window.matchMedia('(max-width: 1024px)').matches);
+    document.body.classList.toggle('is-desktop', !isMobile);
+
 
     /* ================================================================
-       1. 후기 — 홈은 가로 카드, 후기 페이지는 목록으로 같은 데이터를 씁니다.
+       1. 사진이 없어도 화면이 깨지지 않게
+          images 폴더에서 파일을 지워도 빈 칸만 사라지고 나머지는 그대로입니다.
        ================================================================ */
 
-    var rail = $('review-rail');
-    if (rail) {
-        rail.innerHTML = REVIEWS.map(function (r) {
-            return '<article class="rv">' +
-                '<div class="rv-top"><span class="stars" aria-label="별점 5점 만점에 ' + r.score + '점">' +
-                    starRow(r.score) + '</span><span class="rv-sc">' + r.score.toFixed(1) + '</span></div>' +
-                '<p class="rv-txt">' + esc(r.text) + '</p>' +
-                '<p class="rv-by">' + esc(r.name) + ' 고객님<span class="rv-tag">' + esc(r.tag) + '</span></p>' +
-            '</article>';
-        }).join('');
+    function guard(img, onGone) {
+        img.addEventListener('error', function () {
+            var box = onGone || img.closest('.car-card, .germ-cell, figure, .shot');
+            if (box && box.parentNode) { box.parentNode.removeChild(box); }
+        });
     }
 
-    var rvList = $('rv-list');
-    if (rvList) {
-        rvList.innerHTML = REVIEWS.map(function (r) {
-            return '<article class="rv-item">' +
-                '<img src="' + r.img + '" alt="" width="96" height="96" loading="lazy">' +
-                '<div>' +
-                    '<div class="rv-top"><span class="stars" aria-label="별점 5점 만점에 ' + r.score + '점">' +
-                        starRow(r.score) + '</span><span class="rv-sc">' + r.score.toFixed(1) + '</span></div>' +
-                    '<p class="rv-txt">' + esc(r.text) + '</p>' +
-                    '<p class="rv-by">' + esc(r.name) + ' 고객님<span class="rv-tag">' + esc(r.tag) + '</span></p>' +
-                '</div>' +
-            '</article>';
-        }).join('');
 
-        var avg = REVIEWS.reduce(function (a, r) { return a + r.score; }, 0) / REVIEWS.length;
-        if ($('rv-avg')) { $('rv-avg').textContent = avg.toFixed(1); }
-        if ($('rv-count')) { $('rv-count').textContent = REVIEWS.length; }
+    /* ================================================================
+       2. 사진 확대 (라이트박스)
+          핀치 줌 · 더블탭 줌 · 좌우 스와이프 · 아래로 밀어 닫기 · 키보드
+       ================================================================ */
 
-        /* 별점 분포 막대 */
-        var bars = $('rv-bars');
-        if (bars) {
-            bars.innerHTML = [5, 4, 3, 2, 1].map(function (n) {
-                var c = REVIEWS.filter(function (r) { return r.score === n; }).length;
-                var pct = REVIEWS.length ? Math.round(c / REVIEWS.length * 100) : 0;
-                return '<div class="bar-row"><span>' + n + '점</span>' +
-                       '<span class="bar"><i style="width:' + pct + '%"></i></span>' +
-                       '<span>' + c + '건</span></div>';
-            }).join('');
+    var GROUPS = {};          /* { 그룹이름: [ {src, cap, sub, alt}, ... ] } */
+
+    var lb, lbImg, lbCount, lbCapT, lbCapS, lbStage;
+    var lbList = [], lbIdx = 0, lbLast = null;
+    var sc = 1, tx = 0, ty = 0;                 /* 확대율 · 이동 */
+    var startD = 0, startSc = 1, startX = 0, startY = 0, baseTx = 0, baseTy = 0;
+    var dragging = false, pinching = false, moved = 0, lastTap = 0;
+
+    function buildLightbox() {
+        lb = document.createElement('div');
+        lb.className = 'lb';
+        lb.setAttribute('role', 'dialog');
+        lb.setAttribute('aria-modal', 'true');
+        lb.setAttribute('aria-label', '사진 크게 보기');
+        lb.innerHTML =
+            '<div class="lb-stage"><img class="lb-img" alt=""></div>' +
+            '<div class="lb-bar">' +
+                '<span class="lb-count"></span><span class="lb-sp"></span>' +
+                '<button class="lb-btn" type="button" data-lb-close aria-label="닫기">' +
+                    '<span class="ic ic-close" aria-hidden="true"></span></button>' +
+            '</div>' +
+            '<button class="lb-nav lb-prev" type="button" data-lb-prev aria-label="이전 사진">' +
+                '<span class="ic ic-arrow" aria-hidden="true"></span></button>' +
+            '<button class="lb-nav lb-next" type="button" data-lb-next aria-label="다음 사진">' +
+                '<span class="ic ic-arrow" aria-hidden="true"></span></button>' +
+            '<figcaption class="lb-cap"><b></b><span></span></figcaption>';
+        document.body.appendChild(lb);
+
+        lbStage = lb.querySelector('.lb-stage');
+        lbImg   = lb.querySelector('.lb-img');
+        lbCount = lb.querySelector('.lb-count');
+        lbCapT  = lb.querySelector('.lb-cap b');
+        lbCapS  = lb.querySelector('.lb-cap span');
+
+        lb.querySelector('[data-lb-close]').addEventListener('click', closeLb);
+        lb.querySelector('[data-lb-prev]').addEventListener('click', function () { go(-1); });
+        lb.querySelector('[data-lb-next]').addEventListener('click', function () { go(1); });
+
+        /* 배경을 누르면 닫힙니다 (사진 자체를 누른 건 제외) */
+        lbStage.addEventListener('click', function (e) {
+            if (e.target === lbStage && sc === 1) { closeLb(); }
+        });
+
+        bindGestures();
+    }
+
+    function apply(anim) {
+        lbImg.style.transition = anim && !reduceMotion.matches ? 'transform .25s cubic-bezier(.22,1,.36,1)' : 'none';
+        lbImg.style.transform = 'translate(-50%,-50%) translate(' + tx + 'px,' + ty + 'px) scale(' + sc + ')';
+    }
+
+    function reset(anim) { sc = 1; tx = 0; ty = 0; apply(anim); }
+
+    function show(i) {
+        lbIdx = (i + lbList.length) % lbList.length;
+        var it = lbList[lbIdx];
+        lbImg.src = it.src;
+        lbImg.alt = it.alt || it.cap || '';
+        lbCapT.textContent = it.cap || '';
+        lbCapS.textContent = it.sub || '';
+        lbCount.textContent = (lbIdx + 1) + ' / ' + lbList.length;
+        var many = lbList.length > 1;
+        lb.querySelector('.lb-prev').style.display = many ? '' : 'none';
+        lb.querySelector('.lb-next').style.display = many ? '' : 'none';
+        reset(false);
+    }
+
+    function go(step) { if (lbList.length > 1) { show(lbIdx + step); } }
+
+    function openLb(group, index, opener) {
+        if (!lb) { buildLightbox(); }
+        lbList = GROUPS[group] || [];
+        if (!lbList.length) { return; }
+        lbLast = opener || null;
+        lb.classList.add('is-on');
+        document.body.classList.add('lb-open');
+        show(index || 0);
+        lb.querySelector('[data-lb-close]').focus();
+        document.addEventListener('keydown', onKey);
+    }
+
+    function closeLb() {
+        lb.classList.remove('is-on');
+        document.body.classList.remove('lb-open');
+        document.removeEventListener('keydown', onKey);
+        if (lbLast) { lbLast.focus(); lbLast = null; }
+    }
+
+    function onKey(e) {
+        if (e.key === 'Escape')     { closeLb(); }
+        if (e.key === 'ArrowLeft')  { go(-1); }
+        if (e.key === 'ArrowRight') { go(1); }
+        /* 포커스가 밖으로 나가지 않게 잡아 둡니다 */
+        if (e.key === 'Tab') {
+            var f = all('button', lb).filter(function (b) { return b.offsetParent !== null; });
+            if (!f.length) { return; }
+            var first = f[0], last = f[f.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
         }
     }
 
-    var writeBtn = $('rv-write');
-    if (writeBtn) { writeBtn.href = REVIEW_WRITE_URL; }
+    function dist(t) {
+        var dx = t[0].clientX - t[1].clientX, dy = t[0].clientY - t[1].clientY;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    function bindGestures() {
+        /* ── 터치 ── */
+        lbStage.addEventListener('touchstart', function (e) {
+            if (e.touches.length === 2) {
+                pinching = true; dragging = false;
+                startD = dist(e.touches); startSc = sc;
+            } else if (e.touches.length === 1) {
+                dragging = true; pinching = false; moved = 0;
+                startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+                baseTx = tx; baseTy = ty;
+            }
+        }, { passive: true });
+
+        lbStage.addEventListener('touchmove', function (e) {
+            if (pinching && e.touches.length === 2) {
+                e.preventDefault();
+                sc = clamp(startSc * (dist(e.touches) / startD), 1, 5);
+                if (sc === 1) { tx = 0; ty = 0; }
+                apply(false);
+            } else if (dragging && e.touches.length === 1) {
+                var dx = e.touches[0].clientX - startX;
+                var dy = e.touches[0].clientY - startY;
+                moved = Math.abs(dx) + Math.abs(dy);
+                if (sc > 1) {
+                    e.preventDefault();
+                    tx = baseTx + dx; ty = baseTy + dy;
+                    apply(false);
+                }
+            }
+        }, { passive: false });
+
+        lbStage.addEventListener('touchend', function (e) {
+            if (pinching && e.touches.length < 2) {
+                pinching = false;
+                if (sc < 1.08) { reset(true); }
+            }
+            if (dragging && !e.touches.length) {
+                dragging = false;
+                var dx = (e.changedTouches[0] || {}).clientX - startX;
+                var dy = (e.changedTouches[0] || {}).clientY - startY;
+
+                if (sc === 1) {
+                    /* 확대 안 한 상태에서만 넘기기·닫기가 동작합니다 */
+                    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy)) { go(dx < 0 ? 1 : -1); }
+                    else if (dy > 90) { closeLb(); }
+                }
+                /* 더블탭 확대 */
+                if (moved < 10) {
+                    var now = Date.now();
+                    if (now - lastTap < 300) {
+                        if (sc > 1) { reset(true); } else { sc = 2.4; apply(true); }
+                        lastTap = 0;
+                    } else { lastTap = now; }
+                }
+            }
+        }, { passive: true });
+
+        /* ── 마우스 (데스크톱) ── */
+        lbImg.addEventListener('dblclick', function () {
+            if (sc > 1) { reset(true); } else { sc = 2.2; apply(true); }
+        });
+        lbImg.addEventListener('mousedown', function (e) {
+            if (sc <= 1) { return; }
+            e.preventDefault();
+            dragging = true; startX = e.clientX; startY = e.clientY; baseTx = tx; baseTy = ty;
+            lbImg.classList.add('is-drag');
+        });
+        window.addEventListener('mousemove', function (e) {
+            if (!dragging || sc <= 1) { return; }
+            tx = baseTx + (e.clientX - startX); ty = baseTy + (e.clientY - startY); apply(false);
+        });
+        window.addEventListener('mouseup', function () {
+            dragging = false; lbImg.classList.remove('is-drag');
+        });
+        lbStage.addEventListener('wheel', function (e) {
+            e.preventDefault();
+            sc = clamp(sc * (e.deltaY < 0 ? 1.12 : 0.89), 1, 5);
+            if (sc === 1) { tx = 0; ty = 0; }
+            apply(false);
+        }, { passive: false });
+    }
+
+    /* 사진 버튼 하나를 만듭니다 */
+    function shotHTML(it, group, i, ratioClass) {
+        return '<button class="shot ' + (ratioClass || '') + '" type="button" ' +
+                    'data-lb="' + esc(group) + '" data-i="' + i + '" ' +
+                    'aria-label="' + esc(it.cap || '사진') + ' 크게 보기">' +
+                '<img src="' + esc(it.src) + '" alt="' + esc(it.alt || it.cap || '') + '" loading="lazy">' +
+                (it.cap ? '<span class="shot-cap"><b>' + esc(it.cap) + '</b>' +
+                          (it.sub ? '<span>' + esc(it.sub) + '</span>' : '') + '</span>' : '') +
+            '</button>';
+    }
+
+    /* 만들어 둔 사진 버튼에 확대 동작을 붙입니다 */
+    function wireShots(root) {
+        all('.shot[data-lb]', root).forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                openLb(btn.getAttribute('data-lb'), parseInt(btn.getAttribute('data-i'), 10), btn);
+            });
+            var img = btn.querySelector('img');
+            if (img) { guard(img); }
+        });
+    }
+
 
     /* ================================================================
-       2. 카테고리 탭 — 지금 보고 있는 구간을 표시합니다.
+       3. 갤러리 — site.js 의 목록을 그대로 그립니다
+       ================================================================ */
+
+    if (typeof CAR_PHOTOS !== 'undefined') { GROUPS.car = CAR_PHOTOS; }
+    if (typeof CLEAN_PHOTOS !== 'undefined') { GROUPS.clean = CLEAN_PHOTOS; }
+    if (typeof PICNIC_PHOTOS !== 'undefined') { GROUPS.picnic = PICNIC_PHOTOS; }
+    if (typeof GERM_PHOTOS !== 'undefined') { GROUPS.germ = GERM_PHOTOS; }
+
+    var carRail = $('car-rail');
+    if (carRail && GROUPS.car) {
+        carRail.innerHTML = GROUPS.car.map(function (it, i) {
+            return '<div class="car-card">' + shotHTML(it, 'car', i) + '</div>';
+        }).join('');
+        wireShots(carRail);
+    }
+
+    var cleanRail = $('clean-rail');
+    if (cleanRail && GROUPS.clean) {
+        cleanRail.innerHTML = GROUPS.clean.map(function (it, i) {
+            return '<div class="clean-card">' + shotHTML(it, 'clean', i) + '</div>';
+        }).join('');
+        wireShots(cleanRail);
+    }
+
+    var germRail = $('germ-rail');
+    if (germRail && GROUPS.germ) {
+        germRail.innerHTML = GROUPS.germ.map(function (it, i) {
+            return '<div class="germ-card">' + shotHTML(it, 'germ', i) + '</div>';
+        }).join('');
+        wireShots(germRail);
+    }
+
+    var picnicBox = $('picnic-photo');
+    if (picnicBox && GROUPS.picnic) {
+        picnicBox.innerHTML = GROUPS.picnic.map(function (it, i) {
+            return shotHTML(it, 'picnic', i);
+        }).join('');
+        wireShots(picnicBox);
+    }
+
+    /* 페이지에 직접 적어 둔 사진에도 확대를 붙입니다 */
+    wireShots(document);
+
+
+    /* ================================================================
+       4. 이용후기 — 네이버 플레이스 실제 후기
+          네이버 반려동물 분류에는 별점이 없어 후기 글 자체를 보여 줍니다.
+       ================================================================ */
+
+    if (typeof REVIEWS !== 'undefined' && REVIEWS.length) {
+
+        var repeatN = REVIEWS.filter(function (r) { return r.visit >= 2; }).length;
+
+        var sumBox = $('rv-sum');
+        if (sumBox) {
+            sumBox.innerHTML = '네이버 플레이스에 남은 <b>후기 ' + REVIEWS.length + '건</b>' +
+                               ' · 재방문 고객 <b>' + repeatN + '명</b>';
+        }
+
+        function byline(r) {
+            return '<p class="rv-by"><b>' + esc(r.name) + '</b> 고객님 · ' + esc(r.date) +
+                   (r.visit >= 2 ? ' · 재방문 ' + r.visit + '회' : '') + '</p>';
+        }
+
+        var rvRail = $('review-rail');
+        if (rvRail) {
+            rvRail.innerHTML = REVIEWS.slice(0, 8).map(function (r) {
+                return '<article class="rv"><p class="rv-txt">' + esc(r.text) + '</p>' + byline(r) + '</article>';
+            }).join('');
+        }
+
+        var rvList = $('rv-list');
+        if (rvList) {
+            rvList.innerHTML = REVIEWS.map(function (r) {
+                return '<article class="rv-item">' +
+                    '<p class="rv-txt">' + esc(r.text) + '</p>' + byline(r) +
+                    (r.reply ? '<div class="rv-reply"><b>사장님 답글</b>' + esc(r.reply) + '</div>' : '') +
+                '</article>';
+            }).join('');
+        }
+
+        var rvCount = $('rv-count');
+        if (rvCount) { rvCount.textContent = REVIEWS.length; }
+    }
+
+
+    /* ================================================================
+       4-2. 가로 레일 — 손가락으로도, 마우스로도 넘길 수 있게
+            데스크톱에서는 끌어서 스크롤 + 좌우 화살표를 붙입니다.
+       ================================================================ */
+
+    all('.rail, .cards').forEach(function (rail) {
+        if (!rail.children.length) { return; }
+
+        /* ── 마우스로 끌어서 스크롤 ── */
+        var down = false, sx = 0, sl = 0, dragged = false;
+
+        rail.classList.add('is-grab');
+
+        rail.addEventListener('mousedown', function (e) {
+            if (e.button !== 0) { return; }
+            down = true; dragged = false;
+            sx = e.clientX; sl = rail.scrollLeft;
+            e.preventDefault();
+        });
+
+        window.addEventListener('mousemove', function (e) {
+            if (!down) { return; }
+            var dx = e.clientX - sx;
+            if (!dragged && Math.abs(dx) > 5) { dragged = true; rail.classList.add('is-grabbing'); }
+            if (dragged) { rail.scrollLeft = sl - dx; }
+        });
+
+        window.addEventListener('mouseup', function () {
+            if (!down) { return; }
+            down = false;
+            rail.classList.remove('is-grabbing');
+            /* 끌었다면 바로 뒤따라오는 클릭(사진 확대)을 한 번 막습니다 */
+            if (dragged) {
+                var kill = function (ev) { ev.stopPropagation(); ev.preventDefault(); };
+                rail.addEventListener('click', kill, { capture: true, once: true });
+                window.setTimeout(function () { rail.removeEventListener('click', kill, true); }, 0);
+            }
+        });
+
+        /* ── 좌우 화살표 ── */
+        var box = document.createElement('div');
+        box.className = 'rail-box';
+        rail.parentNode.insertBefore(box, rail);
+        box.appendChild(rail);
+        box.insertAdjacentHTML('beforeend',
+            '<button class="rail-btn rail-prev" type="button" aria-label="이전으로">' +
+                '<span class="ic ic-arrow" aria-hidden="true"></span></button>' +
+            '<button class="rail-btn rail-next" type="button" aria-label="다음으로">' +
+                '<span class="ic ic-arrow" aria-hidden="true"></span></button>');
+
+        var prev = box.querySelector('.rail-prev');
+        var next = box.querySelector('.rail-next');
+
+        function step() {
+            var first = rail.children[0];
+            return first ? first.getBoundingClientRect().width + 14 : rail.clientWidth * .8;
+        }
+        function slide(dir) {
+            rail.scrollBy({ left: dir * step(), behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+        }
+        function paint() {
+            var max = rail.scrollWidth - rail.clientWidth;
+            prev.disabled = rail.scrollLeft <= 2;
+            next.disabled = rail.scrollLeft >= max - 2;
+            var none = max <= 2;
+            prev.style.visibility = none ? 'hidden' : '';
+            next.style.visibility = none ? 'hidden' : '';
+        }
+
+        prev.addEventListener('click', function () { slide(-1); });
+        next.addEventListener('click', function () { slide(1); });
+        rail.addEventListener('scroll', paint, { passive: true });
+        window.addEventListener('resize', paint);
+        paint();
+        window.setTimeout(paint, 300);   /* 사진이 로드된 뒤 다시 계산 */
+    });
+
+
+    /* ================================================================
+       5. 전화 · 문자 상담 — 영업점 선택 시트
+          데스크톱에서는 전화 걸기가 안 되므로 안내 문구를 띄우고,
+          번호를 눌러 복사할 수 있게 합니다.
+       ================================================================ */
+
+    var sheet, sheetBack, sheetT, sheetD, sheetList, sheetLast = null;
+
+    function buildSheet() {
+        sheetBack = document.createElement('div');
+        sheetBack.className = 'sheet-back';
+        document.body.appendChild(sheetBack);
+
+        sheet = document.createElement('div');
+        sheet.className = 'sheet';
+        sheet.setAttribute('role', 'dialog');
+        sheet.setAttribute('aria-modal', 'true');
+        sheet.innerHTML =
+            '<div class="sheet-grip" aria-hidden="true"></div>' +
+            '<p class="sheet-t"></p>' +
+            '<p class="sheet-d"></p>' +
+            '<div class="sheet-note">' +
+                '<span class="ic ic-phone" aria-hidden="true" style="margin-top:2px"></span>' +
+                '<span><b>모바일 환경에서만 이용 가능한 기능입니다.</b><br>' +
+                'PC 에서는 번호를 눌러 복사한 뒤 휴대폰으로 걸어 주세요.</span>' +
+            '</div>' +
+            '<div class="branch"></div>';
+        document.body.appendChild(sheet);
+
+        sheetT = sheet.querySelector('.sheet-t');
+        sheetD = sheet.querySelector('.sheet-d');
+        sheetList = sheet.querySelector('.branch');
+        sheetBack.addEventListener('click', closeSheet);
+        sheet.setAttribute('aria-labelledby', '');
+    }
+
+    function openSheet(mode) {
+        if (typeof BRANCHES === 'undefined' || !BRANCHES.length) { return; }
+        if (!sheet) { buildSheet(); }
+
+        var sms = mode === 'sms';
+        sheetT.textContent = sms ? '어디로 문자 보낼까요?' : '어디로 전화 걸까요?';
+        sheetD.textContent = sms
+            ? '운행 중에는 전화를 못 받을 수 있습니다. 문자를 남겨 주시면 운행이 끝나는 대로 답변드립니다.'
+            : '24시간 연중무휴로 상담해 드립니다. 가까운 영업점을 골라 주세요.';
+
+        sheetList.innerHTML = BRANCHES.map(function (b) {
+            var href = (sms ? 'sms:' : 'tel:') + telDigits(b.tel);
+            var inner =
+                '<span class="branch-ic" aria-hidden="true"><span class="ic ' + (sms ? 'ic-sms' : 'ic-phone') + '"></span></span>' +
+                '<span class="branch-b">' +
+                    '<span class="branch-n">' + esc(b.name) +
+                        (b.main ? '<span class="pill">대표</span>' : '') + '</span>' +
+                    '<span class="branch-d">' + esc(b.desc || '') + '</span>' +
+                    '<span class="branch-tel">' + esc(b.tel) + '</span>' +
+                '</span>' +
+                '<span class="ic ic-arrow" aria-hidden="true"></span>';
+
+            /* 모바일이면 바로 연결, 데스크톱이면 복사 버튼 */
+            return isMobile
+                ? '<a class="branch-item' + (b.main ? ' is-main' : '') + '" href="' + href + '">' + inner + '</a>'
+                : '<button class="branch-item' + (b.main ? ' is-main' : '') + '" type="button" ' +
+                       'data-copy="' + esc(b.tel) + '">' + inner + '</button>';
+        }).join('');
+
+        /* 데스크톱 — 누르면 번호를 복사해 줍니다 */
+        all('[data-copy]', sheetList).forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var tel = btn.getAttribute('data-copy');
+                var label = btn.querySelector('.branch-tel');
+                copyText(tel, function (ok) {
+                    var old = label.textContent;
+                    label.textContent = ok ? '복사했습니다 · ' + old : old;
+                    window.setTimeout(function () { label.textContent = old; }, 1800);
+                });
+            });
+        });
+
+        sheetLast = document.activeElement;
+        sheetBack.classList.add('is-on');
+        sheet.classList.add('is-on');
+        document.body.classList.add('lb-open');
+        var first = sheetList.querySelector('.branch-item');
+        if (first) { first.focus(); }
+        document.addEventListener('keydown', onSheetKey);
+    }
+
+    function closeSheet() {
+        if (!sheet) { return; }
+        sheetBack.classList.remove('is-on');
+        sheet.classList.remove('is-on');
+        document.body.classList.remove('lb-open');
+        document.removeEventListener('keydown', onSheetKey);
+        if (sheetLast && sheetLast.focus) { sheetLast.focus(); sheetLast = null; }
+    }
+
+    function onSheetKey(e) {
+        if (e.key === 'Escape') { closeSheet(); return; }
+        if (e.key !== 'Tab') { return; }
+        var f = all('a, button', sheet).filter(function (b) { return b.offsetParent !== null; });
+        if (!f.length) { return; }
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+
+    all('[data-call]').forEach(function (b) {
+        b.addEventListener('click', function () { openSheet('tel'); });
+    });
+
+    /* 문자 링크 — 데스크톱에서는 시트를 대신 띄웁니다 */
+    all('a[href^="sms:"]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+            if (!isMobile) { e.preventDefault(); openSheet('sms'); }
+        });
+    });
+
+
+    /* ================================================================
+       6. 복사 도우미
+       ================================================================ */
+
+    function copyText(text, done) {
+        function fallback() {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+            document.body.appendChild(ta);
+            ta.select();
+            ta.setSelectionRange(0, text.length);
+            var ok = false;
+            try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+            document.body.removeChild(ta);
+            if (!ok) { window.prompt('아래 내용을 복사해 주세요', text); }
+            done(ok);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function () { done(true); }, fallback);
+        } else { fallback(); }
+    }
+
+
+    /* ================================================================
+       7. 카테고리 탭 — 지금 보고 있는 구간을 표시합니다
        ================================================================ */
 
     var tabBox = $('tabs');
@@ -111,11 +582,10 @@
 
         function markTab(i) {
             tabs.forEach(function (t, k) { t.classList.toggle('is-on', k === i); });
-            /* 활성 탭이 가로 스크롤 밖에 있으면 보이도록 당겨 옵니다. */
             var el = tabs[i];
             if (el && tabBox.scrollWidth > tabBox.clientWidth) {
                 var left = el.offsetLeft - (tabBox.clientWidth - el.offsetWidth) / 2;
-                tabBox.scrollTo({ left: Math.max(0, left), behavior: mqReduce.matches ? 'auto' : 'smooth' });
+                tabBox.scrollTo({ left: Math.max(0, left), behavior: reduceMotion.matches ? 'auto' : 'smooth' });
             }
         }
 
@@ -135,8 +605,9 @@
         }
     }
 
+
     /* ================================================================
-       3. 등장 애니메이션
+       8. 등장 애니메이션
        ================================================================ */
 
     var rises = all('.rise');
@@ -146,209 +617,69 @@
                 entries.forEach(function (e) {
                     if (e.isIntersecting) { e.target.classList.add('is-on'); rio.unobserve(e.target); }
                 });
-            }, { threshold: .08, rootMargin: '0px 0px -40px 0px' });
+            }, { threshold: .06, rootMargin: '0px 0px -40px 0px' });
             rises.forEach(function (el) { rio.observe(el); });
         } else {
             rises.forEach(function (el) { el.classList.add('is-on'); });
         }
     }
 
+
     /* ================================================================
-       4. 견적 요청서 — 서버로 보내지 않고 브라우저 안에서만 처리합니다.
+       9. 네비게이션 — 헤더 안 패널을 접고 폅니다
+          기본은 닫힌 상태입니다. 링크를 누르거나 ESC 를 누르면 닫힙니다.
        ================================================================ */
 
-    var qform = $('qform');
-    if (!qform) { return; }
+    var foldBtn = $('nav-fold');
+    var navPanel = $('navpanel');
 
-    var counts = { human: 1, dogS: 0, dogM: 0, dogL: 0, cat: 0 };
-    var bag = '없음';
+    if (foldBtn && navPanel) {
 
-    var qDate = $('q-date');
-    var qTime = $('q-time');
-    var quoteList = $('quote-list');
+        function setNav(open) {
+            document.body.classList.toggle('nav-open', open);
+            foldBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            foldBtn.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+        }
 
-    function ymd(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
-
-    var today = new Date();
-    if (qDate) {
-        qDate.min = ymd(today);
-        qDate.value = ymd(new Date(today.getTime() + 86400000));
-    }
-    if (qTime) { qTime.value = '10:00'; }
-
-    function val(id) { var el = $(id); return el ? el.value.trim() : ''; }
-    function joinAddr(base, detail) { return base ? (detail ? base + ' ' + detail : base) : ''; }
-
-    function dateText() {
-        var v = val('q-date');
-        if (!v) { return ''; }
-        var p = v.split('-');
-        var d = new Date(+p[0], +p[1] - 1, +p[2]);
-        var days = ['일', '월', '화', '수', '목', '금', '토'];
-        return p[0] + '년 ' + (+p[1]) + '월 ' + (+p[2]) + '일 (' + days[d.getDay()] + ')';
-    }
-
-    function timeText() {
-        var v = val('q-time');
-        if (!v) { return ''; }
-        var hh = parseInt(v.split(':')[0], 10), mm = v.split(':')[1];
-        var ampm = hh < 12 ? '오전' : '오후';
-        var h12 = hh % 12; if (h12 === 0) { h12 = 12; }
-        return ampm + ' ' + h12 + '시' + (mm === '00' ? '' : ' ' + parseInt(mm, 10) + '분');
-    }
-
-    function petText() {
-        var parts = [];
-        if (counts.dogS) { parts.push('소형견 ' + counts.dogS + '마리'); }
-        if (counts.dogM) { parts.push('중형견 ' + counts.dogM + '마리'); }
-        if (counts.dogL) { parts.push('대형견 ' + counts.dogL + '마리'); }
-        if (counts.cat)  { parts.push('고양이 ' + counts.cat + '마리'); }
-        return parts.join(', ');
-    }
-
-    function rows() {
-        return [
-            ['이용 날짜', dateText()],
-            ['출발 시간', timeText()],
-            ['출발지', joinAddr(val('q-from'), val('q-from-detail'))],
-            ['도착지', joinAddr(val('q-to'), val('q-to-detail'))],
-            ['탑승 인원', counts.human ? '보호자 ' + counts.human + '명' : '보호자 동승 없음'],
-            ['반려동물', petText()],
-            ['짐', bag],
-            ['요청사항', val('q-note')]
-        ];
-    }
-
-    function renderPreview() {
-        if (!quoteList) { return; }
-        quoteList.innerHTML = rows().map(function (r) {
-            var filled = !!r[1];
-            return '<div class="quote-row' + (filled ? '' : ' is-empty') + '">' +
-                   '<dt>' + r[0] + '</dt><dd>' + (filled ? esc(r[1]) : '입력 전') + '</dd></div>';
-        }).join('');
-    }
-
-    /* 카카오톡·톡톡에 붙여넣기 좋은 형태 */
-    function plainText() {
-        var lines = ['[하루펫 견적 요청]'];
-        rows().forEach(function (r) { if (r[1]) { lines.push(r[0] + ' : ' + r[1]); } });
-        return lines.join('\n');
-    }
-
-    /* ── 수량 조절 ── */
-    all('.qty', qform).forEach(function (box) {
-        var key = box.getAttribute('data-key');
-        var out = box.querySelector('.qty-v');
-        all('.qty-btn', box).forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                counts[key] = clamp(counts[key] + parseInt(btn.getAttribute('data-step'), 10), 0, 20);
-                out.textContent = counts[key];
-                box.classList.toggle('is-set', counts[key] > 0);
-                renderPreview();
-            });
+        foldBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            setNav(!document.body.classList.contains('nav-open'));
         });
-        box.classList.toggle('is-set', counts[key] > 0);
-    });
 
-    /* ── 짐 선택 ── */
-    all('#q-bag .chip').forEach(function (chip) {
-        chip.addEventListener('click', function () {
-            bag = chip.getAttribute('data-val');
-            all('#q-bag .chip').forEach(function (c) {
-                var on = c === chip;
-                c.classList.toggle('is-on', on);
-                c.setAttribute('aria-pressed', on ? 'true' : 'false');
-            });
-            renderPreview();
+        /* 메뉴를 고르면 닫습니다 */
+        all('.tab', navPanel).forEach(function (t) {
+            t.addEventListener('click', function () { setNav(false); });
         });
-    });
 
-    /* ── 주소 검색 (다음 우편번호 서비스) ── */
-    all('.qsearch').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            var field = $(btn.getAttribute('data-addr'));
-            if (!field) { return; }
-            if (typeof window.daum === 'undefined' || !window.daum.Postcode) {
-                /* 검색 도구를 못 불러오면 직접 입력할 수 있게 풀어 줍니다. */
-                field.readOnly = false;
-                field.placeholder = '주소를 직접 입력해 주세요';
-                field.focus();
-                return;
-            }
-            new window.daum.Postcode({
-                oncomplete: function (data) {
-                    field.value = data.roadAddress || data.jibunAddress;
-                    renderPreview();
-                    var detail = $(field.id + '-detail');
-                    if (detail) { detail.focus(); }
-                }
-            }).open();
+        /* 바깥을 누르거나 ESC 를 누르면 닫힙니다 */
+        document.addEventListener('click', function (e) {
+            if (!document.body.classList.contains('nav-open')) { return; }
+            if (!navPanel.contains(e.target) && e.target !== foldBtn) { setNav(false); }
         });
-    });
-
-    all('input, textarea', qform).forEach(function (el) {
-        el.addEventListener('input', renderPreview);
-        el.addEventListener('change', renderPreview);
-    });
-
-    /* ── 내용 복사하기 ── */
-    var copyBtn = $('q-copy');
-    if (copyBtn) {
-        copyBtn.addEventListener('click', function () {
-            var text = plainText();
-            var old = copyBtn.innerHTML;
-
-            function done() {
-                copyBtn.classList.add('is-done');
-                copyBtn.innerHTML = '복사했습니다 · 붙여넣기 하세요';
-                window.setTimeout(function () {
-                    copyBtn.innerHTML = old;
-                    copyBtn.classList.remove('is-done');
-                }, 2200);
-            }
-            function fallback() {
-                var ta = document.createElement('textarea');
-                ta.value = text;
-                ta.setAttribute('readonly', '');
-                ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
-                document.body.appendChild(ta);
-                ta.select();
-                ta.setSelectionRange(0, text.length);
-                try { document.execCommand('copy'); done(); }
-                catch (e) { window.prompt('아래 내용을 복사해 주세요', text); }
-                document.body.removeChild(ta);
-            }
-
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(done, fallback);
-            } else {
-                fallback();
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && document.body.classList.contains('nav-open')) {
+                setNav(false); foldBtn.focus();
             }
         });
     }
 
-    /* ── 견적서 내려받기 (브라우저 인쇄 → PDF 로 저장) ── */
-    var pdfBtn = $('q-pdf');
-    if (pdfBtn) {
-        pdfBtn.addEventListener('click', function () {
-            var body = $('sheet-body');
-            var made = $('sheet-made');
-            if (body) {
-                body.innerHTML = rows().map(function (r) {
-                    return '<tr><th>' + r[0] + '</th><td>' + (r[1] ? esc(r[1]) : '-') + '</td></tr>';
-                }).join('');
-            }
-            if (made) {
-                var n = new Date();
-                made.textContent = '작성일 ' + n.getFullYear() + '. ' + pad2(n.getMonth() + 1) + '. ' + pad2(n.getDate());
-            }
-            /* 저장되는 파일 이름이 되므로 잠시 문서 제목을 바꿉니다. */
-            var title = document.title;
-            document.title = '하루펫_견적요청서_' + (val('q-date') || '').replace(/-/g, '');
-            window.print();
-            window.setTimeout(function () { document.title = title; }, 600);
+
+    /* ================================================================
+       10. 훈련사 경력 더보기
+       ================================================================ */
+
+    var careerBtn = $('career-more');
+    var careerBox = $('career');
+    if (careerBtn && careerBox) {
+        careerBtn.addEventListener('click', function () {
+            var folded = careerBox.classList.toggle('is-folded');
+            careerBtn.setAttribute('aria-expanded', folded ? 'false' : 'true');
+            careerBtn.textContent = folded
+                ? '경력 전체 보기 (' + careerBox.children.length + '건)'
+                : '접기';
         });
     }
 
-    renderPreview();
+    /* 페이지 밖에서도 쓸 수 있게 열어 둡니다 (견적 페이지에서 사용) */
+    window.PetTaxi = { copyText: copyText, esc: esc, pad2: pad2, clamp: clamp, isMobile: isMobile };
 })();
