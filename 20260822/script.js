@@ -314,13 +314,6 @@
 
     if (typeof REVIEWS !== 'undefined' && REVIEWS.length) {
 
-        var repeatN = REVIEWS.filter(function (r) { return r.visit >= 2; }).length;
-
-        var sumBox = $('rv-sum');
-        if (sumBox) {
-            sumBox.innerHTML = '네이버 플레이스에 남은 <b>후기 ' + REVIEWS.length + '건</b>' +
-                               ' · 재방문 고객 <b>' + repeatN + '명</b>';
-        }
 
         function byline(r) {
             return '<p class="rv-by"><b>' + esc(r.name) + '</b> 고객님 · ' + esc(r.date) +
