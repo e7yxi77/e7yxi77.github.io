@@ -392,6 +392,9 @@ main .sec + .sec { border-top: 8px solid var(--paper-2); }
 .claim-body .lead em { font-style: normal; color: var(--brand-dark); }
 
 .claim-warn::before { background: var(--danger); }
+/* 경고 문구는 한 줄로 떨어지도록 폭을 넉넉히 주고 크기를 조금 낮춥니다 */
+.claim-warn .claim-body { max-width: none; }
+.claim-warn .lead { font-size: clamp(17px, 4.4vw, 22px); }
 .claim-warn .lead em { color: var(--danger-dark); }
 
 /* 펫크닉 안내 포스터 — 글자를 읽어야 하므로 다른 사진보다 크게,
