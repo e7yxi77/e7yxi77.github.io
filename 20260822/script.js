@@ -40,12 +40,9 @@
     var engineOn = false;
     var activeBlock = -1;
 
-    var frameNum = $('frame-num');
-    var frameLabel = $('frame-label');
     var frameHint = $('frame-hint');
-    var roadPaw = $('road-paw');
-    var navUp = $('nav-up');
-    var navDown = $('nav-down');
+    var railList = $('rail-list');
+    var railStops = [];
     var hintGone = false;
 
     function dismissHint() {
@@ -72,18 +69,16 @@
 
     function updateFrame(ratio) {
         var r = clamp(ratio, 0, 1);
-        if (roadPaw) { roadPaw.style.top = (4 + r * 92).toFixed(2) + '%'; }
-
         var blk = clamp(Math.round(r * (BLOCKS - 1)), 0, BLOCKS - 1);
-        if (blk !== activeBlock) {
-            activeBlock = blk;
-            if (frameNum) { frameNum.textContent = pad2(blk + 1); }
-            if (frameLabel) { frameLabel.textContent = LABELS[blk] || ''; }
-            revealBlock(blk);
-            revealBlock(blk + 1);
-        }
-        if (navUp) { navUp.disabled = target < vh * 0.5; }
-        if (navDown) { navDown.disabled = target > maxScroll - vh * 0.5; }
+        if (blk === activeBlock) { return; }
+
+        activeBlock = blk;
+        railStops.forEach(function (el, i) {
+            el.classList.toggle('is-on', i === blk);
+            el.setAttribute('aria-current', i === blk ? 'true' : 'false');
+        });
+        revealBlock(blk);
+        revealBlock(blk + 1);
     }
 
     /* 전환은 시간 기반이라 언제 끝나는지 정확히 알 수 있습니다. */
@@ -300,8 +295,23 @@
     }
     openFromHash();
 
-    if (navUp)   { navUp.addEventListener('click', function () { step(-1); }); }
-    if (navDown) { navDown.addEventListener('click', function () { step(1); }); }
+    /* 노선도 정류장 : 현재 위치를 보여 주고 눌러서 이동합니다. */
+    if (railList) {
+        LABELS.slice(0, BLOCKS).forEach(function (name, i) {
+            var li = document.createElement('li');
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'rail-stop' + (i === 0 ? ' is-on' : '');
+            b.innerHTML = '<span class="rail-name">' + name + '</span><span class="rail-dot"></span>';
+            b.setAttribute('aria-label', pad2(i + 1) + '구간 ' + name + '으로 이동');
+            b.addEventListener('click', function () { goTo(i); });
+            li.appendChild(b);
+            railList.appendChild(li);
+            railStops.push(b);
+        });
+        activeBlock = -1;   /* 방금 만든 정류장에 현재 위치를 반영합니다 */
+        updateFrame(maxScroll > 0 ? current / maxScroll : 0);
+    }
 
     all('[data-goto]').forEach(function (btn) {
         btn.addEventListener('click', function () { goTo(parseInt(btn.getAttribute('data-goto'), 10)); });
@@ -461,151 +471,223 @@
     }
 
     /* ================================================================
-       5. 요금 미터 — 하루펫이 공지한 요금표를 그대로 계산합니다.
+       5. 견적 요청서 — 입력한 내용을 복사하거나 PDF 로 내려받습니다.
+          서버로 보내지 않고 브라우저 안에서만 처리합니다.
        ================================================================ */
 
-    /* 수도권 : 하루펫 공지 요금 (2026-09-01 적용) */
-    var METRO = [[0, 4800], [10, 12800], [20, 27800], [30, 42800]];
+    var qform = $('qform');
 
-    /* 지방 장거리 : 공지 요금표 (정상 / 평일 할인 / 주말 할인) */
-    var REGIONS = [
-        { name: '대전', normal: 230000, weekday: 180000, weekend: 130000 },
-        { name: '강릉', normal: 270000, weekday: 220000, weekend: 170000 },
-        { name: '대구', normal: 350000, weekday: 300000, weekend: 250000 },
-        { name: '광주', normal: 350000, weekday: 300000, weekend: 250000 },
-        { name: '울산', normal: 450000, weekday: 400000, weekend: 350000 },
-        { name: '부산', normal: 470000, weekday: 420000, weekend: 370000 },
-        { name: '제주', normal: 600000, weekday: 510000, weekend: 500000 }
-    ];
+    if (qform) {
+        var counts = { human: 1, dogS: 0, dogM: 0, dogL: 0, cat: 0 };
+        var bag = '없음';
 
-    function metroFare(km) {
-        for (var i = 1; i < METRO.length; i++) {
-            if (km <= METRO[i][0]) {
-                var t = (km - METRO[i - 1][0]) / (METRO[i][0] - METRO[i - 1][0]);
-                return Math.round((METRO[i - 1][1] + (METRO[i][1] - METRO[i - 1][1]) * t) / 100) * 100;
-            }
+        var qDate = $('q-date');
+        var qTime = $('q-time');
+        var quoteList = $('quote-list');
+
+        /* 오늘 이후만 고를 수 있게 하고, 기본값은 내일로 둡니다. */
+        var today = new Date();
+        function ymd(d) {
+            return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
         }
-        return METRO[METRO.length - 1][1];
-    }
-
-    var meterNum = $('meter-num');
-    var meterLabel = $('meter-label');
-    var meterSub = $('meter-sub');
-    var meterChips = $('meter-chips');
-    var meterValue = document.querySelector('.meter-value');
-
-    var kmInput = $('km');
-    var kmOut = $('km-out');
-    var regionBox = $('region-chips');
-
-    var mode = 'metro';
-    var region = 5;          /* 부산 */
-    var day = 'weekday';
-
-    function paintMeter(data) {
-        if (!meterNum) { return; }
-        meterLabel.textContent = data.label;
-        meterSub.textContent = data.sub;
-        meterChips.innerHTML = data.chips.map(function (c) { return '<li>' + c + '</li>'; }).join('');
-
-        if (mqReduce.matches) { meterNum.textContent = data.num; return; }
-        meterValue.classList.add('is-swap');
-        window.setTimeout(function () {
-            meterNum.textContent = data.num;
-            meterValue.classList.remove('is-swap');
-        }, 150);
-    }
-
-    function renderMeter() {
-        if (mode === 'metro') {
-            var km = kmInput ? parseInt(kmInput.value, 10) : 10;
-            paintMeter({
-                label: '수도권 · ' + km + 'km',
-                num: won(metroFare(km)),
-                sub: km === 0
-                    ? '승차 시 표시되는 기본요금입니다'
-                    : '기본요금 4,800원 포함 · 일반택시보다 2,000원 저렴',
-                chips: ['단독 이동', '동승 가능', 'Door to Door']
-            });
-        } else {
-            var r = REGIONS[region];
-            var price = r[day];
-            var off = r.normal - price;
-            paintMeter({
-                label: '지방 장거리 · 서울 → ' + r.name,
-                num: won(price),
-                sub: off > 0
-                    ? '정상 요금 ' + won(r.normal) + '원에서 ' + won(off) + '원 할인'
-                    : '할인 전 정상 요금입니다',
-                chips: ['장거리 전용', '실시간 위치 안내', '단독 · 동승 선택']
-            });
+        if (qDate) {
+            qDate.min = ymd(today);
+            var tomorrow = new Date(today.getTime() + 86400000);
+            qDate.value = ymd(tomorrow);
         }
-    }
+        if (qTime) { qTime.value = '10:00'; }
 
-    if (kmInput) {
-        var paintSlider = function () {
-            var p = (kmInput.value - kmInput.min) / (kmInput.max - kmInput.min) * 100;
-            kmInput.style.background =
-                'linear-gradient(to right, #E7832E 0%, #E7832E ' + p + '%, #FEECBF ' + p + '%, #FEECBF 100%)';
-        };
-        kmInput.addEventListener('input', function () {
-            kmOut.textContent = kmInput.value;
-            paintSlider();
-            renderMeter();
-        });
-        paintSlider();
-    }
+        function val(id) {
+            var el = $(id);
+            return el ? el.value.trim() : '';
+        }
 
-    if (regionBox) {
-        REGIONS.forEach(function (r, i) {
-            var b = document.createElement('button');
-            b.type = 'button';
-            b.className = 'chip' + (i === region ? ' is-on' : '');
-            b.textContent = r.name;
-            b.setAttribute('aria-pressed', i === region ? 'true' : 'false');
-            b.addEventListener('click', function () {
-                region = i;
-                all('.chip', regionBox).forEach(function (c, k) {
-                    c.classList.toggle('is-on', k === i);
-                    c.setAttribute('aria-pressed', k === i ? 'true' : 'false');
+        function joinAddr(base, detail) {
+            if (!base) { return ''; }
+            return detail ? base + ' ' + detail : base;
+        }
+
+        function dateText() {
+            var v = val('q-date');
+            if (!v) { return ''; }
+            var parts = v.split('-');
+            var d = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+            var days = ['일', '월', '화', '수', '목', '금', '토'];
+            return parts[0] + '년 ' + (+parts[1]) + '월 ' + (+parts[2]) + '일 (' + days[d.getDay()] + ')';
+        }
+
+        function timeText() {
+            var v = val('q-time');
+            if (!v) { return ''; }
+            var hh = parseInt(v.split(':')[0], 10);
+            var mm = v.split(':')[1];
+            var ampm = hh < 12 ? '오전' : '오후';
+            var h12 = hh % 12; if (h12 === 0) { h12 = 12; }
+            return ampm + ' ' + h12 + '시' + (mm === '00' ? '' : ' ' + parseInt(mm, 10) + '분');
+        }
+
+        function petText() {
+            var parts = [];
+            if (counts.dogS) { parts.push('소형견 ' + counts.dogS + '마리'); }
+            if (counts.dogM) { parts.push('중형견 ' + counts.dogM + '마리'); }
+            if (counts.dogL) { parts.push('대형견 ' + counts.dogL + '마리'); }
+            if (counts.cat)  { parts.push('고양이 ' + counts.cat + '마리'); }
+            return parts.join(', ');
+        }
+
+        /* 견적서에 들어갈 항목을 한 곳에서 만듭니다. */
+        function rows() {
+            return [
+                ['이용 날짜', dateText()],
+                ['출발 시간', timeText()],
+                ['출발지', joinAddr(val('q-from'), val('q-from-detail'))],
+                ['도착지', joinAddr(val('q-to'), val('q-to-detail'))],
+                ['탑승 인원', counts.human ? '보호자 ' + counts.human + '명' : '보호자 동승 없음'],
+                ['반려동물', petText()],
+                ['짐', bag],
+                ['요청사항', val('q-note')]
+            ];
+        }
+
+        var EMPTY = '입력 전';
+
+        function renderPreview() {
+            if (!quoteList) { return; }
+            quoteList.innerHTML = rows().map(function (r) {
+                var filled = !!r[1];
+                return '<div class="quote-row' + (filled ? '' : ' is-empty') + '">' +
+                       '<dt>' + r[0] + '</dt><dd>' + (filled ? escapeHtml(r[1]) : EMPTY) + '</dd></div>';
+            }).join('');
+        }
+
+        function escapeHtml(t) {
+            return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        /* 카카오톡·톡톡에 붙여넣기 좋은 형태 */
+        function plainText() {
+            var lines = ['[하루펫 견적 요청]'];
+            rows().forEach(function (r) {
+                if (r[1]) { lines.push(r[0] + ' : ' + r[1]); }
+            });
+            return lines.join('\n');
+        }
+
+        /* ── 수량 조절 ── */
+        all('.qty', qform).forEach(function (box) {
+            var key = box.getAttribute('data-key');
+            var out = box.querySelector('.qty-v');
+            all('.qty-btn', box).forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var d = parseInt(btn.getAttribute('data-step'), 10);
+                    counts[key] = clamp(counts[key] + d, 0, 20);
+                    out.textContent = counts[key];
+                    box.classList.toggle('is-set', counts[key] > 0);
+                    renderPreview();
                 });
-                renderMeter();
             });
-            regionBox.appendChild(b);
+            box.classList.toggle('is-set', counts[key] > 0);
         });
+
+        /* ── 짐 선택 ── */
+        all('#q-bag .chip').forEach(function (chip) {
+            chip.addEventListener('click', function () {
+                bag = chip.getAttribute('data-val');
+                all('#q-bag .chip').forEach(function (c) {
+                    var on = c === chip;
+                    c.classList.toggle('is-on', on);
+                    c.setAttribute('aria-pressed', on ? 'true' : 'false');
+                });
+                renderPreview();
+            });
+        });
+
+        /* ── 주소 검색 (다음 우편번호 서비스) ── */
+        all('.qsearch').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var field = $(btn.getAttribute('data-addr'));
+                if (!field) { return; }
+                if (typeof window.daum === 'undefined' || !window.daum.Postcode) {
+                    /* 검색 도구를 못 불러오면 직접 입력할 수 있게 풀어 줍니다. */
+                    field.readOnly = false;
+                    field.placeholder = '주소를 직접 입력해 주세요';
+                    field.focus();
+                    return;
+                }
+                new window.daum.Postcode({
+                    oncomplete: function (data) {
+                        field.value = data.roadAddress || data.jibunAddress;
+                        renderPreview();
+                        var detail = $(field.id + '-detail');
+                        if (detail) { detail.focus(); }
+                    }
+                }).open();
+            });
+        });
+
+        all('input, textarea', qform).forEach(function (el) {
+            el.addEventListener('input', renderPreview);
+            el.addEventListener('change', renderPreview);
+        });
+
+        /* ── 내용 복사하기 ── */
+        var copyBtn = $('q-copy');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', function () {
+                var text = plainText();
+                function done() {
+                    var old = copyBtn.innerHTML;
+                    copyBtn.classList.add('is-done');
+                    copyBtn.innerHTML = '복사했습니다 · 붙여넣기 하세요';
+                    window.setTimeout(function () {
+                        copyBtn.innerHTML = old;
+                        copyBtn.classList.remove('is-done');
+                    }, 2200);
+                }
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(done, fallback);
+                } else {
+                    fallback();
+                }
+                function fallback() {
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.setAttribute('readonly', '');
+                    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    ta.setSelectionRange(0, text.length);
+                    try { document.execCommand('copy'); done(); } catch (e) { window.prompt('아래 내용을 복사해 주세요', text); }
+                    document.body.removeChild(ta);
+                }
+            });
+        }
+
+        /* ── 견적서 내려받기 (브라우저 인쇄 → PDF 로 저장) ── */
+        var pdfBtn = $('q-pdf');
+        if (pdfBtn) {
+            pdfBtn.addEventListener('click', function () {
+                var body = $('sheet-body');
+                var made = $('sheet-made');
+                if (body) {
+                    body.innerHTML = rows().map(function (r) {
+                        return '<tr><th>' + r[0] + '</th><td>' + (r[1] ? escapeHtml(r[1]) : '-') + '</td></tr>';
+                    }).join('');
+                }
+                if (made) {
+                    var n = new Date();
+                    made.textContent = '작성일 ' + n.getFullYear() + '. ' + pad2(n.getMonth() + 1) + '. ' + pad2(n.getDate());
+                }
+                /* 저장되는 파일 이름이 되므로 잠시 문서 제목을 바꿉니다. */
+                var title = document.title;
+                document.title = '하루펫_견적요청서_' + (val('q-date') || '').replace(/-/g, '');
+                window.print();
+                window.setTimeout(function () { document.title = title; }, 600);
+            });
+        }
+
+        renderPreview();
     }
-
-    all('.seg-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            day = btn.getAttribute('data-day');
-            all('.seg-btn').forEach(function (b) {
-                var on = b === btn;
-                b.classList.toggle('is-on', on);
-                b.setAttribute('aria-pressed', on ? 'true' : 'false');
-            });
-            renderMeter();
-        });
-    });
-
-    all('.tab').forEach(function (tab) {
-        tab.addEventListener('click', function () {
-            if (tab.classList.contains('is-on')) { return; }
-            mode = tab.getAttribute('data-tab');
-            all('.tab').forEach(function (t) {
-                var on = t === tab;
-                t.classList.toggle('is-on', on);
-                t.setAttribute('aria-selected', on ? 'true' : 'false');
-            });
-            all('.pane').forEach(function (p) {
-                var on = p.id === 'pane-' + mode;
-                p.classList.toggle('is-shown', on);
-                p.hidden = !on;
-            });
-            renderMeter();
-        });
-    });
-
-    renderMeter();
 
     /* ================================================================
        6. 등장 애니메이션

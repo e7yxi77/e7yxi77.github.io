@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>하루펫택시 | 반려동물의 안전한 이동 파트너 · 전국 펫택시</title>
-    <meta name="description" content="하루펫택시는 병원·미용·공항·이사·장례식장까지 반려동물 전용 차량으로 안전하게 이동합니다. 수도권 단거리부터 지방 장거리까지 365일 운행. 예약 문의 010-7987-3460">
+    <meta name="description" content="하루펫택시는 병원·미용·공항·이사·장례식장까지 반려동물 전용 차량으로 안전하게 이동합니다. 수도권 단거리부터 지방 장거리까지 365일 운행. 견적 요청서를 보내주시면 금액을 안내해드립니다. 문의 010-7987-3460">
     <meta name="author" content="하루펫">
     <meta name="theme-color" content="#E7832E">
     <link rel="canonical" href="https://ey.io.kr/20260822/">
@@ -45,7 +45,7 @@
         .t-right { left: auto; }
         .panel-inner, .t-right .panel-inner { max-height: none; overflow: visible; }
         .panel-media .media > img { height: 60vh; }
-        .roadline, .frame-nav, .frame-hint, .frame-index { display: none; }
+        .rail, .seam, .frame-hint { display: none; }
         .pane { display: block; }
     </style></noscript>
 </head>
@@ -58,7 +58,6 @@
     <div class="frame">
         <a class="frame-brand" href="#block-0" aria-label="하루펫택시 홈">
             <img src="images/haru-wordmark.png" alt="하루펫" width="112" height="35">
-            <span class="frame-brand-sub">펫택시</span>
         </a>
 
         <div class="frame-actions">
@@ -77,21 +76,15 @@
             </a>
         </div>
 
-        <p class="frame-index" aria-hidden="true">
-            <b id="frame-num">01</b><span class="of">/ 05</span>
-            <span class="frame-index-label" id="frame-label">하루펫 소개</span>
-        </p>
-
-        <div class="frame-nav">
-            <button class="nav-btn up" id="nav-up" aria-label="이전 구간" disabled><span class="chev" aria-hidden="true"></span></button>
-            <button class="nav-btn down" id="nav-down" aria-label="다음 구간"><span class="chev" aria-hidden="true"></span></button>
-        </div>
-
         <p class="frame-hint" id="frame-hint" aria-hidden="true">한 번 스크롤하면 다음 구간으로 넘어갑니다</p>
     </div>
 
-    <!-- 중앙 주행선: 스크롤 진행에 따라 발자국 마커가 내려갑니다 -->
-    <div class="roadline" aria-hidden="true"><span class="road-paw" id="road-paw"></span></div>
+    <!-- 노선도: 현재 위치 표시와 구간 이동을 겸합니다 -->
+    <nav class="rail" aria-label="구간 이동">
+        <ol id="rail-list"></ol>
+    </nav>
+
+    <span class="seam" aria-hidden="true"></span>
 
     <main class="stage" id="stage">
 
@@ -114,21 +107,21 @@
                 </div>
 
                 <div class="stat-row reveal">
-                    <div class="stat"><span class="k">기본요금</span><span class="v">4,800<small>원</small></span></div>
+                    <div class="stat"><span class="k">운행</span><span class="v">365일<small>연중무휴</small></span></div>
                     <div class="stat"><span class="k">운행 지역</span><span class="v">전국<small>단거리·장거리</small></span></div>
                     <div class="stat"><span class="k">탑승 가능</span><span class="v">소형~대형<small>견·묘 모두</small></span></div>
                 </div>
 
                 <div class="cta-row reveal">
                     <a class="btn btn-call" href="tel:010-7987-3460"><span class="ico-phone" aria-hidden="true"></span>전화로 예약하기</a>
-                    <button class="btn btn-ghost" type="button" data-goto="3">요금 확인하기</button>
+                    <button class="link-go" type="button" data-goto="3">견적 요청하기</button>
                 </div>
             </div>
         </section>
 
         <section class="panel t-right panel-media" data-i="0" aria-label="하루펫택시 차량 사진">
             <figure class="media">
-                <img src="images/photo-hero.jpg" alt="반려동물을 태우고 운행 중인 하루펫택시 차량" width="1200" height="1600" loading="eager">
+                <img src="images/main-1.jpg" alt="반려동물을 태우고 운행 중인 하루펫택시 차량" width="1200" height="1600" loading="eager">
                 <figcaption class="media-tag">
                     <img src="images/haru-mark.png" alt="" width="26" height="26" aria-hidden="true">
                     <span>반려동물 단독 운송 · 전국 운행</span>
@@ -146,7 +139,7 @@
                 <p class="lede short reveal">가는 곳에 따라 준비가 달라집니다. 아래에서 목적지를 선택하면 하루펫택시가 어떻게 이동하는지 보여드립니다.</p>
 
                 <div class="acc reveal" id="acc">
-                    <div class="acc-item is-open" data-photo="images/photo-service-hospital.jpg" data-chip="병원 이동">
+                    <div class="acc-item is-open" data-photo="images/service-hospital.jpg" data-chip="병원 이동">
                         <h3><button class="acc-head" type="button" aria-expanded="true">
                             <span class="acc-name">병원 이동</span>
                             <span class="acc-note">진료 · 예방접종</span>
@@ -157,7 +150,7 @@
                         </div></div>
                     </div>
 
-                    <div class="acc-item" data-photo="images/photo-service-care.jpg" data-chip="미용 · 호텔 · 유치원 이동">
+                    <div class="acc-item" data-photo="images/service-care.jpg" data-chip="미용 · 호텔 · 유치원 이동">
                         <h3><button class="acc-head" type="button" aria-expanded="false">
                             <span class="acc-name">미용 · 호텔 · 유치원 이동</span>
                             <span class="acc-note">등하원 · 왕복</span>
@@ -168,7 +161,7 @@
                         </div></div>
                     </div>
 
-                    <div class="acc-item" data-photo="images/photo-service-moving.jpg" data-chip="이사 · 장거리 이동">
+                    <div class="acc-item" data-photo="images/service-moving.jpg" data-chip="이사 · 장거리 이동">
                         <h3><button class="acc-head" type="button" aria-expanded="false">
                             <span class="acc-name">이사 · 장거리 이동</span>
                             <span class="acc-note">수도권 · 지방</span>
@@ -179,7 +172,7 @@
                         </div></div>
                     </div>
 
-                    <div class="acc-item" data-photo="images/photo-service-airport.jpg" data-chip="여행 · 공항 이동">
+                    <div class="acc-item" data-photo="images/service-airport.jpg" data-chip="여행 · 공항 이동">
                         <h3><button class="acc-head" type="button" aria-expanded="false">
                             <span class="acc-name">여행 · 공항 이동</span>
                             <span class="acc-note">출국 · 입국</span>
@@ -190,7 +183,7 @@
                         </div></div>
                     </div>
 
-                    <div class="acc-item" data-photo="images/photo-service-farewell.jpg" data-chip="장례식장 이동">
+                    <div class="acc-item" data-photo="images/service-farewell.jpg" data-chip="장례식장 이동">
                         <h3><button class="acc-head" type="button" aria-expanded="false">
                             <span class="acc-name">장례식장 이동</span>
                             <span class="acc-note">마지막 길</span>
@@ -201,7 +194,7 @@
                         </div></div>
                     </div>
 
-                    <div class="acc-item" data-photo="images/photo-service-shelter.jpg" data-chip="보호소 이동">
+                    <div class="acc-item" data-photo="images/service-shelter.jpg" data-chip="보호소 이동">
                         <h3><button class="acc-head" type="button" aria-expanded="false">
                             <span class="acc-name">보호소 이동</span>
                             <span class="acc-note">구조 · 입소</span>
@@ -224,7 +217,7 @@
 
         <section class="panel t-right panel-media" data-i="1" aria-label="선택한 목적지 사진">
             <figure class="media">
-                <img src="images/photo-service-hospital.jpg" alt="병원 이동 서비스 사진" id="service-photo" width="1200" height="1600" loading="lazy">
+                <img src="images/service-hospital.jpg" alt="병원 이동 서비스 사진" id="service-photo" width="1200" height="1600" loading="lazy">
                 <figcaption class="media-tag pin">
                     <span class="pin-ico" aria-hidden="true"></span>
                     <span id="service-chip">병원 이동</span>
@@ -237,7 +230,7 @@
         <!-- ========================================================== -->
         <section class="panel t-left panel-media" data-i="2" aria-label="이용 고객 반려동물 사진">
             <figure class="media">
-                <img src="images/photo-review.jpg" alt="차창 밖을 바라보는 반려동물" width="1200" height="1600" loading="lazy">
+                <img src="images/review-1.jpg" alt="차창 밖을 바라보는 반려동물" width="1200" height="1600" loading="lazy">
                 <figcaption class="media-tag">
                     <span class="stars" aria-hidden="true">★★★★★</span>
                     <span>보호자 평점 5.0</span>
@@ -296,55 +289,129 @@
         </section>
 
         <!-- ========================================================== -->
-        <!-- 구간 04 — 요금 (좌측 조작 → 우측 미터 표시)                 -->
+        <!-- 구간 04 — 견적 요청서 (좌측 입력 → 우측 미리보기)          -->
         <!-- ========================================================== -->
-        <section class="panel t-left" data-i="3" id="block-3" aria-labelledby="h-fare">
+        <section class="panel t-left" data-i="3" id="block-3" aria-labelledby="h-quote">
             <div class="panel-inner">
-                <p class="eyebrow reveal">요금 안내</p>
-                <h2 class="title reveal" id="h-fare">얼마쯤 나올까요?</h2>
-                <p class="lede short reveal">하루펫이 안내하는 요금표를 그대로 담았습니다. 아래에서 조건을 고르면 옆 미터에 예상 요금이 표시됩니다.</p>
+                <p class="eyebrow reveal">견적 요청</p>
+                <h2 class="title reveal" id="h-quote">이동 정보를 알려주세요</h2>
+                <p class="lede short reveal">아래 내용을 채우시면 견적 요청서가 만들어집니다. 복사하거나 내려받아 보내주시면 금액을 안내해드립니다.</p>
 
-                <div class="tabs reveal" role="tablist" aria-label="요금 종류">
-                    <button class="tab is-on" id="tab-metro" role="tab" aria-selected="true" aria-controls="pane-metro" data-tab="metro" type="button">수도권 거리요금</button>
-                    <button class="tab" id="tab-local" role="tab" aria-selected="false" aria-controls="pane-local" data-tab="local" type="button">지방 장거리</button>
-                </div>
-
-                <!-- 수도권: 거리 슬라이더 -->
-                <div class="pane is-shown reveal" id="pane-metro" role="tabpanel" aria-labelledby="tab-metro">
-                    <label class="slider-label" for="km">이동 거리 <b><span id="km-out">10</span>km</b></label>
-                    <input class="slider" id="km" type="range" min="0" max="30" step="1" value="10"
-                           aria-label="이동 거리 (킬로미터)" aria-describedby="km-help">
-                    <div class="slider-ticks" aria-hidden="true"><span>0</span><span>10</span><span>20</span><span>30</span></div>
-                    <p class="pane-note" id="km-help">수도권은 단거리와 장거리 모두 운행합니다. 30km를 넘는 거리는 장거리 요금으로 상담해드립니다.</p>
-                </div>
-
-                <!-- 지방: 지역 + 요일 -->
-                <div class="pane reveal" id="pane-local" role="tabpanel" aria-labelledby="tab-local" hidden>
-                    <div class="chips" id="region-chips" role="group" aria-label="목적지 지역"></div>
-                    <div class="seg" role="group" aria-label="이용 요일">
-                        <button class="seg-btn is-on" data-day="weekday" type="button" aria-pressed="true">평일</button>
-                        <button class="seg-btn" data-day="weekend" type="button" aria-pressed="false">주말</button>
-                        <button class="seg-btn" data-day="normal" type="button" aria-pressed="false">할인 전</button>
+                <form class="qform reveal" id="qform" autocomplete="off">
+                    <div class="qrow qrow-2">
+                        <label class="qfield">
+                            <span class="qlabel">이용 날짜</span>
+                            <input type="date" id="q-date" name="date">
+                        </label>
+                        <label class="qfield">
+                            <span class="qlabel">출발 시간</span>
+                            <input type="time" id="q-time" name="time">
+                        </label>
                     </div>
-                    <p class="pane-note">평일 지방 5만원 할인, 주말은 10만원까지 할인됩니다. 지방은 장거리 운행만 가능합니다.</p>
-                </div>
 
-                <p class="fare-disclaimer reveal">표시 금액은 <b>예상 금액</b>이며 최종 금액은 상담 시 안내해드립니다.<span class="fare-more"> 출발지·경유·대기 시간에 따라 달라질 수 있습니다. 2026년 9월 1일부터 적용되는 요금이며, 사전예약 시 최대 20% 할인 혜택이 있습니다.</span></p>
+                    <div class="qfield">
+                        <span class="qlabel">출발지</span>
+                        <div class="qaddr">
+                            <input type="text" id="q-from" placeholder="주소를 검색해 주세요" readonly>
+                            <button class="qsearch" type="button" data-addr="q-from">주소 검색</button>
+                        </div>
+                        <input type="text" id="q-from-detail" class="qdetail" placeholder="상세주소 (동·호수, 건물명)">
+                    </div>
+
+                    <div class="qfield">
+                        <span class="qlabel">도착지</span>
+                        <div class="qaddr">
+                            <input type="text" id="q-to" placeholder="주소를 검색해 주세요" readonly>
+                            <button class="qsearch" type="button" data-addr="q-to">주소 검색</button>
+                        </div>
+                        <input type="text" id="q-to-detail" class="qdetail" placeholder="상세주소 (동·호수, 건물명)">
+                    </div>
+
+                    <div class="qfield">
+                        <span class="qlabel">함께 타시는 분</span>
+                        <div class="qty" data-key="human">
+                            <span class="qty-k">보호자</span>
+                            <button class="qty-btn" type="button" data-step="-1" aria-label="보호자 인원 줄이기">−</button>
+                            <output class="qty-v">1</output>
+                            <button class="qty-btn" type="button" data-step="1" aria-label="보호자 인원 늘리기">+</button>
+                            <span class="qty-u">명</span>
+                        </div>
+                    </div>
+
+                    <div class="qfield">
+                        <span class="qlabel">반려동물</span>
+                        <div class="qty" data-key="dogS">
+                            <span class="qty-k">소형견</span>
+                            <button class="qty-btn" type="button" data-step="-1" aria-label="소형견 줄이기">−</button>
+                            <output class="qty-v">0</output>
+                            <button class="qty-btn" type="button" data-step="1" aria-label="소형견 늘리기">+</button>
+                            <span class="qty-u">마리</span>
+                        </div>
+                        <div class="qty" data-key="dogM">
+                            <span class="qty-k">중형견</span>
+                            <button class="qty-btn" type="button" data-step="-1" aria-label="중형견 줄이기">−</button>
+                            <output class="qty-v">0</output>
+                            <button class="qty-btn" type="button" data-step="1" aria-label="중형견 늘리기">+</button>
+                            <span class="qty-u">마리</span>
+                        </div>
+                        <div class="qty" data-key="dogL">
+                            <span class="qty-k">대형견</span>
+                            <button class="qty-btn" type="button" data-step="-1" aria-label="대형견 줄이기">−</button>
+                            <output class="qty-v">0</output>
+                            <button class="qty-btn" type="button" data-step="1" aria-label="대형견 늘리기">+</button>
+                            <span class="qty-u">마리</span>
+                        </div>
+                        <div class="qty" data-key="cat">
+                            <span class="qty-k">고양이</span>
+                            <button class="qty-btn" type="button" data-step="-1" aria-label="고양이 줄이기">−</button>
+                            <output class="qty-v">0</output>
+                            <button class="qty-btn" type="button" data-step="1" aria-label="고양이 늘리기">+</button>
+                            <span class="qty-u">마리</span>
+                        </div>
+                        <p class="qhint">기타 반려동물은 아래 요청사항에 적어주세요.</p>
+                    </div>
+
+                    <div class="qfield">
+                        <span class="qlabel">짐</span>
+                        <div class="chips" id="q-bag" role="group" aria-label="짐 현황">
+                            <button class="chip is-on" type="button" data-val="없음">없음</button>
+                            <button class="chip" type="button" data-val="이동장 1개">이동장 1개</button>
+                            <button class="chip" type="button" data-val="이동장 2개 이상">이동장 2개 이상</button>
+                            <button class="chip" type="button" data-val="유모차 있음">유모차 있음</button>
+                            <button class="chip" type="button" data-val="캐리어 있음">캐리어 있음</button>
+                        </div>
+                    </div>
+
+                    <label class="qfield">
+                        <span class="qlabel">요청사항 <em>선택</em></span>
+                        <textarea id="q-note" rows="2" placeholder="예) 아이가 겁이 많아요 / 왕복 이용 희망합니다"></textarea>
+                    </label>
+                </form>
             </div>
         </section>
 
-        <section class="panel t-right panel-media" data-i="3" aria-label="예상 요금 미터">
-            <div class="meter">
-                <div class="meter-face">
-                    <p class="meter-label" id="meter-label">수도권 · 10km</p>
-                    <p class="meter-value">
-                        <span id="meter-num">12,800</span><small>원</small>
-                    </p>
-                    <p class="meter-sub" id="meter-sub">기본요금 4,800원 포함 · 일반택시보다 2,000원 저렴</p>
-                    <ul class="meter-chips" id="meter-chips">
-                        <li>단독 이동</li><li>동승 가능</li><li>Door to Door</li>
-                    </ul>
+        <section class="panel t-right panel-media" data-i="3" aria-label="견적 요청서 미리보기">
+            <div class="quote-side">
+                <div class="quote-card">
+                    <p class="quote-cap">견적 요청서</p>
+                    <dl class="quote-list" id="quote-list"></dl>
                 </div>
+
+                <div class="quote-actions">
+                    <button class="btn btn-call" type="button" id="q-copy">
+                        <span class="ico-copy" aria-hidden="true"></span>내용 복사하기
+                    </button>
+                    <button class="btn btn-ghost" type="button" id="q-pdf">
+                        <span class="ico-down" aria-hidden="true"></span>견적서 다운로드
+                    </button>
+                </div>
+
+                <p class="quote-guide">
+                    견적서를 복사하거나 내려받아
+                    <a href="https://talk.naver.com/ct/w5xpj1" target="_blank" rel="noopener">네이버 톡톡</a>
+                    또는 카카오톡으로 보내주시면 <b>이용 금액을 안내</b>해드립니다.
+                </p>
+                <p class="quote-priv">입력하신 내용은 저장되지 않으며 보호자님 기기 안에서만 처리됩니다.</p>
             </div>
         </section>
 
@@ -358,7 +425,7 @@
 
                 <ol class="steps reveal">
                     <li><b>01</b><span class="step-t">문의</span><span class="step-d">전화 또는 네이버 톡톡으로 일정과 목적지를 알려주세요.</span></li>
-                    <li><b>02</b><span class="step-t">예약 확정</span><span class="step-d">차량과 시간, 예상 요금을 안내해드립니다.</span></li>
+                    <li><b>02</b><span class="step-t">예약 확정</span><span class="step-d">차량과 시간, 이용 금액을 안내해드립니다.</span></li>
                     <li><b>03</b><span class="step-t">픽업</span><span class="step-d">약속한 시간에 문 앞으로 찾아갑니다.</span></li>
                     <li><b>04</b><span class="step-t">안전 이동</span><span class="step-d">이동 중 실시간 위치를 안내해드립니다.</span></li>
                     <li><b>05</b><span class="step-t">도착</span><span class="step-d">목적지 도착 후 보호자님께 알려드립니다.</span></li>
@@ -389,18 +456,34 @@
         <section class="panel t-right panel-media" data-i="4" aria-label="하루펫 위치 안내">
             <div class="contact-side">
                 <figure class="contact-photo">
-                    <img src="images/photo-contact.jpg" alt="하루펫택시 차량 외관" width="1200" height="1600" loading="lazy">
+                    <img src="images/transport-1.jpg" alt="하루펫택시 차량 외관" width="1200" height="1600" loading="lazy">
                 </figure>
                 <div class="addr-card">
                     <p class="addr-k">하루펫</p>
                     <p class="addr-v">서울특별시 관악구 청룡길 78<br>(봉천동, 서울대입구아이원아파트) 1층</p>
-                    <a class="addr-link" href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B4%80%EC%95%85%EA%B5%AC%20%EC%B2%AD%EB%A3%A1%EA%B8%B8%2078" target="_blank" rel="noopener">네이버 지도에서 보기</a>
+                    <a class="link-go addr-link" href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B4%80%EC%95%85%EA%B5%AC%20%EC%B2%AD%EB%A3%A1%EA%B8%B8%2078" target="_blank" rel="noopener">네이버 지도에서 보기</a>
                     <p class="addr-note">운행 지역 : 수도권 단거리 · 장거리 / 지방 장거리 · 전국</p>
                     <p class="addr-copy">© 하루펫 · 반려동물의 안전한 이동 파트너</p>
                 </div>
             </div>
         </section>
     </main>
+
+    <!-- 인쇄(PDF 저장) 전용 견적서 — 화면에서는 보이지 않습니다 -->
+    <div class="quote-sheet" id="quote-sheet" aria-hidden="true">
+        <header class="sheet-head">
+            <img src="images/haru-wordmark.png" alt="하루펫" width="150">
+            <div class="sheet-head-r">
+                <p class="sheet-title">견적 요청서</p>
+                <p class="sheet-date" id="sheet-made"></p>
+            </div>
+        </header>
+        <table class="sheet-table"><tbody id="sheet-body"></tbody></table>
+        <footer class="sheet-foot">
+            <p>이 요청서를 네이버 톡톡 또는 카카오톡으로 보내주시면 이용 금액을 안내해드립니다.</p>
+            <p class="sheet-contact">하루펫택시 · 예약 문의 010-7987-3460 · 장거리 상담 010-8030-7236<br>네이버 톡톡 talk.naver.com/ct/w5xpj1</p>
+        </footer>
+    </div>
 
     <script type="application/ld+json">
     {
@@ -424,6 +507,7 @@
       "sameAs": ["https://talk.naver.com/profile/w5xpj1"]
     }
     </script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" defer></script>
     <script src="script.js"></script>
 </body>
 </html>
