@@ -13,7 +13,7 @@
    ------------------------------------------------------------------ */
 
 var BRANCHES = [
-    { name: '대표번호',   desc: '어디로 걸어야 할지 모르겠다면',  tel: '0507-1417-6722', main: true  },
+    { name: '대표번호',   desc: '이용 문의 및 예약 상담',          tel: '0507-1417-6722', main: true  },
     { name: '남양주지사', desc: '김승현 대표',                    tel: '010-2300-6722',  main: false },
     { name: '인천지사',   desc: '손진구 대표',                    tel: '010-4707-7334',  main: false }
 ];
@@ -34,7 +34,7 @@ var CAR_PHOTOS = [
     { src: 'images/car-03-interior-bed.jpg',   cap: '풀 플랫 시트',             alt: '평평하게 펼친 차량 실내 시트' },
     { src: 'images/car-04-interior-table.jpg', cap: '테이블 모드',              alt: '테이블을 세운 차량 실내' },
     { src: 'images/car-06-interior-deck.jpg',  cap: '원목 데크',                alt: '원목 데크를 깐 차량 적재 공간' },
-    { src: 'images/car-05-interior-full.jpg',  cap: '장거리 풀세팅',            alt: '장거리 운행용으로 세팅한 차량 실내' }
+    { src: 'images/car-05-interior-full.jpg',  cap: '장거리 이동 세팅',         alt: '장거리 운행용으로 세팅한 차량 실내' }
 ];
 
 

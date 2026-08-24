@@ -57,6 +57,9 @@
     --t-sec:  clamp(23px, 6.2vw, 34px);   /* 섹션 헤드라인 */
     --t-hero: clamp(30px, 8.8vw, 54px);   /* 히어로 헤드라인 */
 
+    /* 좌우 여백 — 본문과 가로 스크롤 목록이 같은 값을 씁니다 */
+    --pad: 20px;
+
     /* 높이 */
     --hd:  56px;
     --tab: 0px;
@@ -101,7 +104,7 @@ table { border-collapse: collapse; }
 ::selection { background: var(--brand); color: var(--ink); }
 :focus-visible { outline: 2px solid var(--brand-dark); outline-offset: 3px; border-radius: 8px; }
 
-.wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+.wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 var(--pad); }
 
 .skip-link {
     position: fixed; top: -100px; left: 12px; z-index: 300;
@@ -200,8 +203,14 @@ body.nav-open .hd { background: rgba(255,255,255,.985); }
 /* 섹션 공통                                                            */
 /* ------------------------------------------------------------------ */
 
-.sec { padding: 22px 0; scroll-margin-top: calc(var(--hd) + var(--tab)); }
-main .sec + .sec { border-top: 1px solid var(--line); }
+.sec { padding: 28px 0 30px; scroll-margin-top: calc(var(--hd) + var(--tab)); }
+/* 섹션 구분
+   모바일에서는 실선 한 줄로는 잘 안 보여서 옅은 띠로 끊어 줍니다.
+   데스크톱은 여백이 넓어 헤어라인으로 충분합니다. */
+main .sec + .sec { border-top: 8px solid var(--paper-2); }
+@media (min-width: 768px) {
+    main .sec + .sec { border-top: 1px solid var(--line); }
+}
 
 .sec-head { margin-bottom: 12px; }
 .sec-head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
@@ -266,7 +275,7 @@ main .sec + .sec { border-top: 1px solid var(--line); }
     content: ''; position: absolute; inset: 0;
     background: linear-gradient(180deg, rgba(20,18,13,.42) 0%, rgba(20,18,13,.74) 52%, var(--dark) 100%);
 }
-.hero-in { position: relative; padding: 22px 16px 20px; max-width: 1180px; margin: 0 auto; }
+.hero-in { position: relative; padding: 24px var(--pad) 22px; max-width: 1180px; margin: 0 auto; }
 
 
 .hero-h1 {
@@ -306,7 +315,8 @@ main .sec + .sec { border-top: 1px solid var(--line); }
     display: flex; gap: 8px;
     overflow-x: auto; scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch; scrollbar-width: none;
-    margin: 0 -16px; padding: 0 16px 4px;
+    margin: 0 calc(-1 * var(--pad)); padding: 0 var(--pad) 4px;
+    scroll-padding-left: var(--pad);
 }
 .rail::-webkit-scrollbar { display: none; }
 .rail > * { flex: 0 0 auto; scroll-snap-align: start; }
@@ -394,7 +404,8 @@ main .sec + .sec { border-top: 1px solid var(--line); }
     display: flex; gap: 8px;
     overflow-x: auto; scroll-snap-type: x proximity;
     scrollbar-width: none; -webkit-overflow-scrolling: touch;
-    margin: 0 -16px; padding: 0 16px 4px;
+    margin: 0 calc(-1 * var(--pad)); padding: 0 var(--pad) 4px;
+    scroll-padding-left: var(--pad);
 }
 .cards::-webkit-scrollbar { display: none; }
 .cards > * { flex: 0 0 auto; width: 60%; max-width: 240px; scroll-snap-align: start; }
@@ -794,7 +805,7 @@ body.lb-open { overflow: hidden; }
     .claim-body { max-width: 760px; }
     :root { --hd: 60px; --fs-11: 12.5px; --fs-12: 13.5px; --fs-13: 14.5px; --fs-15: 16px; --fs-17: 19px; --fs-20: 23px; }
     body { padding-bottom: 0; }
-    .wrap { padding: 0 24px; }
+    :root { --pad: 24px; }
 
     .hd-mark { width: 30px; height: 30px; }
     .hd-cta { padding: 10px 18px; }
@@ -983,50 +994,42 @@ body.lb-open { overflow: hidden; }
 body.nav-open .nav-burger i:nth-child(1) { top: 5.5px; transform: rotate(45deg); }
 body.nav-open .nav-burger i:nth-child(2) { top: 5.5px; transform: rotate(-45deg); }
 
-/* ── 모바일 : 전체 시트 ── */
+/* ── 모바일 : 헤더 아래로 떨어지는 간결한 드롭다운 ── */
 .navpanel {
-    position: fixed; left: 0; right: 0; top: var(--hd); bottom: 0; z-index: 115;
-    display: flex; flex-direction: column;
-    padding: 10px 16px calc(var(--bar) + 24px + env(safe-area-inset-bottom));
+    position: fixed; left: 0; right: 0; top: var(--hd); z-index: 115;
+    max-height: calc(100dvh - var(--hd)); overflow-y: auto; overscroll-behavior: contain;
+    padding: 4px var(--pad) 12px;
     background: rgba(255,255,255,.985);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     backdrop-filter: saturate(180%) blur(20px);
-    overflow-y: auto; overscroll-behavior: contain;
-    opacity: 0; visibility: hidden; transform: translateY(-10px);
-    transition: opacity .26s var(--ease), transform .3s var(--ease), visibility .26s;
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 14px 30px rgba(23,21,15,.10);
+    opacity: 0; visibility: hidden; transform: translateY(-8px);
+    transition: opacity .22s var(--ease), transform .26s var(--ease), visibility .22s;
 }
 body.nav-open .navpanel { opacity: 1; visibility: visible; transform: none; }
-body.nav-open { overflow: hidden; }
 
-.navlist { display: flex; flex-direction: column; flex: 1 1 auto; }
+.navlist { display: flex; flex-direction: column; }
 .navlist .tab {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    min-height: 62px; padding: 6px 2px;
-    font-size: clamp(22px, 6.4vw, 27px); font-weight: 700; letter-spacing: -.045em;
+    display: flex; align-items: center;
+    min-height: 50px; padding: 8px 2px;
+    font-size: var(--fs-15); font-weight: 600; letter-spacing: -.03em;
     color: var(--ink);
-    opacity: 0; transform: translateY(-8px);
-    transition: opacity .34s var(--ease), transform .34s var(--ease), color .15s var(--ease);
+    opacity: 0; transform: translateY(-5px);
+    transition: opacity .26s var(--ease), transform .26s var(--ease), color .15s var(--ease);
 }
-.navlist .tab::after {
-    content: ''; width: 8px; height: 8px; flex: 0 0 auto;
-    border-right: 2px solid var(--ink-3); border-top: 2px solid var(--ink-3);
-    transform: rotate(45deg); opacity: .55;
-    transition: opacity .15s var(--ease), border-color .15s var(--ease);
-}
-.navlist .tab.is-on { color: var(--brand-dark); }
-.navlist .tab.is-on::after { border-color: var(--brand); opacity: 1; }
-.navlist .tab:active { opacity: .55; }
+.navlist .tab.is-on { color: var(--brand-dark); font-weight: 700; }
+.navlist .tab:active { opacity: .5; }
 
 /* 하나씩 차례로 나타납니다 */
 body.nav-open .navlist .tab { opacity: 1; transform: none; }
-body.nav-open .navlist .tab:nth-child(1) { transition-delay: .04s; }
-body.nav-open .navlist .tab:nth-child(2) { transition-delay: .07s; }
-body.nav-open .navlist .tab:nth-child(3) { transition-delay: .10s; }
-body.nav-open .navlist .tab:nth-child(4) { transition-delay: .13s; }
-body.nav-open .navlist .tab:nth-child(5) { transition-delay: .16s; }
-body.nav-open .navlist .tab:nth-child(6) { transition-delay: .19s; }
-body.nav-open .navlist .tab:nth-child(7) { transition-delay: .22s; }
-
+body.nav-open .navlist .tab:nth-child(1) { transition-delay: .02s; }
+body.nav-open .navlist .tab:nth-child(2) { transition-delay: .05s; }
+body.nav-open .navlist .tab:nth-child(3) { transition-delay: .08s; }
+body.nav-open .navlist .tab:nth-child(4) { transition-delay: .11s; }
+body.nav-open .navlist .tab:nth-child(5) { transition-delay: .14s; }
+body.nav-open .navlist .tab:nth-child(6) { transition-delay: .17s; }
+body.nav-open .navlist .tab:nth-child(7) { transition-delay: .20s; }
 
 /* ── 데스크톱 : 헤더 바로 아래로 펼쳐지는 가로 목록 ── */
 @media (min-width: 768px) {
@@ -1036,14 +1039,13 @@ body.nav-open .navlist .tab:nth-child(7) { transition-delay: .22s; }
         background: rgba(255,255,255,.93);
         -webkit-backdrop-filter: saturate(180%) blur(20px);
         backdrop-filter: saturate(180%) blur(20px);
-        border-bottom: 1px solid transparent;
+        border-bottom: 1px solid transparent; box-shadow: none;
         overflow: hidden;
         opacity: 1; visibility: visible; transform: none;
         max-height: 0;
         transition: max-height .4s cubic-bezier(.32,.72,0,1), border-color .3s var(--ease);
     }
     body.nav-open .navpanel { max-height: 80px; border-bottom-color: rgba(23,21,15,.08); }
-    body.nav-open { overflow: auto; }
 
     .navlist {
         flex-direction: row; justify-content: center; gap: 4px;

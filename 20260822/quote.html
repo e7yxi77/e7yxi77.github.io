@@ -12,13 +12,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>견적 요청 | 편한 펫택시&amp;피크닉</title>
-    <meta name="description" content="이동 정보를 입력하면 견적 요청서가 만들어집니다. 복사하거나 내려받아 보내주시면 이용 금액을 안내해드립니다. 왕복 이용 시 복귀 픽업 정보까지 함께 담깁니다.">
+    <meta name="description" content="이동 정보를 입력해 견적 요청서를 작성해 주세요. 문자 또는 전화로 접수해주시면 이용 일정과 금액을 안내드립니다.">
     <meta name="theme-color" content="#14120D">
     <link rel="canonical" href="https://ey.io.kr/20260822/quote.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="편한 펫택시&피크닉">
     <meta property="og:title" content="견적 요청 | 편한 펫택시&피크닉">
-    <meta property="og:description" content="이동 정보를 알려주시면 이용 금액을 안내해드립니다.">
+    <meta property="og:description" content="이동 정보를 바탕으로 이용 일정과 금액을 안내드립니다.">
     <meta property="og:url" content="https://ey.io.kr/20260822/quote.html">
     <meta property="og:image" content="https://ey.io.kr/20260822/images/og-image.jpg">
     <meta property="og:locale" content="ko_KR">
@@ -71,10 +71,10 @@
             <div class="wrap">
                 <div class="sec-head">
                     <span class="eyebrow">Quote</span>
-                    <h1 class="sec-title">이동 정보를 알려주세요</h1>
+                    <h1 class="sec-title">이동 견적을 <em>간편하게 요청하세요</em></h1>
                     <p class="sec-desc">
-                        아래를 채우시면 오른쪽에 <b>견적 요청서</b>가 만들어집니다.
-                        복사하거나 내려받아 문자로 보내주시면 이용 금액을 안내해드립니다.
+                        이동 정보를 입력하시면 <b>견적 요청서</b>가 자동으로 작성됩니다.
+                        문자 또는 전화로 접수해주시면 이용 일정과 금액을 안내드립니다.
                     </p>
                 </div>
 
@@ -83,7 +83,7 @@
 
                         <!-- 1단계 : 언제 어디로 -->
                         <section class="qstep">
-                            <div class="qstep-hd"><span class="qstep-n">1</span><span class="qstep-t">언제, 어디로 갈까요</span></div>
+                            <div class="qstep-hd"><span class="qstep-n">1</span><span class="qstep-t">이동 일정과 경로</span></div>
 
                             <div class="qrow-2">
                                 <label class="qfield">
@@ -123,14 +123,14 @@
 
                         <!-- 2단계 : 왕복 -->
                         <section class="qstep">
-                            <div class="qstep-hd"><span class="qstep-n">2</span><span class="qstep-t">돌아오는 길도 필요하세요?</span></div>
+                            <div class="qstep-hd"><span class="qstep-n">2</span><span class="qstep-t">왕복 이용 여부</span></div>
 
                             <label class="qtrip" id="q-trip-box">
                                 <input type="checkbox" id="q-trip">
                                 <span class="qtrip-box" aria-hidden="true"><span class="ic ic-check"></span></span>
                                 <span class="qtrip-b">
-                                    <span class="qtrip-t">왕복으로 이용할게요</span>
-                                    <span class="qtrip-d">돌아오는 길 픽업 정보를 입력합니다</span>
+                                    <span class="qtrip-t">왕복 이용을 신청합니다</span>
+                                    <span class="qtrip-d">복귀 픽업 정보를 함께 입력합니다</span>
                                 </span>
                             </label>
 
@@ -172,14 +172,14 @@
 
                                 <label class="qfield">
                                     <span class="qlabel">복귀 요청사항 <em>선택</em></span>
-                                    <textarea id="r-note" rows="2" placeholder="예) 진료가 길어지면 연락드릴게요"></textarea>
+                                    <textarea id="r-note" rows="2" placeholder="예) 진료 시간이 길어질 경우 연락 부탁드립니다."></textarea>
                                 </label>
                             </div>
                         </section>
 
                         <!-- 3단계 : 누가 타나요 -->
                         <section class="qstep">
-                            <div class="qstep-hd"><span class="qstep-n">3</span><span class="qstep-t">누가 타나요</span></div>
+                            <div class="qstep-hd"><span class="qstep-n">3</span><span class="qstep-t">탑승 정보</span></div>
 
                             <div class="qfield">
                                 <span class="qlabel">함께 타시는 분</span>
@@ -226,13 +226,13 @@
                                 <span class="qty-u">마리</span>
                             </div>
                                 </div>
-                                <p class="qhint">이동장 없이 태우셔도 됩니다. 기타 반려동물은 요청사항에 적어 주세요.</p>
+                                <p class="qhint">이동장 없이도 이용 가능합니다. 기타 반려동물은 요청사항에 기재해 주세요.</p>
                             </div>
                         </section>
 
                         <!-- 4단계 : 짐과 요청사항 -->
                         <section class="qstep">
-                            <div class="qstep-hd"><span class="qstep-n">4</span><span class="qstep-t">짐과 요청사항</span></div>
+                            <div class="qstep-hd"><span class="qstep-n">4</span><span class="qstep-t">수하물 및 요청사항</span></div>
 
                             <div class="qfield">
                                 <span class="qlabel">짐</span>
@@ -247,7 +247,7 @@
 
                             <label class="qfield">
                                 <span class="qlabel">요청사항 <em>선택</em></span>
-                                <textarea id="q-note" rows="3" placeholder="예) 아이가 겁이 많아요 / 노령견이라 천천히 부탁드려요"></textarea>
+                                <textarea id="q-note" rows="3" placeholder="예) 낯선 환경에 예민합니다 / 노령견으로 천천한 이동을 요청합니다."></textarea>
                             </label>
                         </section>
                     </form>
@@ -268,8 +268,8 @@
                         </div>
 
                         <p class="quote-guide">
-                            견적서를 복사하거나 내려받아 <b>010-2300-6722</b> 로 문자 보내주시면
-                            <b>이용 금액을 안내</b>해드립니다. 운행 중일 수 있어 문자가 가장 빠릅니다.
+                            견적 요청서를 복사하거나 내려받아 <b>010-2300-6722</b>로 보내주세요.
+                            확인 후 <b>이용 가능 일정과 금액을 안내</b>드립니다. 운행 중에는 문자 문의가 가장 빠릅니다.
                         </p>
                         <p class="quote-priv">입력하신 내용은 어디에도 전송·저장되지 않으며 보호자님 기기 안에서만 처리됩니다.</p>
                     </aside>
@@ -281,14 +281,14 @@
             <div class="wrap">
                 <div class="sec-head">
                     <span class="eyebrow">Process</span>
-                    <h2 class="sec-title">문의부터 도착까지</h2>
+                    <h2 class="sec-title">문의부터 도착까지 <em>체계적으로 안내합니다</em></h2>
                 </div>
                 <ol class="steps">
-                    <li><b>01</b><span class="st">문의</span><span class="sd">견적 요청서를 문자 또는 전화로 보내주세요.</span></li>
-                    <li><b>02</b><span class="st">예약 확정</span><span class="sd">차량과 시간, 이용 금액을 안내해드립니다.</span></li>
-                    <li><b>03</b><span class="st">차량 소독</span><span class="sd">배차 전 스팀·습식·연무 소독을 마칩니다.</span></li>
-                    <li><b>04</b><span class="st">픽업 · 이동</span><span class="sd">약속한 시간에 문 앞으로 찾아가 안전하게 모십니다.</span></li>
-                    <li><b>05</b><span class="st">도착</span><span class="sd">목적지 도착 후 보호자님께 알려드립니다.</span></li>
+                    <li><b>01</b><span class="st">문의 접수</span><span class="sd">견적 요청서를 문자 또는 전화로 보내주세요.</span></li>
+                    <li><b>02</b><span class="st">예약 안내</span><span class="sd">차량, 시간 및 이용 금액을 안내드립니다.</span></li>
+                    <li><b>03</b><span class="st">차량 준비</span><span class="sd">배차 전 차량 위생 관리를 진행합니다.</span></li>
+                    <li><b>04</b><span class="st">픽업 · 이동</span><span class="sd">약속된 시간에 방문하여 안전하게 모십니다.</span></li>
+                    <li><b>05</b><span class="st">목적지 도착</span><span class="sd">도착 후 보호자님께 안내드립니다.</span></li>
                 </ol>
             </div>
         </section>
@@ -346,7 +346,7 @@
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "편한 펫택시&피크닉",
-      "description": "반려동물 전용 이동 서비스. 매일 두 번 스팀·습식·연무 3단 소독. 병원, 미용, 공항, 이사, 장례식장 이동 및 전국 장거리 운행.",
+      "description": "위생 관리와 안전 운행을 바탕으로 병원, 미용, 공항, 이사, 장례식장 및 전국 장거리 이동을 지원하는 반려동물 전용 이동 서비스입니다.",
       "image": "https://ey.io.kr/20260822/images/og-image.jpg",
       "telephone": "+82-507-1417-6722",
       "address": {

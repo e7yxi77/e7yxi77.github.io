@@ -459,10 +459,10 @@
         if (!sheet) { buildSheet(); }
 
         var sms = mode === 'sms';
-        sheetT.textContent = sms ? '어디로 문자 보낼까요?' : '어디로 전화 걸까요?';
+        sheetT.textContent = sms ? '문의하실 영업점을 선택해 주세요' : '상담하실 영업점을 선택해 주세요';
         sheetD.textContent = sms
-            ? '운행 중에는 전화를 못 받을 수 있습니다. 문자를 남겨 주시면 운행이 끝나는 대로 답변드립니다.'
-            : '24시간 연중무휴로 상담해 드립니다. 가까운 영업점을 골라 주세요.';
+            ? '운행 중 통화가 어려울 수 있습니다. 문자를 남겨주시면 확인 후 안내드립니다.'
+            : '24시간 연중무휴로 상담을 운영합니다. 가까운 영업점을 선택해 주세요.';
 
         sheetList.innerHTML = BRANCHES.map(function (b) {
             var href = (sms ? 'sms:' : 'tel:') + telDigits(b.tel);
