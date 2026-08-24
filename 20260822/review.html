@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!--
+  ================================================================
+  하루펫택시 — 이용후기
+  후기 내용은 script.js 의 REVIEWS 배열 한 곳에서 관리합니다.
+  "리뷰 추가하기" 버튼이 여는 주소도 script.js 의 REVIEW_WRITE_URL 입니다.
+  ================================================================
+-->
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>이용후기 | 하루펫택시</title>
+    <meta name="description" content="하루펫택시를 이용하신 보호자들의 후기입니다. 병원 이동, 지방 장거리, 고양이 이동까지 실제 이용 경험을 확인해 보세요.">
+    <meta name="theme-color" content="#E7832E">
+    <link rel="canonical" href="https://ey.io.kr/20260822/review.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="하루펫택시">
+    <meta property="og:title" content="이용후기 | 하루펫택시">
+    <meta property="og:description" content="하루펫택시를 이용하신 보호자들의 후기입니다.">
+    <meta property="og:url" content="https://ey.io.kr/20260822/review.html">
+    <meta property="og:image" content="https://ey.io.kr/20260822/images/og-image.jpg">
+    <meta property="og:locale" content="ko_KR">
+
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+    <link rel="apple-touch-icon" href="images/favicon-180.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">본문 바로가기</a>
+
+    <header class="hd">
+        <div class="wrap hd-in">
+            <a class="hd-logo" href="index.html" aria-label="하루펫택시 홈">
+                <img src="images/haru-wordmark.png" alt="하루펫" width="104" height="27">
+            </a>
+            <span class="hd-sp"></span>
+            <a class="hd-link" href="https://talk.naver.com/profile/w5xpj1/form/1" target="_blank" rel="noopener">견적 신청서</a>
+            <a class="hd-link is-naver" href="https://talk.naver.com/ct/w5xpj1" target="_blank" rel="noopener">네이버 톡톡</a>
+            <a class="hd-call" href="tel:010-7987-3460">
+                <span class="ic ic-phone" aria-hidden="true"></span>
+                <span class="only-pc">010-7987-3460</span>
+                <span class="hd-call-m">전화</span>
+            </a>
+        </div>
+    </header>
+
+    <nav class="tabs" aria-label="바로가기">
+        <div class="wrap tabs-in">
+            <a class="tab" href="index.html#home">홈</a>
+            <a class="tab" href="index.html#service">서비스</a>
+            <a class="tab" href="index.html#safety">방역 · 안전</a>
+            <a class="tab" href="index.html#transport">이동 사진</a>
+            <a class="tab is-on" href="review.html" aria-current="page">이용후기</a>
+            <a class="tab" href="index.html#quote">견적 요청</a>
+        </div>
+    </nav>
+
+    <main id="main">
+        <section class="sec">
+            <div class="wrap">
+                <div class="sec-head">
+                    <span class="sec-eyebrow">이용후기</span>
+                    <h1 class="sec-title">먼저 타 본 보호자들의 이야기</h1>
+                    <p class="sec-desc">하루펫은 반려동물과 보호자의 행복한 이동을 위해 항상 최선을 다합니다. 여러분의 소중한 후기가 하루펫을 더욱 성장하게 합니다.</p>
+                </div>
+
+                <div class="score">
+                    <p class="score-n" id="rv-avg">5.0</p>
+                    <div class="score-r">
+                        <p class="stars" aria-label="평점 5점 만점에 5점">★★★★★</p>
+                        <p class="score-c"><b id="rv-count">4</b>건의 보호자 후기</p>
+                        <div class="bars" id="rv-bars"></div>
+                    </div>
+                </div>
+
+                <div class="rv-list" id="rv-list"></div>
+
+                <div style="margin-top:22px">
+                    <a class="btn btn-naver btn-block btn-lg" id="rv-write"
+                       href="https://talk.naver.com/ct/w5xpj1" target="_blank" rel="noopener">
+                        <span class="ic ic-talk" aria-hidden="true"></span>리뷰 추가하기
+                    </a>
+                    <p class="quote-priv" style="text-align:center;margin-top:9px">
+                        네이버에서 후기를 남겨주시면 다른 보호자님께 큰 도움이 됩니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="ft">
+        <div class="wrap">
+            <img class="ft-logo" src="images/haru-wordmark.png" alt="하루펫" width="78" height="20">
+            <p class="ft-name">하루펫택시 · 반려동물의 안전한 이동 파트너</p>
+            <p>
+                서울특별시 관악구 청룡길 78 (봉천동, 서울대입구아이원아파트) 1층<br>
+                예약 문의 010-7987-3460 · 장거리 상담 010-8030-7236
+            </p>
+            <p style="margin-top:12px">© 하루펫. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="bbar" aria-label="빠른 예약">
+        <a class="btn btn-line" href="tel:010-7987-3460"><span class="ic ic-phone" aria-hidden="true"></span>전화</a>
+        <a class="btn btn-naver" href="https://talk.naver.com/ct/w5xpj1" target="_blank" rel="noopener"><span class="ic ic-talk" aria-hidden="true"></span>톡톡</a>
+        <a class="btn btn-main btn-quote" href="index.html#quote">견적 요청</a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
