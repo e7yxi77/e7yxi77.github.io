@@ -234,27 +234,80 @@
           스크립트를 못 불러오는 환경에서는 직접 입력으로 자동 전환됩니다.
        ================================================================ */
 
+    /* 주소 검색 창을 페이지 안에 띄웁니다.
+       별도 팝업 창으로 열면 브라우저가 막거나 선택 결과가 되돌아오지 않는 일이
+       있어서, 화면 안 레이어에 심는 방식(embed)을 씁니다. */
+
+    var addrBack, addrBox, addrTitle, addrLast = null;
+
+    function buildAddr() {
+        addrBack = document.createElement('div');
+        addrBack.className = 'addr-back';
+        addrBack.innerHTML =
+            '<div class="addr-modal" role="dialog" aria-modal="true" aria-label="주소 검색">' +
+                '<div class="addr-hd">' +
+                    '<p class="addr-t"></p>' +
+                    '<button class="addr-x" type="button" aria-label="주소 검색 닫기">' +
+                        '<span class="ic ic-close" aria-hidden="true"></span></button>' +
+                '</div>' +
+                '<div class="addr-box"></div>' +
+            '</div>';
+        document.body.appendChild(addrBack);
+        addrBox   = addrBack.querySelector('.addr-box');
+        addrTitle = addrBack.querySelector('.addr-t');
+        addrBack.querySelector('.addr-x').addEventListener('click', closeAddr);
+        addrBack.addEventListener('click', function (e) { if (e.target === addrBack) { closeAddr(); } });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && addrBack.classList.contains('is-on')) { closeAddr(); }
+        });
+    }
+
+    function closeAddr() {
+        if (!addrBack) { return; }
+        addrBack.classList.remove('is-on');
+        document.body.classList.remove('lb-open');
+        addrBox.innerHTML = '';
+        if (addrLast && addrLast.focus) { addrLast.focus(); addrLast = null; }
+    }
+
+    function openAddr(field, label) {
+        if (!addrBack) { buildAddr(); }
+        addrLast = document.activeElement;
+        addrTitle.textContent = label + ' 주소 검색';
+        addrBox.innerHTML = '';
+        addrBack.classList.add('is-on');
+        document.body.classList.add('lb-open');
+
+        new window.daum.Postcode({
+            oncomplete: function (data) {
+                field.value = data.roadAddress || data.jibunAddress;
+                closeAddr();
+                var detail = $(field.id + '-detail');
+                if (detail) { detail.focus(); }
+                if (isRound) { fillReverse(false); }
+                render();
+            },
+            onclose: function () { closeAddr(); },
+            width: '100%',
+            height: '100%'
+        }).embed(addrBox, { autoClose: false });
+    }
+
     all('.qsearch').forEach(function (btn) {
         btn.addEventListener('click', function () {
             var field = $(btn.getAttribute('data-addr'));
             if (!field) { return; }
 
+            /* 검색 도구를 못 불러오면 직접 입력할 수 있게 풀어 줍니다 */
             if (typeof window.daum === 'undefined' || !window.daum.Postcode) {
                 field.readOnly = false;
                 field.placeholder = '주소를 직접 입력해 주세요';
                 field.focus();
                 return;
             }
-            new window.daum.Postcode({
-                oncomplete: function (data) {
-                    field.value = data.roadAddress || data.jibunAddress;
-                    var detail = $(field.id + '-detail');
-                    if (detail) { detail.focus(); }
-                    /* 왕복을 켜 두었고 복귀 칸이 비어 있으면 따라 채워 줍니다 */
-                    if (isRound) { fillReverse(false); }
-                    render();
-                }
-            }).open();
+            var lbl = btn.closest('.qfield');
+            lbl = lbl ? (lbl.querySelector('.qlabel') || {}).textContent : '';
+            openAddr(field, (lbl || '').trim());
         });
     });
 
