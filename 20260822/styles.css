@@ -126,6 +126,8 @@ table { border-collapse: collapse; }
 }
 .ic-phone   { -webkit-mask-image: var(--m-phone);   mask-image: var(--m-phone); }
 .ic-sms     { -webkit-mask-image: var(--m-sms);     mask-image: var(--m-sms); }
+.ic-talk    { -webkit-mask-image: var(--m-talk);    mask-image: var(--m-talk); }
+.ic-chev    { -webkit-mask-image: var(--m-chev);    mask-image: var(--m-chev); }
 .ic-arrow   { -webkit-mask-image: var(--m-arrow);   mask-image: var(--m-arrow); }
 .ic-check   { -webkit-mask-image: var(--m-check);   mask-image: var(--m-check); }
 .ic-copy    { -webkit-mask-image: var(--m-copy);    mask-image: var(--m-copy); }
@@ -147,6 +149,8 @@ table { border-collapse: collapse; }
 
 :root {
     --m-phone:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.3 2.1z'/%3E%3C/svg%3E");
+    --m-chev:   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 15.4 5.6 9l1.4-1.4 5 5 5-5L18.4 9z'/%3E%3C/svg%3E");
+    --m-talk:   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3C6.9 3 2.8 6.3 2.8 10.4c0 2.6 1.7 4.9 4.3 6.2-.2.7-.7 2.5-.8 2.9 0 0-.1.3.1.4.2.1.4 0 .4 0 .5-.1 3-2 3.7-2.5.5.1 1 .1 1.5.1 5.1 0 9.2-3.3 9.2-7.4S17.1 3 12 3z'/%3E%3C/svg%3E");
     --m-sms:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm3 6v2h2V9H7zm4 0v2h2V9h-2zm4 0v2h2V9h-2z'/%3E%3C/svg%3E");
     --m-arrow:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 5.5 10.4 4l8 8-8 8L9 18.5 15.5 12z'/%3E%3C/svg%3E");
     --m-check:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9.6 16.2 5.4 12l-1.4 1.4 5.6 5.6L20.4 7.8 19 6.4z'/%3E%3C/svg%3E");
@@ -536,6 +540,7 @@ main .sec + .sec { border-top: 8px solid var(--paper-2); }
     background: var(--brand-soft); color: var(--brand-dark); border-radius: 11px; font-size: 21px;
 }
 .contact-ic.is-naver { background: #E7F9EE; color: var(--naver-dark); }
+.contact-ic.is-kakao { background: #FEF3C3; color: #3C1E1E; }
 .contact-b { flex: 1 1 auto; min-width: 0; }
 .ct-k { display: block; font-size: var(--fs-11); font-weight: 700; color: var(--ink-3); }
 .ct-v { display: block; font-size: var(--fs-15); font-weight: 800; letter-spacing: -.025em; }
@@ -629,6 +634,10 @@ main .sec + .sec { border-top: 8px solid var(--paper-2); }
 }
 .branch-item:hover { border-color: var(--brand); background: var(--brand-soft); }
 .branch-item.is-main { border-color: var(--brand); border-width: 2px; padding: 12px 14px; }
+/* 오픈채팅 주소가 아직 없는 영업점 */
+.branch-item.is-off { background: var(--paper-2); border-style: dashed; cursor: default; }
+.branch-item.is-off:hover { border-color: var(--line-2); background: var(--paper-2); }
+.branch-item.is-off .branch-tel { color: var(--ink-3); }
 .branch-b { flex: 1 1 auto; min-width: 0; }
 
 /* 윗줄 : 지점 이름 (작게) / 아랫줄 : 번호 (크게) */
@@ -816,38 +825,76 @@ body.lb-open { overflow: hidden; }
 .chip:hover { border-color: var(--brand); color: var(--brand-dark); }
 .chip.is-on { background: var(--brand); border-color: var(--brand); color: var(--ink); }
 
-/* 요청서 미리보기 */
-.quote-card {
-    margin-top: 14px; padding: 14px;
-    background: var(--paper); border: 2px solid var(--brand); border-radius: var(--r-l);
-}
-.quote-cap {
-    display: flex; align-items: center; gap: 6px; margin-bottom: 10px; padding-bottom: 9px;
-    border-bottom: 1px solid var(--line);
-    font-size: var(--fs-13); font-weight: 800; color: var(--brand-deep);
-}
-.quote-row {
-    display: grid; grid-template-columns: 72px 1fr; gap: 9px; padding: 6px 0;
-    border-bottom: 1px solid var(--line);
-}
-.quote-row:last-child { border-bottom: 0; }
-.quote-row dt { font-size: var(--fs-11); font-weight: 700; color: var(--ink-3); }
-.quote-row dd { font-size: var(--fs-12); line-height: 1.55; word-break: break-all; }
-.quote-row.is-empty dd { color: var(--ink-3); }
-.quote-row.is-head {
-    grid-template-columns: 1fr; margin-top: 5px; padding-top: 10px;
-    border-top: 1px solid var(--line-2); border-bottom: 0;
-}
-.quote-row.is-head dt { font-size: var(--fs-11); font-weight: 800; color: var(--brand-deep); letter-spacing: .02em; }
 
-.quote-actions { display: grid; gap: 8px; margin-top: 11px; }
+.quote-actions { display: grid; gap: 8px; margin-top: 18px; }
 .quote-guide {
-    margin-top: 10px; padding: 11px 13px;
+    margin-top: 10px; padding: 10px 13px;
     background: var(--brand-soft); border-radius: var(--r);
     font-size: var(--fs-12); line-height: 1.6; color: var(--ink-2);
 }
 .quote-guide b { color: var(--brand-deep); }
-.quote-priv { margin-top: 7px; font-size: var(--fs-11); color: var(--ink-3); line-height: 1.5; }
+
+/* ------------------------------------------------------------------ */
+/* 견적서 보내기 — 복사·다운로드를 마친 뒤에 나타납니다                  */
+/* ------------------------------------------------------------------ */
+
+.sendbox {
+    position: relative; z-index: 2;
+    margin-top: 14px; padding: 16px 15px;
+    background: var(--brand-soft);
+    border: 1px solid var(--brand-line);
+    border-radius: var(--r-l);
+    animation: sendIn .32s var(--ease);
+}
+.sendbox[hidden] { display: none; }
+/* 모바일은 하단 고정 바의 '견적 보내기' 로 접수하므로 이 영역은 감춥니다 */
+@media (max-width: 767px) { .sendbox { display: none; } }
+@keyframes sendIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+.sendbox-t {
+    display: flex; align-items: center; gap: 7px;
+    font-size: var(--fs-15); font-weight: 800; color: var(--brand-deep);
+}
+.sendbox-t .ic { font-size: 17px; }
+.sendbox-d { margin: 4px 0 14px; font-size: var(--fs-12); line-height: 1.55; color: var(--ink-2); }
+
+.sendgroup + .sendgroup { margin-top: 8px; }
+.sendhead {
+    display: flex; align-items: center; gap: 9px;
+    width: 100%; min-height: 52px; padding: 12px 14px;
+    background: var(--paper); border: 1px solid var(--line-2); border-radius: var(--r);
+    font-size: var(--fs-13); font-weight: 800; color: var(--ink); text-align: left;
+    transition: border-color .15s var(--ease);
+}
+.sendhead:hover { border-color: var(--brand); }
+.sendhead .ic-lead { font-size: 17px; color: var(--brand-dark); flex: 0 0 auto; }
+.sendhead .sh-t { flex: 1 1 auto; }
+.sendhead .ic-chev { font-size: 16px; color: var(--ink-3); transition: transform .25s var(--ease); }
+.sendgroup.is-open .sendhead { border-color: var(--brand); background: var(--paper); border-radius: var(--r) var(--r) 0 0; }
+.sendgroup.is-open .sendhead .ic-chev { transform: rotate(180deg); }
+
+.sendlist { display: grid; gap: 6px; padding: 8px; background: var(--paper); border: 1px solid var(--brand); border-top: 0; border-radius: 0 0 var(--r) var(--r); }
+.sendlist[hidden] { display: none; }
+.senditem {
+    display: flex; align-items: center; gap: 10px;
+    min-height: 52px; padding: 9px 12px;
+    background: var(--paper-2); border: 1px solid transparent; border-radius: 8px;
+    text-align: left; transition: border-color .15s var(--ease), background-color .15s var(--ease);
+}
+.senditem:hover { background: var(--brand-soft); }
+.senditem:hover { border-color: var(--brand); }
+.senditem-b { flex: 1 1 auto; min-width: 0; }
+.senditem-n { display: block; font-size: var(--fs-11); font-weight: 700; color: var(--ink-3); }
+.senditem-v { display: block; margin-top: 1px; font-size: var(--fs-13); font-weight: 800; color: var(--ink); letter-spacing: -.02em; }
+.senditem > .ic-arrow { font-size: 12px; color: var(--ink-3); }
+.senditem.is-off { background: transparent; border: 1px dashed var(--line-2); cursor: default; }
+.senditem.is-off .senditem-v { color: var(--ink-3); }
+.senditem.is-off:hover { background: transparent; }
+.senditem .pill {
+    padding: 2px 6px; border-radius: 4px;
+    background: var(--line); color: var(--ink-3);
+    font-size: 9.5px; font-weight: 800;
+}
 
 /* ------------------------------------------------------------------ */
 /* 이용 절차                                                            */
@@ -907,8 +954,7 @@ body.lb-open { overflow: hidden; }
 
     .contact { grid-template-columns: repeat(3, 1fr); }
 
-    .quote-wrap { display: grid; grid-template-columns: 1fr 360px; gap: 34px; align-items: start; }
-    .quote-card { margin-top: 0; position: sticky; top: calc(var(--hd) + 20px); }
+    /* 버튼과 안내문은 위 입력란과 같은 폭을 씁니다 */
     .quote-actions { grid-template-columns: 1fr 1fr; }
     .steps { grid-template-columns: repeat(5, 1fr); }
     .steps li { grid-template-columns: 1fr; gap: 3px; padding: 15px; }

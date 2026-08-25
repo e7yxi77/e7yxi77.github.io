@@ -32,7 +32,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap">
-    <link rel="stylesheet" href="styles.css?v=065fc69a">
+    <link rel="stylesheet" href="styles.css?v=ffd69aea">
 </head>
 <body>
     <a class="skip-link" href="#main">본문 바로가기</a>
@@ -79,197 +79,186 @@
                     </p>
                 </div>
 
-                <div class="quote-wrap">
-                    <form class="qform" id="qform" autocomplete="off">
+                <form class="qform" id="qform" autocomplete="off">
 
-                        <!-- 1단계 : 언제 어디로 -->
-                        <section class="qstep">
-                            <div class="qstep-hd"><span class="qstep-n">1</span><span class="qstep-t">이동 일정과 경로</span></div>
+                    <!-- 1단계 : 언제 어디로 -->
+                    <section class="qstep">
+                        <div class="qstep-hd"><span class="qstep-n">1</span><span class="qstep-t">이동 일정과 경로</span></div>
+
+                        <div class="qrow-2">
+                            <label class="qfield">
+                                <span class="qlabel">이용 날짜</span>
+                                <input type="date" id="q-date">
+                            </label>
+                            <label class="qfield">
+                                <span class="qlabel">출발 시간</span>
+                                <input type="time" id="q-time">
+                            </label>
+                        </div>
+
+                    <div class="qfield">
+                        <span class="qlabel">출발지</span>
+                        <div class="qaddr">
+                            <input type="text" id="q-from" placeholder="주소를 검색해 주세요" readonly>
+                            <button class="qsearch" type="button" data-addr="q-from">주소 검색</button>
+                        </div>
+                        <input type="text" id="q-from-detail" class="qdetail" placeholder="상세주소 (동·호수, 건물명)">
+                    </div>
+
+                        <div class="qflip">
+                            <button type="button" id="q-flip" aria-label="출발지와 도착지 바꾸기">
+                                <span class="ic ic-swap" aria-hidden="true"></span>
+                            </button>
+                        </div>
+
+                    <div class="qfield">
+                        <span class="qlabel">도착지</span>
+                        <div class="qaddr">
+                            <input type="text" id="q-to" placeholder="주소를 검색해 주세요" readonly>
+                            <button class="qsearch" type="button" data-addr="q-to">주소 검색</button>
+                        </div>
+                        <input type="text" id="q-to-detail" class="qdetail" placeholder="상세주소 (동·호수, 건물명)">
+                    </div>
+                    </section>
+
+                    <!-- 2단계 : 왕복 -->
+                    <section class="qstep">
+                        <div class="qstep-hd"><span class="qstep-n">2</span><span class="qstep-t">왕복 이용 여부</span></div>
+
+                        <label class="qtrip" id="q-trip-box">
+                            <input type="checkbox" id="q-trip">
+                            <span class="qtrip-box" aria-hidden="true"><span class="ic ic-check"></span></span>
+                            <span class="qtrip-b">
+                                <span class="qtrip-t">왕복 이용을 신청합니다</span>
+                                <span class="qtrip-d">복귀 픽업 정보를 함께 입력합니다</span>
+                            </span>
+                        </label>
+
+                        <div class="qreturn" id="q-return">
+                            <p class="qreturn-hd">돌아오는 길 픽업 정보</p>
 
                             <div class="qrow-2">
                                 <label class="qfield">
-                                    <span class="qlabel">이용 날짜</span>
-                                    <input type="date" id="q-date">
+                                    <span class="qlabel">복귀 날짜</span>
+                                    <input type="date" id="r-date">
                                 </label>
                                 <label class="qfield">
-                                    <span class="qlabel">출발 시간</span>
-                                    <input type="time" id="q-time">
+                                    <span class="qlabel">픽업 시간</span>
+                                    <input type="time" id="r-time">
                                 </label>
                             </div>
 
-                        <div class="qfield">
-                            <span class="qlabel">출발지</span>
-                            <div class="qaddr">
-                                <input type="text" id="q-from" placeholder="주소를 검색해 주세요" readonly>
-                                <button class="qsearch" type="button" data-addr="q-from">주소 검색</button>
-                            </div>
-                            <input type="text" id="q-from-detail" class="qdetail" placeholder="상세주소 (동·호수, 건물명)">
-                        </div>
-
-                            <div class="qflip">
-                                <button type="button" id="q-flip" aria-label="출발지와 도착지 바꾸기">
-                                    <span class="ic ic-swap" aria-hidden="true"></span>
-                                </button>
-                            </div>
-
-                        <div class="qfield">
-                            <span class="qlabel">도착지</span>
-                            <div class="qaddr">
-                                <input type="text" id="q-to" placeholder="주소를 검색해 주세요" readonly>
-                                <button class="qsearch" type="button" data-addr="q-to">주소 검색</button>
-                            </div>
-                            <input type="text" id="q-to-detail" class="qdetail" placeholder="상세주소 (동·호수, 건물명)">
-                        </div>
-                        </section>
-
-                        <!-- 2단계 : 왕복 -->
-                        <section class="qstep">
-                            <div class="qstep-hd"><span class="qstep-n">2</span><span class="qstep-t">왕복 이용 여부</span></div>
-
-                            <label class="qtrip" id="q-trip-box">
-                                <input type="checkbox" id="q-trip">
-                                <span class="qtrip-box" aria-hidden="true"><span class="ic ic-check"></span></span>
-                                <span class="qtrip-b">
-                                    <span class="qtrip-t">왕복 이용을 신청합니다</span>
-                                    <span class="qtrip-d">복귀 픽업 정보를 함께 입력합니다</span>
-                                </span>
-                            </label>
-
-                            <div class="qreturn" id="q-return">
-                                <p class="qreturn-hd">돌아오는 길 픽업 정보</p>
-
-                                <div class="qrow-2">
-                                    <label class="qfield">
-                                        <span class="qlabel">복귀 날짜</span>
-                                        <input type="date" id="r-date">
-                                    </label>
-                                    <label class="qfield">
-                                        <span class="qlabel">픽업 시간</span>
-                                        <input type="time" id="r-time">
-                                    </label>
-                                </div>
-
-                                <div class="qfield">
-                                    <span class="qlabel">복귀 출발지</span>
-                                    <div class="qaddr">
-                                        <input type="text" id="r-from" placeholder="주소를 검색해 주세요" readonly>
-                                        <button class="qsearch" type="button" data-addr="r-from">주소 검색</button>
-                                    </div>
-                                    <input type="text" id="r-from-detail" class="qdetail" placeholder="상세주소 (동·호수, 건물명)">
-                                </div>
-
-                                <div class="qfield">
-                                    <span class="qlabel">복귀 도착지</span>
-                                    <div class="qaddr">
-                                        <input type="text" id="r-to" placeholder="주소를 검색해 주세요" readonly>
-                                        <button class="qsearch" type="button" data-addr="r-to">주소 검색</button>
-                                    </div>
-                                    <input type="text" id="r-to-detail" class="qdetail" placeholder="상세주소 (동·호수, 건물명)">
-                                </div>
-
-                                <label class="qfield">
-                                    <span class="qlabel">복귀 요청사항 <em>선택</em></span>
-                                    <textarea id="r-note" rows="2" placeholder="예) 진료 시간이 길어질 경우 연락 부탁드립니다."></textarea>
-                                </label>
-                            </div>
-                        </section>
-
-                        <!-- 3단계 : 누가 타나요 -->
-                        <section class="qstep">
-                            <div class="qstep-hd"><span class="qstep-n">3</span><span class="qstep-t">탑승 정보</span></div>
-
                             <div class="qfield">
-                                <span class="qlabel">함께 타시는 분</span>
-                                <div class="qty-group">
-                            <div class="qty" data-key="human">
-                                <span class="qty-k">보호자</span>
-                                <button class="qty-btn" type="button" data-step="-1" aria-label="보호자 줄이기">−</button>
-                                <output class="qty-v">1</output>
-                                <button class="qty-btn" type="button" data-step="1" aria-label="보호자 늘리기">+</button>
-                                <span class="qty-u">명</span>
-                            </div>
+                                <span class="qlabel">복귀 출발지</span>
+                                <div class="qaddr">
+                                    <input type="text" id="r-from" placeholder="주소를 검색해 주세요" readonly>
+                                    <button class="qsearch" type="button" data-addr="r-from">주소 검색</button>
                                 </div>
+                                <input type="text" id="r-from-detail" class="qdetail" placeholder="상세주소 (동·호수, 건물명)">
                             </div>
 
                             <div class="qfield">
-                                <span class="qlabel">반려동물</span>
-                                <div class="qty-group">
-                            <div class="qty" data-key="dogS">
-                                <span class="qty-k">소형견</span>
-                                <button class="qty-btn" type="button" data-step="-1" aria-label="소형견 줄이기">−</button>
-                                <output class="qty-v">0</output>
-                                <button class="qty-btn" type="button" data-step="1" aria-label="소형견 늘리기">+</button>
-                                <span class="qty-u">마리</span>
-                            </div>
-                            <div class="qty" data-key="dogM">
-                                <span class="qty-k">중형견</span>
-                                <button class="qty-btn" type="button" data-step="-1" aria-label="중형견 줄이기">−</button>
-                                <output class="qty-v">0</output>
-                                <button class="qty-btn" type="button" data-step="1" aria-label="중형견 늘리기">+</button>
-                                <span class="qty-u">마리</span>
-                            </div>
-                            <div class="qty" data-key="dogL">
-                                <span class="qty-k">대형견</span>
-                                <button class="qty-btn" type="button" data-step="-1" aria-label="대형견 줄이기">−</button>
-                                <output class="qty-v">0</output>
-                                <button class="qty-btn" type="button" data-step="1" aria-label="대형견 늘리기">+</button>
-                                <span class="qty-u">마리</span>
-                            </div>
-                            <div class="qty" data-key="cat">
-                                <span class="qty-k">고양이</span>
-                                <button class="qty-btn" type="button" data-step="-1" aria-label="고양이 줄이기">−</button>
-                                <output class="qty-v">0</output>
-                                <button class="qty-btn" type="button" data-step="1" aria-label="고양이 늘리기">+</button>
-                                <span class="qty-u">마리</span>
-                            </div>
+                                <span class="qlabel">복귀 도착지</span>
+                                <div class="qaddr">
+                                    <input type="text" id="r-to" placeholder="주소를 검색해 주세요" readonly>
+                                    <button class="qsearch" type="button" data-addr="r-to">주소 검색</button>
                                 </div>
-                                <p class="qhint">이동장 없이도 이용 가능합니다. 기타 반려동물은 요청사항에 기재해 주세요.</p>
-                            </div>
-                        </section>
-
-                        <!-- 4단계 : 짐과 요청사항 -->
-                        <section class="qstep">
-                            <div class="qstep-hd"><span class="qstep-n">4</span><span class="qstep-t">수하물 및 요청사항</span></div>
-
-                            <div class="qfield">
-                                <span class="qlabel">짐</span>
-                                <div class="chips" id="q-bag" role="group" aria-label="짐 현황">
-                                    <button class="chip is-on" type="button" data-val="없음" aria-pressed="true">없음</button>
-                                    <button class="chip" type="button" data-val="이동장 1개" aria-pressed="false">이동장 1개</button>
-                                    <button class="chip" type="button" data-val="이동장 2개 이상" aria-pressed="false">이동장 2개 이상</button>
-                                    <button class="chip" type="button" data-val="유모차 있음" aria-pressed="false">유모차 있음</button>
-                                    <button class="chip" type="button" data-val="캐리어 있음" aria-pressed="false">캐리어 있음</button>
-                                </div>
+                                <input type="text" id="r-to-detail" class="qdetail" placeholder="상세주소 (동·호수, 건물명)">
                             </div>
 
                             <label class="qfield">
-                                <span class="qlabel">요청사항 <em>선택</em></span>
-                                <textarea id="q-note" rows="3" placeholder="예) 낯선 환경에 예민합니다 / 노령견으로 천천한 이동을 요청합니다."></textarea>
+                                <span class="qlabel">복귀 요청사항 <em>선택</em></span>
+                                <textarea id="r-note" rows="2" placeholder="예) 진료 시간이 길어질 경우 연락 부탁드립니다."></textarea>
                             </label>
-                        </section>
-                    </form>
+                        </div>
+                    </section>
 
-                    <aside class="quote-side">
-                        <div class="quote-card">
-                            <p class="quote-cap"><span class="ic ic-doc" aria-hidden="true"></span>견적 요청서</p>
-                            <dl id="quote-list"></dl>
+                    <!-- 3단계 : 누가 타나요 -->
+                    <section class="qstep">
+                        <div class="qstep-hd"><span class="qstep-n">3</span><span class="qstep-t">탑승 정보</span></div>
 
-                            <div class="quote-actions">
-                                <button class="btn btn-main" type="button" id="q-copy">
-                                    <span class="ic ic-copy" aria-hidden="true"></span>내용 복사하기
-                                </button>
-                                <button class="btn btn-line" type="button" id="q-pdf">
-                                    <span class="ic ic-down" aria-hidden="true"></span>견적서 다운로드
-                                </button>
+                        <div class="qfield">
+                            <span class="qlabel">함께 타시는 분</span>
+                            <div class="qty-group">
+                        <div class="qty" data-key="human">
+                            <span class="qty-k">보호자</span>
+                            <button class="qty-btn" type="button" data-step="-1" aria-label="보호자 줄이기">−</button>
+                            <output class="qty-v">1</output>
+                            <button class="qty-btn" type="button" data-step="1" aria-label="보호자 늘리기">+</button>
+                            <span class="qty-u">명</span>
+                        </div>
                             </div>
                         </div>
 
-                        <p class="quote-guide">
-                            견적 요청서를 복사하거나 내려받아 <b>010-2300-6722</b>로 보내주세요.
-                            확인 후 <b>이용 가능 일정과 금액을 안내</b>드립니다. 운행 중에는 문자 문의가 가장 빠릅니다.
-                        </p>
-                        <p class="quote-priv">입력하신 내용은 어디에도 전송·저장되지 않으며 보호자님 기기 안에서만 처리됩니다.</p>
-                    </aside>
+                        <div class="qfield">
+                            <span class="qlabel">반려동물</span>
+                            <div class="qty-group">
+                        <div class="qty" data-key="dogS">
+                            <span class="qty-k">소형견</span>
+                            <button class="qty-btn" type="button" data-step="-1" aria-label="소형견 줄이기">−</button>
+                            <output class="qty-v">0</output>
+                            <button class="qty-btn" type="button" data-step="1" aria-label="소형견 늘리기">+</button>
+                            <span class="qty-u">마리</span>
+                        </div>
+                        <div class="qty" data-key="dogM">
+                            <span class="qty-k">중형견</span>
+                            <button class="qty-btn" type="button" data-step="-1" aria-label="중형견 줄이기">−</button>
+                            <output class="qty-v">0</output>
+                            <button class="qty-btn" type="button" data-step="1" aria-label="중형견 늘리기">+</button>
+                            <span class="qty-u">마리</span>
+                        </div>
+                        <div class="qty" data-key="dogL">
+                            <span class="qty-k">대형견</span>
+                            <button class="qty-btn" type="button" data-step="-1" aria-label="대형견 줄이기">−</button>
+                            <output class="qty-v">0</output>
+                            <button class="qty-btn" type="button" data-step="1" aria-label="대형견 늘리기">+</button>
+                            <span class="qty-u">마리</span>
+                        </div>
+                        <div class="qty" data-key="cat">
+                            <span class="qty-k">고양이</span>
+                            <button class="qty-btn" type="button" data-step="-1" aria-label="고양이 줄이기">−</button>
+                            <output class="qty-v">0</output>
+                            <button class="qty-btn" type="button" data-step="1" aria-label="고양이 늘리기">+</button>
+                            <span class="qty-u">마리</span>
+                        </div>
+                            </div>
+                            <p class="qhint">이동장 없이도 이용 가능합니다. 기타 반려동물은 요청사항에 기재해 주세요.</p>
+                        </div>
+                    </section>
+
+                    <!-- 4단계 : 짐과 요청사항 -->
+                    <section class="qstep">
+                        <div class="qstep-hd"><span class="qstep-n">4</span><span class="qstep-t">수하물 및 요청사항</span></div>
+
+                        <div class="qfield">
+                            <span class="qlabel">짐</span>
+                            <div class="chips" id="q-bag" role="group" aria-label="짐 현황">
+                                <button class="chip is-on" type="button" data-val="없음" aria-pressed="true">없음</button>
+                                <button class="chip" type="button" data-val="이동장 1개" aria-pressed="false">이동장 1개</button>
+                                <button class="chip" type="button" data-val="이동장 2개 이상" aria-pressed="false">이동장 2개 이상</button>
+                                <button class="chip" type="button" data-val="유모차 있음" aria-pressed="false">유모차 있음</button>
+                                <button class="chip" type="button" data-val="캐리어 있음" aria-pressed="false">캐리어 있음</button>
+                            </div>
+                        </div>
+
+                        <label class="qfield">
+                            <span class="qlabel">요청사항 <em>선택</em></span>
+                            <textarea id="q-note" rows="3" placeholder="예) 낯선 환경에 예민합니다 / 노령견으로 천천한 이동을 요청합니다."></textarea>
+                        </label>
+                    </section>
+                </form>
+
+                <div class="quote-actions">
+                    <button class="btn btn-main" type="button" id="q-copy">
+                        <span class="ic ic-copy" aria-hidden="true"></span>내용 복사하기
+                    </button>
+                    <button class="btn btn-line" type="button" id="q-pdf">
+                        <span class="ic ic-down" aria-hidden="true"></span>견적서 다운로드
+                    </button>
+                </div>
+
+                <p class="quote-guide">복사하거나 내려받은 뒤 <b>문의하실 영업점으로 접수</b>해 주세요.</p>
+                <section class="sendbox" id="sendbox" hidden></section>
                 </div>
             </div>
         </section>
@@ -313,9 +302,9 @@
         <button class="btn btn-line" type="button" data-call>
             <span class="ic ic-phone" aria-hidden="true"></span>전화
         </button>
-        <a class="btn btn-main" href="sms:01023006722">
-            <span class="ic ic-sms" aria-hidden="true"></span>문자로 견적 보내기
-        </a>
+        <button class="btn btn-main" type="button" data-send>
+            <span class="ic ic-doc" aria-hidden="true"></span>견적 보내기
+        </button>
     </div>
 
     <!-- 인쇄(PDF 저장) 전용 견적서 -->
@@ -362,8 +351,8 @@
     }
     </script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" defer></script>
-    <script src="site.js?v=065fc69a"></script>
-    <script src="script.js?v=065fc69a"></script>
-    <script src="quote.js?v=065fc69a"></script>
+    <script src="site.js?v=ffd69aea"></script>
+    <script src="script.js?v=ffd69aea"></script>
+    <script src="quote.js?v=ffd69aea"></script>
 </body>
 </html>

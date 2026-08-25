@@ -107,18 +107,8 @@
 
     var quoteList = $('quote-list');
 
-    function render() {
-        if (!quoteList) { return; }
-        quoteList.innerHTML = rows().map(function (r) {
-            if (r[0] === 'head') {
-                return '<div class="quote-row is-head"><dt>' + esc(r[1]) + '</dt></div>';
-            }
-            var filled = !!r[1];
-            return '<div class="quote-row' + (filled ? '' : ' is-empty') + '">' +
-                   '<dt>' + esc(r[0]) + '</dt>' +
-                   '<dd>' + (filled ? esc(r[1]) : '입력 전') + '</dd></div>';
-        }).join('');
-    }
+    /* 미리보기 화면을 두지 않습니다. 복사·다운로드할 때 그 자리에서 만듭니다. */
+    function render() {}
 
     /* 문자·카카오톡에 붙여넣기 좋은 형태 */
     function plainText() {
@@ -312,6 +302,90 @@
        7. 내보내기 — 복사 / PDF 저장
        ================================================================ */
 
+    /* ================================================================
+       7-1. 견적서 보내기 — 복사·다운로드를 마치면 나타납니다
+            문자와 카카오톡 오픈채팅 중에서 영업점을 골라 접수합니다.
+       ================================================================ */
+
+    var sendBox = $('sendbox'), sendDrawn = false;
+
+    function drawSendBox() {
+        if (sendDrawn || !sendBox || typeof BRANCHES === 'undefined') { return; }
+
+        function item(label, value, href, off) {
+            var inner =
+                '<span class="senditem-b">' +
+                    '<span class="senditem-n">' + esc(label) + '</span>' +
+                    '<span class="senditem-v">' + esc(value) +
+                        (off ? ' <span class="pill">준비 중</span>' : '') + '</span>' +
+                '</span>' +
+                (off ? '' : '<span class="ic ic-arrow" aria-hidden="true"></span>');
+            return off
+                ? '<div class="senditem is-off">' + inner + '</div>'
+                : '<a class="senditem" href="' + esc(href) + '"' +
+                  (href.indexOf('http') === 0 ? ' target="_blank" rel="noopener"' : '') + '>' + inner + '</a>';
+        }
+
+        function group(id, icon, title, inner) {
+            return '<div class="sendgroup" data-g="' + id + '">' +
+                '<button class="sendhead" type="button" aria-expanded="false">' +
+                    '<span class="ic ic-lead ' + icon + '" aria-hidden="true"></span>' +
+                    '<span class="sh-t">' + title + '</span>' +
+                    '<span class="ic ic-chev" aria-hidden="true"></span>' +
+                '</button>' +
+                '<div class="sendlist" hidden>' + inner + '</div>' +
+            '</div>';
+        }
+
+        var sms = BRANCHES.map(function (b) {
+            return item(b.name, b.tel, 'sms:' + String(b.tel).replace(/[^0-9]/g, ''), false);
+        }).join('');
+        var kakao = BRANCHES.map(function (b) {
+            return b.kakao ? item(b.name, '오픈채팅 열기', b.kakao, false)
+                           : item(b.name, '오픈채팅', '', true);
+        }).join('');
+
+        sendBox.innerHTML =
+            '<p class="sendbox-t"><span class="ic ic-doc" aria-hidden="true"></span>견적서 보내기</p>' +
+            '<p class="sendbox-d">복사하거나 내려받은 견적서를 <b>문의하실 영업점으로 접수</b>해 주세요.</p>' +
+            group('sms', 'ic-sms', '문자로 접수', sms) +
+            group('kakao', 'ic-talk', '카카오톡 오픈채팅으로 접수', kakao);
+
+        /* 한 번에 하나만 펼칩니다 */
+        all('.sendhead', sendBox).forEach(function (h) {
+            h.addEventListener('click', function () {
+                var g = h.parentElement, open = !g.classList.contains('is-open');
+                all('.sendgroup', sendBox).forEach(function (o) {
+                    o.classList.remove('is-open');
+                    o.querySelector('.sendlist').hidden = true;
+                    o.querySelector('.sendhead').setAttribute('aria-expanded', 'false');
+                });
+                if (open) {
+                    g.classList.add('is-open');
+                    g.querySelector('.sendlist').hidden = false;
+                    h.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+        sendDrawn = true;
+    }
+
+    function showSendBox() {
+        if (!sendBox) { return; }
+        drawSendBox();
+        if (!sendBox.hidden) { return; }
+        sendBox.hidden = false;
+        document.body.classList.add('is-sent');
+        var first = sendBox.querySelector('.sendgroup');
+        if (first && !first.classList.contains('is-open')) { first.querySelector('.sendhead').click(); }
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            window.setTimeout(function () {
+                sendBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 120);
+        }
+    }
+
+
     var copyBtn = $('q-copy');
     if (copyBtn && U.copyText) {
         copyBtn.addEventListener('click', function () {
@@ -319,7 +393,8 @@
             U.copyText(plainText(), function (ok) {
                 if (!ok) { return; }
                 copyBtn.classList.add('is-done');
-                copyBtn.innerHTML = '복사했습니다 · 문자에 붙여넣으세요';
+                copyBtn.innerHTML = '복사했습니다 · 아래에서 접수하세요';
+                showSendBox();
                 window.setTimeout(function () {
                     copyBtn.innerHTML = old;
                     copyBtn.classList.remove('is-done');
@@ -351,6 +426,7 @@
             document.title = '편한펫택시_견적요청서_' + (val('q-date') || '').replace(/-/g, '');
             window.print();
             window.setTimeout(function () { document.title = title; }, 600);
+            showSendBox();
         });
     }
 

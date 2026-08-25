@@ -428,6 +428,7 @@
        ================================================================ */
 
     var sheet, sheetBack, sheetT, sheetD, sheetList, sheetLast = null;
+    var sheetOpenedAt = 0;   /* 탭하는 순간 배경이 같이 눌려 바로 닫히는 것을 막습니다 */
 
     function buildSheet() {
         sheetBack = document.createElement('div');
@@ -452,7 +453,10 @@
         sheetT = sheet.querySelector('.sheet-t');
         sheetD = sheet.querySelector('.sheet-d');
         sheetList = sheet.querySelector('.branch');
-        sheetBack.addEventListener('click', closeSheet);
+        sheetBack.addEventListener('click', function () {
+            if (Date.now() - sheetOpenedAt < 400) { return; }   /* 여는 그 탭은 무시 */
+            closeSheet();
+        });
         sheet.setAttribute('aria-labelledby', '');
     }
 
@@ -460,13 +464,58 @@
         if (typeof BRANCHES === 'undefined' || !BRANCHES.length) { return; }
         if (!sheet) { buildSheet(); }
 
-        var sms = mode === 'sms';
-        sheetT.textContent = sms ? '문의하실 영업점을 선택해 주세요' : '상담하실 영업점을 선택해 주세요';
-        sheetD.textContent = sms
+        var sms = mode === 'sms', kakao = mode === 'kakao', pick = mode === 'send';
+        sheetT.textContent = pick  ? '어떻게 보낼까요?'
+                           : kakao ? '오픈채팅으로 문의할 영업점을 선택해 주세요'
+                           : sms   ? '문의하실 영업점을 선택해 주세요'
+                                   : '상담하실 영업점을 선택해 주세요';
+        sheetD.textContent = pick
+            ? '견적서를 복사한 뒤 보낼 방법을 골라 주세요.'
+            : kakao
+            ? '카카오톡 오픈채팅으로 바로 연결됩니다. 아직 열리지 않은 영업점은 문자로 문의해 주세요.'
+            : sms
             ? '운행 중 통화가 어려울 수 있습니다. 문자를 남겨주시면 확인 후 안내드립니다.'
             : '24시간 연중무휴로 상담을 운영합니다. 가까운 영업점을 선택해 주세요.';
 
+        if (pick) {
+            sheetList.innerHTML =
+                '<button class="branch-item is-main" type="button" data-pick="sms">' +
+                    '<span class="branch-b">' +
+                        '<span class="branch-n">문자</span>' +
+                        '<span class="branch-tel">문자로 보내기</span>' +
+                    '</span><span class="ic ic-arrow" aria-hidden="true"></span></button>' +
+                '<button class="branch-item" type="button" data-pick="kakao">' +
+                    '<span class="branch-b">' +
+                        '<span class="branch-n">카카오톡</span>' +
+                        '<span class="branch-tel">오픈채팅으로 보내기</span>' +
+                    '</span><span class="ic ic-arrow" aria-hidden="true"></span></button>';
+            all('[data-pick]', sheetList).forEach(function (b) {
+                b.addEventListener('click', function (e) { e.stopPropagation(); openSheet(b.getAttribute('data-pick')); });
+            });
+            sheetOpenedAt = Date.now();
+            sheetBack.classList.add('is-on');
+            sheet.classList.add('is-on');
+            document.body.classList.add('lb-open');
+            sheetList.querySelector('.branch-item').focus();
+            document.addEventListener('keydown', onSheetKey);
+            return;
+        }
+
         sheetList.innerHTML = BRANCHES.map(function (b) {
+            /* 카카오톡은 주소가 있는 영업점만 연결할 수 있습니다 */
+            if (kakao) {
+                var inner2 =
+                    '<span class="branch-b">' +
+                        '<span class="branch-n">' + esc(b.name) +
+                            (b.main ? '<span class="pill">대표</span>' : '') + '</span>' +
+                        '<span class="branch-tel">' + (b.kakao ? '오픈채팅 열기' : '준비 중') + '</span>' +
+                    '</span>' +
+                    (b.kakao ? '<span class="ic ic-arrow" aria-hidden="true"></span>' : '');
+                return b.kakao
+                    ? '<a class="branch-item" href="' + esc(b.kakao) + '" target="_blank" rel="noopener">' + inner2 + '</a>'
+                    : '<div class="branch-item is-off">' + inner2 + '</div>';
+            }
+
             var href = (sms ? 'sms:' : 'tel:') + telDigits(b.tel);
             var inner =
                 '<span class="branch-b">' +
@@ -476,7 +525,7 @@
                 '</span>' +
                 '<span class="ic ic-arrow" aria-hidden="true"></span>';
 
-            /* 모바일이면 바로 연결, 데스크톱이면 복사 버튼 */
+            /* 모바일이면 바로 연결, 데스크톱이면 번호를 복사해 줍니다 */
             return isMobile
                 ? '<a class="branch-item' + (b.main ? ' is-main' : '') + '" href="' + href + '">' + inner + '</a>'
                 : '<button class="branch-item' + (b.main ? ' is-main' : '') + '" type="button" ' +
@@ -496,7 +545,9 @@
             });
         });
 
+        sheet.querySelector('.sheet-note').style.display = (kakao || pick) ? 'none' : '';
         sheetLast = document.activeElement;
+        sheetOpenedAt = Date.now();
         sheetBack.classList.add('is-on');
         sheet.classList.add('is-on');
         document.body.classList.add('lb-open');
@@ -525,10 +576,20 @@
     }
 
     all('[data-call]').forEach(function (b) {
-        b.addEventListener('click', function () { openSheet('tel'); });
+        b.addEventListener('click', function (e) { e.stopPropagation(); openSheet('tel'); });
     });
 
-    /* 문자 링크 — 데스크톱에서는 시트를 대신 띄웁니다 */
+    all('[data-sms]').forEach(function (b) {
+        b.addEventListener('click', function (e) { e.stopPropagation(); openSheet('sms'); });
+    });
+    all('[data-kakao]').forEach(function (b) {
+        b.addEventListener('click', function (e) { e.stopPropagation(); openSheet('kakao'); });
+    });
+    all('[data-send]').forEach(function (b) {
+        b.addEventListener('click', function (e) { e.stopPropagation(); openSheet('send'); });
+    });
+
+    /* 남아 있는 문자 링크 — 데스크톱에서는 시트를 대신 띄웁니다 */
     all('a[href^="sms:"]').forEach(function (a) {
         a.addEventListener('click', function (e) {
             if (!isMobile) { e.preventDefault(); openSheet('sms'); }
