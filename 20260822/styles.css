@@ -876,7 +876,7 @@ body.lb-open { overflow: hidden; }
 
     .sec { padding: 54px 0; }
         .sec-head { margin-bottom: 22px; }
-    .sec-desc { max-width: 64ch; }
+    .sec-desc { max-width: 58em; }  /* ch 는 한글 폭과 안 맞아 em 을 씁니다 */
 
     .hero-in { padding: 88px 24px 74px; max-width: 760px; margin: 0 auto; text-align: center; }
     .hero-h1 { max-width: none; margin-left: auto; margin-right: auto; }
@@ -1268,3 +1268,16 @@ body.nav-open .navlist .tab:nth-child(7) { transition-delay: .20s; }
 @media (max-width: 767px) {
     .hd-cta { display: none; }
 }
+
+
+/* ------------------------------------------------------------------ */
+/* 선언 문구 — 좁은 데스크톱에서도 한 줄로 떨어지게 크기를 맞춥니다      */
+/* 세 문구가 항상 같은 크기를 쓰도록 함께 조절합니다.                    */
+/* ------------------------------------------------------------------ */
+
+@media (min-width: 768px) and (max-width: 959px) {
+    .claim-body .lead { font-size: 22px; }
+}
+
+/* 줄이 넘어갈 때 한 단어만 남지 않도록 고르게 나눕니다 */
+.claim-body p { text-wrap: pretty; }
