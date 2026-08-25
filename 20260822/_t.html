@@ -32,7 +32,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap">
-    <link rel="stylesheet" href="styles.css?v=bcdc5bc8">
+    <link rel="stylesheet" href="styles.css?v=4672b472">
 </head>
 <body>
     <a class="skip-link" href="#main">본문 바로가기</a>
@@ -104,12 +104,6 @@
                         </div>
                         <input type="text" id="q-from-detail" class="qdetail" placeholder="상세주소 (동·호수, 건물명)">
                     </div>
-
-                        <div class="qflip">
-                            <button type="button" id="q-flip" aria-label="출발지와 도착지 바꾸기">
-                                <span class="ic ic-swap" aria-hidden="true"></span>
-                            </button>
-                        </div>
 
                     <div class="qfield">
                         <span class="qlabel">도착지</span>
@@ -260,8 +254,6 @@
                 <button class="btn btn-main btn-block btn-lg" type="button" id="q-send" data-send hidden>
                     <span class="ic ic-doc" aria-hidden="true"></span>견적서 보내기
                 </button>
-
-                <p class="quote-guide">복사하거나 내려받은 뒤 <b>문의하실 영업점으로 접수</b>해 주세요.</p>
                 <section class="sendbox" id="sendbox" hidden></section>
                 </div>
             </div>
@@ -301,15 +293,6 @@
             <p class="ft-copy">© 편한 펫택시&amp;피크닉. All rights reserved.</p>
         </div>
     </footer>
-
-    <div class="bbar" aria-label="빠른 예약">
-        <button class="btn btn-line" type="button" data-call>
-            <span class="ic ic-phone" aria-hidden="true"></span>전화
-        </button>
-        <button class="btn btn-main" type="button" data-send>
-            <span class="ic ic-doc" aria-hidden="true"></span>견적 보내기
-        </button>
-    </div>
 
     <!-- 인쇄(PDF 저장) 전용 견적서 -->
     <div class="quote-sheet" id="quote-sheet" aria-hidden="true">
@@ -355,38 +338,24 @@
     }
     </script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js" defer></script>
-    <script src="site.js?v=bcdc5bc8"></script>
-    <script src="script.js?v=bcdc5bc8"></script>
-    <script src="quote.js?v=bcdc5bc8"></script>
+    <script src="site.js?v=4672b472"></script>
+    <script src="script.js?v=4672b472"></script>
+    <script src="quote.js?v=4672b472"></script>
 
 <script>
 window.addEventListener('load', function(){ setTimeout(function(){
-  var o=['viewport='+window.innerWidth];
-  var acts=document.getElementById('q-actions'), send=document.getElementById('q-send');
-  function st(tag){
-    o.push(tag+' : 복사/다운로드 버튼='+(acts.hidden?'숨김':'보임')+'  견적서 보내기='+(send.hidden?'숨김':'보임'));
-  }
-  st('처음');
   document.getElementById('q-copy').click();
   setTimeout(function(){
-    st('복사 후');
-    if(!send.hidden){
-      send.click();
-      setTimeout(function(){
-        o.push('  → 시트: '+(document.querySelector('.sheet.is-on')?document.querySelector('.sheet-t').textContent.trim():'안 열림'));
-        var back=document.querySelector('.sheet-back');
-        back.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true}));
-        back.dispatchEvent(new MouseEvent('click',{bubbles:true}));
-        // 내용을 고치면 되돌아오는지
-        var note=document.getElementById('q-note');
-        note.value='추가 요청'; note.dispatchEvent(new Event('input'));
-        setTimeout(function(){ st('내용 수정 후');
-          var p=document.createElement('pre'); p.id='diag'; p.textContent=o.join('\n'); document.body.appendChild(p); },200);
-      },300);
-    } else {
-      var p=document.createElement('pre'); p.id='diag'; p.textContent=o.join('\n'); document.body.appendChild(p);
-    }
+    var box=document.getElementById('sendbox'), o=[];
+    o.push('보내기 영역 높이: '+Math.round(box.getBoundingClientRect().height)+'px');
+    o.push('중복 안내문: '+(document.querySelector('.quote-guide')?'남아있음 ←실패':'제거됨 OK'));
+    o.push('그룹 '+box.querySelectorAll('.sendgroup').length+'개 / 펼침 '+box.querySelectorAll('.sendgroup.is-open').length+'개');
+    box.querySelectorAll('.sendgroup.is-open .senditem').forEach(function(it){
+      o.push('  '+it.querySelector('.senditem-n').textContent.trim()+'  '+it.querySelector('.senditem-v').textContent.trim()
+             +'   높이='+Math.round(it.getBoundingClientRect().height)+'px');
+    });
+    var p=document.createElement('pre'); p.id='diag'; p.textContent=o.join('\n'); document.body.appendChild(p);
   },600);
-},800); });
+},700); });
 </script></body>
 </html>
