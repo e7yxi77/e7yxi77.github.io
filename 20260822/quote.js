@@ -301,9 +301,11 @@
 
         function item(label, value, href, off) {
             var inner =
-                '<span class="senditem-n">' + esc(label) + '</span>' +
-                '<span class="senditem-v">' + esc(value) +
-                    (off ? '<span class="pill">준비 중</span>' : '') + '</span>' +
+                '<span class="senditem-b">' +
+                    '<span class="senditem-n">' + esc(label) + '</span>' +
+                    '<span class="senditem-v">' + esc(value) +
+                        (off ? ' <span class="pill">준비 중</span>' : '') + '</span>' +
+                '</span>' +
                 (off ? '' : '<span class="ic ic-arrow" aria-hidden="true"></span>');
             return off
                 ? '<div class="senditem is-off">' + inner + '</div>'
