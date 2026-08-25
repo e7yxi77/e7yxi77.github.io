@@ -509,8 +509,13 @@
             return;
         }
 
-        sheetList.innerHTML = BRANCHES.map(function (b) {
-            /* 카카오톡은 주소가 있는 영업점만 연결할 수 있습니다 */
+        /* 카카오톡은 오픈채팅을 운영하는 영업점만 보여 줍니다.
+           site.js 에 kakao 줄이 없는 영업점은 목록에서 빠집니다. */
+        var pool = kakao
+            ? BRANCHES.filter(function (b) { return typeof b.kakao === 'string'; })
+            : BRANCHES;
+
+        sheetList.innerHTML = pool.map(function (b) {
             if (kakao) {
                 var inner2 =
                     '<span class="branch-b">' +
