@@ -316,7 +316,8 @@
 
 
         function byline(r) {
-            return '<p class="rv-by"><b>' + esc(r.name) + '</b> 고객님 · ' + esc(r.date) +
+            /* 작성일은 표시하지 않습니다 (reviews.js 의 date 값은 그대로 보관) */
+            return '<p class="rv-by"><b>' + esc(r.name) + '</b> 고객님' +
                    (r.visit >= 2 ? ' · 재방문 ' + r.visit + '회' : '') + '</p>';
         }
 
