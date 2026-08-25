@@ -163,19 +163,6 @@
         });
     }
 
-    /* 출발지 ↔ 도착지 뒤집기 */
-    var flipBtn = $('q-flip');
-    if (flipBtn) {
-        flipBtn.addEventListener('click', function () {
-            [['q-from', 'q-to'], ['q-from-detail', 'q-to-detail']].forEach(function (pair) {
-                var a = $(pair[0]), b = $(pair[1]);
-                if (!a || !b) { return; }
-                var t = a.value; a.value = b.value; b.value = t;
-            });
-            if (isRound) { fillReverse(true); }
-            render();
-        });
-    }
 
 
 
@@ -191,7 +178,7 @@
                 counts[key] = clamp(counts[key] + parseInt(btn.getAttribute('data-step'), 10), 0, 20);
                 out.textContent = counts[key];
                 box.classList.toggle('is-set', counts[key] > 0);
-                render();
+                render(); restoreActions();
             });
         });
         box.classList.toggle('is-set', counts[key] > 0);
@@ -205,7 +192,7 @@
                 c.classList.toggle('is-on', on);
                 c.setAttribute('aria-pressed', on ? 'true' : 'false');
             });
-            render();
+            render(); restoreActions();
         });
     });
 
@@ -293,8 +280,8 @@
     });
 
     all('input, textarea', qform).forEach(function (el) {
-        el.addEventListener('input',  render);
-        el.addEventListener('change', render);
+        el.addEventListener('input',  function () { render(); restoreActions(); });
+        el.addEventListener('change', function () { render(); restoreActions(); });
     });
 
 
@@ -370,10 +357,32 @@
         sendDrawn = true;
     }
 
+    /* 모바일에서는 복사·다운로드를 마치면 그 버튼이 '견적서 보내기' 로 바뀝니다.
+       내용을 다시 고치면 복사가 필요하므로 원래 버튼으로 되돌립니다. */
+    var actionsBox = $('q-actions'), sendBtn = $('q-send'), swapped = false;
+    var mqMobile = window.matchMedia('(max-width: 767px)');
+
+    function swapToSend(on) {
+        if (!actionsBox || !sendBtn) { return; }
+        swapped = on;
+        actionsBox.hidden = on;
+        sendBtn.hidden = !on;
+    }
+
+    function restoreActions() {
+        if (swapped) { swapToSend(false); }
+    }
+
+    /* 화면 폭이 바뀌면 상태를 다시 맞춥니다 */
+    if (mqMobile.addEventListener) {
+        mqMobile.addEventListener('change', function () { if (!mqMobile.matches) { restoreActions(); } });
+    }
+
     function showSendBox() {
         if (!sendBox) { return; }
         drawSendBox();
         if (!sendBox.hidden) { return; }
+        if (mqMobile.matches) { swapToSend(true); }
         sendBox.hidden = false;
         document.body.classList.add('is-sent');
         var first = sendBox.querySelector('.sendgroup');
