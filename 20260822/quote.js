@@ -187,15 +187,6 @@
         });
     }
 
-    var swapBtn = $('q-swap');
-    if (swapBtn) {
-        swapBtn.addEventListener('click', function () {
-            fillReverse(true);
-            var old = swapBtn.innerHTML;
-            swapBtn.innerHTML = '<span class="ic ic-check" aria-hidden="true"></span>채웠습니다';
-            window.setTimeout(function () { swapBtn.innerHTML = old; }, 1600);
-        });
-    }
 
 
     /* ================================================================
