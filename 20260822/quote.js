@@ -110,7 +110,7 @@
     /* 미리보기 화면을 두지 않습니다. 복사·다운로드할 때 그 자리에서 만듭니다. */
     function render() {}
 
-    /* 문자·카카오톡에 붙여넣기 좋은 형태 */
+    /* 메시지·카카오톡에 붙여넣기 좋은 형태 */
     function plainText() {
         var lines = ['[편한 펫택시&피크닉 견적 요청]'];
         rows().forEach(function (r) {
@@ -291,7 +291,7 @@
 
     /* ================================================================
        7-1. 견적서 보내기 — 복사·다운로드를 마치면 나타납니다
-            문자와 카카오톡 오픈채팅 중에서 영업점을 골라 접수합니다.
+            메시지와 카카오톡 중에서 영업점을 골라 접수합니다.
        ================================================================ */
 
     var sendBox = $('sendbox'), sendDrawn = false;
@@ -328,15 +328,15 @@
             return item(b.name, b.tel, 'sms:' + String(b.tel).replace(/[^0-9]/g, ''), false);
         }).join('');
         var kakao = BRANCHES.map(function (b) {
-            return b.kakao ? item(b.name, '오픈채팅 열기', b.kakao, false)
-                           : item(b.name, '오픈채팅', '', true);
+            return b.kakao ? item(b.name, '카카오톡 열기', b.kakao, false)
+                           : item(b.name, '카카오톡', '', true);
         }).join('');
 
         sendBox.innerHTML =
             '<p class="sendbox-t"><span class="ic ic-doc" aria-hidden="true"></span>견적서 보내기</p>' +
             '<p class="sendbox-d">복사하거나 내려받은 견적서를 <b>문의하실 영업점으로 접수</b>해 주세요.</p>' +
-            group('sms', 'ic-sms', '문자로 접수', sms) +
-            group('kakao', 'ic-talk', '카카오톡 오픈채팅으로 접수', kakao);
+            group('sms', 'ic-sms', '메시지로 접수', sms) +
+            group('kakao', 'ic-talk', '카카오톡으로 접수', kakao);
 
         /* 한 번에 하나만 펼칩니다 */
         all('.sendhead', sendBox).forEach(function (h) {

@@ -903,7 +903,7 @@ body.lb-open { overflow: hidden; }
     :root { --pad: 24px; }
 
     .hd-mark { width: 30px; height: 30px; }
-    .hd-cta { min-height: 40px; padding: 0 17px; font-size: var(--fs-13); }
+    .hd-cta { min-height: 44px; padding: 0 17px; font-size: var(--fs-13); }
     .tab { padding: 0 18px; }
 
     .sec { padding: 54px 0; }
@@ -1146,7 +1146,7 @@ body.nav-open .navlist .tab:nth-child(7) { transition-delay: .20s; }
         padding: 10px 24px 12px;
     }
     .navlist .tab {
-        min-height: 40px; padding: 8px 16px; border-radius: 999px;
+        min-height: 44px; padding: 10px 16px; border-radius: 999px;
         font-size: var(--fs-13); font-weight: 500; letter-spacing: -.015em;
         opacity: 1; transform: none;
     }
