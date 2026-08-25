@@ -530,7 +530,7 @@ main .sec + .sec { border-top: 8px solid var(--paper-2); }
 
 .contact { display: grid; gap: 8px; }
 .contact-item {
-    display: flex; align-items: center; gap: 11px; width: 100%; padding: 12px 13px;
+    display: flex; align-items: center; gap: 10px; width: 100%; min-width: 0; padding: 12px 13px;
     background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-l);
     text-align: left; transition: border-color .15s var(--ease);
 }
@@ -542,8 +542,8 @@ main .sec + .sec { border-top: 8px solid var(--paper-2); }
 .contact-ic.is-naver { background: #E7F9EE; color: var(--naver-dark); }
 .contact-ic.is-kakao { background: #FEF3C3; color: #3C1E1E; }
 .contact-b { flex: 1 1 auto; min-width: 0; }
-.ct-k { display: block; font-size: var(--fs-11); font-weight: 700; color: var(--ink-3); }
-.ct-v { display: block; font-size: var(--fs-15); font-weight: 800; letter-spacing: -.025em; }
+.ct-k { display: block; font-size: var(--fs-11); font-weight: 700; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ct-v { display: block; font-size: var(--fs-15); font-weight: 800; letter-spacing: -.025em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .contact-item > .ic-arrow { font-size: 13px; color: var(--ink-3); }
 
 .ft {
@@ -952,7 +952,8 @@ body.lb-open { overflow: hidden; }
 
     .trainer { padding: 24px 26px; }
 
-    .contact { grid-template-columns: repeat(3, 1fr); }
+    /* 문의 수단 네 개를 한 줄에 놓습니다 */
+    .contact { grid-template-columns: repeat(4, 1fr); }
 
     /* 버튼과 안내문은 위 입력란과 같은 폭을 씁니다 */
     .quote-actions { grid-template-columns: 1fr 1fr; }
@@ -1327,3 +1328,12 @@ body.nav-open .navlist .tab:nth-child(7) { transition-delay: .20s; }
 
 /* 줄이 넘어갈 때 한 단어만 남지 않도록 고르게 나눕니다 */
 .claim-body p { text-wrap: pretty; }
+
+
+/* 좁은 데스크톱에서 문의 수단 네 개가 눌리지 않도록 조입니다 */
+@media (min-width: 768px) and (max-width: 899px) {
+    .contact { gap: 6px; }
+    .contact-item { gap: 8px; padding: 11px 10px; }
+    .contact-ic { width: 34px; height: 34px; font-size: 18px; border-radius: 9px; }
+    .contact-item > .ic-arrow { display: none; }
+}
