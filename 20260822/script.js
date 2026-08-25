@@ -428,7 +428,6 @@
        ================================================================ */
 
     var sheet, sheetBack, sheetT, sheetD, sheetList, sheetLast = null;
-    var sheetOpenedAt = 0;   /* 탭하는 순간 배경이 같이 눌려 바로 닫히는 것을 막습니다 */
 
     function buildSheet() {
         sheetBack = document.createElement('div');
@@ -453,8 +452,18 @@
         sheetT = sheet.querySelector('.sheet-t');
         sheetD = sheet.querySelector('.sheet-d');
         sheetList = sheet.querySelector('.branch');
-        sheetBack.addEventListener('click', function () {
-            if (Date.now() - sheetOpenedAt < 400) { return; }   /* 여는 그 탭은 무시 */
+        /* 배경을 눌러 닫기.
+           손가락이 배경에서 "눌리기 시작"한 경우에만 닫습니다.
+           버튼을 눌러 시트가 열리는 순간 그 탭이 배경으로 이어지는(고스트 클릭)
+           상황에서는 눌린 시작점이 배경이 아니므로 닫히지 않습니다. */
+        var downOnBack = false;
+        sheetBack.addEventListener('pointerdown', function (e) {
+            downOnBack = (e.target === sheetBack);
+        });
+        sheetBack.addEventListener('click', function (e) {
+            if (e.target !== sheetBack) { return; }
+            if (!downOnBack) { downOnBack = false; return; }
+            downOnBack = false;
             closeSheet();
         });
         sheet.setAttribute('aria-labelledby', '');
@@ -492,7 +501,6 @@
             all('[data-pick]', sheetList).forEach(function (b) {
                 b.addEventListener('click', function (e) { e.stopPropagation(); openSheet(b.getAttribute('data-pick')); });
             });
-            sheetOpenedAt = Date.now();
             sheetBack.classList.add('is-on');
             sheet.classList.add('is-on');
             document.body.classList.add('lb-open');
@@ -547,7 +555,6 @@
 
         sheet.querySelector('.sheet-note').style.display = (kakao || pick) ? 'none' : '';
         sheetLast = document.activeElement;
-        sheetOpenedAt = Date.now();
         sheetBack.classList.add('is-on');
         sheet.classList.add('is-on');
         document.body.classList.add('lb-open');
