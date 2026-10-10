@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lernzettel Kommunikationsmodelle</title>
+<style>
+:root{
+  --bg:#f6f5f1; --surface:#ffffff; --surface-2:#f0eee8; --text:#1c1c1f; --muted:#5a5a63; --border:#e1ded5;
+  --accent:#2f5bd3;
+  --buehler:#2563eb; --watz:#7c3aed; --svt:#0f8a6a; --gordon:#d9480f; --beruf:#64748b; --anw:#b4235a;
+  --sache:#2f7fc1; --selbst:#2f8f45; --bez:#c99300; --appell:#d9442e;
+  --ok:#1f8a4c; --warn:#b45309;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121316; --surface:#1a1c21; --surface-2:#22252b; --text:#ececf0; --muted:#a3a3ad; --border:#2e313a;
+    --accent:#86a8ff;
+    --buehler:#7aa2ff; --watz:#b69cff; --svt:#4fd1a5; --gordon:#ff8a4c; --beruf:#a3b1c6; --anw:#ff7aa8;
+    --sache:#7db4e6; --selbst:#79c785; --bez:#f2c94c; --appell:#ff7b67;
+    --ok:#5bd28f; --warn:#f6ad55;
+    --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121316; --surface:#1a1c21; --surface-2:#22252b; --text:#ececf0; --muted:#a3a3ad; --border:#2e313a;
+  --accent:#86a8ff;
+  --buehler:#7aa2ff; --watz:#b69cff; --svt:#4fd1a5; --gordon:#ff8a4c; --beruf:#a3b1c6; --anw:#ff7aa8;
+  --sache:#7db4e6; --selbst:#79c785; --bez:#f2c94c; --appell:#ff7b67;
+  --ok:#5bd28f; --warn:#f6ad55;
+  --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.62}
+a{color:var(--accent)}
+h1,h2,h3,h4{line-height:1.25;margin:1.4em 0 .5em}
+h1{font-size:clamp(1.9rem,4.5vw,2.7rem);margin:.2em 0 .2em;letter-spacing:-.01em}
+h2{font-size:1.6rem;margin-top:0}
+h3{font-size:1.22rem}
+h4{font-size:1.05rem;margin:1.1em 0 .4em}
+p{margin:.55em 0}
+ul,ol{padding-left:1.3em;margin:.5em 0}
+li{margin:.25em 0}
+small,.muted{color:var(--muted)}
+code{font-family:ui-monospace,Consolas,monospace;font-size:.92em}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:1fr;max-width:1240px;margin:0 auto;padding:0 16px}
+@media (min-width:1100px){.layout{grid-template-columns:250px minmax(0,1fr);gap:40px;padding:0 28px}}
+nav.toc{display:none}
+@media (min-width:1100px){
+  nav.toc{display:block;position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:28px 0 28px}
+}
+nav.toc .toc-title{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 .6em;font-weight:700}
+nav.toc ol{list-style:none;padding:0;margin:0}
+nav.toc li{margin:0}
+nav.toc a{display:flex;gap:.55em;align-items:baseline;padding:.32em .6em;border-radius:8px;color:var(--text);text-decoration:none;font-size:.93rem;line-height:1.35}
+nav.toc a:hover{background:var(--surface-2)}
+nav.toc a.active{background:var(--surface);box-shadow:var(--shadow);font-weight:600}
+nav.toc .n{color:var(--muted);font-variant-numeric:tabular-nums;min-width:1.4em;font-size:.85em}
+main{min-width:0;padding-bottom:80px}
+
+/* Header */
+header.hero{padding:34px 0 10px}
+.kicker{font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700}
+.hero .sub{font-size:1.12rem;color:var(--muted);margin:.2em 0 1em}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:.6em 0 1em}
+.chip{display:inline-block;padding:.22em .7em;border-radius:999px;background:var(--surface);border:1px solid var(--border);font-size:.86rem}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+button.btn{font:inherit;font-size:.9rem;padding:.5em .95em;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer}
+button.btn:hover{border-color:var(--accent)}
+button.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] button.btn.primary{color:#111}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) button.btn.primary{color:#111}}
+
+/* Mobile TOC */
+.mtoc{display:block;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px 16px;margin:14px 0 6px}
+.mtoc summary{cursor:pointer;font-weight:700}
+.mtoc ol{columns:2;column-gap:20px;margin:.6em 0 0;padding-left:1.4em;font-size:.95rem}
+@media (max-width:560px){.mtoc ol{columns:1}}
+@media (min-width:1100px){.mtoc{display:none}}
+
+/* Sections */
+section.sec{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:26px 22px;margin:22px 0;box-shadow:var(--shadow);position:relative;overflow:hidden;scroll-margin-top:16px}
+@media (min-width:700px){section.sec{padding:32px 36px}}
+section.sec::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--c,var(--accent))}
+.sec-num{display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;border-radius:10px;background:var(--c,var(--accent));color:#fff;font-weight:800;font-size:.8em;margin-right:.45em;vertical-align:.12em}
+:root[data-theme="dark"] .sec-num{color:#111}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sec-num{color:#111}}
+.c-buehler{--c:var(--buehler)} .c-watz{--c:var(--watz)} .c-svt{--c:var(--svt)} .c-gordon{--c:var(--gordon)} .c-beruf{--c:var(--beruf)} .c-anw{--c:var(--anw)} .c-gen{--c:var(--accent)}
+
+.model-meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin:-.2em 0 1em;color:var(--muted);font-size:.95rem}
+.model-meta b{color:var(--text)}
+.kern{font-size:1.12rem;border-left:4px solid var(--c,var(--accent));padding:.5em 0 .5em 1em;margin:1em 0;background:color-mix(in srgb,var(--c,var(--accent)) 7%,transparent);border-radius:0 10px 10px 0}
+
+/* Boxes */
+.box{border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--border);background:var(--surface-2);break-inside:avoid}
+.box > :first-child{margin-top:0}
+.box > :last-child{margin-bottom:0}
+.box .box-t{display:block;font-weight:800;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35em}
+.box.merke{background:color-mix(in srgb,var(--c,var(--accent)) 9%,var(--surface));border-color:color-mix(in srgb,var(--c,var(--accent)) 35%,var(--border))}
+.box.merke .box-t{color:var(--c,var(--accent))}
+.box.achtung{background:color-mix(in srgb,var(--warn) 10%,var(--surface));border-color:color-mix(in srgb,var(--warn) 40%,var(--border))}
+.box.achtung .box-t{color:var(--warn)}
+.box.tipp{background:color-mix(in srgb,var(--ok) 9%,var(--surface));border-color:color-mix(in srgb,var(--ok) 35%,var(--border))}
+.box.tipp .box-t{color:var(--ok)}
+.box.profi{background:var(--surface);border-style:dashed}
+.box.profi .box-t{color:var(--muted)}
+
+/* Tables */
+.tw{overflow-x:auto;margin:14px 0;border:1px solid var(--border);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:.6em .75em;border-bottom:1px solid var(--border)}
+th{background:var(--surface-2);font-size:.85rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td.k{font-weight:700;min-width:7.5em}
+.tw.min table{min-width:640px}
+
+/* Quotes from texts */
+.q{font-style:italic}
+.z{display:inline-block;font-style:normal;font-size:.78em;font-weight:700;color:var(--muted);background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:0 .4em;margin-left:.25em;white-space:nowrap}
+.excerpt{font-family:Georgia,"Times New Roman",serif;background:var(--surface-2);border-radius:12px;padding:12px 14px;margin:14px 0;font-size:.98rem}
+.excerpt .ln{display:grid;grid-template-columns:2.2em 9.5em 1fr;gap:.4em;padding:.12em 0}
+@media (max-width:560px){.excerpt .ln{grid-template-columns:2em 1fr}.excerpt .ln .sp{grid-column:2}.excerpt .ln .tx{grid-column:2}}
+.excerpt .lnr{color:var(--muted);font-family:system-ui,sans-serif;font-size:.8em;padding-top:.2em}
+.excerpt .sp{font-variant:small-caps;letter-spacing:.03em;color:var(--muted)}
+.excerpt i{color:var(--muted)}
+
+/* SvT colors */
+.t{display:inline-block;padding:.05em .55em;border-radius:6px;font-weight:700;font-size:.9em;color:#fff;white-space:nowrap}
+.t.sache{background:var(--sache)} .t.selbst{background:var(--selbst)} .t.bez{background:var(--bez)} .t.appell{background:var(--appell)}
+:root[data-theme="dark"] .t{color:#111}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .t{color:#111}}
+.t.bez{color:#1c1c1f}
+
+/* Fachbegriff */
+.fb{font-weight:700;color:var(--c,var(--accent))}
+
+/* Details / solutions */
+details.loes,details.frage{border:1px solid var(--border);border-radius:12px;margin:14px 0;background:var(--surface);break-inside:avoid}
+details.loes > summary,details.frage > summary{cursor:pointer;padding:.7em 1em;font-weight:700;list-style:none;display:flex;gap:.6em;align-items:center}
+details.loes > summary::-webkit-details-marker,details.frage > summary::-webkit-details-marker{display:none}
+details.loes > summary::before,details.frage > summary::before{content:"▸";transition:transform .15s;color:var(--c,var(--accent))}
+details[open].loes > summary::before,details[open].frage > summary::before{transform:rotate(90deg)}
+details.loes > summary .lab{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--c,var(--accent));border:1px solid currentColor;border-radius:6px;padding:0 .4em}
+details.loes .inner,details.frage .inner{padding:0 1.1em 1em}
+details.frage > summary{font-weight:600}
+
+/* Axiom cards */
+.ax{border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:16px 0;background:var(--surface);break-inside:avoid}
+.ax h3{margin:0 0 .4em;display:flex;gap:.6em;align-items:baseline}
+.ax h3 .an{flex:none;display:inline-flex;align-items:center;justify-content:center;width:1.8em;height:1.8em;border-radius:50%;background:var(--watz);color:#fff;font-size:.85em}
+:root[data-theme="dark"] .ax h3 .an{color:#111}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ax h3 .an{color:#111}}
+.orig{font-family:Georgia,"Times New Roman",serif;font-style:italic;color:var(--muted);margin:.2em 0 .7em}
+.ax dl{display:grid;grid-template-columns:1fr;gap:.25em 1em;margin:.4em 0 0}
+@media (min-width:700px){.ax dl{grid-template-columns:10.5em 1fr}}
+.ax dt{font-weight:700;color:var(--muted);font-size:.92rem}
+.ax dd{margin:0 0 .4em}
+
+/* Grids */
+.grid2{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
+.grid4{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:700px){.grid4{grid-template-columns:1fr 1fr}}
+.card{border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:var(--surface);break-inside:avoid}
+.card h4{margin:0 0 .3em}
+
+/* Figures */
+figure{margin:18px 0}
+figure svg{display:block;width:100%;height:auto;max-width:640px;margin:0 auto}
+figcaption{text-align:center;font-size:.88rem;color:var(--muted);margin-top:.4em}
+.svgtext{fill:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.svgmuted{fill:var(--muted);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+
+/* Symmetric vs complementary */
+.rel{display:flex;gap:10px;align-items:flex-end;justify-content:center;height:86px;margin:8px 0}
+.rel span{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;background:color-mix(in srgb,var(--watz) 18%,var(--surface));border:2px solid var(--watz);font-weight:800}
+.rel.komp span:first-child{margin-bottom:38px}
+
+/* Steps */
+ol.steps{counter-reset:s;list-style:none;padding:0}
+ol.steps > li{counter-increment:s;position:relative;padding:.2em 0 .7em 2.8em;margin:0}
+ol.steps > li::before{content:counter(s);position:absolute;left:0;top:.1em;width:2em;height:2em;border-radius:50%;background:var(--c,var(--accent));color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:.9em}
+:root[data-theme="dark"] ol.steps > li::before{color:#111}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) ol.steps > li::before{color:#111}}
+
+/* Glossary */
+dl.glossar{display:grid;grid-template-columns:1fr;gap:0;margin:0}
+@media (min-width:760px){dl.glossar{grid-template-columns:13em 1fr}}
+dl.glossar dt{font-weight:700;padding:.55em 0 0;border-top:1px solid var(--border)}
+dl.glossar dd{margin:0;padding:.1em 0 .55em}
+@media (min-width:760px){dl.glossar dd{padding:.55em 0;border-top:1px solid var(--border)}}
+
+.yes::before{content:"✓ ";color:var(--ok);font-weight:800}
+.no::before{content:"✗ ";color:var(--appell);font-weight:800}
+ul.clean{list-style:none;padding-left:0}
+ul.check li{list-style:none;position:relative;padding-left:1.6em}
+ul.check{padding-left:0}
+ul.check li::before{content:"☐";position:absolute;left:0;color:var(--muted)}
+
+footer{color:var(--muted);font-size:.88rem;text-align:center;padding:10px 0 40px}
+
+/* Print */
+@media print{
+  :root,:root[data-theme="dark"]{--bg:#fff;--surface:#fff;--surface-2:#f3f3f3;--text:#000;--muted:#444;--border:#bbb;--shadow:none;
+    --buehler:#1d4ed8;--watz:#6d28d9;--svt:#047857;--gordon:#c2410c;--beruf:#475569;--anw:#9d174d;--accent:#1d4ed8;
+    --sache:#2f7fc1;--selbst:#2f8f45;--bez:#c99300;--appell:#d9442e;--ok:#166534;--warn:#92400e}
+  @page{margin:14mm 12mm}
+  body{font-size:10pt;line-height:1.45;background:#fff}
+  nav.toc,.mtoc,.toolbar{display:none!important}
+  .layout{display:block;padding:0}
+  section.sec{border:none;box-shadow:none;padding:0 0 0 12px;margin:0 0 18px;overflow:visible}
+  section.sec h2{break-after:avoid}
+  h3,h4{break-after:avoid}
+  table{font-size:9pt}
+  th,td{padding:.4em .5em;overflow-wrap:anywhere;hyphens:auto}
+  td.k{min-width:0}
+  figure svg{max-width:460px}
+  details > summary::before{display:none}
+  .t,.sec-num,ol.steps > li::before,.ax h3 .an{color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .t.bez{color:#000!important}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .tw{overflow:visible}
+  .tw.min table{min-width:0}
+  tr,.box,.ax,.card{break-inside:avoid}
+  a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav class="toc" aria-label="Inhalt">
+  <p class="toc-title">Inhalt</p>
+  <ol>
+    <li><a href="#ueberblick"><span class="n">1</span>Auf einen Blick</a></li>
+    <li><a href="#grundbegriffe"><span class="n">2</span>Grundbegriffe</a></li>
+    <li><a href="#buehler"><span class="n">3</span>Bühler: Organon-Modell</a></li>
+    <li><a href="#watzlawick"><span class="n">4</span>Watzlawick: 5 Axiome</a></li>
+    <li><a href="#schulzvonthun"><span class="n">5</span>Schulz von Thun: Vier Seiten</a></li>
+    <li><a href="#gordon"><span class="n">6</span>Gordon: Sperren &amp; Ich-Botschaft</a></li>
+    <li><a href="#vergleich"><span class="n">7</span>Modelle vergleichen</a></li>
+    <li><a href="#anwenden"><span class="n">8</span>Anwenden auf literarische Texte</a></li>
+    <li><a href="#physiker"><span class="n">9</span>Musterlösung „Die Physiker“</a></li>
+    <li><a href="#transfer"><span class="n">10</span>Transfer: anderes Drama</a></li>
+    <li><a href="#beruf"><span class="n">11</span>Zusatz: Gespräche im Beruf</a></li>
+    <li><a href="#glossar"><span class="n">12</span>Glossar</a></li>
+    <li><a href="#test"><span class="n">13</span>Selbsttest &amp; Checkliste</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="hero">
+  <div class="kicker">Deutsch · Klasse 11 · Klausurvorbereitung</div>
+  <h1>Lernzettel Kommunikationsmodelle</h1>
+  <p class="sub">Alle Modelle aus den Arbeitsblättern (M1–M14) – mit Fachbegriffen, Beispielen, Musterlösungen und einer Anleitung, wie du ein Modell auf einen literarischen Text anwendest.</p>
+  <div class="chips">
+    <span class="chip">Bühler · Organon-Modell</span>
+    <span class="chip">Watzlawick · 5 Axiome</span>
+    <span class="chip">Schulz von Thun · Vier-Seiten-Modell</span>
+    <span class="chip">Gordon · 12 Sperren &amp; Ich-Botschaft</span>
+  </div>
+  <div class="toolbar">
+    <button class="btn primary" id="toggleAll" type="button">Alle Lösungen öffnen</button>
+    <button class="btn" id="printBtn" type="button">Drucken / PDF</button>
+    <button class="btn" id="themeBtn" type="button">Hell / Dunkel</button>
+  </div>
+  <details class="mtoc">
+    <summary>Inhaltsverzeichnis</summary>
+    <ol>
+      <li><a href="#ueberblick">Auf einen Blick</a></li>
+      <li><a href="#grundbegriffe">Grundbegriffe</a></li>
+      <li><a href="#buehler">Bühler: Organon-Modell</a></li>
+      <li><a href="#watzlawick">Watzlawick: 5 Axiome</a></li>
+      <li><a href="#schulzvonthun">Schulz von Thun</a></li>
+      <li><a href="#gordon">Gordon</a></li>
+      <li><a href="#vergleich">Modelle vergleichen</a></li>
+      <li><a href="#anwenden">Anwenden auf Texte</a></li>
+      <li><a href="#physiker">Musterlösung „Die Physiker“</a></li>
+      <li><a href="#transfer">Transfer: anderes Drama</a></li>
+      <li><a href="#beruf">Zusatz: Beruf</a></li>
+      <li><a href="#glossar">Glossar</a></li>
+      <li><a href="#test">Selbsttest</a></li>
+    </ol>
+  </details>
+</header>
+
+<!-- ============ 1 ÜBERBLICK ============ -->
+<section class="sec c-gen" id="ueberblick">
+  <h2><span class="sec-num">1</span>Auf einen Blick</h2>
+  <div class="box merke">
+    <span class="box-t">Was kommt in der Klausur?</span>
+    <p>Du bekommst einen <b>literarischen Text</b> (oft eine Szene aus einem Drama, manchmal einen Prosatext). Du sollst ein <b>Kommunikationsmodell</b> kurz erklären und es dann <b>am Gespräch im Text anwenden</b>: mit Zitaten, Zeilenangaben und Fachbegriffen. Am Ende deutest du: <i>Warum gelingt oder scheitert die Kommunikation? Was zeigt das über die Figuren und das Thema des Textes?</i></p>
+  </div>
+
+  <div class="tw min"><table>
+    <thead><tr><th>Modell</th><th>Wer? Wann?</th><th>Kernidee</th><th>Wichtige Fachbegriffe</th><th>Gut geeignet für …</th></tr></thead>
+    <tbody>
+      <tr><td class="k" style="color:var(--buehler)">Organon-Modell</td><td>Karl Bühler, 1934</td><td>Sprache ist ein Werkzeug. Jedes Sprachzeichen hat drei Funktionen.</td><td>Ausdruck (Symptom), Appell (Signal), Darstellung (Symbol), Intention</td><td>die <b>Absicht</b> einer Äußerung: Monolog, Rede, Brief, einzelne wichtige Sätze</td></tr>
+      <tr><td class="k" style="color:var(--watz)">5 Axiome</td><td>Paul Watzlawick, 1967/1969</td><td>Fünf Grundregeln, die für jede Kommunikation gelten.</td><td>Inhalts-/Beziehungsaspekt, Interpunktion, digital/analog, symmetrisch/komplementär, Metakommunikation</td><td><b>Beziehungen</b>, Machtkämpfe, Schweigen, Körpersprache, Streit im Kreis</td></tr>
+      <tr><td class="k" style="color:var(--svt)">Vier-Seiten-Modell</td><td>Friedemann Schulz von Thun, 1981</td><td>Jede Nachricht hat vier Seiten. Der Sender spricht mit vier „Schnäbeln“, der Empfänger hört mit vier „Ohren“.</td><td>Sachinhalt, Selbstkundgabe, Beziehung, Appell; explizit/implizit; kongruent/inkongruent</td><td><b>Missverständnisse</b> zwischen Figuren, versteckte Botschaften</td></tr>
+      <tr><td class="k" style="color:var(--gordon)">12 Kommunikations&shy;sperren + Ich-Botschaft</td><td>Thomas Gordon, 1970 (dt. 1972)</td><td>Bestimmte Reaktionen blockieren das Gespräch. Ich-Botschaften machen Kritik konstruktiv.</td><td>Kommunikationssperre, Du-Botschaft, Ich-Botschaft (Verhalten – Wirkung – Gefühl)</td><td><b>Streitgespräche</b> mit Vorwürfen; bessere Alternativen formulieren</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Welches Modell passt zu meinem Text?</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Wenn im Text …</th><th>… dann nimm vor allem</th></tr></thead>
+    <tbody>
+      <tr><td>eine Figur etwas <b>anders versteht</b>, als es gemeint war (Missverständnis)</td><td><b style="color:var(--svt)">Schulz von Thun</b> (vier Ohren)</td></tr>
+      <tr><td>es um <b>Macht, Rang, Hierarchie</b> geht (Vater–Tochter, Chef–Diener, Polizist–Zeuge)</td><td><b style="color:var(--watz)">Watzlawick</b>, 5. Axiom</td></tr>
+      <tr><td>eine Figur <b>schweigt</b>, <b>Körpersprache</b> zeigt oder Regieanweisungen wichtig sind</td><td><b style="color:var(--watz)">Watzlawick</b>, 1. und 4. Axiom</td></tr>
+      <tr><td>ein Streit sich <b>im Kreis dreht</b> und jeder dem anderen die Schuld gibt</td><td><b style="color:var(--watz)">Watzlawick</b>, 3. Axiom</td></tr>
+      <tr><td>man über eine Sache streitet, aber eigentlich geht es um <b>Respekt, Liebe, Stolz</b></td><td><b style="color:var(--watz)">Watzlawick</b>, 2. Axiom (oder Schulz von Thun: Beziehungsseite)</td></tr>
+      <tr><td>du die <b>Absicht (Intention)</b> einer Rede, eines Monologs oder Briefes bestimmen sollst</td><td><b style="color:var(--buehler)">Bühler</b></td></tr>
+      <tr><td>Figuren sich <b>Vorwürfe</b> machen, sich beleidigen, das Gespräch blockiert</td><td><b style="color:var(--gordon)">Gordon</b> (Sperren), Ich-Botschaft als Alternative</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="box tipp">
+    <span class="box-t">So lernst du mit diesem Zettel</span>
+    <ol>
+      <li>Lies zuerst diese Übersicht und die <a href="#grundbegriffe">Grundbegriffe</a>.</li>
+      <li>Lerne jedes Modell mit den <b>Merke-Kästen</b> und Eselsbrücken.</li>
+      <li>Löse die Aufgaben aus den Arbeitsblättern selbst – erst dann die <b>Lösungen</b> aufklappen.</li>
+      <li>Lies die <a href="#anwenden">Anleitung</a> und die <a href="#physiker">Musterlösung „Die Physiker“</a> genau. So sieht es in der Klausur aus.</li>
+      <li>Mach am Ende den <a href="#test">Selbsttest</a>.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ 2 GRUNDBEGRIFFE ============ -->
+<section class="sec c-gen" id="grundbegriffe">
+  <h2><span class="sec-num">2</span>Grundbegriffe der Kommunikation</h2>
+  <p>Alle Modelle bauen auf einem einfachen Grundschema auf:</p>
+  <figure>
+    <svg viewBox="0 0 640 120" role="img" aria-label="Sender schickt Nachricht an Empfänger, Empfänger gibt Rückmeldung">
+      <defs><marker id="arG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/></marker></defs>
+      <rect x="10" y="30" width="150" height="50" rx="12" style="fill:var(--surface-2);stroke:var(--border)"/>
+      <text x="85" y="61" text-anchor="middle" class="svgtext" font-size="17" font-weight="700">Sender</text>
+      <rect x="245" y="30" width="150" height="50" rx="12" style="fill:var(--surface-2);stroke:var(--border)"/>
+      <text x="320" y="61" text-anchor="middle" class="svgtext" font-size="17" font-weight="700">Nachricht</text>
+      <rect x="480" y="30" width="150" height="50" rx="12" style="fill:var(--surface-2);stroke:var(--border)"/>
+      <text x="555" y="61" text-anchor="middle" class="svgtext" font-size="17" font-weight="700">Empfänger</text>
+      <line x1="162" y1="55" x2="240" y2="55" style="stroke:var(--accent)" stroke-width="2.5" marker-end="url(#arG)"/>
+      <line x1="397" y1="55" x2="475" y2="55" style="stroke:var(--accent)" stroke-width="2.5" marker-end="url(#arG)"/>
+      <path d="M555,82 C555,112 85,112 85,84" fill="none" style="stroke:var(--muted)" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#arG)"/>
+      <text x="320" y="112" text-anchor="middle" class="svgmuted" font-size="13">Rückmeldung (Feedback) – jetzt wird der Empfänger zum Sender</text>
+    </svg>
+  </figure>
+  <div class="tw"><table>
+    <thead><tr><th>Begriff</th><th>Erklärung</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Sender</td><td>Die Person, die etwas mitteilt (Sprecher, Schreiber).</td></tr>
+      <tr><td class="k">Empfänger</td><td>Die Person, die die Nachricht bekommt (Hörer, Leser).</td></tr>
+      <tr><td class="k">Nachricht / Botschaft</td><td>Das, was gesendet wird – Worte, aber auch Körpersprache.</td></tr>
+      <tr><td class="k">Intention</td><td>Die <b>Absicht</b> des Senders: Was will er erreichen?</td></tr>
+      <tr><td class="k">Code</td><td>Das gemeinsame Zeichensystem (z. B. die deutsche Sprache). Sender und Empfänger müssen den Code teilen.</td></tr>
+      <tr><td class="k">Kontext / Situation</td><td>Ort, Zeit, Vorgeschichte, Beziehung der Personen. Der Kontext verändert die Bedeutung.</td></tr>
+      <tr><td class="k">verbal</td><td>mit Worten (was gesagt wird).</td></tr>
+      <tr><td class="k">nonverbal</td><td>ohne Worte: <b>Gestik</b> (Hände, Arme), <b>Mimik</b> (Gesicht), <b>Körperhaltung</b>, Blickkontakt, Abstand.</td></tr>
+      <tr><td class="k">paraverbal</td><td><b>wie</b> etwas gesagt wird: Tonfall, Lautstärke, Sprechtempo, Pausen.</td></tr>
+      <tr><td class="k">explizit / implizit</td><td>explizit = direkt, ausdrücklich gesagt. Implizit = indirekt, „zwischen den Zeilen“ gemeint.</td></tr>
+      <tr><td class="k">Kommunikations&shy;störung</td><td>Die Nachricht kommt nicht so an, wie sie gemeint war → Missverständnis, Streit, Abbruch.</td></tr>
+      <tr><td class="k">Metakommunikation</td><td>Kommunikation <b>über</b> die Kommunikation: „Wie redest du eigentlich mit mir?“ Hilft, Störungen zu lösen.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box merke">
+    <span class="box-t">Merke für literarische Texte</span>
+    <p><b>Drama:</b> Der <b>Haupttext</b> sind die Repliken (was die Figuren sagen). Der <b>Nebentext</b> sind die <b>Regieanweisungen</b> (meist kursiv). Dort steht oft das Nonverbale: Gestik, Mimik, Schweigen, Handlungen.<br>
+    <b>Prosa:</b> Das Nonverbale steht im <b>Erzählerbericht</b>. Was eine Figur wirklich denkt, zeigen <b>innerer Monolog</b> oder <b>erlebte Rede</b>.</p>
+  </div>
+</section>
+
+<!-- ============ 3 BÜHLER ============ -->
+<section class="sec c-buehler" id="buehler">
+  <h2><span class="sec-num">3</span>Das Organon-Modell (Karl Bühler)</h2>
+  <div class="model-meta"><span><b>Karl Bühler</b> (1879–1963), Sprachpsychologe</span><span>Werk: <b>„Sprachtheorie“</b> (1934)</span><span>Arbeitsblätter: M5, M6, M7</span></div>
+  <p class="kern">Sprache ist ein <b>Werkzeug</b> (altgriechisch <i>órganon</i> = Werkzeug). Mit diesem Werkzeug teilt einer dem anderen etwas über die Dinge mit.</p>
+
+  <h3>Wie funktioniert das Modell?</h3>
+  <p>Beim Sprechen sind immer <b>drei Elemente</b> beteiligt:</p>
+  <ul>
+    <li>ein <span class="fb">Sender</span> (Sprecher),</li>
+    <li>ein <span class="fb">Empfänger</span> (Hörer),</li>
+    <li>die <span class="fb">Gegenstände und Sachverhalte</span> der Welt (worüber gesprochen wird).</li>
+  </ul>
+  <p>In der Mitte steht das <span class="fb">Sprachzeichen</span> (in der Grafik: <b>Z</b>). Es ist mit allen drei Elementen verbunden. Deshalb hat jedes Sprachzeichen <b>drei Funktionen gleichzeitig</b>.</p>
+
+  <figure>
+    <svg viewBox="0 0 600 400" role="img" aria-label="Organon-Modell: Zeichen Z in der Mitte, verbunden mit Sender (Ausdruck), Empfänger (Appell) und Gegenständen und Sachverhalten (Darstellung)">
+      <rect x="190" y="18" width="220" height="62" rx="8" style="fill:var(--surface-2);stroke:var(--text)" stroke-width="1.5"/>
+      <text x="300" y="45" text-anchor="middle" class="svgtext" font-size="16" font-weight="700">Gegenstände und</text>
+      <text x="300" y="66" text-anchor="middle" class="svgtext" font-size="16" font-weight="700">Sachverhalte</text>
+      <g style="stroke:var(--buehler)" stroke-width="1.6" stroke-dasharray="3 4">
+        <line x1="210" y1="168" x2="210" y2="82"/><line x1="235" y1="168" x2="235" y2="82"/><line x1="260" y1="168" x2="260" y2="82"/><line x1="285" y1="168" x2="285" y2="82"/><line x1="310" y1="168" x2="310" y2="82"/><line x1="335" y1="168" x2="335" y2="82"/><line x1="360" y1="168" x2="360" y2="82"/><line x1="385" y1="168" x2="385" y2="82"/>
+      </g>
+      <g style="stroke:var(--buehler)" stroke-width="1.6">
+        <line x1="210" y1="186" x2="150.6" y2="223.1"/><line x1="225" y1="210" x2="165.6" y2="247.1"/><line x1="240" y1="234" x2="180.6" y2="271.1"/><line x1="255" y1="258" x2="195.6" y2="295.1"/><line x1="270" y1="282" x2="210.6" y2="319.1"/><line x1="285" y1="306" x2="225.6" y2="343.1"/>
+        <line x1="390" y1="186" x2="449.4" y2="223.1"/><line x1="375" y1="210" x2="434.4" y2="247.1"/><line x1="360" y1="234" x2="419.4" y2="271.1"/><line x1="345" y1="258" x2="404.4" y2="295.1"/><line x1="330" y1="282" x2="389.4" y2="319.1"/><line x1="315" y1="306" x2="374.4" y2="343.1"/>
+      </g>
+      <polygon points="200,170 400,170 300,330" fill="none" style="stroke:var(--text)" stroke-width="2"/>
+      <circle cx="300" cy="223" r="80" fill="none" style="stroke:var(--muted)" stroke-width="1.6" stroke-dasharray="4 4"/>
+      <text x="300" y="232" text-anchor="middle" class="svgtext" font-size="30" font-weight="700">Z</text>
+      <text x="420" y="122" class="svgtext" font-size="16" font-weight="700" style="fill:var(--buehler)">Darstellung</text>
+      <text x="420" y="141" class="svgmuted" font-size="13">→ Zeichen = Symbol</text>
+      <text x="18" y="178" class="svgtext" font-size="16" font-weight="700" style="fill:var(--buehler)">Ausdruck</text>
+      <text x="18" y="197" class="svgmuted" font-size="13">→ Zeichen = Symptom</text>
+      <text x="470" y="200" class="svgtext" font-size="16" font-weight="700" style="fill:var(--buehler)">Appell</text>
+      <text x="470" y="219" class="svgmuted" font-size="13">→ Zeichen = Signal</text>
+      <text x="60" y="345" class="svgtext" font-size="20" font-weight="700">Sender</text>
+      <text x="430" y="372" class="svgtext" font-size="20" font-weight="700">Empfänger</text>
+    </svg>
+    <figcaption>Organon-Modell nach Bühler (vereinfacht nachgezeichnet, vgl. M5)</figcaption>
+  </figure>
+
+  <h3>Die drei Funktionen des Sprachzeichens</h3>
+  <div class="tw min"><table>
+    <thead><tr><th>Bezug auf …</th><th>Funktion</th><th>Das Zeichen ist ein …</th><th>Leitfrage</th><th>Beispiel</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Sender</td><td><b>Ausdruck</b><br><small>(Ausdrucksfunktion)</small></td><td><b>Symptom</b> (Anzeichen): Es zeigt, wie es <i>im Sender</i> aussieht.</td><td>Was zeigt der Sprecher von sich – Gefühle, Stimmung, Einstellung?</td><td>„Au!“ · „Ich bin so glücklich!“</td></tr>
+      <tr><td class="k">Empfänger</td><td><b>Appell</b><br><small>(Appellfunktion)</small></td><td><b>Signal</b>: Es will das Verhalten <i>des Empfängers</i> steuern.</td><td>Was soll der Empfänger tun, denken oder fühlen?</td><td>„Komm her!“ · „Hilfe!“</td></tr>
+      <tr><td class="k">Gegenstände und Sachverhalte</td><td><b>Darstellung</b><br><small>(Darstellungsfunktion)</small></td><td><b>Symbol</b>: Es steht für eine Sache in der Welt.</td><td>Welche Information über die Welt wird gegeben?</td><td>„Der Zug fährt um 8 Uhr.“</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="box merke">
+    <span class="box-t">Merke</span>
+    <ul>
+      <li>Alle drei Funktionen sind <b>immer gleichzeitig</b> da.</li>
+      <li>Aber meistens <b>dominiert</b> (überwiegt) eine Funktion.</li>
+      <li>Welche Funktion dominiert, hängt von der <b>Intention</b> (Absicht) des Senders und von der <b>Situation</b> ab.</li>
+    </ul>
+    <p><b>Eselsbrücke:</b> <b>Sym<u>ptom</u></b> – wie beim Arzt: zeigt, was <i>innen</i> los ist (Sender). <b>Signal</b> – wie eine Ampel: sagt, was man <i>tun</i> soll (Empfänger). <b>Symbol</b> – steht für eine <i>Sache</i> (Welt).</p>
+  </div>
+
+  <div class="box profi">
+    <span class="box-t">Profi-Wissen: Kreis und Dreieck in der Grafik</span>
+    <p>Der <b>Kreis</b> ist das konkrete Schallereignis – also das, was man wirklich hört. Das <b>Dreieck</b> ist das Sprachzeichen mit seiner Bedeutung. Beide passen nicht genau übereinander:</p>
+    <ul>
+      <li><b>Abstraktive Relevanz:</b> Teile des Kreises liegen außerhalb des Dreiecks. Nicht alles, was man hört, ist für die Bedeutung wichtig (z. B. ob die Stimme hoch oder tief ist).</li>
+      <li><b>Apperzeptive Ergänzung:</b> Die Ecken des Dreiecks liegen außerhalb des Kreises. Der Hörer <b>ergänzt</b>, was fehlt (z. B. wenn jemand undeutlich spricht oder es laut ist).</li>
+    </ul>
+  </div>
+
+  <h3>Woran erkenne ich die Funktionen im Text?</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Funktion</th><th>Typische sprachliche Signale</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Ausdruck</td><td>Ich-Aussagen, Gefühlswörter (<i>Angst, froh, peinlich</i>), Interjektionen (<i>Ach! Au! Meine Güte!</i>), Ausrufe, wertende Adjektive, nonverbale Zeichen (Seufzen, Zittern)</td></tr>
+      <tr><td class="k">Appell</td><td>Imperativ (<i>Komm!</i>), Fragen und Bitten (<i>Kann ich …?</i>), Modalverben (<i>sollen, müssen, dürfen</i>), Du-/Sie-Anrede, Drohungen, Versprechen</td></tr>
+      <tr><td class="k">Darstellung</td><td>sachliche Aussagesätze, Fakten, Zahlen, Daten, Namen, neutrale Wortwahl, 3. Person</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Aufgabe M5: „Es ist heiß“</h3>
+  <details class="loes"><summary><span class="lab">Lösung</span> „Es ist heiß“ mit dem Organon-Modell erklärt</summary><div class="inner">
+    <div class="tw"><table>
+      <thead><tr><th>Funktion</th><th>Was bedeutet „Es ist heiß“?</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Darstellung (Symbol)</td><td>Information über die Welt: Die Temperatur ist hoch.</td></tr>
+        <tr><td class="k">Ausdruck (Symptom)</td><td>Der Sender zeigt sein Befinden: Mir ist zu warm, ich schwitze, ich fühle mich nicht wohl.</td></tr>
+        <tr><td class="k">Appell (Signal)</td><td>Der Empfänger soll etwas tun: „Mach bitte das Fenster auf!“ oder „Bring mir etwas zu trinken!“</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>Intention entscheidet:</b> Im Wetterbericht dominiert die <b>Darstellung</b>. Wenn jemand stöhnend auf dem Sofa liegt, dominiert der <b>Ausdruck</b>. Wenn die Chefin es zum Praktikanten am Fenster sagt, dominiert der <b>Appell</b>.</p>
+  </div></details>
+
+  <h3>Aufgabe M7: Textsorten zuordnen</h3>
+  <details class="loes"><summary><span class="lab">Lösung</span> Welche Funktion dominiert in welcher Textsorte?</summary><div class="inner">
+    <div class="tw"><table>
+      <thead><tr><th>Appell</th><th>Darstellung</th><th>Ausdruck</th></tr></thead>
+      <tbody><tr>
+        <td>politische Rede<br>Werbetext<br>(Kommentar)<br>(Instagram-Post)</td>
+        <td>Nachrichten<br>Gebrauchsanweisung<br>TV-Dokumentation<br>(Roman)</td>
+        <td>Gedicht<br>Songtext<br>(Roman)<br>(Instagram-Post)</td>
+      </tr></tbody>
+    </table></div>
+    <p><b>Aufgabe 2 – Mischformen:</b> Die Zuordnung ist nicht immer eindeutig. Man ordnet nach der <b>dominanten</b> Funktion. Beispiele:</p>
+    <ul>
+      <li><b>Kommentar:</b> Darstellung (Fakten) + Ausdruck (Meinung des Autors) + Appell (Leser überzeugen).</li>
+      <li><b>Instagram-Post:</b> Ausdruck (Selbstdarstellung) + Appell (liken, folgen, bei Influencern: kaufen).</li>
+      <li><b>Roman:</b> Darstellung einer (fiktiven) Welt + Ausdruck von Gefühlen; manchmal auch Appell (z. B. Kritik an der Gesellschaft).</li>
+      <li><b>Politische Rede:</b> Appell dominiert, aber sie nutzt Fakten (Darstellung) und Emotionen (Ausdruck).</li>
+    </ul>
+  </div></details>
+
+  <h3>Aufgabe M6: Ben und sein Vater</h3>
+  <details class="loes"><summary><span class="lab">Lösung</span> Intentionen von Ben und dem Vater (Organon-Modell)</summary><div class="inner">
+    <div class="tw min"><table>
+      <thead><tr><th>Zeile</th><th>Äußerung</th><th>Dominante Funktion</th><th>Begründung</th></tr></thead>
+      <tbody>
+        <tr><td>Z. 1–3</td><td>Ben: <span class="q">„Da darf ich doch sicher auch mal eins trinken?!“</span></td><td>Appell</td><td>Sieht aus wie eine Frage, ist aber eine Bitte um Erlaubnis. „doch sicher“ und „?!“ machen Druck: Ben erwartet ein Ja.</td></tr>
+        <tr><td>Z. 4–7</td><td>Vater: <span class="q">„Gut, dass du fragst. […] Bei uns zu Hause gibt es ja keinen Alkohol.“</span></td><td>Darstellung (+ Ausdruck)</td><td>Er lobt die Frage (Zufriedenheit) und nennt Fakten über die Familie. Er antwortet noch nicht klar.</td></tr>
+        <tr><td>Z. 8</td><td>Ben: <span class="q">„Also darf ich!“</span></td><td>Appell</td><td>Ben deutet das Ausweichen als Ja. Das Ausrufezeichen zeigt: Er will Fakten schaffen.</td></tr>
+        <tr><td>Z. 9–10</td><td>Vater: <span class="q">„Nein, laut Jugendschutzgesetz …“</span></td><td>Darstellung + Appell</td><td>Sachliche Begründung mit dem Gesetz; klares Verbot.</td></tr>
+        <tr><td>Z. 11–12</td><td>Ben: <span class="q">„Ich will kein Außenseiter sein.“</span></td><td>Ausdruck</td><td>Ben zeigt seine Angst vor Ausgrenzung – sein eigentliches Problem.</td></tr>
+        <tr><td>Z. 13</td><td>Vater: <span class="q">„Ich trinke auch keinen Alkohol.“</span></td><td>Darstellung</td><td>Er argumentiert mit sich selbst, geht aber nicht auf Bens Gefühl ein.</td></tr>
+        <tr><td>Z. 14, 16</td><td>Ben: <span class="q">„Das Gesetz ist total unsinnig.“ – „Bist du langweilig.“</span></td><td>Ausdruck</td><td>Ärger und Frust; Abwertung des Vaters.</td></tr>
+        <tr><td>Z. 17</td><td>Vater: <span class="q">„Der Spaß hört dann auf, wenn …“</span></td><td>Appell (Warnung)</td><td>Warnt vor den Folgen; indirekt zeigt er Sorge.</td></tr>
+        <tr><td>Z. 21</td><td>Ben: <span class="q">„Dann gehe ich da lieber gar nicht hin.“</span></td><td>Appell (+ Ausdruck)</td><td>Druck durch Drohung; zugleich Scham („peinlich“).</td></tr>
+        <tr><td>Z. 23</td><td>Ben: <span class="q">„Nie gönnst du mir was.“</span></td><td>Ausdruck</td><td>Enttäuschung; Verallgemeinerung „nie“ = Vorwurf.</td></tr>
+        <tr><td>Z. 24</td><td>Vater: <span class="q">„Ich mache mir nur Sorgen.“</span></td><td>Ausdruck</td><td>Zum ersten Mal zeigt der Vater offen sein Gefühl – seine eigentliche Intention.</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>Ergebnis:</b> Bei Ben dominieren <b>Appell</b> und <b>Ausdruck</b> (er will die Erlaubnis und zeigt Gefühle). Beim Vater dominieren <b>Darstellung</b> und <b>Appell</b> (Gesetz, Regeln). Erst am Ende zeigt er seinen <b>Ausdruck</b> (Sorge). Beide sprechen auf verschiedenen Ebenen: Ben emotional, der Vater sachlich. Deshalb verstehen sie sich nicht.</p>
+    <p><b>Aufgabe 3 – Ist das Modell hilfreich?</b> Ja: Man erkennt die <b>Absicht hinter einer Äußerung</b> (z. B. eine Frage ist eigentlich ein Appell) und kann gezielter reagieren. Hätte der Vater Bens Angst (Ausdruck) früher erkannt und seine Sorge früher gezeigt, wäre ein Kompromiss möglich gewesen (z. B. alkoholfreies Bier, Abholen). <b>Grenzen:</b> Das Modell zeigt nicht, wie die <b>Beziehung</b> das Gespräch beeinflusst, und nicht, wie der <b>Empfänger</b> etwas versteht. Dafür braucht man Watzlawick oder Schulz von Thun.</p>
+  </div></details>
+
+  <div class="grid2">
+    <div class="card"><h4 class="yes">Stärken</h4><ul><li>Einfach und klar: drei Funktionen.</li><li>Gut, um die <b>Intention</b> einer Äußerung oder Textsorte zu bestimmen.</li><li>Gilt für mündliche und schriftliche Texte.</li></ul></div>
+    <div class="card"><h4 class="no">Grenzen</h4><ul><li>Vor allem vom <b>Sender</b> aus gedacht.</li><li>Die <b>Beziehung</b> der Gesprächspartner fehlt.</li><li>Zeigt nicht den Gesprächs<b>verlauf</b> (keine Rückmeldung).</li><li>Nonverbales spielt kaum eine Rolle.</li></ul></div>
+  </div>
+</section>
+
+<!-- ============ 4 WATZLAWICK ============ -->
+<section class="sec c-watz" id="watzlawick">
+  <h2><span class="sec-num">4</span>Die fünf Axiome (Paul Watzlawick)</h2>
+  <div class="model-meta"><span><b>Paul Watzlawick</b> (1921–2007), österreichisch-amerikanischer Kommunikationswissenschaftler, Psychotherapeut</span><span>Werk: <b>„Menschliche Kommunikation“</b> (1969, mit J. Beavin und D. Jackson; engl. 1967)</span><span>Arbeitsblätter: M8, M9, M10</span></div>
+  <p class="kern">Ein <b>Axiom</b> ist ein Grundsatz, der als wahr gilt und <b>keinen Beweis</b> braucht. Watzlawick nennt fünf Axiome, die für <b>jede</b> menschliche Kommunikation gelten. Sein Schwerpunkt: die <b>Beziehung</b> zwischen den Gesprächspartnern.</p>
+
+  <div class="ax">
+    <h3><span class="an">1</span>Man kann nicht nicht kommunizieren.</h3>
+    <p class="orig">„Man kann nicht nicht kommunizieren.“</p>
+    <dl>
+      <dt>Erklärung</dt><dd>Sobald sich zwei Menschen <b>wahrnehmen</b>, kommunizieren sie. Kommunikation ist wie Verhalten: Man kann sich nicht „nicht verhalten“. Auch <b>Schweigen</b>, Wegschauen, Gähnen oder Weggehen sind Botschaften.</dd>
+      <dt>Beispiel</dt><dd>Debbie kommt zu spät, lächelt nur und sagt nichts (M2, Z. 2–3). Tabea versteht: „Sie entschuldigt sich nicht einmal.“</dd>
+      <dt>Typische Störung</dt><dd>Das Schweigen oder die Körpersprache wird anders gedeutet, als es gemeint war.</dd>
+      <dt>Im Text achten auf</dt><dd>Regieanweisungen, Schweigen, Pausen (Gedankenstriche), Abgänge, Blicke.</dd>
+    </dl>
+  </div>
+
+  <div class="ax">
+    <h3><span class="an">2</span>Jede Kommunikation hat einen Inhalts- und einen Beziehungsaspekt.</h3>
+    <p class="orig">„Jede Kommunikation hat einen Inhalts- und einen Beziehungsaspekt, derart, dass letzterer den ersteren bestimmt und daher eine Metakommunikation ist.“</p>
+    <dl>
+      <dt>Erklärung</dt><dd><span class="fb">Inhaltsaspekt</span> = <b>WAS</b> gesagt wird (die Information).<br><span class="fb">Beziehungsaspekt</span> = <b>WIE</b> es gesagt wird und wie die Partner zueinander stehen. Er zeigt sich durch Tonfall, Gestik, Mimik, Wortwahl.<br>Der Beziehungsaspekt ist <b>wichtiger</b>: Er bestimmt, wie der Inhalt verstanden wird.</dd>
+      <dt>Beispiel</dt><dd>„Kannst du <i>endlich</i> das Fenster zumachen?“ – Inhalt: Das Fenster soll zu. Beziehung: „Du nervst mich. Ich darf dir sagen, was du tun sollst.“</dd>
+      <dt>Typische Störung</dt><dd>Ein Konflikt auf der <b>Beziehungsebene</b> wird auf der <b>Inhaltsebene</b> ausgetragen: Man streitet über eine Sache, aber eigentlich geht es um Respekt, Liebe oder Macht.</dd>
+      <dt>Lösung</dt><dd><span class="fb">Metakommunikation</span>: über die Kommunikation sprechen („Mich stört, <i>wie</i> du mit mir redest.“). Die Kommunikation gelingt nur, wenn beide Inhalts- und Beziehungsebene trennen.</dd>
+      <dt>Im Text achten auf</dt><dd>Anrede (du/Sie, Titel), Kosenamen oder Schimpfwörter, Abtönungspartikeln (<i>doch, mal, endlich, eben</i>), Tonfall in Regieanweisungen.</dd>
+    </dl>
+  </div>
+
+  <div class="ax">
+    <h3><span class="an">3</span>Kommunikation ist immer Ursache und Wirkung (Interpunktion).</h3>
+    <p class="orig">„Die Natur einer Beziehung ist durch die Interpunktion der Kommunikationsabläufe seitens der Partner bedingt.“</p>
+    <dl>
+      <dt>Erklärung</dt><dd>Kommunikation verläuft <b>kreisförmig</b>. Jede Äußerung ist gleichzeitig <b>Reaktion</b> (Wirkung) auf das Vorherige und <b>Auslöser</b> (Ursache) für das Nächste. Jeder Partner setzt den „Anfang“ anders – wie ein Satzzeichen. Das nennt Watzlawick <span class="fb">Interpunktion</span>. Jeder glaubt: „Ich reagiere nur auf dich. Du hast angefangen.“</dd>
+      <dt>Typische Störung</dt><dd><b>Teufelskreis</b>: Beide geben sich gegenseitig die Schuld. Das Gespräch dreht sich im Kreis.</dd>
+      <dt>Im Text achten auf</dt><dd>„Weil du immer …“, „Du hast angefangen“, Vorwürfe, die sich wiederholen und steigern.</dd>
+    </dl>
+    <figure>
+      <svg viewBox="0 0 600 230" role="img" aria-label="Teufelskreis: Sie nörgelt, weil er sich zurückzieht. Er zieht sich zurück, weil sie nörgelt.">
+        <defs><marker id="arW" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--watz)"/></marker></defs>
+        <rect x="10" y="85" width="200" height="60" rx="14" style="fill:var(--surface-2);stroke:var(--watz)" stroke-width="2"/>
+        <text x="110" y="112" text-anchor="middle" class="svgtext" font-size="16" font-weight="700">Sie nörgelt.</text>
+        <text x="110" y="132" text-anchor="middle" class="svgmuted" font-size="12.5">„… weil er sich zurückzieht.“</text>
+        <rect x="390" y="85" width="200" height="60" rx="14" style="fill:var(--surface-2);stroke:var(--watz)" stroke-width="2"/>
+        <text x="490" y="112" text-anchor="middle" class="svgtext" font-size="16" font-weight="700">Er zieht sich zurück.</text>
+        <text x="490" y="132" text-anchor="middle" class="svgmuted" font-size="12.5">„… weil sie nörgelt.“</text>
+        <path d="M120,82 C190,8 410,8 480,80" fill="none" style="stroke:var(--watz)" stroke-width="2.5" marker-end="url(#arW)"/>
+        <path d="M480,148 C410,222 190,222 120,150" fill="none" style="stroke:var(--watz)" stroke-width="2.5" marker-end="url(#arW)"/>
+        <text x="300" y="112" text-anchor="middle" class="svgmuted" font-size="14" font-style="italic">Wo ist</text>
+        <text x="300" y="130" text-anchor="middle" class="svgmuted" font-size="14" font-style="italic">der Anfang?</text>
+      </svg>
+      <figcaption>Klassisches Beispiel für Interpunktion: Jeder sieht nur sein Verhalten als Reaktion.</figcaption>
+    </figure>
+  </div>
+
+  <div class="ax">
+    <h3><span class="an">4</span>Kommunikation ist digital und analog.</h3>
+    <p class="orig">„Menschliche Kommunikation bedient sich digitaler und analoger Modalitäten.“</p>
+    <dl>
+      <dt>Erklärung</dt><dd><span class="fb">Digitale Kommunikation</span> = <b>verbal</b>: die Worte und Sätze. Sie ist sachlich und eindeutig und eignet sich gut für den <b>Inhalt</b>.<br><span class="fb">Analoge Kommunikation</span> = <b>nonverbal und paraverbal</b>: Gestik, Mimik, Körperhaltung, Tonfall, Situation. Sie zeigt vor allem die <b>Beziehung</b> und sagt etwas „zwischen den Zeilen“. Sie ist mehrdeutig.</dd>
+      <dt>Beispiel</dt><dd>Philip sagt „Mir geht’s gut“ (digital), aber er gähnt und klingt wütend (analog) (M10).</dd>
+      <dt>Typische Störung</dt><dd>Digitale und analoge Botschaft <b>widersprechen</b> sich (<span class="fb">inkongruent</span>). Der Empfänger weiß nicht, was er glauben soll. Meist glaubt man der analogen Botschaft mehr. Im Idealfall passen beide zusammen (<span class="fb">kongruent</span>).</dd>
+      <dt>Im Text achten auf</dt><dd>Regieanweisungen (Drama), Beschreibungen des Erzählers (Prosa), Satzzeichen wie ! ? – …</dd>
+    </dl>
+  </div>
+
+  <div class="ax">
+    <h3><span class="an">5</span>Kommunikation ist symmetrisch oder komplementär.</h3>
+    <p class="orig">„Zwischenmenschliche Kommunikationsabläufe sind entweder symmetrisch oder komplementär, je nachdem, ob die Beziehung zwischen den Partnern auf Gleichheit oder Unterschiedlichkeit beruht.“</p>
+    <div class="grid2">
+      <div class="card"><h4>symmetrisch</h4><div class="rel"><span>A</span><span>B</span></div><p>Die Partner sind <b>gleichrangig</b>, „auf Augenhöhe“. Sie wollen die Gleichheit erhalten.<br><small>Freunde, Geschwister, Kollegen, Paare</small></p></div>
+      <div class="card"><h4>komplementär</h4><div class="rel komp"><span>A</span><span>B</span></div><p>Die Partner sind <b>ungleich</b>. Einer ist <b>übergeordnet</b>, einer <b>untergeordnet</b>. Sie ergänzen sich (lat. <i>complementum</i> = Ergänzung).<br><small>Eltern–Kind, Lehrer–Schüler, Arzt–Patient, Chef–Angestellter</small></p></div>
+    </div>
+    <dl>
+      <dt>Typische Störungen</dt><dd><b>Symmetrische Eskalation:</b> Beide wollen überlegen sein → Machtkampf: „Wer hat das letzte Wort?“ (Tabea und Debbie).<br><b>Starre Komplementarität:</b> Einer dominiert immer, der andere wird unterdrückt.<br><b>Rollenkonflikt:</b> Eine Figur akzeptiert ihre Rolle nicht (z. B. das Kind will gleichberechtigt sein).</dd>
+      <dt>Im Text achten auf</dt><dd>Wer befiehlt? Wer fragt, wer antwortet? Wer unterbricht wen? Wer spricht viel (Redeanteile)? Wer bestimmt das Thema? Anrede und Titel.</dd>
+    </dl>
+  </div>
+
+  <div class="box merke">
+    <span class="box-t">Eselsbrücke: Die 5 Axiome in 5 Stichworten</span>
+    <ol>
+      <li><b>Schweigen spricht</b> – auch Nicht-Reden ist eine Botschaft.</li>
+      <li><b>Was &amp; Wie</b> – Inhalt und Beziehung.</li>
+      <li><b>Henne oder Ei?</b> – Ursache und Wirkung, Kreislauf, Interpunktion.</li>
+      <li><b>Wort &amp; Körper</b> – digital und analog.</li>
+      <li><b>Gleich oder ungleich?</b> – symmetrisch oder komplementär.</li>
+    </ol>
+  </div>
+
+  <h3>Nonverbale Kommunikation (M9)</h3>
+  <p>Nach dem 1. Axiom ist <b>jedes Verhalten</b> Kommunikation – auch das nonverbale. Dazu gehören:</p>
+  <div class="tw"><table>
+    <thead><tr><th>Bereich</th><th>Erklärung</th><th>Beispiel → mögliche Bedeutung</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Gestik</td><td>Bewegungen der Hände und Arme</td><td>Arme verschränken → Abwehr, Distanz · mit dem Finger zeigen → Vorwurf</td></tr>
+      <tr><td class="k">Mimik</td><td>Gesichtsausdruck</td><td>Augen rollen → Genervtheit, Abwertung · Lächeln → Freundlichkeit, aber auch Unsicherheit</td></tr>
+      <tr><td class="k">Körperhaltung</td><td>Wie jemand steht oder sitzt</td><td>sich wegdrehen → Ablehnung · zusammengesunken → Trauer, Müdigkeit</td></tr>
+      <tr><td class="k">Blickkontakt</td><td>Ansehen oder Wegsehen</td><td>auf das Handy schauen → Desinteresse</td></tr>
+      <tr><td class="k">Abstand</td><td>Nähe oder Distanz im Raum</td><td>aufstehen und gehen → Rückzug</td></tr>
+      <tr><td class="k">paraverbal</td><td>Tonfall, Lautstärke, Tempo, Pausen</td><td>laut und schnell → Wut · leise, mit Pausen → Unsicherheit</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box achtung"><span class="box-t">Achtung</span><p>Körpersprache ist <b>mehrdeutig</b>. Deute sie immer im <b>Kontext</b> der Situation und belege sie am Text (z. B. Regieanweisung mit Zeilenangabe).</p></div>
+
+  <h3>Aufgabe M10: Özlem und Philip</h3>
+  <details class="loes"><summary><span class="lab">Lösung</span> Gesprächsanalyse mit den fünf Axiomen</summary><div class="inner">
+    <p><b>1. Axiom (nicht nicht kommunizieren):</b> Philip <i>gähnt</i> (Z. 1) – ohne Worte zeigt er Müdigkeit oder Langeweile. Er <i>steht auf und geht in die Küche</i> (Z. 13): Rückzug, Distanz. Özlem <i>schmollt</i> (Z. 16): Sie ist gekränkt. Alles davon sind Botschaften.</p>
+    <p><b>2. Axiom (Inhalt und Beziehung):</b> Özlem reagiert auf der <b>Beziehungsebene</b>: <span class="q">„Hast du schlechte Laune?“</span> (Z. 3), <span class="q">„Du bist irgendwie wütend.“</span> (Z. 6–7). Philip antwortet auf der <b>Inhaltsebene</b>: <span class="q">„Weil die Serie mich langweilt.“</span> (Z. 8). Sie reden aneinander vorbei. Besonders deutlich: <span class="q">„Ich habe dich vermisst.“</span> (Z. 14) meint auf der Beziehungsebene „Du bist mir wichtig“. Philip versteht es aber als Kontrolle: <span class="q">„jeden meiner Schritte überwachst du“</span> (Z. 15).</p>
+    <p><b>3. Axiom (Ursache und Wirkung):</b> Ein Kreislauf: Philip ist schlecht gelaunt → Özlem fragt nach → Philip fühlt sich bedrängt und geht weg → Özlem sucht Nähe → Philip fühlt sich überwacht → Özlem schmollt → Philip geht schlafen. Jeder sieht sein Verhalten als Reaktion auf den anderen (Interpunktion).</p>
+    <p><b>4. Axiom (digital und analog):</b> Digital sagt Philip <span class="q">„Mir geht’s gut.“</span> (Z. 4–5). Analog (Gähnen, Tonfall) zeigt er das Gegenteil. Özlem merkt den Widerspruch: <span class="q">„Das hört sich nicht so an.“</span> (Z. 6). Die Botschaft ist <b>inkongruent</b>, Özlem glaubt der analogen Botschaft.</p>
+    <p><b>5. Axiom (symmetrisch/komplementär):</b> Als Paar sind sie grundsätzlich <b>symmetrisch</b>. Es gibt kleine Machtkämpfe: Özlem lehnt Philips Vorschlag ab und benutzt sein eigenes Wort: <span class="q">„Das finde ich langweilig.“</span> (Z. 12). Philip empfindet Özlems Nähe als Kontrolle, also als <b>komplementäre</b> Beziehung (sie oben, er unten), und wehrt sich. Am Ende entschuldigt er sich (Z. 17) – das beruhigt die Lage, aber das Problem wird nicht geklärt. Das Gespräch endet mit Rückzug.</p>
+  </div></details>
+
+  <div class="grid2">
+    <div class="card"><h4 class="yes">Stärken</h4><ul><li>Zeigt die <b>Beziehung</b> und den <b>Verlauf</b> eines Gesprächs.</li><li>Bezieht <b>Nonverbales</b> ein.</li><li>Erklärt Machtkämpfe und Teufelskreise.</li></ul></div>
+    <div class="card"><h4 class="no">Grenzen</h4><ul><li>Keine genaue Analyse <b>einzelner</b> Aussagen (das kann Schulz von Thun besser).</li><li>Die Axiome beschreiben, geben aber kaum <b>Lösungen</b>.</li><li>Die Begriffe digital/analog sind abstrakt.</li></ul></div>
+  </div>
+</section>
+
+<!-- ============ 5 SCHULZ VON THUN ============ -->
+<section class="sec c-svt" id="schulzvonthun">
+  <h2><span class="sec-num">5</span>Das Vier-Seiten-Modell (Friedemann Schulz von Thun)</h2>
+  <div class="model-meta"><span><b>Friedemann Schulz von Thun</b> (geb. 1944), Psychologe und Kommunikationswissenschaftler</span><span>Werk: <b>„Miteinander reden 1“</b> (1981)</span><span>Arbeitsblatt: M11</span></div>
+  <p class="kern">Jede Nachricht hat <b>vier Seiten</b> gleichzeitig. Der <b>Sender</b> spricht mit <b>vier Schnäbeln</b>, der <b>Empfänger</b> hört mit <b>vier Ohren</b>. Der Empfänger entscheidet (oft unbewusst), mit welchem Ohr er hört – so entstehen <b>Missverständnisse</b>.</p>
+  <p><small>Andere Namen: Kommunikationsquadrat, Nachrichtenquadrat, Vier-Ohren-Modell (Empfänger), Vier-Schnäbel-Modell (Sender).</small></p>
+
+  <figure>
+    <svg viewBox="0 0 640 260" role="img" aria-label="Vier-Seiten-Modell: Sender mit vier Schnäbeln, Nachricht mit Sachinhalt, Selbstkundgabe, Beziehung und Appell, Empfänger mit vier Ohren">
+      <defs>
+        <marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--sache)"/></marker>
+        <marker id="m2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--selbst)"/></marker>
+        <marker id="m3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--bez)"/></marker>
+        <marker id="m4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--appell)"/></marker>
+      </defs>
+      <circle cx="70" cy="95" r="22" style="fill:var(--svt)"/>
+      <path d="M32,170 C32,128 108,128 108,170 Z" style="fill:var(--svt)"/>
+      <text x="70" y="196" text-anchor="middle" class="svgtext" font-size="16" font-weight="700">Sender</text>
+      <text x="70" y="216" text-anchor="middle" class="svgmuted" font-size="13">„4 Schnäbel“</text>
+      <circle cx="570" cy="95" r="22" style="fill:var(--svt)"/>
+      <path d="M532,170 C532,128 608,128 608,170 Z" style="fill:var(--svt)"/>
+      <text x="570" y="196" text-anchor="middle" class="svgtext" font-size="16" font-weight="700">Empfänger</text>
+      <text x="570" y="216" text-anchor="middle" class="svgmuted" font-size="13">„4 Ohren“</text>
+      <g stroke-width="3">
+        <line x1="118" y1="70" x2="205" y2="62" style="stroke:var(--sache)" marker-end="url(#m1)"/>
+        <line x1="118" y1="105" x2="205" y2="108" style="stroke:var(--selbst)" marker-end="url(#m2)"/>
+        <line x1="118" y1="140" x2="205" y2="150" style="stroke:var(--appell)" marker-end="url(#m4)"/>
+        <line x1="118" y1="175" x2="205" y2="200" style="stroke:var(--bez)" marker-end="url(#m3)"/>
+        <line x1="435" y1="62" x2="520" y2="70" style="stroke:var(--sache)" marker-end="url(#m1)"/>
+        <line x1="435" y1="108" x2="520" y2="105" style="stroke:var(--selbst)" marker-end="url(#m2)"/>
+        <line x1="435" y1="150" x2="520" y2="140" style="stroke:var(--appell)" marker-end="url(#m4)"/>
+        <line x1="435" y1="200" x2="520" y2="175" style="stroke:var(--bez)" marker-end="url(#m3)"/>
+      </g>
+      <rect x="220" y="30" width="200" height="200" style="fill:var(--surface);stroke:var(--border)"/>
+      <rect x="220" y="30" width="200" height="32" style="fill:var(--sache)"/>
+      <rect x="220" y="198" width="200" height="32" style="fill:var(--bez)"/>
+      <rect x="220" y="62" width="32" height="136" style="fill:var(--selbst)"/>
+      <rect x="388" y="62" width="32" height="136" style="fill:var(--appell)"/>
+      <text x="320" y="51" text-anchor="middle" font-size="15" font-weight="700" fill="#fff" font-family="system-ui,sans-serif">Sachinhalt</text>
+      <text x="320" y="219" text-anchor="middle" font-size="15" font-weight="700" fill="#1c1c1f" font-family="system-ui,sans-serif">Beziehung</text>
+      <text x="236" y="130" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff" font-family="system-ui,sans-serif" transform="rotate(-90 236 130)" dominant-baseline="middle">Selbstkundgabe</text>
+      <text x="404" y="130" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff" font-family="system-ui,sans-serif" transform="rotate(90 404 130)" dominant-baseline="middle">Appell</text>
+      <text x="320" y="136" text-anchor="middle" class="svgtext" font-size="20" font-weight="700">Nachricht</text>
+    </svg>
+    <figcaption>Das Kommunikationsquadrat (nachgezeichnet nach der Grafik in M11)</figcaption>
+  </figure>
+
+  <h3>Die vier Seiten einer Nachricht</h3>
+  <p>Beispiel (klassisch bei Schulz von Thun): Ein Mann sitzt im Auto neben seiner Frau. Sie fährt. Er sagt: <b>„Du, da vorne ist grün!“</b></p>
+  <div class="tw min"><table>
+    <thead><tr><th>Seite</th><th>Schnabel: Sender fragt sich …</th><th>Ohr: Empfänger fragt sich …</th><th>„Du, da vorne ist grün!“</th></tr></thead>
+    <tbody>
+      <tr><td><span class="t sache">Sachinhalt</span></td><td>Worüber informiere ich? (Daten, Fakten)</td><td><b>Sach-Ohr:</b> Ist das wahr? Ist das wichtig? Ist das vollständig?</td><td>Die Ampel ist grün.</td></tr>
+      <tr><td><span class="t selbst">Selbstkundgabe</span><br><small>früher: Selbstoffenbarung</small></td><td>Was zeige ich von mir? (Gefühle, Werte, Zustand)</td><td><b>Selbstkundgabe-Ohr:</b> Was ist mit dem los? Was ist das für einer?</td><td>Ich habe es eilig. Ich bin ungeduldig.</td></tr>
+      <tr><td><span class="t bez">Beziehung</span></td><td>Was halte ich von dir? Wie stehen wir zueinander? (Du-Botschaft und Wir-Botschaft)</td><td><b>Beziehungs-Ohr:</b> Wie redet der mit mir? Wen glaubt er vor sich zu haben?</td><td>Du brauchst meine Hilfe. Du passt nicht gut auf.</td></tr>
+      <tr><td><span class="t appell">Appell</span></td><td>Wozu möchte ich dich bringen?</td><td><b>Appell-Ohr:</b> Was soll ich jetzt tun, denken, fühlen?</td><td>Fahr los! Gib Gas!</td></tr>
+    </tbody>
+  </table></div>
+  <p>Die Frau antwortet: <b>„Fährst du oder fahre ich?“</b> Sie hat vor allem mit dem <span class="t bez">Beziehungs-Ohr</span> gehört: Sie fühlt sich bevormundet. Gemeint war vielleicht nur ein Hinweis. → <b>Missverständnis.</b></p>
+
+  <h3>Wichtige Fachbegriffe</h3>
+  <div class="tw"><table>
+    <tbody>
+      <tr><td class="k">explizit / implizit</td><td>Eine Botschaft kann <b>explizit</b> (direkt ausgesprochen) oder <b>implizit</b> (indirekt, „zwischen den Zeilen“, durch Tonfall, Mimik, Gestik) sein. Oft ist der Sachinhalt explizit, die anderen drei Seiten sind implizit.</td></tr>
+      <tr><td class="k">Selbstdarstellung / Selbstenthüllung</td><td>Die Selbstkundgabe kann <b>gewollt</b> sein (Selbstdarstellung: Ich will gut wirken) oder <b>ungewollt</b> (Selbstenthüllung: Man verrät mehr über sich, als man will – z. B. durch Nervosität).</td></tr>
+      <tr><td class="k">offener / verdeckter Appell</td><td>Offen: Bitte, Befehl („Mach das Fenster auf!“). Verdeckt: versteckt, manchmal manipulativ („Ganz schön warm hier.“).</td></tr>
+      <tr><td class="k">kongruent / inkongruent</td><td>Kongruent: Worte und Körpersprache passen zusammen. Inkongruent: Sie widersprechen sich (vgl. Watzlawick, 4. Axiom).</td></tr>
+      <tr><td class="k">einseitige Empfangs&shy;gewohnheiten</td><td>Manche Menschen hören mit einem Ohr besonders stark:<br><span class="t bez">großes Beziehungs-Ohr</span> → fühlt sich schnell angegriffen, nimmt alles persönlich.<br><span class="t sache">großes Sach-Ohr</span> → diskutiert nur Fakten, überhört Gefühle.<br><span class="t selbst">großes Selbstkundgabe-Ohr</span> → analysiert immer den anderen („Du bist ja nur gestresst.“).<br><span class="t appell">großes Appell-Ohr</span> → will es allen recht machen, reagiert sofort.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="box merke">
+    <span class="box-t">Merke</span>
+    <ul>
+      <li><b>Schnäbel = Sender</b> (was gemeint ist). <b>Ohren = Empfänger</b> (was ankommt).</li>
+      <li>Ein <b>Missverständnis</b> entsteht, wenn der Empfänger mit einem anderen Ohr hört, als der Sender gemeint hat.</li>
+      <li>Eselsbrücke – vier Fragen: <b>Worüber?</b> (Sache) · <b>Wer bin ich?</b> (Selbstkundgabe) · <b>Wer bist du / wer sind wir?</b> (Beziehung) · <b>Was sollst du tun?</b> (Appell)</li>
+      <li>Schulz von Thun verbindet <b>Bühler</b> (Darstellung → Sachinhalt, Ausdruck → Selbstkundgabe, Appell → Appell) mit <b>Watzlawick</b> (Beziehungsaspekt → Beziehung).</li>
+    </ul>
+  </div>
+
+  <h3>Woran erkenne ich die vier Seiten im Text?</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Seite</th><th>Typische Signale</th></tr></thead>
+    <tbody>
+      <tr><td><span class="t sache">Sachinhalt</span></td><td>Aussagesätze, Fakten, Zahlen, Namen</td></tr>
+      <tr><td><span class="t selbst">Selbstkundgabe</span></td><td>Ich-Aussagen, Gefühlswörter, Interjektionen, Körpersprache (Schwitzen, Zittern), Pronomen „man“ statt „ich“ (versteckt die eigene Person)</td></tr>
+      <tr><td><span class="t bez">Beziehung</span></td><td>Anrede (du/Sie, Titel), Tonfall, Kosenamen oder Schimpfwörter, Abtönungspartikeln (<i>doch, mal, endlich</i>), Unterbrechungen, Befehlston</td></tr>
+      <tr><td><span class="t appell">Appell</span></td><td>Imperativ, Fragen, Modalverben (<i>sollen, müssen</i>), Konjunktiv („Könntest du …?“), Andeutungen</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Aufgabe M11: Der Lehrer sagt „Ganz schön warm hier.“</h3>
+  <details class="loes"><summary><span class="lab">Lösung</span> Vier Schnäbel und vier Ohren</summary><div class="inner">
+    <div class="tw min"><table>
+      <thead><tr><th>Seite</th><th>Was sagt der Lehrer? (Schnabel)</th><th>Was hören die Schüler? (Ohr) – Möglichkeiten</th></tr></thead>
+      <tbody>
+        <tr><td><span class="t sache">Sachinhalt</span></td><td>Im Klassenraum ist es warm.</td><td>„Stimmt, es sind 28 Grad.“</td></tr>
+        <tr><td><span class="t selbst">Selbstkundgabe</span></td><td>Mir ist heiß, ich fühle mich nicht wohl.</td><td>„Der Lehrer schwitzt, ihm geht es nicht gut.“</td></tr>
+        <tr><td><span class="t bez">Beziehung</span></td><td>Ich bin der Lehrer und darf euch Hinweise geben. Ihr seid für den Raum mitverantwortlich.</td><td>„Er gibt uns die Schuld, weil die Fenster zu sind.“ oder: „Er will, dass wir für ihn springen.“</td></tr>
+        <tr><td><span class="t appell">Appell</span></td><td>Macht bitte das Fenster auf!</td><td>„Ich soll das Fenster öffnen.“ – Ein Schüler steht auf.</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>Mögliches Missverständnis:</b> Hört ein Schüler nur mit dem Sach-Ohr („Ja, stimmt.“) und tut nichts, ist der Lehrer vielleicht enttäuscht – sein Appell war <b>verdeckt</b> (implizit).</p>
+  </div></details>
+
+  <h3>Anwendung auf M2: „Ich warte schon seit 15 Minuten.“</h3>
+  <details class="loes"><summary><span class="lab">Lösung</span> Tabeas erster Satz mit dem Vier-Seiten-Modell</summary><div class="inner">
+    <ul class="clean">
+      <li><span class="t sache">Sachinhalt</span> Ich bin seit 15 Minuten hier.</li>
+      <li><span class="t selbst">Selbstkundgabe</span> Ich bin verärgert und enttäuscht.</li>
+      <li><span class="t bez">Beziehung</span> Du respektierst mich und meine Zeit nicht.</li>
+      <li><span class="t appell">Appell</span> Entschuldige dich! Sei in Zukunft pünktlich!</li>
+    </ul>
+    <p>Debbie hört vor allem mit dem <span class="t bez">Beziehungs-Ohr</span>: Sie fühlt sich angegriffen (<span class="q">„Du übertreibst total.“</span>, Z. 6) und greift zurück an. Den Appell (Entschuldigung) überhört sie.</p>
+  </div></details>
+
+  <div class="grid2">
+    <div class="card"><h4 class="yes">Stärken</h4><ul><li>Betrachtet <b>Sender und Empfänger</b>.</li><li>Erklärt <b>Missverständnisse</b> sehr genau.</li><li>Leicht auf einzelne Äußerungen anwendbar.</li></ul></div>
+    <div class="card"><h4 class="no">Grenzen</h4><ul><li>Analysiert vor allem <b>einzelne Nachrichten</b>, weniger den ganzen Gesprächsverlauf.</li><li>Die Zuordnung ist oft <b>Interpretation</b> (subjektiv).</li><li>Gefahr: zu viel in einen Satz „hineinlesen“.</li></ul></div>
+  </div>
+</section>
+
+<!-- ============ 6 GORDON ============ -->
+<section class="sec c-gordon" id="gordon">
+  <h2><span class="sec-num">6</span>Kommunikationssperren und Ich-Botschaften (Thomas Gordon)</h2>
+  <div class="model-meta"><span><b>Thomas Gordon</b> (1918–2002), amerikanischer Psychologe</span><span>Werk: Ratgeber <b>„Familienkonferenz“</b></span><span>Arbeitsblätter: M2, M3, M4</span></div>
+  <p class="kern">Mit einer <b>Kommunikationssperre</b> akzeptiert man das Erleben (Gefühle, Probleme) des anderen <b>nicht</b>, sondern will es <b>verändern</b>. Man verlässt die <b>Augenhöhe</b> und stellt sich über den anderen. Das fühlt sich sicher an, aber es <b>blockiert</b> die Verbindung zum anderen.</p>
+  <div class="box achtung"><span class="box-t">Wichtig</span><p>Auch <b>gut gemeinte</b> Reaktionen wie Lob, Trost oder Ratschläge können Sperren sein!</p></div>
+
+  <h3>Die 12 Kommunikationssperren</h3>
+  <p>Situation: Eine Schülerin sagt: <b>„Ich habe total Angst vor der Deutschklausur.“</b></p>
+  <div class="tw min"><table>
+    <thead><tr><th>Nr.</th><th>Sperre</th><th>Beispiel-Reaktion</th><th>Warum blockiert das?</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="k">befehlen, anleiten, kommandieren</td><td>„Hör auf zu jammern und lern einfach!“</td><td>Sie fühlt sich kontrolliert und klein → Trotz, Widerstand.</td></tr>
+      <tr><td>2</td><td class="k">warnen, drohen, ermahnen</td><td>„Wenn du jetzt nicht lernst, fällst du durch.“</td><td>Erzeugt Angst und Druck → Abwehr.</td></tr>
+      <tr><td>3</td><td class="k">zureden, moralisieren, predigen</td><td>„Man sollte eben immer rechtzeitig anfangen.“</td><td>„Man sollte …“ macht Schuldgefühle; spricht von oben herab.</td></tr>
+      <tr><td>4</td><td class="k">beraten, Vorschläge machen, Lösungen geben</td><td>„Mach doch einfach einen Lernplan.“</td><td>Sie fühlt sich nicht ernst genommen: „Er glaubt, ich kann das nicht selbst.“</td></tr>
+      <tr><td>5</td><td class="k">Vorhaltungen machen, belehren</td><td>„Ich habe dir doch schon letzte Woche gesagt, dass du anfangen sollst.“</td><td>Sie fühlt sich dumm und muss sich verteidigen.</td></tr>
+      <tr><td>6</td><td class="k">verurteilen, kritisieren, widersprechen, beschuldigen</td><td>„Du bist einfach faul.“ / „Stimmt doch gar nicht.“</td><td>Angriff → Verteidigung oder Gegenangriff.</td></tr>
+      <tr><td>7</td><td class="k">loben, zustimmen</td><td>„Ach, du bist doch so klug, du schaffst das locker!“</td><td>Das Gefühl wird übergangen; Lob kann auch Druck machen.</td></tr>
+      <tr><td>8</td><td class="k">beschimpfen, lächerlich machen, beschämen</td><td>„Du Angsthase!“</td><td>Verletzt und beschämt → das Gespräch bricht ab.</td></tr>
+      <tr><td>9</td><td class="k">interpretieren, analysieren, diagnostizieren</td><td>„Du hast nur Angst, weil du dich nicht vorbereitet hast.“</td><td>„Ich weiß besser als du, was in dir los ist.“ → Ärger, Bloßstellung.</td></tr>
+      <tr><td>10</td><td class="k">beruhigen, bemitleiden, trösten</td><td>„Ach, das wird schon! Ist doch nicht so schlimm.“</td><td>Das Gefühl wird kleingemacht → sie fühlt sich nicht verstanden.</td></tr>
+      <tr><td>11</td><td class="k">forschen, fragen, verhören</td><td>„Warum hast du nicht früher gelernt? Wie viele Stunden waren es?“</td><td>Fühlt sich wie ein Verhör an; der Fragende kontrolliert das Gespräch.</td></tr>
+      <tr><td>12</td><td class="k">zurückziehen, ablenken, aufheitern</td><td>„Lass uns über was Schöneres reden. Hast du das Spiel gestern gesehen?“</td><td>Das Problem wird nicht ernst genommen → sie fühlt sich allein gelassen.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box merke">
+    <span class="box-t">Merkhilfe: drei Gruppen (eigene Lernhilfe)</span>
+    <ul>
+      <li><b>Nr. 1–5: Lösungen aufzwingen</b> – befehlen, drohen, moralisieren, beraten, belehren.</li>
+      <li><b>Nr. 6–9: bewerten und abwerten</b> – kritisieren, loben, beschimpfen, interpretieren.</li>
+      <li><b>Nr. 10–12: ausweichen</b> – trösten, ausfragen, ablenken.</li>
+    </ul>
+  </div>
+
+  <h3>Du-Botschaft und Ich-Botschaft (M4)</h3>
+  <div class="grid2">
+    <div class="card"><h4 class="no">Du-Botschaft</h4><p>Aussage <b>über den anderen</b>, oft ein Vorwurf oder Urteil.</p><p class="q">„Immer kommst du zu spät!“</p><p>Wirkung: Der andere fühlt sich <b>angegriffen</b> und verteidigt sich. Wer „du“ sagt, bewegt sich auf „kommunikativem Glatteis“.</p></div>
+    <div class="card"><h4 class="yes">Ich-Botschaft</h4><p>Aussage über die <b>eigene Wahrnehmung</b> und das <b>eigene Gefühl</b>.</p><p class="q">„Wir waren um 15 Uhr verabredet, jetzt ist es 15.15 Uhr …“</p><p>Wirkung: Kritik wird <b>konstruktiv</b>. Der andere sieht, wie sein Verhalten wirkt – ohne angegriffen zu werden.</p></div>
+  </div>
+  <div class="box merke">
+    <span class="box-t">Die Ich-Botschaft in 3 Schritten (V – W – G)</span>
+    <ol class="steps">
+      <li><b>Verhalten beschreiben</b> (ohne Bewertung): „Wir hatten uns für 15.00 Uhr verabredet. Inzwischen ist es 15.15 Uhr.“</li>
+      <li><b>Wirkung benennen</b>: „Jetzt haben wir weniger Zeit für unser Treffen, weil ich später noch zu Hause helfen muss.“</li>
+      <li><b>Gefühl benennen</b>: „Das stresst mich.“</li>
+    </ol>
+    <p><b>Formel:</b> „Wenn du … (Verhalten), dann … (Wirkung), und ich fühle mich … (Gefühl).“</p>
+  </div>
+  <div class="box achtung">
+    <span class="box-t">Achtung – zwei Fallen</span>
+    <ul>
+      <li><b>Fehler im Arbeitsblatt M4:</b> Die Überschriften sind vertauscht. <b>Version 1</b> („Immer kommst du zu spät!“) ist eine <b>Du-Botschaft mit Vorwurf</b>. <b>Version 2</b> ist die <b>Ich-Botschaft ohne Vorwurf</b>.</li>
+      <li>„<i>Ich finde, du bist egoistisch.</i>“ ist <b>keine</b> Ich-Botschaft! Das ist eine versteckte Du-Botschaft, denn sie bewertet den anderen.</li>
+    </ul>
+  </div>
+
+  <h3>Aufgabe M4: Du-Botschaften umformulieren</h3>
+  <details class="loes"><summary><span class="lab">Lösung</span> a) bis d) als Ich-Botschaften</summary><div class="inner">
+    <div class="tw min"><table>
+      <thead><tr><th>Du-Botschaft</th><th>Ich-Botschaft (Verhalten – Wirkung – Gefühl)</th><th>Wirkung</th></tr></thead>
+      <tbody>
+        <tr><td>a) „Du übertreibst total.“</td><td>„Du sagst, dass ich <i>immer</i> zu spät komme. Ich habe dann das Gefühl, dass du nur meine Fehler siehst. Das kränkt mich.“</td><td>Tabea erfährt, wie ihr Vorwurf ankommt – ohne neuen Angriff.</td></tr>
+        <tr><td>b) „Du bist schon 17 und lässt dich zu Hause wie eine billige Arbeitskraft behandeln.“</td><td>„Wenn du nachmittags oft zu Hause helfen musst, haben wir wenig Zeit zusammen. Das finde ich schade.“</td><td>Keine Abwertung der Familie; Debbie zeigt, was sie eigentlich stört.</td></tr>
+        <tr><td>c) „Du denkst immer nur an dich.“</td><td>„Letztes Mal bist du nicht gekommen, und heute warst du 15 Minuten zu spät. Ich bekomme dann das Gefühl, dass ich dir nicht so wichtig bin. Das macht mich traurig.“</td><td>Konkretes Verhalten statt Pauschalurteil; das Gefühl wird sichtbar.</td></tr>
+        <tr><td>d) „Du bist einfach spießig mit deiner Pünktlichkeit.“</td><td>„Wenn du mich wegen 15 Minuten kritisierst, fühle ich mich unter Druck gesetzt. Dann werde ich nervös und gereizt.“</td><td>Keine Beleidigung; Tabea kann verstehen und reagieren.</td></tr>
+      </tbody>
+    </table></div>
+  </div></details>
+
+  <h3>Aufgabe M2: Wo verläuft das Gespräch unglücklich?</h3>
+  <details class="loes"><summary><span class="lab">Lösung</span> Tabelle Zeilenangabe – Problem – mögliche Lösung</summary><div class="inner">
+    <div class="tw min"><table>
+      <thead><tr><th>Zeile</th><th>Problem</th><th>Mögliche Lösung</th></tr></thead>
+      <tbody>
+        <tr><td>Z. 2–3</td><td>Debbie kommt zu spät, lächelt nur und sagt nichts. Tabea versteht: keine Entschuldigung (1. Axiom).</td><td>Debbie entschuldigt sich sofort und nennt kurz den Grund.</td></tr>
+        <tr><td>Z. 4</td><td><span class="q">„Immer kommst du zu spät!“</span> – Du-Botschaft und Verallgemeinerung („immer“) = Vorwurf.</td><td>Ich-Botschaft (siehe M4, Version 2).</td></tr>
+        <tr><td>Z. 5–6</td><td>Debbie widerspricht, verharmlost (<span class="q">„Entspann doch mal.“</span>) und greift an (<span class="q">„Du übertreibst total.“</span>).</td><td>Gefühl anerkennen: „Tut mir leid, dass du warten musstest.“</td></tr>
+        <tr><td>Z. 9–10</td><td>Debbie wertet Tabeas Familie ab (<span class="q">„billige Arbeitskraft“</span>). Das Thema wechselt vom Zuspätkommen zur Familie.</td><td>Beim eigentlichen Thema bleiben; nachfragen statt bewerten.</td></tr>
+        <tr><td>Z. 11–12</td><td>Tabea schlägt zurück (<span class="q">„von vorne bis hinten bedienen lässt“</span>) – Gegenangriff.</td><td>Nicht zurückschlagen, sondern sagen, wie die Aussage wirkt: „Das verletzt mich.“</td></tr>
+        <tr><td>Z. 15–16</td><td>Tabea holt alte Konflikte hervor (<span class="q">„Letztes Mal bist du gar nicht gekommen.“</span>).</td><td>Bei der aktuellen Situation bleiben; Altes später in Ruhe klären.</td></tr>
+        <tr><td>Z. 19–20</td><td>Spott (<span class="q">„einen auf Familie machen“</span>) und Fangfrage mit Entweder-oder (<span class="q">„Freundin oder Familie?“</span>).</td><td>Ich-Botschaft: „Ich habe manchmal Angst, dass ich dir nicht so wichtig bin.“</td></tr>
+        <tr><td>Z. 22–23</td><td>Pauschale Urteile (<span class="q">„immer nur an dich“</span>, <span class="q">„spießig“</span>) – symmetrische Eskalation.</td><td>Metakommunikation: „Wir streiten gerade nur. Lass uns kurz Pause machen.“</td></tr>
+        <tr><td>Z. 24</td><td>Tabea zieht sich zurück und stellt die Freundschaft in Frage.</td><td>Über Gefühle sprechen und eine Regel finden (z. B. kurze Nachricht bei Verspätung).</td></tr>
+      </tbody>
+    </table></div>
+  </div></details>
+
+  <h3>Aufgabe M3 (3): Die Sperren im Dialog Tabea – Debbie</h3>
+  <details class="loes"><summary><span class="lab">Lösung</span> Kommunikationssperren mit Zeilenangaben</summary><div class="inner">
+    <div class="tw min"><table>
+      <thead><tr><th>Zeile</th><th>Äußerung</th><th>Sperre (Nr.)</th></tr></thead>
+      <tbody>
+        <tr><td>Z. 4</td><td>„Immer kommst du zu spät!“</td><td>6 beschuldigen, kritisieren</td></tr>
+        <tr><td>Z. 5</td><td>„Stimmt ja gar nicht.“</td><td>6 widersprechen</td></tr>
+        <tr><td>Z. 5–6</td><td>„Entspann doch mal.“ – „Du übertreibst total.“</td><td>1 befehlen · 6 kritisieren</td></tr>
+        <tr><td>Z. 9–10</td><td>„… wie eine billige Arbeitskraft behandeln. Find ich blöd.“</td><td>8 lächerlich machen, beschämen · 6 kritisieren</td></tr>
+        <tr><td>Z. 11–12</td><td>„Nur weil du dich … bedienen lässt …“ – „Mir ist meine Familie eben wichtig.“</td><td>8 beschämen · 3 moralisieren</td></tr>
+        <tr><td>Z. 15–16</td><td>„… lässt du mich einfach warten. Letztes Mal … versetzt.“</td><td>5 Vorhaltungen machen</td></tr>
+        <tr><td>Z. 17</td><td>„Stimmt ja gar nicht.“</td><td>6 widersprechen</td></tr>
+        <tr><td>Z. 19</td><td>„Also doch einen auf Familie machen. Du weißt auch nicht, was du willst.“</td><td>8 lächerlich machen · 9 interpretieren</td></tr>
+        <tr><td>Z. 19–20</td><td>„Was ist dir nun wichtiger …?“</td><td>11 verhören (Fangfrage)</td></tr>
+        <tr><td>Z. 21</td><td>„Blöde Frage.“</td><td>8 abwerten · 6 kritisieren</td></tr>
+        <tr><td>Z. 22</td><td>„Du denkst immer nur an dich.“</td><td>6 verurteilen · 9 diagnostizieren</td></tr>
+        <tr><td>Z. 23</td><td>„Du bist einfach spießig …“</td><td>8 beschimpfen · 6 widersprechen</td></tr>
+        <tr><td>Z. 24</td><td>„Vielleicht passen wir einfach nicht zusammen.“</td><td>12 zurückziehen</td></tr>
+      </tbody>
+    </table></div>
+    <p><small>Die Zuordnung ist nicht immer eindeutig. Eine Aussage kann mehrere Sperren enthalten. In der Klausur ist die <b>Begründung</b> wichtig.</small></p>
+  </div></details>
+
+  <div class="box profi">
+    <span class="box-t">Zusatzwissen: Aktives Zuhören</span>
+    <p>Gordons Gegenmittel zu den Sperren: Man wiederholt das Gefühl des anderen in eigenen Worten, ohne zu bewerten. Beispiel: „Du bist sauer, weil du so lange warten musstest.“ So fühlt sich der andere verstanden.</p>
+  </div>
+
+  <div class="box tipp">
+    <span class="box-t">Gordon in der Klausur</span>
+    <p>Gordons Modell ist ein <b>Ratgeber-Modell</b>: Es sagt, wie man <i>besser</i> kommuniziert. Im literarischen Text kannst du damit (1) Sperren finden, (2) erklären, warum das Gespräch scheitert, und (3) – nur wenn die Aufgabe es verlangt – eine Alternative mit Ich-Botschaften formulieren.<br><b>Aber:</b> In der Literatur sollen Gespräche oft scheitern. Das hat eine <b>Funktion</b> (Konflikt, Tragik, Komik). Deute diese Funktion, statt die Figur nur zu „verbessern“.</p>
+  </div>
+</section>
+
+<!-- ============ 7 VERGLEICH ============ -->
+<section class="sec c-gen" id="vergleich">
+  <h2><span class="sec-num">7</span>Die Modelle vergleichen</h2>
+  <h3>Was entspricht sich?</h3>
+  <div class="tw min"><table>
+    <thead><tr><th>Bühler (Organon)</th><th>Watzlawick (Axiome)</th><th>Schulz von Thun (Vier Seiten)</th></tr></thead>
+    <tbody>
+      <tr><td>Darstellung</td><td>Inhaltsaspekt (vor allem digital)</td><td><span class="t sache">Sachinhalt</span></td></tr>
+      <tr><td>Ausdruck</td><td>Teil des Beziehungsaspekts</td><td><span class="t selbst">Selbstkundgabe</span></td></tr>
+      <tr><td>—</td><td>Beziehungsaspekt (vor allem analog)</td><td><span class="t bez">Beziehung</span></td></tr>
+      <tr><td>Appell</td><td>Teil des Beziehungsaspekts</td><td><span class="t appell">Appell</span></td></tr>
+    </tbody>
+  </table></div>
+  <p>Schulz von Thun hat Bühlers drei Funktionen um Watzlawicks <b>Beziehungsaspekt</b> erweitert – und zusätzlich die <b>Empfängerseite</b> (vier Ohren) dazugenommen. Gordon passt nicht in diese Tabelle: Er beschreibt nicht die Seiten einer Nachricht, sondern <b>Verhaltensweisen</b>, die ein Gespräch stören, und wie man es besser macht.</p>
+
+  <h3>Perspektive der Modelle</h3>
+  <div class="tw min"><table>
+    <thead><tr><th>Modell</th><th>Blickt vor allem auf …</th><th>Art des Modells</th><th>Beste Frage an den Text</th></tr></thead>
+    <tbody>
+      <tr><td class="k" style="color:var(--buehler)">Bühler</td><td>den Sender und seine Absicht</td><td>beschreibend</td><td>Was will die Figur mit dieser Äußerung erreichen?</td></tr>
+      <tr><td class="k" style="color:var(--watz)">Watzlawick</td><td>die Beziehung und den Verlauf</td><td>beschreibend</td><td>Wie stehen die Figuren zueinander, und wie entwickelt sich das Gespräch?</td></tr>
+      <tr><td class="k" style="color:var(--svt)">Schulz von Thun</td><td>Sender <b>und</b> Empfänger</td><td>beschreibend</td><td>Was ist gemeint – und was kommt an?</td></tr>
+      <tr><td class="k" style="color:var(--gordon)">Gordon</td><td>störende Reaktionen</td><td>ratgebend (normativ)</td><td>Was blockiert das Gespräch, und wie ginge es besser?</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box tipp"><span class="box-t">Tipp</span><p>Wenn die Aufgabe es erlaubt, kannst du Modelle <b>kombinieren</b>, z. B. Watzlawick für die Machtverhältnisse und Schulz von Thun für ein einzelnes Missverständnis. Aber: Bleib bei den <b>Fachbegriffen des jeweiligen Modells</b>. Schreib nicht „Bühlers Beziehungs-Ohr“ – das gibt es nicht.</p></div>
+</section>
+
+<!-- ============ 8 ANWENDEN ============ -->
+<section class="sec c-anw" id="anwenden">
+  <h2><span class="sec-num">8</span>Ein Modell auf einen literarischen Text anwenden</h2>
+
+  <h3>Schritt für Schritt</h3>
+  <ol class="steps">
+    <li><b>Aufgabe genau lesen.</b> Welcher Operator? <i>analysieren / untersuchen</i> = genau am Text arbeiten; <i>erläutern</i> = erklären mit Beispielen; <i>interpretieren</i> = deuten; <i>beurteilen</i> = begründet bewerten. Ist ein Modell vorgegeben oder darfst du wählen?</li>
+    <li><b>Gesprächssituation klären.</b> Wer spricht mit wem? Wo und wann? Was ist der Anlass? Wie ist die Beziehung (Rang, Gefühle)? Was ist vorher im Werk passiert?</li>
+    <li><b>Gespräch in Phasen gliedern</b> (mit Zeilenangaben). Wo kippt das Gespräch? Wo gibt es einen Wendepunkt?</li>
+    <li><b>Modell kurz vorstellen</b> (3–5 Sätze): Name, Begründer, Kernidee, wichtige Fachbegriffe. Nicht zu lang – es geht um den Text!</li>
+    <li><b>Modell an Schlüsselstellen anwenden.</b> Wähle 2–4 wichtige Stellen. Arbeite immer im Dreischritt: <b>Zitat mit Zeile → Fachbegriff/Analyse → Deutung</b>.</li>
+    <li><b>Sprache und Nonverbales einbeziehen.</b> Satzarten, Satzabbrüche, Wortwahl, Anrede, Regieanweisungen (siehe Tabelle unten).</li>
+    <li><b>Ergebnis formulieren.</b> Warum gelingt oder scheitert die Kommunikation? Was zeigt das über die Figuren, ihre Beziehung und das <b>Thema des Werks</b>? Bezug zur Deutungshypothese.</li>
+    <li><b>Falls gefragt: Grenzen des Modells</b> nennen (z. B. „Das Modell erfasst nicht …“).</li>
+  </ol>
+
+  <div class="box merke">
+    <span class="box-t">Der Dreischritt – das Herz jeder Analyse</span>
+    <p><b>1. Beleg:</b> „Die Oberschwester antwortet nur: ‚Geht nicht.‘ (Z. 54).“<br>
+    <b>2. Analyse mit Fachbegriff:</b> „Die Ellipse ist knapp und abweisend. Auf der Beziehungsebene zeigt sie, dass die Oberschwester sich dem Inspektor überlegen fühlt (komplementäre Beziehung).“<br>
+    <b>3. Deutung:</b> „Dadurch wird deutlich, dass in der Anstalt nicht die Polizei, sondern die Klinik bestimmt.“</p>
+  </div>
+
+  <h3>Wo steht das in der Klausur? (Interpretationsaufsatz, Format A)</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Teil</th><th>Inhalt</th><th>Kommunikationsmodell?</th></tr></thead>
+    <tbody>
+      <tr><td class="k">I Einleitung</td><td>Autor, Titel, Textsorte, Epoche, Thema</td><td>—</td></tr>
+      <tr><td class="k">II Kontext</td><td>Einordnung der Textstelle ins Werk (keine Nacherzählung!)</td><td>—</td></tr>
+      <tr><td class="k">III Inhaltsangabe</td><td>Präsens, sachlich, eigene Worte, keine Zitate, keine direkte Rede</td><td>—</td></tr>
+      <tr><td class="k">IV A Deutungshypothese</td><td>Deine Kernaussage zum Text</td><td>kann schon die Kommunikation nennen („Das Gespräch scheitert, weil …“)</td></tr>
+      <tr><td class="k">IV B Textimmanente Interpretation</td><td>Analyse mit funktionaler Sprachanalyse, jede Behauptung mit Beleg</td><td><b>Hier!</b> Modell kurz vorstellen und anwenden</td></tr>
+      <tr><td class="k">IV C Textexterne Deutung</td><td>Epoche, Autor, Zeitgeschichte</td><td>evtl. Bezug: Was sagt die Kommunikation über die Zeit/Epoche?</td></tr>
+      <tr><td class="k">V Schluss</td><td>Fazit bezogen auf die Hypothese (keine private Meinung)</td><td>Ergebnis der Kommunikationsanalyse aufgreifen</td></tr>
+    </tbody>
+  </table></div>
+  <p><small>Wenn die Kommunikationsanalyse eine <b>eigene Teilaufgabe</b> ist, schreibst du dafür einen eigenen Teil: kurze Modellvorstellung → Anwendung → Ergebnis.</small></p>
+
+  <h3>Sprachliche Mittel für die Gesprächsanalyse</h3>
+  <div class="tw min"><table>
+    <thead><tr><th>Mittel</th><th>Beispiel aus den Arbeitsblättern</th><th>Mögliche Wirkung</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Ellipse</td><td>„Geht nicht.“ (Physiker, Z. 54) · „Heiß hier.“ (Z. 66)</td><td>knapp, abweisend, emotional, Überlegenheit</td></tr>
+      <tr><td class="k">Aposiopese (Satzabbruch)</td><td>„Kann ich nun den Mörder –“ (Z. 46)</td><td>Unterbrechung, Unsicherheit, Machtverhältnis</td></tr>
+      <tr><td class="k">Rhetorische Frage</td><td>„Bin ich eigentlich verrückt?“ (Z. 63)</td><td>Zweifel, Verzweiflung, Ironie</td></tr>
+      <tr><td class="k">Ausruf (Exclamatio)</td><td>„Der Kerl hat schließlich eine Krankenschwester erdrosselt!“ (Z. 58)</td><td>starke Emotion, Wut</td></tr>
+      <tr><td class="k">Imperativ</td><td>„Entspann doch mal.“ (M2, Z. 5–6)</td><td>Befehl, Überlegenheit, Herablassung</td></tr>
+      <tr><td class="k">Verallgemeinerung</td><td>„Immer kommst du zu spät!“ (M2, Z. 4) · „Nie gönnst du mir was.“ (M6, Z. 23)</td><td>Vorwurf, Eskalation</td></tr>
+      <tr><td class="k">Euphemismus</td><td>„Täter“ statt „Mörder“, „Unglücksfall“ statt „Mord“ (Physiker, Z. 20, 34)</td><td>Verharmlosung, Verschleierung</td></tr>
+      <tr><td class="k">Pronomen</td><td>„<i>Man</i> kommt ganz durcheinander.“ (Z. 65) · „Das können <i>wir</i> ärztlich nicht zulassen.“ (Z. 56)</td><td>„man“: Distanz, versteckt das Ich · „wir“: spricht für die Institution</td></tr>
+      <tr><td class="k">Anrede / Titel</td><td>„Herr Inspektor.“ (Z. 59)</td><td>Distanz, Förmlichkeit, Zurechtweisung</td></tr>
+      <tr><td class="k">Abtönungspartikeln</td><td>„Da darf ich <i>doch</i> sicher auch <i>mal</i> eins trinken?!“ (M6, Z. 2)</td><td>Druck, Erwartung, Ungeduld</td></tr>
+      <tr><td class="k">Wiederholung</td><td>„Bitte, Herr Inspektor.“ (Z. 19, 33, 47)</td><td>Muster, Machtdemonstration, Komik</td></tr>
+      <tr><td class="k">Stichomythie</td><td>schneller Wechsel kurzer Repliken (Physiker, Z. 10–23)</td><td>Tempo, Verhör, Konflikt</td></tr>
+      <tr><td class="k">Redeanteile</td><td>Wer spricht viel, wer wenig?</td><td>Dominanz oder Unterlegenheit</td></tr>
+      <tr><td class="k">Regieanweisung</td><td>„Er wischt sich den Schweiß ab.“ (Z. 65–66)</td><td>nonverbale (analoge) Botschaft</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Satzbausteine (Formulierungshilfen)</h3>
+  <div class="grid2">
+    <div class="card"><h4>Modell vorstellen</h4><ul>
+      <li>„Zur Analyse des Gesprächs eignet sich das Vier-Seiten-Modell von Friedemann Schulz von Thun, weil …“</li>
+      <li>„Nach Schulz von Thun hat jede Nachricht vier Seiten: …“</li>
+      <li>„Laut Karl Bühler erfüllt jedes Sprachzeichen drei Funktionen: …“</li>
+      <li>„Paul Watzlawick geht in seinem zweiten Axiom davon aus, dass …“</li>
+    </ul></div>
+    <div class="card"><h4>Anwenden</h4><ul>
+      <li>„Auf der Sachebene teilt X mit, dass … (Z. …).“</li>
+      <li>„Gleichzeitig gibt X auf der Ebene der Selbstkundgabe zu erkennen, dass …“</li>
+      <li>„Die Beziehungsbotschaft lautet etwa: ‚…‘“</li>
+      <li>„Der verdeckte Appell an Y ist: …“</li>
+      <li>„Y hört die Aussage vor allem mit dem Beziehungs-Ohr. Das zeigt sich daran, dass …“</li>
+      <li>„In dieser Äußerung dominiert die Appellfunktion, denn …“</li>
+    </ul></div>
+    <div class="card"><h4>Watzlawick und Gordon</h4><ul>
+      <li>„Hier wird das erste Axiom deutlich: Obwohl Y schweigt (Z. …), sendet er/sie eine Botschaft, nämlich …“</li>
+      <li>„Die digitale und die analoge Botschaft widersprechen sich: …“</li>
+      <li>„Die Beziehung ist komplementär, da …“</li>
+      <li>„Es kommt zu einer symmetrischen Eskalation: …“</li>
+      <li>„Diese Reaktion ist eine Kommunikationssperre nach Gordon (Nr. 6: kritisieren), weil …“</li>
+    </ul></div>
+    <div class="card"><h4>Deuten und abschließen</h4><ul>
+      <li>„Dadurch wird deutlich, dass …“</li>
+      <li>„Dies unterstreicht …“</li>
+      <li>„Die Kommunikation scheitert, weil …“</li>
+      <li>„Das Gespräch zeigt, dass die Figur …“</li>
+      <li>„Damit bestätigt sich die Deutungshypothese, dass …“</li>
+      <li>„Das Modell stößt hier an seine Grenzen, denn …“</li>
+    </ul></div>
+  </div>
+
+  <h3>Typische Fehler – und wie du sie vermeidest</h3>
+  <div class="tw min"><table>
+    <thead><tr><th>Fehler</th><th>Besser</th></tr></thead>
+    <tbody>
+      <tr><td class="no">Nur das Modell erklären, nicht anwenden.</td><td class="yes">Kurz erklären (3–5 Sätze), dann am Text arbeiten.</td></tr>
+      <tr><td class="no">Jeden Satz mit allen vier Seiten analysieren.</td><td class="yes">2–4 Schlüsselstellen auswählen und gründlich deuten.</td></tr>
+      <tr><td class="no">Behauptung ohne Beleg.</td><td class="yes">Immer Zitat + Zeilenangabe.</td></tr>
+      <tr><td class="no">Nacherzählen, was passiert.</td><td class="yes">Deuten: Was zeigt das über Figur, Beziehung, Thema?</td></tr>
+      <tr><td class="no">Fachbegriffe vermischen oder Ohren/Schnäbel verwechseln.</td><td class="yes">Schnäbel = Sender, Ohren = Empfänger; Begriffe passend zum Modell.</td></tr>
+      <tr><td class="no">Nur die gesprochenen Worte betrachten.</td><td class="yes">Regieanweisungen und Nonverbales einbeziehen.</td></tr>
+      <tr><td class="no">Private Meinung („Der Inspektor nervt.“).</td><td class="yes">Sachlich, am Text, in der 3. Person.</td></tr>
+      <tr><td class="no">Vergangenheitsform.</td><td class="yes">Präsens („Der Inspektor fragt …“).</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="box tipp">
+    <span class="box-t">Drama oder Prosa?</span>
+    <p><b>Drama:</b> Achte auf Repliken, Redeanteile, Unterbrechungen und die Regieanweisungen.<br>
+    <b>Prosa:</b> Der Erzähler beschreibt Mimik und Gestik. <b>Innerer Monolog</b> und <b>erlebte Rede</b> zeigen, wie eine Figur eine Nachricht <i>versteht</i> – ideal für die vier Ohren bei Schulz von Thun!</p>
+  </div>
+</section>
+
+<!-- ============ 9 PHYSIKER ============ -->
+<section class="sec c-anw" id="physiker">
+  <h2><span class="sec-num">9</span>Musterlösung: „Die Physiker“ (M12)</h2>
+  <div class="model-meta"><span><b>Friedrich Dürrenmatt</b> (1921–1990)</span><span><b>„Die Physiker“</b>, Komödie in zwei Akten (1962)</span></div>
+  <p><b>Kontext:</b> Die Szene steht am Anfang des ersten Aktes. In der privaten Nervenheilanstalt „Les Cerisiers“ wurde die Krankenschwester Irene Straub erdrosselt. Täter ist der Patient Ernesti, der sich für Einstein hält. Inspektor Voß ermittelt und spricht mit der Oberschwester (Marta Boll). Es ist schon der zweite Mord innerhalb von drei Monaten.</p>
+
+  <div class="excerpt" aria-label="Textauszug Zeilen 46 bis 67">
+    <div class="ln"><span class="lnr">46</span><span class="sp">Inspektor</span><span class="tx">Kann ich nun den Mörder –</span></div>
+    <div class="ln"><span class="lnr"></span><span class="sp">Oberschwester</span><span class="tx">Bitte, Herr Inspektor.</span></div>
+    <div class="ln"><span class="lnr"></span><span class="sp">Inspektor</span><span class="tx">– den Täter sehen?</span></div>
+    <div class="ln"><span class="lnr"></span><span class="sp">Oberschwester</span><span class="tx">Er geigt.</span></div>
+    <div class="ln"><span class="lnr">50</span><span class="sp">Inspektor</span><span class="tx">Was heißt: Er geigt?</span></div>
+    <div class="ln"><span class="lnr"></span><span class="sp">Oberschwester</span><span class="tx">Sie hören es ja.</span></div>
+    <div class="ln"><span class="lnr"></span><span class="sp">Inspektor</span><span class="tx">Dann soll er bitte aufhören. <i>Da die Oberschwester nicht reagiert.</i> Ich habe ihn zu vernehmen.</span></div>
+    <div class="ln"><span class="lnr"></span><span class="sp">Oberschwester</span><span class="tx">Geht nicht.</span></div>
+    <div class="ln"><span class="lnr">55</span><span class="sp">Inspektor</span><span class="tx">Warum geht es nicht?</span></div>
+    <div class="ln"><span class="lnr"></span><span class="sp">Oberschwester</span><span class="tx">Das können wir ärztlich nicht zulassen. Herr Ernesti muss jetzt geigen.</span></div>
+    <div class="ln"><span class="lnr"></span><span class="sp">Inspektor</span><span class="tx">Der Kerl hat schließlich eine Krankenschwester erdrosselt!</span></div>
+    <div class="ln"><span class="lnr"></span><span class="sp">Oberschwester</span><span class="tx">Herr Inspektor. Es handelt sich nicht um einen Kerl, sondern um einen kranken Menschen, der sich beruhigen muss. Und weil er sich für Einstein hält, beruhigt er sich nur, wenn er geigt.</span></div>
+    <div class="ln"><span class="lnr">63</span><span class="sp">Inspektor</span><span class="tx">Bin ich eigentlich verrückt?</span></div>
+    <div class="ln"><span class="lnr"></span><span class="sp">Oberschwester</span><span class="tx">Nein.</span></div>
+    <div class="ln"><span class="lnr">65</span><span class="sp">Inspektor</span><span class="tx">Man kommt ganz durcheinander. <i>Er wischt sich den Schweiß ab.</i> Heiß hier.</span></div>
+    <div class="ln"><span class="lnr"></span><span class="sp">Oberschwester</span><span class="tx">Durchaus nicht.</span></div>
+  </div>
+  <p><small>Textauszug aus M12 (Dürrenmatt: Die Physiker. Zürich: Diogenes 1998). Zeilenzählung wie im Arbeitsblatt.</small></p>
+
+  <h3>a) Z. 46–48 mit dem Organon-Modell</h3>
+  <details class="loes"><summary><span class="lab">Lösung</span> Bühler: Intention von Inspektor und Oberschwester</summary><div class="inner">
+    <p><b>Inspektor (Z. 46, 48):</b> <span class="q">„Kann ich nun den Mörder – […] – den Täter sehen?“</span></p>
+    <ul>
+      <li><b>Appell (dominant):</b> Er will Ernesti sehen. Die Äußerung ist höflich als Frage formuliert (Modalverb „kann“). Eigentlich ist sie aber eine <b>Forderung</b> – er ist der Polizist. Das Wort „nun“ zeigt <b>Ungeduld</b>: Er hat lange genug gewartet.</li>
+      <li><b>Darstellung:</b> Sachverhalt: Ernesti hat die Schwester getötet. Mit dem Wort „Mörder“ stellt er die Tat als Verbrechen dar.</li>
+      <li><b>Ausdruck:</b> Ungeduld und Ärger. Seine Sicht: Ernesti ist ein Verbrecher.</li>
+    </ul>
+    <p><b>Oberschwester (Z. 47):</b> <span class="q">„Bitte, Herr Inspektor.“</span></p>
+    <ul>
+      <li><b>Appell (dominant):</b> verdeckt: „Sagen Sie nicht ‚Mörder‘!“ Sie unterbricht ihn – der Satz des Inspektors bricht ab (<b>Aposiopese</b>, Gedankenstrich).</li>
+      <li><b>Ausdruck:</b> Missbilligung, Empörung. Sie schützt die Patienten.</li>
+      <li><b>Darstellung:</b> fast keine – die <b>Ellipse</b> enthält keine neue Information.</li>
+    </ul>
+    <p><b>Wirkung und Deutung:</b> Der Appell der Oberschwester ist <b>erfolgreich</b>: Der Inspektor korrigiert sich zu „Täter“ (Z. 48). Dasselbe Muster gab es schon in Z. 18–20 („Der Mörder?“ – „Bitte, Herr Inspektor“ – „Der Täter?“) und Z. 32–34 („Mord“ → „Unglücksfall“). Durch diese <b>Euphemismen</b> kontrolliert die Oberschwester, wie über die Tat gesprochen wird. Die Staatsgewalt (Polizei) muss sich der Sprache der Anstalt unterwerfen. Die Wiederholung wirkt komisch, aber auch bedrohlich: Schuld und Verantwortung werden sprachlich verschleiert – ein zentrales Thema des Dramas.</p>
+  </div></details>
+
+  <h3>b) Z. 49–62 mit den fünf Axiomen</h3>
+  <details class="loes"><summary><span class="lab">Lösung</span> Watzlawick: Machtkampf zwischen Inspektor und Oberschwester</summary><div class="inner">
+    <p><b>1. Axiom:</b> Die Regieanweisung <span class="q">„Da die Oberschwester nicht reagiert.“</span> (Z. 52) zeigt: Auch ihr <b>Schweigen</b> ist eine Botschaft – sie ignoriert seine Forderung und damit seine Autorität. Auch Ernestis Geigenspiel ist hörbar präsent (<span class="q">„Sie hören es ja.“</span>, Z. 51).</p>
+    <p><b>2. Axiom:</b> Auf der <b>Inhaltsebene</b> geht es darum, ob der Inspektor Ernesti jetzt vernehmen darf. Auf der <b>Beziehungsebene</b> geht es um die Frage: <i>Wer bestimmt hier?</i> Die Oberschwester antwortet knapp und fast unhöflich (<span class="q">„Geht nicht.“</span>, Z. 54) und weist ihn zurecht wie eine Lehrerin einen Schüler (<span class="q">„Herr Inspektor. Es handelt sich nicht um einen Kerl …“</span>, Z. 59–60). Der Beziehungskonflikt (Macht) wird auf der Inhaltsebene (ärztliche Gründe) ausgetragen.</p>
+    <p><b>3. Axiom:</b> Ein Kreislauf aus Ursache und Wirkung: Der Inspektor fordert (Z. 52–53) → die Oberschwester blockt (Z. 54) → er fragt nach (Z. 55) → sie begründet ärztlich (Z. 56–57) → er wird emotional (Z. 58) → sie weist ihn zurecht (Z. 59–62). Jeder sieht sich im Recht: Er muss ermitteln, sie muss den Patienten schützen.</p>
+    <p><b>4. Axiom:</b> <b>Digital</b> sind die Antworten der Oberschwester kurz und sachlich (<span class="q">„Er geigt.“</span>, Z. 49). <b>Analog</b> zeigen der Ausruf und das abwertende Wort „Kerl“ (Z. 58) die Wut des Inspektors. Die förmliche Anrede <span class="q">„Herr Inspektor.“</span> als eigener Satz (Z. 59) klingt streng und belehrend.</p>
+    <p><b>5. Axiom:</b> Eigentlich erwartet man eine <b>komplementäre</b> Beziehung mit dem Inspektor <b>oben</b>: Er vertritt den Staat (<span class="q">„Ich habe ihn zu vernehmen.“</span>, Z. 53). Im Text ist es <b>umgekehrt</b>: Die Oberschwester entscheidet (<span class="q">„Das können <i>wir</i> ärztlich nicht zulassen.“</span>, Z. 56 – „wir“ = die Klinik). In den kurzen Repliken (Z. 49–55, <b>Stichomythie</b>) gibt es kurz einen symmetrischen Machtkampf, den die Oberschwester gewinnt.</p>
+    <p><b>Deutung:</b> Die Polizei – Vertreter von Ordnung und Gesetz – ist in der Anstalt machtlos. Die Logik der Anstalt („Herr Ernesti muss jetzt geigen“) siegt über die Logik des Rechts. Das ist <b>grotesk</b> (komisch und erschreckend zugleich), typisch für Dürrenmatt.</p>
+  </div></details>
+
+  <h3>c) Z. 63–67: die Selbstkundgabe (Vier-Seiten-Modell)</h3>
+  <details class="loes"><summary><span class="lab">Lösung</span> Schulz von Thun: Was verrät der Inspektor über sich?</summary><div class="inner">
+    <ul>
+      <li><span class="q">„Bin ich eigentlich verrückt?“</span> (Z. 63): <span class="t selbst">Selbstkundgabe</span> – Er ist verwirrt und zweifelt an seinem Verstand. Ironie: Er stellt diese Frage in einer Irrenanstalt. Die Oberschwester antwortet nur auf der <span class="t sache">Sachebene</span>: <span class="q">„Nein.“</span> (Z. 64). Die knappe, wörtliche Antwort wirkt komisch.</li>
+      <li><span class="q">„Man kommt ganz durcheinander.“</span> (Z. 65): <span class="t selbst">Selbstkundgabe</span> – Verwirrung, Überforderung. Mit dem Pronomen <b>„man“</b> statt „ich“ verallgemeinert er und versteckt seine Schwäche (gewollte <b>Selbstdarstellung</b>). Die Schwäche wird trotzdem sichtbar (<b>Selbstenthüllung</b>).</li>
+      <li>Regieanweisung <span class="q">„Er wischt sich den Schweiß ab.“</span> (Z. 65–66): nonverbale <span class="t selbst">Selbstkundgabe</span> – Stress, Nervosität, Unsicherheit.</li>
+      <li><span class="q">„Heiß hier.“</span> (Z. 66), eine <b>Ellipse</b>: <span class="t sache">Sache</span>: Es ist warm. <span class="t selbst">Selbstkundgabe</span>: Mir ist heiß, ich bin unter Druck. <span class="t appell">Appell</span> (verdeckt): Öffnen Sie ein Fenster / Haben Sie Verständnis. <span class="t bez">Beziehung</span>: Er sucht Zustimmung.</li>
+      <li>Die Oberschwester: <span class="q">„Durchaus nicht.“</span> (Z. 67). Sie hört nur mit dem <span class="t sache">Sach-Ohr</span> und widerspricht entschieden („durchaus“). Sie ignoriert seine Selbstkundgabe und lehnt den Appell ab. Ihre <span class="t bez">Beziehungsbotschaft</span>: „Ihr Gefühl ist falsch – ich bestimme, was hier wahr ist.“</li>
+    </ul>
+    <p><b>Deutung:</b> Der Inspektor soll eigentlich Vernunft und Ordnung vertreten. Aber er verliert die Kontrolle und zweifelt an sich selbst. Damit zeigt die Szene ein Hauptthema des Dramas: Die Grenze zwischen <b>Wahnsinn und Vernunft</b> ist unklar – in der Irrenanstalt wirkt der „Normale“ verrückt.</p>
+  </div></details>
+
+  <h3>So klingt ein Klausurabsatz</h3>
+  <details class="loes"><summary><span class="lab">Muster</span> Ausformulierter Analyseabsatz (Z. 63–67)</summary><div class="inner">
+    <p style="font-family:Georgia,'Times New Roman',serif;line-height:1.75">Besonders deutlich zeigt sich die Verunsicherung des Inspektors am Ende des Auszugs (Z. 63–67). Diese Stelle lässt sich mit dem Vier-Seiten-Modell von Friedemann Schulz von Thun untersuchen. Nach diesem Modell enthält jede Nachricht neben dem Sachinhalt auch eine Selbstkundgabe, also eine Information des Senders über sich selbst. Mit der Frage „Bin ich eigentlich verrückt?“ (Z. 63) gibt der Inspektor offen zu erkennen, dass er an seiner eigenen Wahrnehmung zweifelt. Die Oberschwester reagiert mit „Nein.“ (Z. 64) jedoch nur auf der Sachebene und geht auf seine Verwirrung nicht ein. Auch in der Aussage „Man kommt ganz durcheinander.“ (Z. 65) zeigt sich seine Überforderung. Durch das Indefinitpronomen „man“ versucht er, seine persönliche Schwäche zu verallgemeinern und damit zu verbergen. Die Regieanweisung „Er wischt sich den Schweiß ab.“ (Z. 65 f.) verrät jedoch nonverbal seine Nervosität. Die elliptische Bemerkung „Heiß hier.“ (Z. 66) enthält daher nicht nur eine Sachinformation, sondern vor allem eine Selbstkundgabe und einen verdeckten Appell um Verständnis. Die Oberschwester hört diese Botschaft ausschließlich mit dem Sach-Ohr und widerspricht entschieden: „Durchaus nicht.“ (Z. 67). Dadurch wird deutlich, dass der Vertreter von Gesetz und Vernunft in der Anstalt die Kontrolle verliert, während die Oberschwester bestimmt, was als wahr gilt. Die Szene unterstreicht so das zentrale Thema des Dramas: die unklare Grenze zwischen Vernunft und Wahnsinn.</p>
+  </div></details>
+</section>
+
+<!-- ============ 10 TRANSFER ============ -->
+<section class="sec c-anw" id="transfer">
+  <h2><span class="sec-num">10</span>Transfer: Die Modelle an einem anderen Drama</h2>
+  <p>In der Klausur bekommst du vielleicht einen Text, den du noch nicht analysiert hast. Die Fragen bleiben aber gleich. Hier eine <b>Skizze</b> am Beispiel von Lessings Lustspiel <b>„Minna von Barnhelm“</b> (1767, Epoche: Aufklärung). Prüfe Zitate und Zeilen immer an deinem eigenen Textauszug!</p>
+  <p><b>Situation:</b> Nach dem Siebenjährigen Krieg ist Major von Tellheim aus der Armee entlassen, arm und steht unter falschem Verdacht. Wegen seiner „Ehre“ will er seine reiche Verlobte Minna nicht mehr heiraten. Minna will ihn zurückgewinnen.</p>
+  <div class="grid2">
+    <div class="card"><h4 style="color:var(--watz)">Watzlawick, 5. Axiom</h4><p>Tellheim sieht die Beziehung jetzt als <b>komplementär</b>: Sie ist reich, er ist arm. Er will nicht der Unterlegene sein. Minna will eine <b>symmetrische</b> Beziehung. Mit ihrer Intrige (sie gibt vor, enterbt zu sein) dreht sie die Rollen um: Nun kann Tellheim der Helfende sein.</p></div>
+    <div class="card"><h4 style="color:var(--watz)">Watzlawick, 2. Axiom</h4><p>Auf der <b>Inhaltsebene</b> sprechen sie über Geld und Ehre. Auf der <b>Beziehungsebene</b> geht es um Liebe und Stolz. Der Beziehungskonflikt wird über das Thema „Ehre“ ausgetragen.</p></div>
+    <div class="card"><h4 style="color:var(--svt)">Schulz von Thun</h4><p>Minna spricht oft scherzhaft und ironisch (<span class="t selbst">Selbstkundgabe</span>: Gelassenheit, Liebe; <span class="t appell">Appell</span>: „Sei nicht so stolz!“). Tellheim nimmt vieles wörtlich und ernst – er hört mit einem anderen Ohr → Missverständnisse.</p></div>
+    <div class="card"><h4 style="color:var(--buehler)">Bühler</h4><p>Tellheims Reden über seine Ehre wirken sachlich (<b>Darstellung</b>), aber eigentlich dominiert der <b>Ausdruck</b>: verletzter Stolz und Scham.</p></div>
+  </div>
+  <div class="box tipp"><span class="box-t">Bezug zur Epoche (IV C)</span><p>Aufklärung: Vernunft, Toleranz, Menschlichkeit. Minna überwindet Tellheims starren Ehrbegriff mit Witz und Gefühl – die Kommunikation zeigt, wie Vernunft und Menschlichkeit über ein starres Standesdenken siegen.</p></div>
+</section>
+
+<!-- ============ 11 BERUF ============ -->
+<section class="sec c-beruf" id="beruf">
+  <h2><span class="sec-num">11</span>Zusatz: Kommunikation im Beruf (M13, M14)</h2>
+  <p><small>Diese Themen stehen auch in den Arbeitsblättern. Für die Analyse eines literarischen Textes sind sie aber <b>weniger wichtig</b>. Kurz lernen reicht.</small></p>
+
+  <h3>Vier Kundentypen (M13)</h3>
+  <p>Typologien sind wie „Schubladen“: Sie vereinfachen. Sie helfen aber, Kunden einzuschätzen und passend zu reagieren.</p>
+  <div class="tw min"><table>
+    <thead><tr><th>Typ</th><th>Merkmale</th><th>Tipp für den Verkäufer</th></tr></thead>
+    <tbody>
+      <tr><td class="k">1 Der Vielredner</td><td>holt weit aus, wiederholt sich, unterbricht, lässt andere kaum zu Wort kommen</td><td>freundlich lenken, zusammenfassen, gezielt Fragen stellen</td></tr>
+      <tr><td class="k">2 Der Selbstsichere</td><td>starkes Ego, weiß, was er will, sachlich, wenig Emotionen</td><td>kurz, klar, sachlich informieren; Fakten nennen</td></tr>
+      <tr><td class="k">3 Der Hektische</td><td>unruhig, nervös, unkonzentriert, schaut oft aufs Handy</td><td>schnell auf den Punkt kommen, Ruhe ausstrahlen</td></tr>
+      <tr><td class="k">4 Der Schüchterne</td><td>leicht unsicher, zögerlich, ungenau; man erfährt nicht genau, was er will</td><td>geduldig sein, offene Fragen stellen, Sicherheit geben</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Verkaufsgespräche strukturieren (M14)</h3>
+  <div class="grid2">
+    <div class="card"><h4>AIDA-Formel</h4><p><small>Werbestratege Elmo Lewis</small></p><ul>
+      <li><b>A</b>ttention – Aufmerksamkeit wecken</li>
+      <li><b>I</b>nterest – Interesse wecken</li>
+      <li><b>D</b>esire – Wunsch nach dem Produkt fördern (Besitzwunsch)</li>
+      <li><b>A</b>ction – Der Kunde kauft.</li></ul></div>
+    <div class="card"><h4>KAAPAV-Formel</h4><ul>
+      <li><b>K</b>ontakt – höflich, lächelnd begrüßen</li>
+      <li><b>A</b>nalyse – herausfinden, was der Kunde will</li>
+      <li><b>A</b>ngebot – passendes Angebot machen</li>
+      <li><b>P</b>rüfen – Einwände des Kunden entkräften</li>
+      <li><b>A</b>bschluss – Der Kunde kauft.</li>
+      <li><b>V</b>erabschiedung – höflich und wertschätzend</li></ul></div>
+  </div>
+
+  <h3>Einwände entkräften (Einwandbehandlung)</h3>
+  <div class="tw min"><table>
+    <thead><tr><th>Methode</th><th>So geht’s</th><th>Beispiel</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Ja-aber-Methode</td><td>erst zustimmen, dann Gegenargument</td><td>„Ja, es ist recht hochpreisig, dafür aber qualitativ hochwertig.“</td></tr>
+      <tr><td class="k">Bumerang-Methode</td><td>den Einwand als Argument benutzen</td><td>„Orange gefällt Ihnen nicht? Das ist die Trendfarbe des Jahres.“</td></tr>
+      <tr><td class="k">Rückfrage-Methode</td><td>mit einer Frage Zeit und Informationen gewinnen</td><td>„Was genau gefällt Ihnen an dem Modell nicht?“</td></tr>
+      <tr><td class="k">Nachteil-Vorteil-Methode</td><td>recht geben, dann einen Vorteil nennen</td><td>„Stimmt, die Bezüge sehen altmodisch aus. Dafür sind sie nicht anfällig für Flecken.“</td></tr>
+      <tr><td class="k">Ausweichangebot</td><td>ein anderes Produkt oder eine Variante anbieten</td><td>„Ich sehe mal nach, ob wir noch etwas anderes auf Lager haben.“</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ 12 GLOSSAR ============ -->
+<section class="sec c-gen" id="glossar">
+  <h2><span class="sec-num">12</span>Glossar: alle Fachbegriffe</h2>
+  <dl class="glossar">
+    <dt>analog (Watzlawick)</dt><dd>nonverbale und paraverbale Kommunikation (Gestik, Mimik, Tonfall); zeigt vor allem die Beziehung; mehrdeutig.</dd>
+    <dt>Aposiopese</dt><dd>Satzabbruch, oft mit Gedankenstrich: „Kann ich nun den Mörder –“.</dd>
+    <dt>Appell (Bühler)</dt><dd>Funktion des Zeichens, die sich an den Empfänger richtet; das Zeichen ist ein <b>Signal</b>.</dd>
+    <dt>Appell (Schulz von Thun)</dt><dd>Seite der Nachricht: Wozu will ich dich bringen? Offen oder verdeckt.</dd>
+    <dt>Ausdruck (Bühler)</dt><dd>Funktion des Zeichens, die das Innere des Senders zeigt; das Zeichen ist ein <b>Symptom</b>.</dd>
+    <dt>Axiom</dt><dd>Grundsatz, der ohne Beweis als wahr gilt.</dd>
+    <dt>Beziehungsaspekt (Watzlawick)</dt><dd>WIE etwas gesagt wird und wie die Partner zueinander stehen; bestimmt den Inhaltsaspekt.</dd>
+    <dt>Beziehung (Schulz von Thun)</dt><dd>Seite der Nachricht: Was halte ich von dir (Du-Botschaft), wie stehen wir zueinander (Wir-Botschaft)?</dd>
+    <dt>Darstellung (Bühler)</dt><dd>Funktion des Zeichens, die über Gegenstände und Sachverhalte informiert; das Zeichen ist ein <b>Symbol</b>.</dd>
+    <dt>digital (Watzlawick)</dt><dd>verbale Kommunikation (Worte, Sätze); gut für Inhalte; eindeutig.</dd>
+    <dt>Du-Botschaft</dt><dd>Aussage über den anderen, oft Vorwurf: „Du bist …“.</dd>
+    <dt>Ellipse</dt><dd>unvollständiger Satz: „Heiß hier.“</dd>
+    <dt>Empfänger</dt><dd>Person, die eine Nachricht bekommt.</dd>
+    <dt>Euphemismus</dt><dd>beschönigender Ausdruck: „Unglücksfall“ statt „Mord“.</dd>
+    <dt>explizit / implizit</dt><dd>direkt ausgesprochen / indirekt, „zwischen den Zeilen“ gemeint.</dd>
+    <dt>Gestik / Mimik</dt><dd>Bewegungen der Hände und Arme / Gesichtsausdruck.</dd>
+    <dt>Ich-Botschaft</dt><dd>Aussage über die eigene Wahrnehmung: Verhalten beschreiben – Wirkung benennen – Gefühl benennen.</dd>
+    <dt>Inhaltsaspekt (Watzlawick)</dt><dd>WAS gesagt wird; die Information.</dd>
+    <dt>Intention</dt><dd>Absicht des Senders.</dd>
+    <dt>Interpunktion (Watzlawick)</dt><dd>Jeder Partner gliedert den Gesprächsablauf anders und sieht sich selbst nur als Reagierenden („Du hast angefangen!“).</dd>
+    <dt>Kommunikationssperre (Gordon)</dt><dd>Reaktion, die das Erleben des anderen nicht akzeptiert und das Gespräch blockiert.</dd>
+    <dt>komplementär</dt><dd>ungleiche, sich ergänzende Beziehung: einer über-, einer untergeordnet.</dd>
+    <dt>kongruent / inkongruent</dt><dd>Worte und Körpersprache passen zusammen / widersprechen sich.</dd>
+    <dt>Metakommunikation</dt><dd>Kommunikation über die Kommunikation.</dd>
+    <dt>Nachricht</dt><dd>das, was gesendet wird; hat nach Schulz von Thun vier Seiten.</dd>
+    <dt>nonverbal / paraverbal</dt><dd>ohne Worte (Körpersprache) / die Art des Sprechens (Tonfall, Lautstärke, Tempo, Pausen).</dd>
+    <dt>Organon</dt><dd>altgriechisch: Werkzeug.</dd>
+    <dt>Regieanweisung</dt><dd>Nebentext im Drama; beschreibt Handlungen, Gestik, Mimik, Tonfall.</dd>
+    <dt>Replik</dt><dd>Redebeitrag einer Figur im Drama.</dd>
+    <dt>Sachinhalt</dt><dd>Seite der Nachricht: Daten, Fakten, Informationen.</dd>
+    <dt>Selbstkundgabe</dt><dd>(früher: Selbstoffenbarung) Seite der Nachricht: Was der Sender über sich zeigt – gewollt (Selbstdarstellung) oder ungewollt (Selbstenthüllung).</dd>
+    <dt>Sender</dt><dd>Person, die etwas mitteilt.</dd>
+    <dt>Signal / Symbol / Symptom</dt><dd>Bühler: Das Zeichen ist Signal (für den Empfänger), Symbol (für die Sache), Symptom (für den Sender).</dd>
+    <dt>Stichomythie</dt><dd>schneller Wechsel kurzer Repliken im Drama; zeigt Konflikt und Tempo.</dd>
+    <dt>symmetrisch</dt><dd>gleichrangige Beziehung „auf Augenhöhe“.</dd>
+    <dt>symmetrische Eskalation</dt><dd>Machtkampf: Beide wollen überlegen sein.</dd>
+    <dt>Vier Ohren / vier Schnäbel</dt><dd>Bild für Empfänger (hört auf vier Seiten) und Sender (spricht auf vier Seiten).</dd>
+  </dl>
+</section>
+
+<!-- ============ 13 TEST ============ -->
+<section class="sec c-gen" id="test">
+  <h2><span class="sec-num">13</span>Selbsttest und Checkliste</h2>
+  <p>Beantworte die Frage zuerst im Kopf oder auf Papier. Dann klicke, um die Antwort zu sehen.</p>
+
+  <details class="frage"><summary>1. Was bedeutet „Organon“, und warum heißt Bühlers Modell so?</summary><div class="inner"><p>Organon = Werkzeug (altgriechisch). Für Bühler ist Sprache ein Werkzeug, mit dem einer dem anderen etwas über die Dinge mitteilt.</p></div></details>
+  <details class="frage"><summary>2. Nenne die drei Funktionen nach Bühler und die passende Zeichenart.</summary><div class="inner"><p>Ausdruck → Symptom (Sender) · Appell → Signal (Empfänger) · Darstellung → Symbol (Gegenstände und Sachverhalte).</p></div></details>
+  <details class="frage"><summary>3. Jemand ruft „Hilfe!“ – welche Funktion dominiert?</summary><div class="inner"><p>Der Appell (Signal: Komm und hilf mir!). Daneben auch Ausdruck (Angst).</p></div></details>
+  <details class="frage"><summary>4. Was ist ein Axiom?</summary><div class="inner"><p>Ein Grundsatz, der als wahr gilt und keinen Beweis braucht.</p></div></details>
+  <details class="frage"><summary>5. Erkläre das 1. Axiom mit einem Beispiel aus einem Drama.</summary><div class="inner"><p>Man kann nicht nicht kommunizieren: Auch Schweigen ist eine Botschaft. Beispiel: „Da die Oberschwester nicht reagiert.“ (Physiker, Z. 52) – ihr Schweigen zeigt Ablehnung.</p></div></details>
+  <details class="frage"><summary>6. Was bedeutet „Interpunktion“ bei Watzlawick?</summary><div class="inner"><p>Jeder Partner setzt den Anfang eines Konflikts anders und sieht sein eigenes Verhalten nur als Reaktion auf den anderen. Es entsteht ein Kreislauf ohne klaren Anfang.</p></div></details>
+  <details class="frage"><summary>7. Lehrer und Schüler: symmetrisch oder komplementär? Und zwei Freundinnen?</summary><div class="inner"><p>Lehrer–Schüler: komplementär (ungleich, einer übergeordnet). Freundinnen: symmetrisch (auf Augenhöhe).</p></div></details>
+  <details class="frage"><summary>8. Was ist eine symmetrische Eskalation?</summary><div class="inner"><p>Ein Machtkampf zwischen Gleichrangigen: Beide wollen überlegen sein und das letzte Wort haben (z. B. Tabea und Debbie).</p></div></details>
+  <details class="frage"><summary>9. Digital und analog – was ist was?</summary><div class="inner"><p>Digital = verbal (Worte), eher für den Inhalt. Analog = nonverbal und paraverbal (Gestik, Mimik, Tonfall), eher für die Beziehung.</p></div></details>
+  <details class="frage"><summary>10. Nenne die vier Seiten einer Nachricht nach Schulz von Thun.</summary><div class="inner"><p>Sachinhalt, Selbstkundgabe, Beziehung, Appell.</p></div></details>
+  <details class="frage"><summary>11. „Du, da vorne ist grün!“ – was hört das Beziehungs-Ohr?</summary><div class="inner"><p>„Du hältst mich für eine schlechte Fahrerin. Du willst mich bevormunden.“</p></div></details>
+  <details class="frage"><summary>12. Was hat Schulz von Thun, was Bühler nicht hat?</summary><div class="inner"><p>Die Beziehungsseite (von Watzlawick) und die Empfängerperspektive (vier Ohren).</p></div></details>
+  <details class="frage"><summary>13. Welche Kommunikationssperre ist „Kopf hoch, das wird schon wieder!“?</summary><div class="inner"><p>Nr. 10: beruhigen, trösten. Das Gefühl wird kleingemacht.</p></div></details>
+  <details class="frage"><summary>14. Welche Sperre ist „Du bist doch nur neidisch.“?</summary><div class="inner"><p>Nr. 9: interpretieren, diagnostizieren (eventuell auch Nr. 6: beschuldigen).</p></div></details>
+  <details class="frage"><summary>15. Formuliere als Ich-Botschaft: „Du hörst mir nie zu!“</summary><div class="inner"><p>„Gerade schaust du auf dein Handy, während ich dir etwas erzähle (Verhalten). Ich weiß dann nicht, ob meine Geschichte bei dir ankommt (Wirkung). Das macht mich traurig (Gefühl).“</p></div></details>
+  <details class="frage"><summary>16. In einem Text versteht eine Figur einen Hinweis als Kritik. Welches Modell passt am besten?</summary><div class="inner"><p>Das Vier-Seiten-Modell von Schulz von Thun: Der Sender meint z. B. die Sachebene, der Empfänger hört mit dem Beziehungs-Ohr.</p></div></details>
+  <details class="frage"><summary>17. Warum ist „Ich finde, du bist egoistisch.“ keine Ich-Botschaft?</summary><div class="inner"><p>Weil sie den anderen bewertet. Sie beschreibt kein Verhalten, keine Wirkung und kein eigenes Gefühl. Es ist eine versteckte Du-Botschaft.</p></div></details>
+  <details class="frage"><summary>18. Nenne zwei Grenzen des Organon-Modells.</summary><div class="inner"><p>Es betrachtet vor allem den Sender; die Beziehung der Partner und der Gesprächsverlauf fehlen; Nonverbales spielt kaum eine Rolle.</p></div></details>
+
+  <h3>Checkliste für die Klausur</h3>
+  <ul class="check">
+    <li>Ich habe die Gesprächssituation geklärt (wer, mit wem, wo, warum, welche Beziehung).</li>
+    <li>Ich habe das Modell kurz und mit den richtigen Fachbegriffen vorgestellt.</li>
+    <li>Ich habe 2–4 Schlüsselstellen ausgewählt.</li>
+    <li>Jede Behauptung hat ein Zitat mit Zeilenangabe.</li>
+    <li>Ich arbeite im Dreischritt: Beleg → Analyse → Deutung.</li>
+    <li>Ich habe Regieanweisungen und Nonverbales einbezogen.</li>
+    <li>Ich habe sprachliche Mittel mit ihrer Funktion genannt.</li>
+    <li>Ich erkläre, warum die Kommunikation gelingt oder scheitert – und was das für das Thema des Werks bedeutet.</li>
+    <li>Ich schreibe im Präsens, sachlich, ohne private Meinung.</li>
+  </ul>
+</section>
+
+<footer>Lernzettel auf Grundlage der Arbeitsblätter „Kommunikationsmodelle“ (RAAbits Deutsch, M1–M14) · Viel Erfolg in der Klausur!</footer>
+</main>
+</div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  try { var s = localStorage.getItem('lz-theme'); if (s) root.setAttribute('data-theme', s); } catch(e) {}
+  document.getElementById('themeBtn').addEventListener('click', function(){
+    var cur = root.getAttribute('data-theme') || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('lz-theme', next); } catch(e) {}
+  });
+
+  var btnAll = document.getElementById('toggleAll'), allOpen = false;
+  btnAll.addEventListener('click', function(){
+    allOpen = !allOpen;
+    document.querySelectorAll('details.loes, details.frage').forEach(function(d){ d.open = allOpen; });
+    btnAll.textContent = allOpen ? 'Alle Lösungen schließen' : 'Alle Lösungen öffnen';
+  });
+
+  var prev = [];
+  window.addEventListener('beforeprint', function(){
+    var ds = document.querySelectorAll('main details');
+    prev = Array.prototype.map.call(ds, function(d){ return d.open; });
+    ds.forEach(function(d){ d.open = true; });
+  });
+  window.addEventListener('afterprint', function(){
+    document.querySelectorAll('main details').forEach(function(d, i){ d.open = !!prev[i]; });
+  });
+  document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+
+  if ('IntersectionObserver' in window) {
+    var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+    var byId = {};
+    links.forEach(function(a){ byId[a.getAttribute('href').slice(1)] = a; });
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting && byId[e.target.id]) {
+          links.forEach(function(l){ l.classList.remove('active'); });
+          byId[e.target.id].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    document.querySelectorAll('main section[id]').forEach(function(s){ obs.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
