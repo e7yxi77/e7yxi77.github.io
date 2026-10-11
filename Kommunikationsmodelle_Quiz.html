@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kommunikationsmodelle – Klausurtest</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #191c26;
+    --surface2: #21253300;
+    --border: #2e3245;
+    --text: #e8eaf0;
+    --muted: #7880a0;
+    --blue: #5b8dee;
+    --green: #4caf82;
+    --red: #e05c6a;
+    --yellow: #f0b429;
+    --radius: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 2rem 1.5rem;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .header-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--blue);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .header-meta {
+    margin-top: 0.75rem;
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  /* PROGRESS */
+  .progress-bar-wrap {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 1.25rem 2rem 0;
+  }
+
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--blue);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* SCORE */
+  .score-bar {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0.75rem 2rem;
+    display: flex;
+    gap: 1.5rem;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .score-item span {
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .score-item .correct { color: var(--green); }
+  .score-item .wrong { color: var(--red); }
+  .score-item .total { color: var(--blue); }
+
+  /* SECTION TABS */
+  .tabs {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 1rem 2rem 0;
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 0.3rem 0.85rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tab.active {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
+  }
+
+  /* MAIN */
+  main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 5rem;
+  }
+
+  .section-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+  }
+
+  .section-desc {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* QUESTION */
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .question-card.answered { border-color: var(--border); }
+  .question-card.correct-card { border-color: var(--green); }
+  .question-card.wrong-card { border-color: var(--red); }
+
+  .q-number {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+  }
+
+  .q-text {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 1.1rem;
+    line-height: 1.55;
+  }
+
+  .q-context {
+    font-size: 13px;
+    color: var(--muted);
+    background: rgba(255,255,255,0.03);
+    border-left: 2px solid var(--border);
+    padding: 0.6rem 0.9rem;
+    margin-bottom: 1rem;
+    border-radius: 0 4px 4px 0;
+    font-style: italic;
+  }
+
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .option {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: left;
+    color: var(--text);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    transition: all 0.15s;
+  }
+
+  .option:hover:not(:disabled) {
+    border-color: var(--blue);
+    background: rgba(91,141,238,0.08);
+  }
+
+  .option:disabled { cursor: default; }
+
+  .option.selected-correct {
+    background: rgba(76,175,130,0.12);
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  .option.selected-wrong {
+    background: rgba(224,92,106,0.12);
+    border-color: var(--red);
+    color: var(--red);
+  }
+
+  .option.show-correct {
+    background: rgba(76,175,130,0.08);
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  .opt-letter {
+    font-size: 11px;
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    opacity: 0.7;
+  }
+
+  /* FILL IN */
+  .fill-input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 0.7rem 1rem;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    margin-bottom: 0.6rem;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .fill-input:focus { border-color: var(--blue); }
+  .fill-input.correct-input { border-color: var(--green); color: var(--green); }
+  .fill-input.wrong-input { border-color: var(--red); }
+
+  /* MATCH */
+  .match-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .match-left {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 0.6rem 0.9rem;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .match-select {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 0.6rem 0.9rem;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+
+  .match-select:focus { border-color: var(--blue); }
+  .match-select.correct-m { border-color: var(--green); color: var(--green); }
+  .match-select.wrong-m { border-color: var(--red); }
+  .match-select option { background: #191c26; color: var(--text); }
+
+  /* FEEDBACK */
+  .feedback {
+    margin-top: 0.75rem;
+    font-size: 13px;
+    padding: 0.6rem 0.9rem;
+    border-radius: 6px;
+    display: none;
+  }
+
+  .feedback.show { display: block; }
+  .feedback.correct-fb { background: rgba(76,175,130,0.1); color: var(--green); }
+  .feedback.wrong-fb { background: rgba(224,92,106,0.1); color: #ff8f9a; }
+
+  /* BUTTONS */
+  .btn-check {
+    margin-top: 0.75rem;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 0.5rem 1.25rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .btn-check:hover { opacity: 0.85; }
+  .btn-check:disabled { opacity: 0.4; cursor: default; }
+
+  /* RESULT */
+  .result-screen {
+    display: none;
+    text-align: center;
+    padding: 3rem 1rem;
+  }
+
+  .result-screen.show { display: block; }
+
+  .result-score {
+    font-family: 'DM Serif Display', serif;
+    font-size: 5rem;
+    line-height: 1;
+    margin: 1rem 0 0.5rem;
+  }
+
+  .result-label {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .result-grade {
+    display: inline-block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.4rem 1.2rem;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+  }
+
+  .btn-restart {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 7px;
+    padding: 0.6rem 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-restart:hover { border-color: var(--blue); color: var(--blue); }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 600px) {
+    header, .progress-bar-wrap, .score-bar, .tabs, main { padding-left: 1rem; padding-right: 1rem; }
+    h1 { font-size: 1.5rem; }
+    .match-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-tag">Klausurvorbereitung &middot; Deutsch 11</div>
+  <h1>Kommunikationsmodelle</h1>
+  <div class="header-meta">
+    <span>Gordon &middot; Bühler &middot; Watzlawick &middot; Schulz von Thun</span>
+    <span>32 Fragen</span>
+  </div>
+</header>
+
+<div class="progress-bar-wrap">
+  <div class="progress-info">
+    <span id="progress-text">0 von 32 beantwortet</span>
+    <span id="progress-pct">0%</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+</div>
+
+<div class="score-bar">
+  <div class="score-item">Richtig: <span class="correct" id="score-correct">0</span></div>
+  <div class="score-item">Falsch: <span class="wrong" id="score-wrong">0</span></div>
+  <div class="score-item">Gesamt: <span class="total" id="score-total">32</span></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showSection('all')">Alle</button>
+  <button class="tab" onclick="showSection('gordon')">Gordon</button>
+  <button class="tab" onclick="showSection('ichbot')">Ich-Botschaften</button>
+  <button class="tab" onclick="showSection('buehler')">Organon-Modell</button>
+  <button class="tab" onclick="showSection('watzlawick')">Watzlawick</button>
+  <button class="tab" onclick="showSection('vsm')">Vier-Seiten-Modell</button>
+</div>
+
+<main>
+
+<!-- ERGEBNIS -->
+<div class="result-screen" id="result-screen">
+  <div class="header-tag">Ergebnis</div>
+  <div class="result-score" id="result-score">–</div>
+  <div class="result-label" id="result-label">von 32 Punkten</div>
+  <div class="result-grade" id="result-grade"></div>
+  <br>
+  <button class="btn-restart" onclick="restartQuiz()">Nochmal versuchen</button>
+</div>
+
+<!-- ============ GORDON ============ -->
+<div class="section" data-section="gordon">
+  <div class="section-header">
+    <div class="section-title">Gordons 12 Kommunikationssperren</div>
+    <div class="section-desc">Thomas Gordon (1918–2002) – Kommunikationssperren blockieren echten Kontakt</div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="question-card" id="q1">
+    <div class="q-number">Frage 1 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Was sind Kommunikationssperren nach Thomas Gordon?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q1','b')"><span class="opt-letter">A</span> Regeln für gelungene Kommunikation</button>
+      <button class="option" onclick="checkMC(this,'q1','b')"><span class="opt-letter">B</span> Verhaltensweisen, die das Erleben des Gegenübers verändern wollen statt es zu akzeptieren</button>
+      <button class="option" onclick="checkMC(this,'q1','b')"><span class="opt-letter">C</span> Techniken für besseres Zuhören</button>
+      <button class="option" onclick="checkMC(this,'q1','b')"><span class="opt-letter">D</span> Methoden zur Konfliktlösung</button>
+    </div>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question-card" id="q2">
+    <div class="q-number">Frage 2 von 32 &middot; Zuordnung</div>
+    <div class="q-text">Ordne die Beispiele den richtigen Kommunikationssperren zu.</div>
+    <div class="match-grid">
+      <div class="match-left">"Du solltest das einfach anders sehen."</div>
+      <select class="match-select" id="m2a">
+        <option value="">– wählen –</option>
+        <option value="3">3 – zureden, moralisieren</option>
+        <option value="6">6 – verurteilen, kritisieren</option>
+        <option value="8">8 – beschimpfen</option>
+        <option value="10">10 – beruhigen</option>
+      </select>
+      <div class="match-left">"Du bist einfach zu sensibel."</div>
+      <select class="match-select" id="m2b">
+        <option value="">– wählen –</option>
+        <option value="5">5 – Vorhaltungen machen</option>
+        <option value="9">9 – interpretieren, diagnostizieren</option>
+        <option value="1">1 – befehlen</option>
+        <option value="4">4 – beraten</option>
+      </select>
+      <div class="match-left">"Mach das so, wie ich es dir sage!"</div>
+      <select class="match-select" id="m2c">
+        <option value="">– wählen –</option>
+        <option value="7">7 – loben</option>
+        <option value="12">12 – ablenken</option>
+        <option value="1">1 – befehlen, kommandieren</option>
+        <option value="2">2 – warnen, drohen</option>
+      </select>
+    </div>
+    <button class="btn-check" onclick="checkMatch('q2',['m2a','m2b','m2c'],['3','9','1'])">Prüfen</button>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question-card" id="q3">
+    <div class="q-number">Frage 3 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Welche Kommunikationssperre liegt vor?</div>
+    <div class="q-context">"Ach, das wird schon wieder. Mach dir keine Sorgen, das ist doch gar nicht so schlimm."</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q3','c')"><span class="opt-letter">A</span> Sperre 3 – zureden, moralisieren</button>
+      <button class="option" onclick="checkMC(this,'q3','c')"><span class="opt-letter">B</span> Sperre 6 – verurteilen, kritisieren</button>
+      <button class="option" onclick="checkMC(this,'q3','c')"><span class="opt-letter">C</span> Sperre 10 – beruhigen, bemitleiden, trösten</button>
+      <button class="option" onclick="checkMC(this,'q3','c')"><span class="opt-letter">D</span> Sperre 12 – ablenken, aufheitern</button>
+    </div>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="question-card" id="q4">
+    <div class="q-number">Frage 4 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Warum kann sogar Lob eine Kommunikationssperre sein?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q4','b')"><span class="opt-letter">A</span> Weil Lob immer unehrlich ist</button>
+      <button class="option" onclick="checkMC(this,'q4','b')"><span class="opt-letter">B</span> Weil auch Lob versucht, das Erleben des anderen im eigenen Sinne zu verändern</button>
+      <button class="option" onclick="checkMC(this,'q4','b')"><span class="opt-letter">C</span> Weil Lob den Gesprächspartner einschüchtert</button>
+      <button class="option" onclick="checkMC(this,'q4','b')"><span class="opt-letter">D</span> Weil Lob immer eine Lüge enthält</button>
+    </div>
+    <div class="feedback" id="fb-q4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="question-card" id="q5">
+    <div class="q-number">Frage 5 von 32 &middot; Lückentext</div>
+    <div class="q-text">Ergänze den Satz:</div>
+    <div class="q-context">Kommunikationssperren werden oft dann eingesetzt, wenn man eigentlich ________ zulassen möchte, sich aber nicht traut.</div>
+    <input class="fill-input" id="fi-q5" type="text" placeholder="Ein Wort eingeben...">
+    <button class="btn-check" onclick="checkFill('q5','fi-q5',['Nähe','nähe'])">Prüfen</button>
+    <div class="feedback" id="fb-q5"></div>
+  </div>
+
+  <!-- Q6 – Dialog Tabea/Debbie -->
+  <div class="question-card" id="q6">
+    <div class="q-number">Frage 6 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Welche Sperre nutzt Debbie in diesem Satz?</div>
+    <div class="q-context">"Du bist einfach spießig mit deiner Pünktlichkeit."</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q6','c')"><span class="opt-letter">A</span> Sperre 2 – warnen, drohen</button>
+      <button class="option" onclick="checkMC(this,'q6','c')"><span class="opt-letter">B</span> Sperre 4 – beraten</button>
+      <button class="option" onclick="checkMC(this,'q6','c')"><span class="opt-letter">C</span> Sperre 6 – verurteilen, kritisieren, beschuldigen</button>
+      <button class="option" onclick="checkMC(this,'q6','c')"><span class="opt-letter">D</span> Sperre 11 – forschen, verhören</button>
+    </div>
+    <div class="feedback" id="fb-q6"></div>
+  </div>
+</div>
+
+<!-- ============ ICH-BOTSCHAFTEN ============ -->
+<div class="section" data-section="ichbot">
+  <div class="section-header">
+    <div class="section-title">Ich-Botschaften vs. Du-Botschaften</div>
+    <div class="section-desc">Ich-Botschaften: 3 Schritte – Verhalten beschreiben, Wirkung nennen, Gefühl benennen</div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="question-card" id="q7">
+    <div class="q-number">Frage 7 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Was sind die drei Schritte einer Ich-Botschaft?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q7','a')"><span class="opt-letter">A</span> Verhalten beschreiben → Wirkung des Verhaltens nennen → Gefühl benennen</button>
+      <button class="option" onclick="checkMC(this,'q7','a')"><span class="opt-letter">B</span> Problem nennen → Lösung vorschlagen → Ergebnis festhalten</button>
+      <button class="option" onclick="checkMC(this,'q7','a')"><span class="opt-letter">C</span> Vorwurf machen → erklären → entschuldigen</button>
+      <button class="option" onclick="checkMC(this,'q7','a')"><span class="opt-letter">D</span> Gefühl nennen → Reaktion beschreiben → Forderung stellen</button>
+    </div>
+    <div class="feedback" id="fb-q7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="question-card" id="q8">
+    <div class="q-number">Frage 8 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Welche Version ist eine korrekte Ich-Botschaft?</div>
+    <div class="q-context">Situation: Dein Freund kommt immer zu spät zu euren Treffen.</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q8','c')"><span class="opt-letter">A</span> "Du kommst immer zu spät! Das ist respektlos."</button>
+      <button class="option" onclick="checkMC(this,'q8','c')"><span class="opt-letter">B</span> "Komm das nächste Mal pünktlich, sonst warte ich nicht mehr."</button>
+      <button class="option" onclick="checkMC(this,'q8','c')"><span class="opt-letter">C</span> "Wenn du zu spät kommst, haben wir weniger Zeit zusammen – das macht mich traurig."</button>
+      <button class="option" onclick="checkMC(this,'q8','c')"><span class="opt-letter">D</span> "Ich finde, du solltest pünktlicher sein."</button>
+    </div>
+    <div class="feedback" id="fb-q8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="question-card" id="q9">
+    <div class="q-number">Frage 9 von 32 &middot; Umformulierung</div>
+    <div class="q-text">Forme diese Du-Botschaft in eine Ich-Botschaft um:</div>
+    <div class="q-context">"Du denkst immer nur an dich."</div>
+    <input class="fill-input" id="fi-q9" type="text" placeholder="Ich-Botschaft formulieren...">
+    <button class="btn-check" onclick="checkFill('q9','fi-q9',['ich','Ich'])">Prüfen</button>
+    <div class="feedback" id="fb-q9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="question-card" id="q10">
+    <div class="q-number">Frage 10 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Warum sind Du-Botschaften problematisch?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q10','b')"><span class="opt-letter">A</span> Weil sie zu höflich klingen</button>
+      <button class="option" onclick="checkMC(this,'q10','b')"><span class="opt-letter">B</span> Weil sie den Gesprächspartner angreifen und Vorwürfe enthalten</button>
+      <button class="option" onclick="checkMC(this,'q10','b')"><span class="opt-letter">C</span> Weil sie zu lang sind</button>
+      <button class="option" onclick="checkMC(this,'q10','b')"><span class="opt-letter">D</span> Weil sie keine Informationen enthalten</button>
+    </div>
+    <div class="feedback" id="fb-q10"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="question-card" id="q11">
+    <div class="q-number">Frage 11 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Was ist der Vorteil der Ich-Botschaft?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q11','d')"><span class="opt-letter">A</span> Sie ist kürzer als eine Du-Botschaft</button>
+      <button class="option" onclick="checkMC(this,'q11','d')"><span class="opt-letter">B</span> Sie macht den Sprecher sympathischer</button>
+      <button class="option" onclick="checkMC(this,'q11','d')"><span class="opt-letter">C</span> Sie vermeidet alle Konflikte</button>
+      <button class="option" onclick="checkMC(this,'q11','d')"><span class="opt-letter">D</span> Sie vermittelt Kritik konstruktiv, ohne den anderen direkt anzugreifen</button>
+    </div>
+    <div class="feedback" id="fb-q11"></div>
+  </div>
+</div>
+
+<!-- ============ BÜHLER ============ -->
+<div class="section" data-section="buehler">
+  <div class="section-header">
+    <div class="section-title">Bühlers Organon-Modell</div>
+    <div class="section-desc">Karl Bühler (1879–1963) – Sprache als Werkzeug (Organon) mit drei Funktionen</div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="question-card" id="q12">
+    <div class="q-number">Frage 12 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Welche drei Elemente sind beim Sprechen laut Bühler immer beteiligt?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q12','a')"><span class="opt-letter">A</span> Sender, Empfänger, Gegenstände und Sachverhalte der Welt</button>
+      <button class="option" onclick="checkMC(this,'q12','a')"><span class="opt-letter">B</span> Sprecher, Zuhörer, Gefühle</button>
+      <button class="option" onclick="checkMC(this,'q12','a')"><span class="opt-letter">C</span> Inhalt, Beziehung, Appell</button>
+      <button class="option" onclick="checkMC(this,'q12','a')"><span class="opt-letter">D</span> Wörter, Sätze, Bedeutungen</button>
+    </div>
+    <div class="feedback" id="fb-q12"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="question-card" id="q13">
+    <div class="q-number">Frage 13 von 32 &middot; Zuordnung</div>
+    <div class="q-text">Ordne die drei Funktionen der Sprache nach Bühler richtig zu.</div>
+    <div class="match-grid">
+      <div class="match-left">Ausdruck</div>
+      <select class="match-select" id="m13a">
+        <option value="">– wählen –</option>
+        <option value="a">bezieht sich auf den Sender selbst</option>
+        <option value="b">bezieht sich auf den Empfänger</option>
+        <option value="c">bezieht sich auf die Gegenstände</option>
+      </select>
+      <div class="match-left">Appell</div>
+      <select class="match-select" id="m13b">
+        <option value="">– wählen –</option>
+        <option value="a">bezieht sich auf den Sender selbst</option>
+        <option value="b">bezieht sich auf den Empfänger</option>
+        <option value="c">bezieht sich auf die Gegenstände</option>
+      </select>
+      <div class="match-left">Darstellung</div>
+      <select class="match-select" id="m13c">
+        <option value="">– wählen –</option>
+        <option value="a">bezieht sich auf den Sender selbst</option>
+        <option value="b">bezieht sich auf den Empfänger</option>
+        <option value="c">bezieht sich auf die Gegenstände</option>
+      </select>
+    </div>
+    <button class="btn-check" onclick="checkMatch('q13',['m13a','m13b','m13c'],['a','b','c'])">Prüfen</button>
+    <div class="feedback" id="fb-q13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="question-card" id="q14">
+    <div class="q-number">Frage 14 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Was ist die Funktion, wenn jemand sagt "Es ist heiß hier" mit der Absicht, dass jemand das Fenster öffnet?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q14','b')"><span class="opt-letter">A</span> Ausdruck</button>
+      <button class="option" onclick="checkMC(this,'q14','b')"><span class="opt-letter">B</span> Appell</button>
+      <button class="option" onclick="checkMC(this,'q14','b')"><span class="opt-letter">C</span> Darstellung</button>
+      <button class="option" onclick="checkMC(this,'q14','b')"><span class="opt-letter">D</span> Information</button>
+    </div>
+    <div class="feedback" id="fb-q14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="question-card" id="q15">
+    <div class="q-number">Frage 15 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Welcher Textgattung würde man hauptsächlich die Funktion "Ausdruck" zuordnen?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q15','c')"><span class="opt-letter">A</span> Nachrichten</button>
+      <button class="option" onclick="checkMC(this,'q15','c')"><span class="opt-letter">B</span> Gebrauchsanweisung</button>
+      <button class="option" onclick="checkMC(this,'q15','c')"><span class="opt-letter">C</span> Gedicht / Songtext</button>
+      <button class="option" onclick="checkMC(this,'q15','c')"><span class="opt-letter">D</span> TV-Dokumentation</button>
+    </div>
+    <div class="feedback" id="fb-q15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="question-card" id="q16">
+    <div class="q-number">Frage 16 von 32 &middot; Lückentext</div>
+    <div class="q-text">Ergänze: Das Organon-Modell stammt von Karl ________ und wurde 1934 veröffentlicht.</div>
+    <input class="fill-input" id="fi-q16" type="text" placeholder="Name eingeben...">
+    <button class="btn-check" onclick="checkFill('q16','fi-q16',['Bühler','bühler','buehler','Buehler'])">Prüfen</button>
+    <div class="feedback" id="fb-q16"></div>
+  </div>
+</div>
+
+<!-- ============ WATZLAWICK ============ -->
+<div class="section" data-section="watzlawick">
+  <div class="section-header">
+    <div class="section-title">Watzlawicks 5 Axiome</div>
+    <div class="section-desc">Paul Watzlawick (1921–2007) – Grundsätze menschlicher Kommunikation</div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="question-card" id="q17">
+    <div class="q-number">Frage 17 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Was besagt das 1. Axiom von Watzlawick?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q17','a')"><span class="opt-letter">A</span> Man kann nicht nicht kommunizieren</button>
+      <button class="option" onclick="checkMC(this,'q17','a')"><span class="opt-letter">B</span> Kommunikation hat immer zwei Seiten</button>
+      <button class="option" onclick="checkMC(this,'q17','a')"><span class="opt-letter">C</span> Jede Kommunikation ist digital</button>
+      <button class="option" onclick="checkMC(this,'q17','a')"><span class="opt-letter">D</span> Kommunikation ist symmetrisch</button>
+    </div>
+    <div class="feedback" id="fb-q17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="question-card" id="q18">
+    <div class="q-number">Frage 18 von 32 &middot; Zuordnung</div>
+    <div class="q-text">Ordne die 5 Axiome den richtigen Beschreibungen zu.</div>
+    <div class="match-grid">
+      <div class="match-left">Axiom 2</div>
+      <select class="match-select" id="m18a">
+        <option value="">– wählen –</option>
+        <option value="a">Man kann nicht nicht kommunizieren</option>
+        <option value="b">Jede Kommunikation hat Inhalts- und Beziehungsaspekt</option>
+        <option value="c">Kommunikation ist analog und digital</option>
+        <option value="d">Kommunikation ist Ursache und Wirkung</option>
+        <option value="e">Kommunikation ist symmetrisch oder komplementär</option>
+      </select>
+      <div class="match-left">Axiom 4</div>
+      <select class="match-select" id="m18b">
+        <option value="">– wählen –</option>
+        <option value="a">Man kann nicht nicht kommunizieren</option>
+        <option value="b">Jede Kommunikation hat Inhalts- und Beziehungsaspekt</option>
+        <option value="c">Kommunikation ist analog und digital</option>
+        <option value="d">Kommunikation ist Ursache und Wirkung</option>
+        <option value="e">Kommunikation ist symmetrisch oder komplementär</option>
+      </select>
+      <div class="match-left">Axiom 5</div>
+      <select class="match-select" id="m18c">
+        <option value="">– wählen –</option>
+        <option value="a">Man kann nicht nicht kommunizieren</option>
+        <option value="b">Jede Kommunikation hat Inhalts- und Beziehungsaspekt</option>
+        <option value="c">Kommunikation ist analog und digital</option>
+        <option value="d">Kommunikation ist Ursache und Wirkung</option>
+        <option value="e">Kommunikation ist symmetrisch oder komplementär</option>
+      </select>
+    </div>
+    <button class="btn-check" onclick="checkMatch('q18',['m18a','m18b','m18c'],['b','c','e'])">Prüfen</button>
+    <div class="feedback" id="fb-q18"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="question-card" id="q19">
+    <div class="q-number">Frage 19 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Was ist der Unterschied zwischen analoger und digitaler Kommunikation?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q19','c')"><span class="opt-letter">A</span> Digital ist moderner, analog ist veraltet</button>
+      <button class="option" onclick="checkMC(this,'q19','c')"><span class="opt-letter">B</span> Analog ist schriftlich, digital ist mündlich</button>
+      <button class="option" onclick="checkMC(this,'q19','c')"><span class="opt-letter">C</span> Digital = verbale Kommunikation (Wörter), analog = nonverbale Kommunikation (Gestik, Mimik)</button>
+      <button class="option" onclick="checkMC(this,'q19','c')"><span class="opt-letter">D</span> Es gibt keinen Unterschied</button>
+    </div>
+    <div class="feedback" id="fb-q19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="question-card" id="q20">
+    <div class="q-number">Frage 20 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Im Dialog zwischen Philip und Özlem: Philip gähnt. Was kommuniziert er damit laut Axiom 1?</div>
+    <div class="q-context">Philip (gähnt): Irgendwie langweilig die Serie.</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q20','b')"><span class="opt-letter">A</span> Gar nichts – er schläft fast</button>
+      <button class="option" onclick="checkMC(this,'q20','b')"><span class="opt-letter">B</span> Auch das Gähnen ist Kommunikation – es zeigt Langeweile oder Müdigkeit (nonverbal)</button>
+      <button class="option" onclick="checkMC(this,'q20','b')"><span class="opt-letter">C</span> Er kommuniziert, dass er schläfrig ist</button>
+      <button class="option" onclick="checkMC(this,'q20','b')"><span class="opt-letter">D</span> Das Gähnen hat keine kommunikative Bedeutung</button>
+    </div>
+    <div class="feedback" id="fb-q20"></div>
+  </div>
+
+  <!-- Q21 -->
+  <div class="question-card" id="q21">
+    <div class="q-number">Frage 21 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Was bedeutet "komplementäre Kommunikation" (Axiom 5)?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q21','d')"><span class="opt-letter">A</span> Beide Partner kommunizieren auf Augenhöhe</button>
+      <button class="option" onclick="checkMC(this,'q21','d')"><span class="opt-letter">B</span> Die Partner ergänzen sich inhaltlich</button>
+      <button class="option" onclick="checkMC(this,'q21','d')"><span class="opt-letter">C</span> Beide Partner machen Komplimente</button>
+      <button class="option" onclick="checkMC(this,'q21','d')"><span class="opt-letter">D</span> Die Partner stehen in einem ungleichen Verhältnis – einer ist über- und einer untergeordnet</button>
+    </div>
+    <div class="feedback" id="fb-q21"></div>
+  </div>
+
+  <!-- Q22 -->
+  <div class="question-card" id="q22">
+    <div class="q-number">Frage 22 von 32 &middot; Lückentext</div>
+    <div class="q-text">Ergänze: Laut 3. Axiom ist Kommunikation immer ________ und ________.</div>
+    <input class="fill-input" id="fi-q22" type="text" placeholder="Zwei Wörter eingeben (Wort1 und Wort2)...">
+    <button class="btn-check" onclick="checkFill('q22','fi-q22',['Ursache','ursache','Wirkung','wirkung','ursache und wirkung','Ursache und Wirkung'])">Prüfen</button>
+    <div class="feedback" id="fb-q22"></div>
+  </div>
+</div>
+
+<!-- ============ VIER-SEITEN-MODELL ============ -->
+<div class="section" data-section="vsm">
+  <div class="section-header">
+    <div class="section-title">Das Vier-Seiten-Modell</div>
+    <div class="section-desc">Friedemann Schulz von Thun – jede Nachricht hat vier Seiten (Vier-Ohren-Modell)</div>
+  </div>
+
+  <!-- Q23 -->
+  <div class="question-card" id="q23">
+    <div class="q-number">Frage 23 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Welche vier Seiten hat eine Nachricht laut Schulz von Thun?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q23','a')"><span class="opt-letter">A</span> Sachebene, Beziehungsebene, Selbstkundgabe, Appellebene</button>
+      <button class="option" onclick="checkMC(this,'q23','a')"><span class="opt-letter">B</span> Ausdruck, Appell, Darstellung, Inhalt</button>
+      <button class="option" onclick="checkMC(this,'q23','a')"><span class="opt-letter">C</span> Sender, Empfänger, Botschaft, Reaktion</button>
+      <button class="option" onclick="checkMC(this,'q23','a')"><span class="opt-letter">D</span> Verbal, nonverbal, inhaltlich, emotional</button>
+    </div>
+    <div class="feedback" id="fb-q23"></div>
+  </div>
+
+  <!-- Q24 -->
+  <div class="question-card" id="q24">
+    <div class="q-number">Frage 24 von 32 &middot; Zuordnung</div>
+    <div class="q-text">Der Lehrer sagt: "Ganz schön warm hier." Analysiere mit dem Vier-Seiten-Modell.</div>
+    <div class="match-grid">
+      <div class="match-left">Sachebene</div>
+      <select class="match-select" id="m24a">
+        <option value="">– wählen –</option>
+        <option value="a">Es ist warm im Raum</option>
+        <option value="b">Mir ist es zu warm / ich fühle mich unwohl</option>
+        <option value="c">Macht das Fenster auf!</option>
+        <option value="d">Ich finde die Bedingungen hier unangenehm</option>
+      </select>
+      <div class="match-left">Selbstkundgabe</div>
+      <select class="match-select" id="m24b">
+        <option value="">– wählen –</option>
+        <option value="a">Es ist warm im Raum</option>
+        <option value="b">Mir ist es zu warm / ich fühle mich unwohl</option>
+        <option value="c">Macht das Fenster auf!</option>
+        <option value="d">Ich finde die Bedingungen hier unangenehm</option>
+      </select>
+      <div class="match-left">Appell</div>
+      <select class="match-select" id="m24c">
+        <option value="">– wählen –</option>
+        <option value="a">Es ist warm im Raum</option>
+        <option value="b">Mir ist es zu warm / ich fühle mich unwohl</option>
+        <option value="c">Macht das Fenster auf!</option>
+        <option value="d">Ich finde die Bedingungen hier unangenehm</option>
+      </select>
+    </div>
+    <button class="btn-check" onclick="checkMatch('q24',['m24a','m24b','m24c'],['a','b','c'])">Prüfen</button>
+    <div class="feedback" id="fb-q24"></div>
+  </div>
+
+  <!-- Q25 -->
+  <div class="question-card" id="q25">
+    <div class="q-number">Frage 25 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Warum heißt das Modell auch "Vier-Ohren-Modell"?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q25','c')"><span class="opt-letter">A</span> Weil man vier Ohren braucht, um gut zuzuhören</button>
+      <button class="option" onclick="checkMC(this,'q25','c')"><span class="opt-letter">B</span> Weil es vier verschiedene Sprecher gibt</button>
+      <button class="option" onclick="checkMC(this,'q25','c')"><span class="opt-letter">C</span> Weil der Empfänger eine Nachricht auf vier verschiedenen Ebenen hören (verstehen) kann</button>
+      <button class="option" onclick="checkMC(this,'q25','c')"><span class="opt-letter">D</span> Weil Schulz von Thun vier Schüler interviewte</button>
+    </div>
+    <div class="feedback" id="fb-q25"></div>
+  </div>
+
+  <!-- Q26 -->
+  <div class="question-card" id="q26">
+    <div class="q-number">Frage 26 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Was zeigt die Beziehungsebene in einer Nachricht?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q26','b')"><span class="opt-letter">A</span> Den sachlichen Inhalt der Nachricht</button>
+      <button class="option" onclick="checkMC(this,'q26','b')"><span class="opt-letter">B</span> Wie der Sprecher zum Empfänger steht und was er von ihm hält</button>
+      <button class="option" onclick="checkMC(this,'q26','b')"><span class="opt-letter">C</span> Was der Sprecher über sich selbst verrät</button>
+      <button class="option" onclick="checkMC(this,'q26','b')"><span class="opt-letter">D</span> Was der Sprecher vom Empfänger möchte</button>
+    </div>
+    <div class="feedback" id="fb-q26"></div>
+  </div>
+
+  <!-- Q27 -->
+  <div class="question-card" id="q27">
+    <div class="q-number">Frage 27 von 32 &middot; Lückentext</div>
+    <div class="q-text">Das Vier-Seiten-Modell kann man auch als "Vier-______-Modell" bezeichnen, weil der Sprecher auch auf vier Ebenen senden kann.</div>
+    <input class="fill-input" id="fi-q27" type="text" placeholder="Wort eingeben...">
+    <button class="btn-check" onclick="checkFill('q27','fi-q27',['Schnäbel','schnäbel','Schnaebel','schnaebel'])">Prüfen</button>
+    <div class="feedback" id="fb-q27"></div>
+  </div>
+</div>
+
+<!-- ============ GEMISCHT ============ -->
+<div class="section" data-section="gemischt">
+  <div class="section-header">
+    <div class="section-title">Übergreifende Fragen</div>
+    <div class="section-desc">Vergleiche und Anwendungen aller Modelle</div>
+  </div>
+
+  <!-- Q28 -->
+  <div class="question-card" id="q28">
+    <div class="q-number">Frage 28 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Was haben das Organon-Modell (Bühler) und das Vier-Seiten-Modell (Schulz von Thun) gemeinsam?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q28','c')"><span class="opt-letter">A</span> Beide wurden 1934 veröffentlicht</button>
+      <button class="option" onclick="checkMC(this,'q28','c')"><span class="opt-letter">B</span> Beide haben genau drei Elemente</button>
+      <button class="option" onclick="checkMC(this,'q28','c')"><span class="opt-letter">C</span> Beide zeigen, dass eine Aussage verschiedene Funktionen/Ebenen haben kann</button>
+      <button class="option" onclick="checkMC(this,'q28','c')"><span class="opt-letter">D</span> Beide beschreiben Kommunikationsstörungen</button>
+    </div>
+    <div class="feedback" id="fb-q28"></div>
+  </div>
+
+  <!-- Q29 -->
+  <div class="question-card" id="q29">
+    <div class="q-number">Frage 29 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Ben sagt zu seinem Vater: "Das Gesetz ist total unsinnig." Welche Funktion hat das im Organon-Modell hauptsächlich?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q29','a')"><span class="opt-letter">A</span> Ausdruck – Ben drückt seine Meinung und Frustration aus</button>
+      <button class="option" onclick="checkMC(this,'q29','a')"><span class="opt-letter">B</span> Appell – er will das Gesetz ändern</button>
+      <button class="option" onclick="checkMC(this,'q29','a')"><span class="opt-letter">C</span> Darstellung – er gibt eine sachliche Information</button>
+      <button class="option" onclick="checkMC(this,'q29','a')"><span class="opt-letter">D</span> Beziehungsebene – er will dem Vater etwas mitteilen</button>
+    </div>
+    <div class="feedback" id="fb-q29"></div>
+  </div>
+
+  <!-- Q30 -->
+  <div class="question-card" id="q30">
+    <div class="q-number">Frage 30 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Özlem sagt zu Philip: "Da bist du ja wieder. Ich habe dich vermisst." Philip antwortet: "Meine Güte – jeden meiner Schritte überwachst du." Welches Axiom erklärt dieses Missverständnis?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q30','b')"><span class="opt-letter">A</span> Axiom 1 – man kann nicht nicht kommunizieren</button>
+      <button class="option" onclick="checkMC(this,'q30','b')"><span class="opt-letter">B</span> Axiom 2 – Inhalts- und Beziehungsaspekt werden unterschiedlich interpretiert</button>
+      <button class="option" onclick="checkMC(this,'q30','b')"><span class="opt-letter">C</span> Axiom 4 – digitale und analoge Kommunikation widersprechen sich</button>
+      <button class="option" onclick="checkMC(this,'q30','b')"><span class="opt-letter">D</span> Axiom 5 – komplementäre Kommunikation</button>
+    </div>
+    <div class="feedback" id="fb-q30"></div>
+  </div>
+
+  <!-- Q31 -->
+  <div class="question-card" id="q31">
+    <div class="q-number">Frage 31 von 32 &middot; Multiple Choice</div>
+    <div class="q-text">Welches Modell würdest du nutzen, um zu analysieren, warum Tabea und Debbies Gespräch scheitert?</div>
+    <div class="options">
+      <button class="option" onclick="checkMC(this,'q31','d')"><span class="opt-letter">A</span> Nur das Organon-Modell</button>
+      <button class="option" onclick="checkMC(this,'q31','d')"><span class="opt-letter">B</span> Nur Watzlawicks Axiome</button>
+      <button class="option" onclick="checkMC(this,'q31','d')"><span class="opt-letter">C</span> Nur Gordons Sperren</button>
+      <button class="option" onclick="checkMC(this,'q31','d')"><span class="opt-letter">D</span> Mehrere Modelle – z.B. Gordons Sperren, Ich/Du-Botschaften und Watzlawicks Axiome</button>
+    </div>
+    <div class="feedback" id="fb-q31"></div>
+  </div>
+
+  <!-- Q32 -->
+  <div class="question-card" id="q32">
+    <div class="q-number">Frage 32 von 32 &middot; Lückentext</div>
+    <div class="q-text">Vervollständige: Das Gegenteil von symmetrischer Kommunikation ist ________ Kommunikation.</div>
+    <input class="fill-input" id="fi-q32" type="text" placeholder="Wort eingeben...">
+    <button class="btn-check" onclick="checkFill('q32','fi-q32',['komplementäre','komplementare','komplementär','komplementar','Komplementäre','Komplementare'])">Prüfen</button>
+    <div class="feedback" id="fb-q32"></div>
+  </div>
+
+</div>
+
+</main>
+
+<script>
+  const TOTAL = 32;
+  let answered = 0;
+  let correct = 0;
+  let wrong = 0;
+
+  const feedbacks = {
+    'q1': 'Richtig! Kommunikationssperren wollen das Erleben des Gegenübers verändern, nicht akzeptieren.',
+    'q2': 'Richtig! "Zureden/moralisieren" = Sperre 3, "interpretieren/diagnostizieren" = Sperre 9, "befehlen" = Sperre 1.',
+    'q3': 'Richtig! Das ist Sperre 10 – beruhigen, bemitleiden, trösten.',
+    'q4': 'Richtig! Auch Lob versucht, den anderen zu steuern.',
+    'q5': 'Richtig! Kommunikationssperren werden eingesetzt, wenn man eigentlich Nähe zulassen möchte.',
+    'q6': 'Richtig! "Spießig" = Sperre 6 – verurteilen, kritisieren.',
+    'q7': 'Richtig! Die drei Schritte: Verhalten beschreiben → Wirkung nennen → Gefühl benennen.',
+    'q8': 'Richtig! "Wenn du... dann... – das macht mich..." ist eine vollständige Ich-Botschaft.',
+    'q9': 'Richtig! Deine Antwort beginnt mit "Ich" – das ist das Wichtigste.',
+    'q10': 'Richtig! Du-Botschaften greifen an und enthalten Vorwürfe.',
+    'q11': 'Richtig! Ich-Botschaften vermitteln Kritik konstruktiv.',
+    'q12': 'Richtig! Sender, Empfänger und Gegenstände/Sachverhalte.',
+    'q13': 'Richtig! Ausdruck = Sender, Appell = Empfänger, Darstellung = Gegenstände.',
+    'q14': 'Richtig! Wenn das Ziel ist, dass jemand handelt (Fenster öffnet), ist es ein Appell.',
+    'q15': 'Richtig! Gedichte und Songs drücken vor allem den inneren Zustand des Senders aus.',
+    'q16': 'Richtig! Das Organon-Modell stammt von Karl Bühler (1934).',
+    'q17': 'Richtig! 1. Axiom: Man kann nicht nicht kommunizieren.',
+    'q18': 'Richtig! Axiom 2 = Inhalts/Beziehungsaspekt, Axiom 4 = analog/digital, Axiom 5 = symmetrisch/komplementär.',
+    'q19': 'Richtig! Digital = verbal (Wörter), analog = nonverbal (Gestik, Mimik).',
+    'q20': 'Richtig! Auch Gähnen kommuniziert – laut Axiom 1 kann man nicht nicht kommunizieren.',
+    'q21': 'Richtig! Komplementär = ungleiches Verhältnis, einer ist über-, einer untergeordnet.',
+    'q22': 'Richtig! 3. Axiom: Kommunikation ist Ursache und Wirkung (kreisförmig).',
+    'q23': 'Richtig! Die vier Seiten: Sachebene, Beziehungsebene, Selbstkundgabe, Appellebene.',
+    'q24': 'Richtig! Sachebene = Fakt, Selbstkundgabe = eigenes Gefühl, Appell = gewünschte Reaktion.',
+    'q25': 'Richtig! Der Empfänger kann mit vier "Ohren" hören – jede Ebene eine eigene Interpretation.',
+    'q26': 'Richtig! Die Beziehungsebene zeigt, wie der Sprecher zum Empfänger steht.',
+    'q27': 'Richtig! Das Modell heißt auch "Vier-Schnäbel-Modell".',
+    'q28': 'Richtig! Beide zeigen, dass Sprache mehrere Ebenen / Funktionen gleichzeitig hat.',
+    'q29': 'Richtig! Ben drückt seine eigene Meinung und Frustration aus – das ist Ausdruck.',
+    'q30': 'Richtig! Özlem meint es liebevoll (Beziehungsebene), Philip versteht es als Kontrolle.',
+    'q31': 'Richtig! Für eine vollständige Analyse braucht man mehrere Modelle.',
+    'q32': 'Richtig! Das Gegenteil von symmetrisch ist komplementär.',
+  };
+
+  function updateProgress() {
+    const pct = Math.round((answered / TOTAL) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = answered + ' von ' + TOTAL + ' beantwortet';
+    document.getElementById('progress-pct').textContent = pct + '%';
+    document.getElementById('score-correct').textContent = correct;
+    document.getElementById('score-wrong').textContent = wrong;
+    if (answered === TOTAL) showResult();
+  }
+
+  function checkMC(btn, qid, correctLetter) {
+    const card = document.getElementById(qid);
+    if (card.classList.contains('answered')) return;
+    const opts = card.querySelectorAll('.option');
+    const letters = ['a','b','c','d'];
+    const btnIdx = Array.from(opts).indexOf(btn);
+    const selected = letters[btnIdx];
+    opts.forEach(o => o.disabled = true);
+    const fb = document.getElementById('fb-' + qid);
+    if (selected === correctLetter) {
+      btn.classList.add('selected-correct');
+      fb.textContent = '✓ ' + feedbacks[qid];
+      fb.className = 'feedback show correct-fb';
+      card.classList.add('correct-card');
+      correct++;
+    } else {
+      btn.classList.add('selected-wrong');
+      opts[letters.indexOf(correctLetter)].classList.add('show-correct');
+      fb.textContent = '✗ Leider falsch. Richtig: ' + feedbacks[qid];
+      fb.className = 'feedback show wrong-fb';
+      card.classList.add('wrong-card');
+      wrong++;
+    }
+    card.classList.add('answered');
+    answered++;
+    updateProgress();
+  }
+
+  function checkFill(qid, inputId, accepted) {
+    const card = document.getElementById(qid);
+    if (card.classList.contains('answered')) return;
+    const input = document.getElementById(inputId);
+    const val = input.value.trim();
+    const fb = document.getElementById('fb-' + qid);
+    const isCorrect = accepted.some(a => val.toLowerCase().includes(a.toLowerCase()));
+    input.disabled = true;
+    card.querySelector('.btn-check').disabled = true;
+    if (isCorrect) {
+      input.classList.add('correct-input');
+      fb.textContent = '✓ ' + feedbacks[qid];
+      fb.className = 'feedback show correct-fb';
+      card.classList.add('correct-card');
+      correct++;
+    } else {
+      input.classList.add('wrong-input');
+      fb.textContent = '✗ Falsch. Richtig: ' + feedbacks[qid];
+      fb.className = 'feedback show wrong-fb';
+      card.classList.add('wrong-card');
+      wrong++;
+    }
+    card.classList.add('answered');
+    answered++;
+    updateProgress();
+  }
+
+  function checkMatch(qid, selectIds, correctVals) {
+    const card = document.getElementById(qid);
+    if (card.classList.contains('answered')) return;
+    let allCorrect = true;
+    selectIds.forEach((sid, i) => {
+      const sel = document.getElementById(sid);
+      sel.disabled = true;
+      if (sel.value === correctVals[i]) {
+        sel.classList.add('correct-m');
+      } else {
+        sel.classList.add('wrong-m');
+        allCorrect = false;
+      }
+    });
+    const fb = document.getElementById('fb-' + qid);
+    card.querySelector('.btn-check').disabled = true;
+    if (allCorrect) {
+      fb.textContent = '✓ ' + feedbacks[qid];
+      fb.className = 'feedback show correct-fb';
+      card.classList.add('correct-card');
+      correct++;
+    } else {
+      fb.textContent = '✗ Nicht alle richtig. ' + feedbacks[qid];
+      fb.className = 'feedback show wrong-fb';
+      card.classList.add('wrong-card');
+      wrong++;
+    }
+    card.classList.add('answered');
+    answered++;
+    updateProgress();
+  }
+
+  function showResult() {
+    const pct = Math.round((correct / TOTAL) * 100);
+    document.getElementById('result-screen').classList.add('show');
+    document.getElementById('result-score').textContent = correct + '/' + TOTAL;
+    document.getElementById('result-label').textContent = 'Punkte (' + pct + '%)';
+    const gradeEl = document.getElementById('result-grade');
+    let grade, color;
+    if (pct >= 90) { grade = 'Note 1'; color = '#4caf82'; }
+    else if (pct >= 75) { grade = 'Note 2'; color = '#82c45a'; }
+    else if (pct >= 60) { grade = 'Note 3'; color = '#f0b429'; }
+    else if (pct >= 45) { grade = 'Note 4'; color = '#f08229'; }
+    else { grade = 'Note 5 – noch mehr üben!'; color = '#e05c6a'; }
+    gradeEl.textContent = grade;
+    gradeEl.style.background = color + '22';
+    gradeEl.style.color = color;
+    gradeEl.style.border = '1px solid ' + color;
+    window.scrollTo({ top: document.getElementById('result-screen').offsetTop - 100, behavior: 'smooth' });
+  }
+
+  function restartQuiz() {
+    location.reload();
+  }
+
+  function showSection(sec) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    if (sec === 'all') {
+      document.querySelectorAll('.section').forEach(s => s.style.display = '');
+    } else {
+      document.querySelectorAll('.section').forEach(s => {
+        s.style.display = s.dataset.section === sec || s.dataset.section === 'gemischt' ? '' : 'none';
+      });
+      if (sec !== 'all') {
+        document.querySelector('[data-section="gemischt"]').style.display = 'none';
+      }
+    }
+  }
+</script>
+</body>
+</html>
