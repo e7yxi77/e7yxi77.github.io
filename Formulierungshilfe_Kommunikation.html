@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulierungshilfe – Kommunikationsmodelle</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #f7f8fa;
+    --border: #e2e5ed;
+    --text: #1a1d2e;
+    --muted: #6b7290;
+    --blue: #2d5be3;
+    --blue-light: #eef2fd;
+    --green: #1a7a52;
+    --green-light: #eaf5ef;
+    --amber: #7a4f00;
+    --amber-light: #fdf3e3;
+    --purple: #5b2d8e;
+    --purple-light: #f3eeff;
+    --red: #a02030;
+    --red-light: #fdeef0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  header {
+    border-bottom: 2px solid var(--text);
+    padding: 2rem 2.5rem 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .header-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--text);
+    line-height: 1.2;
+    font-weight: 400;
+  }
+
+  .header-sub {
+    margin-top: 0.4rem;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 2.5rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .card.full { grid-column: 1 / -1; }
+
+  .card-head {
+    padding: 0.7rem 1.1rem;
+    font-family: 'DM Serif Display', serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .card-head .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .card-body { padding: 0.75rem 1.1rem; }
+
+  .row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 0.3rem 0.75rem;
+    align-items: start;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid #f0f1f5;
+    font-size: 13.5px;
+  }
+
+  .row:last-child { border-bottom: none; }
+
+  .base {
+    font-weight: 600;
+    color: var(--muted);
+    font-size: 12.5px;
+    padding-top: 2px;
+  }
+
+  .alts {
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  .alts em {
+    display: block;
+    font-style: italic;
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+
+  /* Color themes */
+  .blue .card-head { background: var(--blue-light); }
+  .blue .card-head .dot { background: var(--blue); }
+  .blue .card-head { color: var(--blue); }
+
+  .green .card-head { background: var(--green-light); }
+  .green .card-head .dot { background: var(--green); }
+  .green .card-head { color: var(--green); }
+
+  .amber .card-head { background: var(--amber-light); }
+  .amber .card-head .dot { background: var(--amber); }
+  .amber .card-head { color: var(--amber); }
+
+  .purple .card-head { background: var(--purple-light); }
+  .purple .card-head .dot { background: var(--purple); }
+  .purple .card-head { color: var(--purple); }
+
+  .red .card-head { background: var(--red-light); }
+  .red .card-head .dot { background: var(--red); }
+  .red .card-head { color: var(--red); }
+
+  .grey .card-head { background: var(--surface); }
+  .grey .card-head .dot { background: var(--muted); }
+  .grey .card-head { color: var(--text); }
+
+  /* PHRASE BLOCKS (full-width) */
+  .phrases {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.4rem;
+    padding: 0.75rem 1.1rem;
+  }
+
+  .phrase-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 0.5rem 0.75rem;
+    font-size: 13px;
+  }
+
+  .phrase-item .ph-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 11px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  @media print {
+    body { font-size: 12px; }
+    header, main { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .card { break-inside: avoid; }
+  }
+
+  @media (max-width: 650px) {
+    main { grid-template-columns: 1fr; }
+    .card.full { grid-column: 1; }
+    .phrases { grid-template-columns: 1fr 1fr; }
+    header, main { padding-left: 1rem; padding-right: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-tag">Klausurvorbereitung &middot; Deutsch 11 &middot; Kommunikationsmodelle</div>
+  <h1>Formulierungshilfe</h1>
+  <div class="header-sub">Formale und präzise Ausdrücke für die schriftliche Analyse von Kommunikationssituationen</div>
+</header>
+
+<main>
+
+  <!-- 1. ALLGEMEINE VERBEN -->
+  <div class="card blue">
+    <div class="card-head"><div class="dot"></div>Allgemeine Verben – statt "sagen"</div>
+    <div class="card-body">
+      <div class="row"><div class="base">sagen</div><div class="alts">äußern, formulieren, zum Ausdruck bringen, feststellen, konstatieren, verlauten lassen<em>„Der Sprecher äußert, dass..."</em></div></div>
+      <div class="row"><div class="base">schreiben</div><div class="alts">darlegen, beschreiben, schildern, erläutern, ausführen, erörtern<em>„Watzlawick legt dar, dass..."</em></div></div>
+      <div class="row"><div class="base">zeigen</div><div class="alts">verdeutlichen, veranschaulichen, aufzeigen, belegen, demonstrieren, unterstreichen<em>„Das Beispiel verdeutlicht..."</em></div></div>
+      <div class="row"><div class="base">meinen</div><div class="alts">beabsichtigen, beabsichtigt sein, intendieren, implizieren, nahelegen<em>„Der Sender intendiert damit..."</em></div></div>
+      <div class="row"><div class="base">denken</div><div class="alts">davon ausgehen, annehmen, vertreten die Ansicht, postulieren<em>„Gordon geht davon aus, dass..."</em></div></div>
+      <div class="row"><div class="base">verstehen</div><div class="alts">interpretieren als, auffassen als, deuten als, rezipieren<em>„Der Empfänger interpretiert die Aussage als..."</em></div></div>
+      <div class="row"><div class="base">benutzen</div><div class="alts">einsetzen, anwenden, verwenden, zurückgreifen auf, bedienen sich<em>„Die Sprecherin bedient sich der Sperre..."</em></div></div>
+    </div>
+  </div>
+
+  <!-- 2. ANALYSE-VERBEN -->
+  <div class="card green">
+    <div class="card-head"><div class="dot"></div>Analyse &amp; Argumentation</div>
+    <div class="card-body">
+      <div class="row"><div class="base">zeigen, dass</div><div class="alts">belegen, dass · nachweisen, dass · verdeutlichen, dass · offenbaren, dass</div></div>
+      <div class="row"><div class="base">erklären</div><div class="alts">begründen · darlegen · erläutern · ausführen · rechtfertigen</div></div>
+      <div class="row"><div class="base">vergleichen</div><div class="alts">gegenüberstellen · in Beziehung setzen · abgrenzen von · unterscheiden zwischen</div></div>
+      <div class="row"><div class="base">beschreiben</div><div class="alts">charakterisieren · skizzieren · umreißen · spezifizieren</div></div>
+      <div class="row"><div class="base">Ursache</div><div class="alts">zurückzuführen auf · bedingt durch · resultiert aus · liegt darin begründet</div></div>
+      <div class="row"><div class="base">Folge / Wirkung</div><div class="alts">führt dazu, dass · bewirkt · hat zur Folge · zieht nach sich · resultiert in</div></div>
+      <div class="row"><div class="base">beweisen</div><div class="alts">belegen durch · stützen auf · untermauern · als Beleg dient</div></div>
+    </div>
+  </div>
+
+  <!-- 3. KOMMUNIKATIONSSPERREN -->
+  <div class="card amber">
+    <div class="card-head"><div class="dot"></div>Gordon – Kommunikationssperren benennen</div>
+    <div class="card-body">
+      <div class="row"><div class="base">nutzt Sperre</div><div class="alts">setzt Kommunikationssperre Nr. X ein · bedient sich der Sperre des/der... · greift auf die Sperre zurück</div></div>
+      <div class="row"><div class="base">blockiert</div><div class="alts">hemmt den Kommunikationsfluss · unterbricht die Verbindung · verhindert echten Kontakt</div></div>
+      <div class="row"><div class="base">Absicht</div><div class="alts">verfolgt die Absicht, das Erleben des Gegenübers zu verändern · will die Situation kontrollieren</div></div>
+      <div class="row"><div class="base">Wirkung</div><div class="alts">verlässt die Augenhöhe · nimmt eine überlegene Position ein · entfernt sich vom Gegenüber</div></div>
+      <div class="row"><div class="base">Beispiel</div><div class="alts">Dies zeigt sich in Zeile X, wo... · Exemplarisch dafür ist die Aussage "..."</div></div>
+    </div>
+  </div>
+
+  <!-- 4. ICH/DU-BOTSCHAFT -->
+  <div class="card purple">
+    <div class="card-head"><div class="dot"></div>Ich-Botschaft / Du-Botschaft analysieren</div>
+    <div class="card-body">
+      <div class="row"><div class="base">Du-Botschaft</div><div class="alts">enthält einen Vorwurf · greift den Gesprächspartner an · wirkt anklagend · ist konfrontativ formuliert</div></div>
+      <div class="row"><div class="base">Ich-Botschaft</div><div class="alts">beschreibt das Verhalten sachlich · benennt die Wirkung · drückt das ausgelöste Gefühl aus · vermittelt Kritik konstruktiv</div></div>
+      <div class="row"><div class="base">Schritt 1</div><div class="alts">Das Verhalten wird beschrieben: „Wenn du..." / „Sobald..."</div></div>
+      <div class="row"><div class="base">Schritt 2</div><div class="alts">Die Wirkung wird benannt: „...hat das zur Folge, dass..." / „...bewirkt, dass ich..."</div></div>
+      <div class="row"><div class="base">Schritt 3</div><div class="alts">Das Gefühl wird geäußert: „Das macht mich..." / „Ich fühle mich dabei..."</div></div>
+    </div>
+  </div>
+
+  <!-- 5. ORGANON-MODELL -->
+  <div class="card red">
+    <div class="card-head"><div class="dot"></div>Bühler – Organon-Modell</div>
+    <div class="card-body">
+      <div class="row"><div class="base">Ausdruck</div><div class="alts">steht im Vordergrund · bezieht sich auf den Sender · spiegelt den inneren Zustand des Sprechers wider · offenbart die Perspektive des Senders</div></div>
+      <div class="row"><div class="base">Appell</div><div class="alts">richtet sich an den Empfänger · zielt darauf ab, eine Reaktion auszulösen · soll den Empfänger zu einer Handlung bewegen</div></div>
+      <div class="row"><div class="base">Darstellung</div><div class="alts">bezieht sich auf die Gegenstände und Sachverhalte · vermittelt eine sachliche Information · steht in Bezug zur äußeren Wirklichkeit</div></div>
+      <div class="row"><div class="base">Intention</div><div class="alts">Die vorrangige Intention des Senders ist... · Im Vordergrund steht die Funktion des/der...</div></div>
+    </div>
+  </div>
+
+  <!-- 6. WATZLAWICK -->
+  <div class="card blue">
+    <div class="card-head"><div class="dot"></div>Watzlawick – Axiome anwenden</div>
+    <div class="card-body">
+      <div class="row"><div class="base">Axiom 1</div><div class="alts">kommuniziert nonverbal, indem... · auch das Schweigen / Verhalten ist als Kommunikation zu werten · Das erste Axiom greift hier, weil...</div></div>
+      <div class="row"><div class="base">Axiom 2</div><div class="alts">auf der Inhaltsebene wird... / auf der Beziehungsebene hingegen... · Das Missverständnis entsteht auf der Beziehungsebene</div></div>
+      <div class="row"><div class="base">Axiom 3</div><div class="alts">reagiert auf... · löst die Reaktion aus · Es entsteht ein kreisförmiges Kommunikationsmuster</div></div>
+      <div class="row"><div class="base">Axiom 4</div><div class="alts">Die verbale Aussage steht im Widerspruch zur nonverbalen Kommunikation · digital und analog widersprechen sich</div></div>
+      <div class="row"><div class="base">Axiom 5</div><div class="alts">Es handelt sich um eine symmetrische / komplementäre Kommunikationssituation · Die Gesprächspartner stehen in einem ungleichen Verhältnis</div></div>
+    </div>
+  </div>
+
+  <!-- 7. VIER-SEITEN-MODELL -->
+  <div class="card green">
+    <div class="card-head"><div class="dot"></div>Schulz von Thun – Vier-Seiten-Modell</div>
+    <div class="card-body">
+      <div class="row"><div class="base">Sachebene</div><div class="alts">auf der Sachebene teilt der Sprecher mit, dass... · die sachliche Information lautet...</div></div>
+      <div class="row"><div class="base">Beziehung</div><div class="alts">auf der Beziehungsebene signalisiert der Sprecher, dass... · impliziert eine bestimmte Einstellung gegenüber dem Empfänger</div></div>
+      <div class="row"><div class="base">Selbstkundgabe</div><div class="alts">gibt der Sprecher etwas über sich selbst preis · offenbart seinen inneren Zustand · lässt Rückschlüsse auf seinen Gemütszustand zu</div></div>
+      <div class="row"><div class="base">Appell</div><div class="alts">mit dem Appell bezweckt der Sprecher · möchte eine bestimmte Reaktion beim Empfänger auslösen</div></div>
+      <div class="row"><div class="base">Empfänger</div><div class="alts">interpretiert die Aussage auf dem... Ohr · hört die Nachricht vorwiegend als...</div></div>
+    </div>
+  </div>
+
+  <!-- 8. EINLEITUNG/SCHLUSS -->
+  <div class="card grey">
+    <div class="card-head"><div class="dot"></div>Einleitung &amp; Schluss formulieren</div>
+    <div class="card-body">
+      <div class="row"><div class="base">Einleitung</div><div class="alts">Der vorliegende Dialog zwischen X und Y zeigt... · Im Folgenden wird untersucht, inwiefern... · Ziel der Analyse ist es, zu erläutern, wie...</div></div>
+      <div class="row"><div class="base">Überleitung</div><div class="alts">Im Hinblick auf... · Darüber hinaus... · In engem Zusammenhang damit steht... · Betrachtet man zusätzlich...</div></div>
+      <div class="row"><div class="base">Zitat</div><div class="alts">Wie in Zeile X deutlich wird: „..." · Dies belegt die Aussage in Zeile X: „..." · Exemplarisch zeigt sich dies in...</div></div>
+      <div class="row"><div class="base">Schluss</div><div class="alts">Zusammenfassend lässt sich festhalten, dass... · Die Analyse zeigt, dass... · Abschließend ist festzustellen, dass...</div></div>
+    </div>
+  </div>
+
+  <!-- 9. MUSTERPHRASES (FULL WIDTH) -->
+  <div class="card full grey">
+    <div class="card-head"><div class="dot"></div>Muster-Formulierungen für die Analyse</div>
+    <div class="phrases">
+      <div class="phrase-item">
+        <div class="ph-label">Sperre benennen</div>
+        „In Zeile X setzt [Name] die Kommunikationssperre Nr. Y ([Bezeichnung]) ein, indem sie/er..."
+      </div>
+      <div class="phrase-item">
+        <div class="ph-label">Ich-Botschaft analysieren</div>
+        „Die Aussage lässt sich als Ich-Botschaft einordnen: Das Verhalten wird in Zeile X beschrieben, die Wirkung in Zeile Y benannt und das Gefühl in Zeile Z geäußert."
+      </div>
+      <div class="phrase-item">
+        <div class="ph-label">Organon-Modell anwenden</div>
+        „Die Aussage „..." erfüllt vorrangig die Funktion des Appells, da der Sender beabsichtigt, den Empfänger zu einer Handlung zu bewegen."
+      </div>
+      <div class="phrase-item">
+        <div class="ph-label">Axiom anwenden</div>
+        „Gemäß dem zweiten Axiom Watzlawicks lässt sich das Missverständnis auf der Beziehungsebene verorten: Während [A] meint..., versteht [B] die Aussage als..."
+      </div>
+      <div class="phrase-item">
+        <div class="ph-label">Vier-Seiten-Modell</div>
+        „Auf der Sachebene teilt der Sprecher mit, dass... Auf der Selbstkundgabe-Ebene hingegen offenbart er, dass... Der Empfänger hört die Botschaft jedoch auf dem Beziehungsohr und interpretiert sie als..."
+      </div>
+      <div class="phrase-item">
+        <div class="ph-label">Missverständnis erklären</div>
+        „Das Missverständnis resultiert daraus, dass Sender und Empfänger die Nachricht auf unterschiedlichen Ebenen codieren bzw. decodieren."
+      </div>
+      <div class="phrase-item">
+        <div class="ph-label">Verbesserung vorschlagen</div>
+        „Eine gelungenere Kommunikation wäre möglich, wenn [Name] eine Ich-Botschaft verwendete und formulierte: '...'"
+      </div>
+      <div class="phrase-item">
+        <div class="ph-label">Wirkung beschreiben</div>
+        „Diese Formulierung hat zur Folge, dass... · bewirkt eine Eskalation des Konflikts · führt zu einem Kommunikationsabbruch"
+      </div>
+      <div class="phrase-item">
+        <div class="ph-label">Schlussfolgerung</div>
+        „Die Analyse belegt, dass das Scheitern des Gesprächs auf mehrere Kommunikationssperren zurückzuführen ist, darunter insbesondere..."
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. ADJEKTIVE -->
+  <div class="card amber">
+    <div class="card-head"><div class="dot"></div>Nützliche Adjektive &amp; Adverbien</div>
+    <div class="card-body">
+      <div class="row"><div class="base">schlimm</div><div class="alts">problematisch · kontraproduktiv · dysfunktional · missglückt · eskalierend</div></div>
+      <div class="row"><div class="base">gut</div><div class="alts">konstruktiv · gelungen · zielführend · angemessen · effektiv · produktiv</div></div>
+      <div class="row"><div class="base">klar</div><div class="alts">eindeutig · unmissverständlich · präzise · explizit · nachvollziehbar</div></div>
+      <div class="row"><div class="base">wichtig</div><div class="alts">zentral · bedeutsam · entscheidend · maßgeblich · ausschlaggebend</div></div>
+      <div class="row"><div class="base">offensichtlich</div><div class="alts">erkennbar · ersichtlich · nachweisbar · feststellbar · zu konstatieren</div></div>
+      <div class="row"><div class="base">außerdem</div><div class="alts">darüber hinaus · des Weiteren · zudem · ergänzend ist anzumerken</div></div>
+    </div>
+  </div>
+
+  <!-- 11. HÄUFIGE FEHLER -->
+  <div class="card red">
+    <div class="card-head"><div class="dot"></div>Diese Formulierungen vermeiden</div>
+    <div class="card-body">
+      <div class="row"><div class="base">❌ "man sieht"</div><div class="alts">✓ „lässt sich erkennen" / „ist festzustellen" / „zeigt sich"</div></div>
+      <div class="row"><div class="base">❌ "es ist so"</div><div class="alts">✓ „es lässt sich konstatieren" / „es ist festzuhalten"</div></div>
+      <div class="row"><div class="base">❌ "ich finde"</div><div class="alts">✓ „dies legt nahe" / „daraus ergibt sich" / „es ist zu schlussfolgern"</div></div>
+      <div class="row"><div class="base">❌ "das zeigt"</div><div class="alts">✓ „dies verdeutlicht" / „dies belegt" / „dies veranschaulicht"</div></div>
+      <div class="row"><div class="base">❌ "sagt zu ihr"</div><div class="alts">✓ „äußert gegenüber" / „richtet an" / „formuliert in Zeile X"</div></div>
+      <div class="row"><div class="base">❌ "macht was"</div><div class="alts">✓ „setzt ... ein" / „bedient sich" / „greift auf ... zurück"</div></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Formulierungshilfe &middot; Kommunikationsmodelle &middot; Deutsch Klasse 11
+</footer>
+
+</body>
+</html>
