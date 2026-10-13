@@ -1,0 +1,1258 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><style>body{margin:0}[hidden]{display:none!important}</style></head><body><title>Politik KA 1 Lernzettel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: Lernzettel entlang der 12 Klausurthemen — Themen-Checkliste oben, ein Abschnitt pro Thema, farbcodierte Schritte (blau/amber/grün) und Prinzipien (blau/teal/violett/orange), Übungsteil am Ende */
+:root {
+  --paper: #F3F5F8;
+  --card: #FFFFFF;
+  --ink: #16202B;
+  --ink-2: #47566A;
+  --muted: #758396;
+  --line: #D8DEE6;
+  --accent: #1E4F91;
+  --accent-soft: #E3ECF8;
+  --s1: #2563C9; --s1-bg: #E6EEFB;
+  --s2: #A86A0C; --s2-bg: #FBF0DC;
+  --s3: #237A4B; --s3-bg: #E2F2E8;
+  --p0: #1E4F91; --p0-bg: #E3ECF8;
+  --p1: #0E7480; --p1-bg: #DFF2F3;
+  --p2: #6A43B0; --p2-bg: #EEE7FA;
+  --p3: #B9480F; --p3-bg: #FCE9DE;
+  --ok: #237A4B; --bad: #B42318;
+  --bar-old: #A9BCD9;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0F141A; --card: #17202A; --ink: #E5EAF0; --ink-2: #AEB9C6; --muted: #8592A1; --line: #2B3644;
+    --accent: #86AEEA; --accent-soft: #1A2A40;
+    --s1: #82A9F2; --s1-bg: #17253B; --s2: #E2B25F; --s2-bg: #2E2414; --s3: #6CC596; --s3-bg: #14291E;
+    --p0: #86AEEA; --p0-bg: #1A2A40;
+    --p1: #5CC6D1; --p1-bg: #0F2B2F; --p2: #B79DF2; --p2-bg: #251D3A; --p3: #F28E5E; --p3-bg: #34211A;
+    --ok: #6CC596; --bad: #F28B82; --bar-old: #3D5272;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0F141A; --card: #17202A; --ink: #E5EAF0; --ink-2: #AEB9C6; --muted: #8592A1; --line: #2B3644;
+  --accent: #86AEEA; --accent-soft: #1A2A40;
+  --s1: #82A9F2; --s1-bg: #17253B; --s2: #E2B25F; --s2-bg: #2E2414; --s3: #6CC596; --s3-bg: #14291E;
+  --p0: #86AEEA; --p0-bg: #1A2A40;
+  --p1: #5CC6D1; --p1-bg: #0F2B2F; --p2: #B79DF2; --p2-bg: #251D3A; --p3: #F28E5E; --p3-bg: #34211A;
+  --ok: #6CC596; --bad: #F28B82; --bar-old: #3D5272;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.5; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.15; }
+h2 { font-size: clamp(1.4rem, 3.1vw, 1.85rem); font-weight: 800; }
+h3 { font-size: 1.1rem; font-weight: 600; }
+p { margin: 0; }
+b, strong { font-weight: 700; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* top bar */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.top-in { max-width: 1100px; margin: 0 auto; padding: 10px 16px; display: flex; gap: 14px; align-items: center; }
+.brand { font-family: var(--font-display); font-weight: 800; white-space: nowrap; }
+.nav { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+.nav a { text-decoration: none; color: var(--ink-2); font-weight: 600; font-size: 0.9rem; padding: 6px 12px; border-radius: 999px; white-space: nowrap; border: 1px solid var(--line); background: var(--card); }
+.nav a:hover { color: var(--accent); border-color: var(--accent); }
+
+.wrap { max-width: 1100px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 64px; display: grid; gap: 52px; }
+section { scroll-margin-top: 70px; display: grid; gap: 18px; }
+.part { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.1rem, 2.4vw, 1.3rem); background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 10px; scroll-margin-top: 70px; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.sec-head { display: grid; gap: 6px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
+.sec-head .eyebrow b { color: var(--accent); font-weight: 500; }
+.lead { color: var(--ink-2); max-width: 75ch; }
+
+/* hero + topic checklist */
+.hero { display: grid; gap: 14px; }
+.hero h1 { font-size: clamp(2rem, 6vw, 3.1rem); font-weight: 800; letter-spacing: -0.01em; }
+.motto { color: var(--p2); font-weight: 600; }
+.topics { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 10px; }
+.topics ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 20px; }
+.topics li a { display: grid; grid-template-columns: 2em minmax(0, 1fr); gap: 8px; align-items: baseline; text-decoration: none; color: var(--ink); padding: 5px 6px; border-radius: 8px; }
+.topics li a:hover { background: var(--accent-soft); }
+.topics .n { font-family: var(--font-mono); color: var(--card); background: var(--accent); border-radius: 6px; text-align: center; font-size: 0.8rem; padding: 1px 0; }
+.topics small { color: var(--muted); }
+
+/* generic */
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 0.85rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); }
+.note { font-size: 0.9rem; color: var(--ink-2); }
+.tag-extra { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); border: 1px dashed var(--muted); border-radius: 4px; padding: 0 5px; margin-left: 4px; white-space: nowrap; }
+.merke { border-left: 4px solid var(--s2); background: var(--s2-bg); border-radius: 0 10px 10px 0; padding: 10px 14px; }
+.merke > b:first-child { color: var(--s2); }
+.muster { border-left: 4px solid var(--p2); background: var(--p2-bg); border-radius: 0 12px 12px 0; padding: 14px 18px; display: grid; gap: 8px; }
+.muster .mh { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--p2); }
+.muster p { max-width: 80ch; }
+ul.tight, ol.tight { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
+details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; }
+details summary { cursor: pointer; font-weight: 700; color: var(--accent); }
+details[open] summary { margin-bottom: 10px; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* flow arrows */
+.flow { display: flex; align-items: stretch; flex-wrap: wrap; }
+.flow > .node { flex: 1 1 140px; min-width: 0; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; text-align: center; display: grid; gap: 2px; align-content: center; }
+.flow > .arr { display: grid; place-items: center; padding: 0 6px; color: var(--accent); font-size: 1.4rem; font-weight: 700; }
+.flow .node small { color: var(--ink-2); }
+
+/* category table */
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 700; }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 700; white-space: nowrap; }
+.dot { display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; padding: 1px 8px; border-radius: 999px; white-space: nowrap; }
+.d1 { background: var(--s1-bg); color: var(--s1); } .d2 { background: var(--s2-bg); color: var(--s2); } .d3 { background: var(--s3-bg); color: var(--s3); }
+tr.g1 td:first-child { box-shadow: inset 4px 0 0 var(--s1); }
+tr.g2 td:first-child { box-shadow: inset 4px 0 0 var(--s2); }
+tr.g3 td:first-child { box-shadow: inset 4px 0 0 var(--s3); }
+
+/* M3 model */
+.m3 { display: grid; grid-template-columns: minmax(0, 1.5fr) auto minmax(0, 1fr); gap: 10px; align-items: center; }
+.m3 .col { display: grid; gap: 8px; }
+.m3 .box { border-radius: 12px; padding: 10px 14px; text-align: center; font-weight: 600; border: 1px solid var(--line); background: var(--card); }
+.m3 .b1 { background: var(--s1-bg); } .m3 .b2 { background: var(--s2-bg); } .m3 .b3 { background: var(--s3-bg); }
+.m3 .goal { background: var(--ink); color: var(--paper); }
+.m3 .down { text-align: center; color: var(--accent); font-weight: 700; line-height: 1; }
+.m3 .arrows { display: grid; gap: 30px; color: var(--accent); font-size: 1.4rem; font-weight: 700; }
+.m3 .cats { border-radius: 50% / 22%; border: 2px solid var(--p3); background: var(--p3-bg); padding: 26px 18px; text-align: center; font-size: 0.92rem; }
+.m3 .cats b { display: block; margin-bottom: 4px; color: var(--p3); }
+
+/* three steps */
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.step { border-radius: 14px; padding: 16px; display: grid; gap: 10px; align-content: start; border: 1px solid transparent; min-width: 0; }
+.step .num { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500; }
+.step h3 { font-size: 1.25rem; }
+.step .q { font-family: var(--font-display); font-size: 1.45rem; font-weight: 800; }
+.step ul { margin: 0; padding-left: 1.1em; font-size: 0.92rem; display: grid; gap: 3px; }
+.step .chip { background: var(--card); }
+.step .say { font-size: 0.85rem; color: var(--ink-2); font-style: italic; }
+.st1 { background: var(--s1-bg); border-color: color-mix(in srgb, var(--s1) 30%, transparent); }
+.st1 .num, .st1 .q { color: var(--s1); }
+.st2 { background: var(--s2-bg); border-color: color-mix(in srgb, var(--s2) 30%, transparent); }
+.st2 .num, .st2 .q { color: var(--s2); }
+.st3 { background: var(--s3-bg); border-color: color-mix(in srgb, var(--s3) 30%, transparent); }
+.st3 .num, .st3 .q { color: var(--s3); }
+.mode { font-size: 0.82rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: var(--card); justify-self: start; }
+
+/* nested circles */
+.nest { border: 2px dashed var(--muted); border-radius: 28px; padding: 16px; display: grid; gap: 10px; align-content: start; }
+.nest > .lbl { font-weight: 700; color: var(--ink-2); }
+.nest .inner { background: var(--accent-soft); border: 2px solid var(--accent); border-radius: 20px; padding: 14px; display: grid; gap: 6px; }
+.nest .inner .lbl { color: var(--accent); font-weight: 700; }
+.dims { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.dim { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 4px; align-content: start; }
+.dim .en { font-family: var(--font-mono); color: var(--accent); }
+.dim b { font-family: var(--font-display); font-size: 1.15rem; }
+.dim small { color: var(--ink-2); }
+
+/* GG */
+.gg { background: var(--ink); color: var(--paper); border-radius: 14px; padding: 20px; display: grid; gap: 8px; }
+.gg q { font-family: var(--font-display); font-size: clamp(1.15rem, 2.6vw, 1.5rem); font-weight: 600; quotes: "„" "“"; }
+.gg .src { font-family: var(--font-mono); font-size: 0.8rem; opacity: 0.75; }
+.arts { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+.art { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; display: grid; gap: 1px; }
+.art .mono { color: var(--accent); font-size: 0.8rem; }
+.art span { font-size: 0.9rem; }
+.art.key { border-color: var(--accent); background: var(--accent-soft); }
+
+/* timeline */
+.timeline { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.tl { padding: 28px 12px 0; position: relative; display: grid; gap: 4px; align-content: start; }
+.tl::before { content: ""; position: absolute; top: 9px; left: 0; right: 0; height: 2px; background: var(--line); }
+.tl::after { content: ""; position: absolute; top: 3px; left: 12px; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 3px solid var(--paper); }
+.tl .when { font-family: var(--font-mono); color: var(--accent); font-size: 0.85rem; }
+
+/* principles */
+.pbase { border-radius: 14px; padding: 16px 18px; background: var(--p0-bg); border: 2px solid var(--p0); display: grid; gap: 6px; }
+.pbase .ph { font-family: var(--font-mono); font-size: 0.78rem; color: var(--p0); letter-spacing: 0.06em; text-transform: uppercase; }
+.pbase h3 { color: var(--p0); font-size: 1.3rem; }
+.princ { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.pc { border-radius: 14px; padding: 16px; display: grid; gap: 10px; align-content: start; border-top: 6px solid; background: var(--card); border-left: 1px solid var(--line); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-width: 0; }
+.pc h3 { font-size: 1.25rem; }
+.pc ul { margin: 0; padding-left: 1.1em; font-size: 0.92rem; display: grid; gap: 3px; }
+.pc .ex { font-size: 0.88rem; color: var(--ink-2); }
+.subp { border-radius: 10px; padding: 10px 12px; display: grid; gap: 4px; }
+.subp .sh { font-family: var(--font-display); font-weight: 800; font-size: 1.02rem; }
+.subp .where { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-2); }
+.subp p { font-size: 0.9rem; }
+.pc1 { border-top-color: var(--p1); } .pc1 h3, .pc1 .sh { color: var(--p1); } .pc1 .subp { background: var(--p1-bg); }
+.pc2 { border-top-color: var(--p2); } .pc2 h3, .pc2 .sh { color: var(--p2); } .pc2 .subp { background: var(--p2-bg); }
+.pc3 { border-top-color: var(--p3); } .pc3 h3, .pc3 .sh { color: var(--p3); } .pc3 .subp { background: var(--p3-bg); }
+.yes { color: var(--bad); font-weight: 700; }
+.vs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.vs .panel h3 { font-size: 1.05rem; }
+.cmp th:not(:first-child) { color: var(--ink); }
+.cmp th.c1 { box-shadow: inset 0 -3px 0 var(--p1); } .cmp th.c2 { box-shadow: inset 0 -3px 0 var(--p2); } .cmp th.c3 { box-shadow: inset 0 -3px 0 var(--p3); }
+.cmp td:first-child { color: var(--ink-2); }
+.cmp tr.sugg td { background: color-mix(in srgb, var(--paper) 60%, transparent); }
+
+/* decision tree */
+.tree { display: grid; gap: 10px; justify-items: center; text-align: center; }
+.tree .qq { background: var(--card); border: 2px solid var(--ink); border-radius: 12px; padding: 10px 14px; font-weight: 700; max-width: 520px; }
+.tree .row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; width: 100%; max-width: 760px; }
+.tree .br { display: grid; gap: 8px; justify-items: center; align-content: start; }
+.tree .yn { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); }
+.tree .res { border-radius: 10px; padding: 8px 12px; font-weight: 700; width: 100%; }
+.r1 { background: var(--p1-bg); color: var(--p1); } .r2 { background: var(--p2-bg); color: var(--p2); } .r3 { background: var(--p3-bg); color: var(--p3); }
+
+/* temple */
+.temple { max-width: 820px; width: 100%; justify-self: center; display: grid; gap: 6px; }
+.roof { clip-path: polygon(50% 0, 100% 100%, 0 100%); background: var(--s3); color: var(--card); text-align: center; padding: 34px 10px 10px; font-family: var(--font-display); font-weight: 800; letter-spacing: 0.04em; font-size: clamp(0.85rem, 2.4vw, 1.1rem); }
+.pillars { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; padding-inline: 4%; }
+.pillar { background: var(--s3-bg); border: 1px solid color-mix(in srgb, var(--s3) 40%, transparent); border-radius: 4px; padding: 14px 6px; text-align: center; display: grid; gap: 6px; align-content: start; min-height: 150px; }
+.pillar b { font-size: 0.9rem; line-height: 1.2; hyphens: auto; }
+.pillar .rate { font-family: var(--font-mono); font-size: 0.95rem; color: var(--s3); }
+.pillar small { color: var(--ink-2); font-size: 0.78rem; }
+.pillar.ag { outline: 2px solid var(--p3); outline-offset: 2px; }
+.base { background: var(--card); border: 1px solid var(--line); border-radius: 4px; padding: 6px 10px; text-align: center; font-size: 0.88rem; font-weight: 600; }
+
+/* charts */
+.chart { position: relative; min-width: 0; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.ax { stroke: var(--line); stroke-width: 1; }
+.axl { fill: var(--muted); font: 500 11px var(--font-mono); }
+.bar { fill: var(--accent); }
+.bar.hot { fill: var(--s1); }
+.val { fill: var(--ink); font: 700 12px var(--font-body); }
+.sub2 { fill: var(--muted); font: 500 10.5px var(--font-mono); }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--paper); font-size: 0.82rem; padding: 6px 9px; border-radius: 6px; white-space: nowrap; transform: translate(-50%, -110%); }
+.hbars { display: grid; gap: 6px; }
+.hb { display: grid; grid-template-columns: 10.5em minmax(0, 1fr) 4.2em; gap: 8px; align-items: center; font-size: 0.88rem; }
+.hb .track { height: 12px; }
+.hb .fill { height: 100%; border-radius: 0 4px 4px 0; background: var(--accent); }
+.hb .v { font-family: var(--font-mono); text-align: right; font-size: 0.82rem; }
+.stat { display: grid; gap: 2px; }
+.stat .big { font-family: var(--font-display); font-weight: 800; font-size: 1.9rem; font-variant-numeric: tabular-nums; }
+
+/* then-now tiles */
+.tn { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.tile { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.tile .t { font-weight: 700; font-size: 0.9rem; line-height: 1.25; }
+.pair { display: grid; gap: 5px; }
+.pr { display: grid; grid-template-columns: 2.6em minmax(0, 1fr); gap: 6px; align-items: center; font-size: 0.78rem; }
+.pr .yr { font-family: var(--font-mono); color: var(--muted); }
+.pr .b { height: 18px; border-radius: 0 4px 4px 0; display: flex; align-items: center; padding-left: 6px; font-family: var(--font-mono); font-size: 0.78rem; white-space: nowrap; color: var(--ink); }
+.pr .old { background: var(--bar-old); }
+.pr .new { background: var(--accent); color: var(--card); font-weight: 500; }
+.tile .so { font-size: 0.82rem; color: var(--ink-2); }
+
+/* EH stepper */
+.eh { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.eh > div { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px; display: grid; gap: 4px; align-content: start; font-size: 0.88rem; }
+.eh .pt { font-family: var(--font-mono); font-weight: 500; color: var(--card); background: var(--accent); border-radius: 6px; padding: 1px 7px; justify-self: start; font-size: 0.8rem; }
+
+/* practice */
+.deckbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button { font: inherit; cursor: pointer; border-radius: 10px; border: 1px solid var(--line); background: var(--card); color: var(--ink); padding: 8px 14px; font-weight: 600; }
+button:hover { border-color: var(--accent); color: var(--accent); }
+button.primary { background: var(--accent); color: var(--card); border-color: var(--accent); }
+button.primary:hover { color: var(--card); filter: brightness(1.08); }
+button[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.flash { perspective: 1200px; }
+.card3d { position: relative; min-height: 240px; transition: transform 0.45s ease; transform-style: preserve-3d; cursor: pointer; }
+.card3d.flipped { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 16px; padding: 24px; display: grid; place-items: center; text-align: center; border: 1px solid var(--line); }
+.face.front { background: var(--card); }
+.face.front .term { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.4rem, 4vw, 2rem); }
+.face.back { background: var(--accent-soft); transform: rotateY(180deg); font-size: 1.02rem; }
+.face .hint { position: absolute; bottom: 10px; left: 0; right: 0; font-size: 0.78rem; color: var(--muted); }
+.counter { font-family: var(--font-mono); color: var(--muted); font-size: 0.85rem; }
+.quizq { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opts button { min-width: 110px; }
+.opts button.right { background: var(--s3-bg); border-color: var(--ok); color: var(--ok); }
+.opts button.wrong { background: var(--p3-bg); border-color: var(--bad); color: var(--bad); }
+.fb { min-height: 1.5em; font-size: 0.95rem; }
+.fb.ok { color: var(--ok); } .fb.no { color: var(--bad); }
+.score { font-family: var(--font-mono); font-size: 0.9rem; }
+footer { color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--line); padding-top: 14px; }
+
+@media (max-width: 900px) {
+  .tn { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .eh { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .princ { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .topics ol, .grid2, .grid3, .steps, .dims, .timeline, .vs { grid-template-columns: minmax(0, 1fr); }
+  .m3 { grid-template-columns: minmax(0, 1fr); }
+  .m3 .arrows { display: none; }
+  .tl { padding-top: 0; padding-left: 30px; padding-bottom: 14px; }
+  .tl::before { top: 0; bottom: 0; left: 9px; right: auto; width: 2px; height: auto; }
+  .tl::after { top: 2px; left: 3px; }
+  .pillars { gap: 4px; padding-inline: 0; }
+  .pillar { min-height: 120px; padding: 10px 2px; }
+  .pillar b { font-size: 0.72rem; }
+  .pillar .rate { font-size: 0.78rem; }
+  .pillar small { display: none; }
+  .flow { flex-direction: column; }
+  .flow > .node { flex: 0 0 auto; }
+  .flow > .arr { transform: rotate(90deg); padding: 2px 0; }
+  .eh { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tree .row { grid-template-columns: minmax(0, 1fr); }
+  .hb { grid-template-columns: 8em minmax(0, 1fr) 4em; }
+}
+@media (prefers-reduced-motion: reduce) { .card3d { transition: none; } }
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">Politik · KA 1</div>
+    <nav class="nav" aria-label="Kapitel">
+      <a href="#themen">Themen</a>
+      <a href="#teilA">1–5 Politik</a>
+      <a href="#teilB">6–11 Sozialstaat</a>
+      <a href="#t12">12 Rente</a>
+      <a href="#ueben">Üben</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="hero" id="themen">
+    <div class="eyebrow">Klasse 11 · 1. Klassenarbeit · Lernzettel</div>
+    <h1>Politik verstehen, Sozialstaat, Rente</h1>
+    <p class="motto">„완벽한 개념과 피나는 연습만이 만점을 만듭니다.“</p>
+    <div class="topics">
+      <b>Alle 12 Klausurthemen – klick auf ein Thema</b>
+      <ol>
+        <li><a href="#t1"><span class="n">1</span><span>Kategorien und Schlüsselfragen des Politischen</span></a></li>
+        <li><a href="#t7"><span class="n">7</span><span>Historische Wurzeln des Sozialstaats</span></a></li>
+        <li><a href="#t2"><span class="n">2</span><span>Schritte und Kategorien zur Bearbeitung eines politischen Problems <small>(S. 13, 17 · zusammenhängender Text)</small></span></a></li>
+        <li><a href="#t8"><span class="n">8</span><span>Das Sozialstaatsprinzip</span></a></li>
+        <li><a href="#t3"><span class="n">3</span><span>Analyse politischer Probleme in drei Schritten <small>(S. 13, 18)</small></span></a></li>
+        <li><a href="#t9"><span class="n">9</span><span>Prinzipien der Sozialversicherung <small>(Individualität, Versicherung mit Äquivalenz und Solidarität, Versorgung, Fürsorge mit Subsidiarität)</small></span></a></li>
+        <li><a href="#t4"><span class="n">4</span><span>Politikzyklus <small>(Verständnismodell)</small></span></a></li>
+        <li><a href="#t10"><span class="n">10</span><span>Säulen des Sozialstaats</span></a></li>
+        <li><a href="#t5"><span class="n">5</span><span>Politik im engeren Sinn <small>(S. 19)</small></span></a></li>
+        <li><a href="#t11"><span class="n">11</span><span>Gegenwart und Zukunft des Sozialstaats <small>(S. 32/33)</small></span></a></li>
+        <li><a href="#t6"><span class="n">6</span><span>Grundprobleme der Sozialpolitik</span></a></li>
+        <li><a href="#t12"><span class="n">12</span><span>Alterssicherung als politisches Problem <small>(Situations-, Möglichkeitsanalyse, Urteilsbildung)</small></span></a></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="part" id="teilA">Teil A · Politik verstehen (Themen 1–5)</div>
+
+  <!-- ============ 1 ============ -->
+  <section id="t1">
+    <div class="sec-head">
+      <div class="eyebrow"><b>Thema 1</b> · Buch S. 13, 17, 18</div>
+      <h2>Kategorien und Schlüsselfragen des Politischen</h2>
+    </div>
+    <p class="lead"><b>Kategorien</b> sind Schlüsselbegriffe, mit denen man die schwer durchschaubare politische Wirklichkeit „aufschließt“ – wie ein Schlüssel eine Tür. Aus jeder Kategorie macht man eine <b>Schlüsselfrage</b>. Zusammen bilden sie ein <b>kategoriales Analyseraster</b>, das man auf jedes politische Problem anwenden kann – in der Schule genauso wie in Berlin oder Brüssel.</p>
+    <div class="flow">
+      <div class="node"><b>komplexe politische Wirklichkeit</b></div><div class="arr">→</div>
+      <div class="node" style="background: var(--p3-bg)"><b>Kategorien</b><small>Schlüsselbegriffe</small></div><div class="arr">→</div>
+      <div class="node" style="background: var(--s2-bg)"><b>gute und gezielte Fragen</b><small>„Eine gute Analyse beginnt mit guten Fragen.“</small></div><div class="arr">↺</div>
+      <div class="node"><b>Wirklichkeit verstehen</b><small>Kreismodell S. 18</small></div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Kategorie</th><th>Schlüsselfrage</th><th>Schritt</th></tr></thead>
+        <tbody>
+          <tr class="g1"><td>Konflikt</td><td>Welcher Konflikt liegt vor? Worum wird gestritten?</td><td><span class="dot d1">① Situation</span></td></tr>
+          <tr class="g1"><td>Beteiligte</td><td>Wer ist am Konflikt beteiligt (handelt aktiv)?</td><td><span class="dot d1">① Situation</span></td></tr>
+          <tr class="g1"><td>Betroffene</td><td>Wer ist von dem Problem betroffen (spürt die Folgen)?</td><td><span class="dot d1">① Situation</span></td></tr>
+          <tr class="g1"><td>Interessen</td><td>Welche Interessen und Absichten liegen vor?</td><td><span class="dot d1">① Situation</span></td></tr>
+          <tr class="g1"><td>(Vor-)Geschichte</td><td>Welche Vorgeschichte hat der Konflikt?</td><td><span class="dot d1">① Situation</span></td></tr>
+          <tr class="g1"><td>Aufgabe</td><td>Welche Aufgabe stellt sich für die Verantwortlichen, welche für die Gemeinschaft?</td><td><span class="dot d1">① Situation</span></td></tr>
+          <tr class="g2"><td>Rechtslage</td><td>Was lässt sich bei der bestehenden Rechtslage verändern?</td><td><span class="dot d2">② Möglichkeit</span></td></tr>
+          <tr class="g2"><td>Verfahren</td><td>Welche Verfahren (Prozeduren) müssen beachtet werden?</td><td><span class="dot d2">② Möglichkeit</span></td></tr>
+          <tr class="g2"><td>Machtverhältnisse</td><td>Wer hat die Macht? Wer hat Einfluss?</td><td><span class="dot d2">② Möglichkeit</span></td></tr>
+          <tr class="g2"><td>Mehrheit</td><td>Wo liegen die Mehrheiten?</td><td><span class="dot d2">② Möglichkeit</span></td></tr>
+          <tr class="g2"><td>Ordnung</td><td>Welche Regelungsmöglichkeiten werden diskutiert?</td><td><span class="dot d2">② Möglichkeit</span></td></tr>
+          <tr class="g3"><td>Gerechtigkeit</td><td>Ist die Regelung gerecht? Berücksichtigt sie die Interessen aller?</td><td><span class="dot d3">③ Urteil</span></td></tr>
+          <tr class="g3"><td>Zumutbarkeit</td><td>Ist die Regelung allen zumutbar?</td><td><span class="dot d3">③ Urteil</span></td></tr>
+          <tr class="g3"><td>Frieden</td><td>Führt sie zu einem dauerhaft friedlichen Ausgleich?</td><td><span class="dot d3">③ Urteil</span></td></tr>
+          <tr class="g3"><td>Freiheit</td><td>Bleibt Raum für Freiheit und demokratische Partizipation?</td><td><span class="dot d3">③ Urteil</span></td></tr>
+          <tr class="g3"><td>Menschenwürde</td><td>Wird die Würde aller Menschen geachtet?</td><td><span class="dot d3">③ Urteil</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>Doppelte Funktion der Kategorien (S. 17)</h3>
+        <div class="grid2">
+          <div><b>① Analyseinstrument</b><p class="note">Sie erschließen die politische Wirklichkeit. Als Fragen formuliert passen sie auf jedes politische Sachproblem.</p></div>
+          <div><b>② Beurteilungsinstrument</b><p class="note">Sie helfen, ein eigenes Urteil rational zu begründen – das kann vom eigenen Vorurteil abweichen.</p></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="merke"><b>Beteiligte ≠ Betroffene:</b> Beteiligte handeln aktiv mit, Betroffene spüren die Folgen. Manche sind beides.</div>
+        <div class="merke"><b>Auswahl:</b> Nicht immer alle Kategorien nutzen – welche passen, hängt vom Fall ab (S. 18).</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2 ============ -->
+  <section id="t2">
+    <div class="sec-head">
+      <div class="eyebrow"><b>Thema 2</b> · Buch S. 13 (M3), S. 17</div>
+      <h2>Schritte und Kategorien zur Bearbeitung eines politischen Problems</h2>
+    </div>
+    <div class="panel">
+      <b>Modell „Schritte zur Bearbeitung politischer Probleme“ (S. 13, M3)</b>
+      <div class="m3">
+        <div class="col">
+          <div class="box">Ausgangspunkt: ein politisches Problem</div>
+          <div class="down">↓</div>
+          <div class="box b1">① Situationsanalyse – „Was ist?“</div>
+          <div class="box b2">② Möglichkeitsanalyse – „Was ist möglich?“</div>
+          <div class="box b3">③ Urteilsbildung – „Was soll sein?“</div>
+          <div class="down">↓</div>
+          <div class="box goal">Ziel: ein begründetes politisches Urteil</div>
+        </div>
+        <div class="arrows" aria-hidden="true"><span>←</span><span>←</span><span>←</span></div>
+        <div class="cats"><b>Kategorien</b>Aufgabe, Konflikt, Interessen, Beteiligte, Betroffene, Verfahren, Rechtslage, (Vor-)Geschichte, Machtverhältnisse, Mehrheit, Ordnung, Zumutbarkeit, Menschenwürde, Freiheit, Gerechtigkeit, Frieden</div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>Was S. 17 über Kategorien sagt</h3>
+        <ul class="tight">
+          <li>Ein <b>Konflikt</b> entsteht aus unterschiedlichen <b>Interessen</b> und Absichten der Betroffenen.</li>
+          <li>Es gibt <b>keine rein sachliche Lösung</b>; mehrere Entscheidungen sind möglich.</li>
+          <li>Eine <b>verbindliche Regelung</b> ist nötig – jeder bringt möglichst viel eigenes Interesse ein.</li>
+          <li>Interesse ≠ nur eigener Vorteil: auch Freundschaft, Sympathie, Einigung.</li>
+          <li><b>Macht</b> ist ungleich: Ansehen, Überzeugungskraft, Verbindungen; delegierte Macht, Amtsautorität.</li>
+          <li><b>Kompromisse</b> → Koalitionen; <b>Verfahrensregeln</b>; ohne Einigung ist ein <b>Mehrheitsentscheid</b> am ehesten zumutbar.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Beispiel S. 13 (M2): das Oberstufenforum</h3>
+        <p class="note">Schüler beleidigen im Forum Lehrer und stellen Bilder einer Mitschülerin ohne Zustimmung online.</p>
+        <ul class="tight">
+          <li><b>Konflikt:</b> Forum schließen oder behalten?</li>
+          <li><b>Beteiligte/Interessen:</b> Schulleiter will schließen (Amtsautorität) · SV hilft der Schülerin, will das Forum aber behalten (delegierte Macht) · Schülersprecher will schließen – hofft auf eine Rapmusik-AG (Eigeninteresse) · Internet-AG sammelt Unterschriften</li>
+          <li><b>Verfahren/Mehrheit:</b> Gesamtkonferenz entscheidet per Mehrheitsbeschluss</li>
+        </ul>
+      </div>
+    </div>
+    <div class="muster">
+      <span class="mh">Mustertext · als zusammenhängender Text lernen</span>
+      <p>Um ein politisches Problem gründlich zu bearbeiten, geht man in <b>drei Schritten</b> vor. Ausgangspunkt ist ein politisches Problem, Ziel ist ein <b>begründetes politisches Urteil</b>. In der <b>Situationsanalyse</b> fragt man „Was ist?“: Welcher Konflikt liegt vor, wer ist beteiligt und betroffen, welche Interessen gibt es, welche Vorgeschichte hat der Konflikt und welche Aufgabe stellt sich? In der <b>Möglichkeitsanalyse</b> fragt man „Was ist möglich?“: Man prüft die Rechtslage, die einzuhaltenden Verfahren, die Machtverhältnisse, die Mehrheiten und die diskutierten Regelungen. In der <b>Urteilsbildung</b> fragt man „Was soll sein?“ und bewertet, ob eine Regelung gerecht und allen zumutbar ist, ob sie zu dauerhaftem Frieden führt und Raum für Freiheit lässt.</p>
+      <p>Dabei helfen <b>Kategorien</b>: Schlüsselbegriffe, mit denen man die politische Wirklichkeit „aufschließt“. Als Fragen formuliert ergeben sie ein <b>kategoriales Analyseraster</b> für jedes Problem. Sie haben eine <b>doppelte Funktion</b>: Als <b>Analyseinstrument</b> erschließen sie die Wirklichkeit, als <b>Beurteilungsinstrument</b> helfen sie, ein eigenes Urteil rational zu begründen. Man wählt immer die Kategorien aus, die zum Fall passen.</p>
+    </div>
+  </section>
+
+  <!-- ============ 3 ============ -->
+  <section id="t3">
+    <div class="sec-head">
+      <div class="eyebrow"><b>Thema 3</b> · Buch S. 13, 18</div>
+      <h2>Analyse politischer Probleme in drei Schritten</h2>
+    </div>
+    <div class="steps">
+      <div class="step st1">
+        <span class="num">SCHRITT 1</span>
+        <h3>Situationsanalyse</h3>
+        <span class="q">„Was ist?“</span>
+        <ul>
+          <li>Welcher <b>Konflikt</b> liegt vor?</li>
+          <li>Wer ist <b>beteiligt</b>, wer <b>betroffen</b>?</li>
+          <li>Welche <b>Interessen</b> und Absichten?</li>
+          <li>Welche <b>Vorgeschichte</b>?</li>
+          <li>Welche <b>Aufgabe</b> für Verantwortliche und Gemeinschaft?</li>
+        </ul>
+        <span class="say">„Im Zentrum des Konflikts steht die Frage, ob …“</span>
+        <span class="mode">beschreiben · keine Meinung</span>
+      </div>
+      <div class="step st2">
+        <span class="num">SCHRITT 2</span>
+        <h3>Möglichkeitsanalyse</h3>
+        <span class="q">„Was ist möglich?“</span>
+        <ul>
+          <li>Was lässt sich bei der <b>Rechtslage</b> ändern?</li>
+          <li>Welche <b>Verfahren</b> müssen eingehalten werden?</li>
+          <li>Wer hat die <b>Macht</b>, wo liegen die <b>Mehrheiten</b>?</li>
+          <li>Welche <b>Regelungsmöglichkeiten</b> werden diskutiert?</li>
+        </ul>
+        <span class="say">„Diskutiert werden folgende Alternativen: …“</span>
+        <span class="mode">abwägen · keine Meinung</span>
+      </div>
+      <div class="step st3">
+        <span class="num">SCHRITT 3</span>
+        <h3>Urteilsbildung</h3>
+        <span class="q">„Was soll sein?“</span>
+        <ul>
+          <li>Ist die Regelung <b>gerecht</b>?</li>
+          <li>Berücksichtigt sie die <b>Interessen aller</b>?</li>
+          <li>Ist sie allen <b>zumutbar</b>?</li>
+          <li>Führt sie zu dauerhaftem <b>Frieden</b>?</li>
+          <li>Bleibt Raum für <b>Freiheit</b> und Partizipation?</li>
+        </ul>
+        <span class="say">„Insgesamt komme ich zu dem Urteil, dass …, weil …“</span>
+        <span class="mode">bewerten · jetzt deine Meinung</span>
+      </div>
+    </div>
+    <div class="merke"><b>Merke:</b> Bei jedem Schritt prüfen, welche Kategorien als Fragen passen. In Schritt 1 und 2 nur beschreiben – bewertet wird erst in Schritt 3. Verlangt die Aufgabe drei Kategorien: genau drei nennen und im Fließtext verarbeiten.</div>
+  </section>
+
+  <!-- ============ 4 ============ -->
+  <section id="t4">
+    <div class="sec-head">
+      <div class="eyebrow"><b>Thema 4</b> · Verständnismodell, wird nicht explizit abgefragt <span class="tag-extra">Zusatz</span></div>
+      <h2>Politikzyklus</h2>
+    </div>
+    <div class="flow">
+      <div class="node"><b>Problem</b><small>wird öffentlich sichtbar</small></div><div class="arr">→</div>
+      <div class="node"><b>Auseinandersetzung</b><small>Streit über Lösungen</small></div><div class="arr">→</div>
+      <div class="node"><b>Entscheidung</b><small>verbindlich, z. B. Gesetz</small></div><div class="arr">→</div>
+      <div class="node"><b>Bewertung / Reaktionen</b><small>Zustimmung oder Kritik</small></div><div class="arr">→</div>
+      <div class="node"><b>neues Problem ↺</b><small>der Kreislauf beginnt neu</small></div>
+    </div>
+    <p class="note">Politik ist ein <b>Prozess</b>, kein einmaliger Akt. Beispiel Rente: demografischer Wandel → Kommission und Parteien streiten → Koalitionsausschuss beschließt → Kritik der Opposition → neue Debatte.</p>
+  </section>
+
+  <!-- ============ 5 ============ -->
+  <section id="t5">
+    <div class="sec-head">
+      <div class="eyebrow"><b>Thema 5</b> · Buch S. 18–19</div>
+      <h2>Politik im engeren Sinn</h2>
+    </div>
+    <div class="grid2">
+      <div class="nest">
+        <span class="lbl">Politik im weiteren Sinne</span>
+        <p class="note">Alles Handeln, bei dem Menschen <b>unter gegenseitiger Respektierung</b> um die gemeinsame Bewältigung <b>konflikthafter Situationen</b> ringen – um die Vermittlung und Vereinbarung unterschiedlicher Interessen. Gilt in jeder Gruppe (Familie, Schule, Verein). Problem: zu weit, auch Alltagskonflikte.</p>
+        <div class="inner">
+          <span class="lbl">Politik im engeren Sinne (Arbeitsbegriff)</span>
+          <p>Dieses Handeln richtet sich auf die <b>verbindliche Ordnung des Zusammenlebens einer ganzen Gesellschaft</b>. Dadurch wird die Gesellschaft eine <b>handlungsfähige Einheit</b>, ein politischer Verband: der <b>„Staat“</b>.</p>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Was macht Handeln zu Politik?</h3>
+        <p class="note">Politik ist soziales Handeln aus gegenseitiger Abhängigkeit. Besonderheiten:</p>
+        <div class="chips"><span class="chip">Bezug auf Konflikte</span><span class="chip">Streben nach Macht</span><span class="chip">Führung von Menschen</span><span class="chip">Ordnen und Zuordnen von Gruppen</span><span class="chip">Verhandeln</span><span class="chip">verbindliches Entscheiden</span></div>
+        <div class="merke"><b>Unterschied:</b> nicht nur die Größe, sondern der <b>Zweck</b> – Parteien, Parlament und Regierung machen Regeln für die <b>ganze Gesellschaft</b>. Oberstufenforum = weiterer Sinn, Rentenreform = engerer Sinn.</div>
+      </div>
+    </div>
+    <div class="dims">
+      <div class="dim"><span class="en">polity</span><b>Form</b><span>Ordnung, Verfassung, Institutionen</span><small>Rente: Art. 20 GG, Bundestag</small></div>
+      <div class="dim"><span class="en">policy</span><b>Inhalt</b><span>Ziele, Programme, Lösungen</span><small>Rente: Regelaltersgrenze 67,5</small></div>
+      <div class="dim"><span class="en">politics</span><b>Prozess</b><span>Handeln, Konflikt, Macht</span><small>Rente: Streit der Parteien</small></div>
+    </div>
+    <p class="note">Politik im weiteren Sinne ist fast nur <b>politics</b>. Bei Politik im engeren Sinne sind <b>polity und policy</b> ebenso wichtig – man sollte alle drei Dimensionen beachten.</p>
+  </section>
+
+  <div class="part" id="teilB">Teil B · Der Sozialstaat (Themen 6–11)</div>
+
+  <!-- ============ 6 ============ -->
+  <section id="t6">
+    <div class="sec-head">
+      <div class="eyebrow"><b>Thema 6</b> · Folien</div>
+      <h2>Grundprobleme der Sozialpolitik</h2>
+    </div>
+    <p class="lead">Ausgangsproblem: In der Marktwirtschaft verdient man sein Geld im <b>Leistungswettbewerb</b>. Manche können daran nicht oder nur eingeschränkt teilnehmen, und jeden können die <b>Standardrisiken</b> treffen: Krankheit, Unfall, Alter, Arbeitslosigkeit, Pflegebedürftigkeit. Der Sozialstaat gleicht das durch <b>Umverteilung</b> aus – daraus entstehen die Grundprobleme:</p>
+    <div class="grid3">
+      <div class="panel"><b>Wie viel Sozialstaat?</b><p class="note">Das Sozialstaatsprinzip ist vage – es muss demokratisch ausgehandelt werden.</p></div>
+      <div class="panel"><b>Wer bekommt wie viel?</b><p class="note">Im Mittelpunkt steht der Bedarf des Einzelnen. Muss man Bedürftigkeit prüfen?</p></div>
+      <div class="panel"><b>Wer bezahlt?</b><p class="note">Die Ausgaben steigen (2017: ca. 966 Mrd. €) – ist das noch finanzierbar?</p></div>
+      <div class="panel"><b>Eigenverantwortung oder Solidarität?</b><p class="note">Subsidiarität: erst selbst helfen. Solidarität: Starke helfen Schwachen.</p></div>
+      <div class="panel"><b>Leistung oder Bedarf?</b><p class="note">Mehr bekommen, wer mehr einzahlt (Äquivalenz) – oder wer mehr braucht?</p></div>
+      <div class="panel"><b>Netz oder Hängematte?</b><p class="note">Auffangen oder bequem machen? Dazu: weniger Zahler, mehr Empfänger (Demografie).</p></div>
+    </div>
+    <p class="note">Hinweis: In den Folien gibt es keine eigene Folie mit diesem Titel – zusammengestellt aus „Der Sozialstaat“, „Sozialstaatsprinzip“ und dem Bild „Hängematte“.</p>
+  </section>
+
+  <!-- ============ 7 ============ -->
+  <section id="t7">
+    <div class="sec-head">
+      <div class="eyebrow"><b>Thema 7</b> · Folie „Geschichte“</div>
+      <h2>Historische Wurzeln des Sozialstaats</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl"><span class="when">Frühe Neuzeit – 19. Jh.</span><b>(Groß-)Familie + Kirche</b><span class="note">Lebensrisiken tragen die Familie und soziale Einrichtungen in privater und kirchlicher Trägerschaft.</span></div>
+      <div class="tl"><span class="when">Ende 19. Jh.</span><b>Bismarck’sche Sozialversicherung</b><span class="note">erste staatliche Grundsicherung · 1883 Kranken-, 1884 Unfall-, 1889 Rentenversicherung<span class="tag-extra">Zusatz</span></span></div>
+      <div class="tl"><span class="when">1950er</span><b>„Wirtschaftswunder“</b><span class="note">großzügiger Ausbau des Sozialstaats, engmaschiges „soziales Netz“, Soziale Marktwirtschaft</span></div>
+    </div>
+    <details>
+      <summary>Warum Bismarck? <span class="tag-extra">Zusatz</span></summary>
+      <p class="note">Industrialisierung → Menschen ziehen in die Städte, die Großfamilie kann sie nicht mehr absichern, viel Armut („soziale Frage“). Die Arbeiterbewegung wird stärker. Bismarck: „Zuckerbrot und Peitsche“ – Sozialistengesetz 1878 (Verbot) und Sozialversicherung (Arbeiter an den Staat binden). Später: 1927 Arbeitslosenversicherung, 1957 Rentenreform (Umlageverfahren), 1995 Pflegeversicherung.</p>
+    </details>
+  </section>
+
+  <!-- ============ 8 ============ -->
+  <section id="t8">
+    <div class="sec-head">
+      <div class="eyebrow"><b>Thema 8</b> · Folien</div>
+      <h2>Das Sozialstaatsprinzip</h2>
+    </div>
+    <div class="gg">
+      <q>Die Bundesrepublik Deutschland ist ein demokratischer und sozialer Bundesstaat.</q>
+      <span class="src">Art. 20 Abs. 1 GG</span>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>Das „Ob“ ist sicher</h3>
+        <p>Das Prinzip verpflichtet <b>alle staatlichen Organe</b> zu einer Politik des <b>sozialen Ausgleichs</b> und der <b>sozialen Sicherheit</b>. Die <b>Ewigkeitsklausel</b> (Art. 79 Abs. 3) schützt Art. 1 und 20 – der Sozialstaat kann nicht abgeschafft werden.</p>
+      </div>
+      <div class="panel">
+        <h3>Das „Wie“ ist offen</h3>
+        <p>Das Prinzip bleibt <b>vage</b>: Wie viel, für wen, wer zahlt? Deshalb unterliegt es dem <b>demokratischen Aushandlungsprozess</b> – Sozialpolitik ist immer umstritten.</p>
+      </div>
+    </div>
+    <div class="arts">
+      <div class="art"><span class="mono">Art. 20 (1)</span><span>sozialer Bundesstaat</span></div>
+      <div class="art"><span class="mono">Art. 28 (1)</span><span>Länder = sozialer Rechtsstaat</span></div>
+      <div class="art"><span class="mono">Art. 1 (1)</span><span>Würde des Menschen</span></div>
+      <div class="art"><span class="mono">Art. 1 (3)</span><span>Grundrechte binden den Staat</span></div>
+      <div class="art"><span class="mono">Art. 3</span><span>Gleichheit vor dem Gesetz</span></div>
+      <div class="art"><span class="mono">Art. 6</span><span>Schutz von Ehe und Familie</span></div>
+      <div class="art"><span class="mono">Art. 9 (3)</span><span>Koalitionsfreiheit</span></div>
+      <div class="art"><span class="mono">Art. 14 (2)</span><span>„Eigentum verpflichtet“</span></div>
+      <div class="art"><span class="mono">Art. 19 (2)</span><span>Wesensgehalt der Grundrechte</span></div>
+      <div class="art key"><span class="mono">Art. 79 (3)</span><span>Ewigkeitsklausel</span></div>
+    </div>
+    <div class="flow">
+      <div class="node"><b>Leistungsfähige</b><small>zahlen Steuern und Sozialbeiträge</small></div><div class="arr">→</div>
+      <div class="node"><b>Umverteilung</b><small>Pflicht: menschenwürdiges Leben sichern</small></div><div class="arr">→</div>
+      <div class="node"><b>Schwächere</b><small>bekommen Sozialleistungen</small></div>
+    </div>
+    <p class="note">= Idee der <b>Sozialen Marktwirtschaft</b> (seit den 1950ern): freie Marktwirtschaft und gleichzeitig Ausgleich durch staatliche Umverteilung.</p>
+  </section>
+
+  <!-- ============ 9 ============ -->
+  <section id="t9">
+    <div class="sec-head">
+      <div class="eyebrow"><b>Thema 9</b> · Folien, Buch S. 34</div>
+      <h2>Prinzipien der Sozialversicherung</h2>
+    </div>
+    <p class="lead">Es gibt <b>4 Prinzipien</b> und <b>3 Unterprinzipien</b>: Das Individualitätsprinzip ist die Grundannahme. Darunter stehen Versicherungs-, Versorgungs- und Fürsorgeprinzip – mit Äquivalenz und Solidarität (Versicherung) und Subsidiarität (Fürsorge).</p>
+
+    <div class="pbase">
+      <span class="ph">Prinzip 1 · Grundannahme für alles</span>
+      <h3>Individualitätsprinzip</h3>
+      <p>Nicht eine ganze Schicht oder Bevölkerungsgruppe, sondern <b>der Bedarf und die Nöte des einzelnen Bürgers</b> stehen im Mittelpunkt staatlicher Unterstützung.</p>
+      <p class="note">Buch (S. 34): Individualprinzip = auch <b>Eigeninitiative und Leistungsbereitschaft</b>. Beispiel: Die Grundsicherung wird nach der persönlichen Lage berechnet.</p>
+    </div>
+
+    <div class="princ">
+      <div class="pc pc1">
+        <span class="eyebrow">Prinzip 2</span>
+        <h3>Versicherungsprinzip</h3>
+        <ul>
+          <li>Versicherung gegen <b>Standardrisiken</b>: Krankheit, Unfall, Alter, Arbeitslosigkeit</li>
+          <li><b>Pflichtversicherung</b> für die meisten</li>
+          <li>Wer <b>Beiträge</b> zahlt, bekommt im Versicherungsfall Leistungen – <b>ohne</b> Bedürftigkeitsprüfung</li>
+        </ul>
+        <div class="subp">
+          <span class="sh">Äquivalenzprinzip</span>
+          <span class="where">Renten- und Arbeitslosenversicherung</span>
+          <p>Die <b>Höhe der Leistung</b> hängt von der <b>Versicherungsdauer</b> und der <b>Höhe der Einzahlung</b> ab. „So viel du einzahlst, so viel bekommst du.“</p>
+        </div>
+        <div class="subp">
+          <span class="sh">Solidaritätsprinzip</span>
+          <span class="where">Kranken- und Pflegeversicherung</span>
+          <p>Über die <b>eigenen Beiträge</b> werden <b>auch die Leistungen anderer</b> finanziert. Beitrag nach Einkommen, Leistung nach Bedarf. Ausnahme: PKV (aber keine Unterstützung vom Bund).</p>
+        </div>
+        <p class="ex">Beispiele: Renten-, Kranken-, Unfallversicherung</p>
+      </div>
+      <div class="pc pc2">
+        <span class="eyebrow">Prinzip 3</span>
+        <h3>Versorgungsprinzip</h3>
+        <ul>
+          <li><b>Fürsorgepflicht</b> des Staates für Menschen im <b>öffentlichen Dienst</b> oder mit <b>sozialrelevantem Status</b></li>
+          <li>Ausgleich für die <b>Übernahme bestimmter Risiken</b> bzw. eine <b>nichtmaterielle Leistung für die Gemeinschaft</b></li>
+          <li>finanziert aus <b>Steuern</b> – keine Beiträge, <b>keine</b> Bedürftigkeitsprüfung</li>
+          <li>hier gilt das Solidaritätsprinzip</li>
+        </ul>
+        <p class="ex">Beispiele: Kindergeld, Hinterbliebenenrenten für Angehörige von Kriegsversehrten, Beamtenversorgung (Pensionen)</p>
+      </div>
+      <div class="pc pc3">
+        <span class="eyebrow">Prinzip 4</span>
+        <h3>Fürsorgeprinzip</h3>
+        <ul>
+          <li>greift für <b>alle</b>, deren eigene Anstrengungen und Einkommen (oder Leistungen aus Versicherung/Versorgung) <b>nicht reichen</b> für ein <b>menschenwürdiges Dasein</b></li>
+          <li>Voraussetzung: <b>individuelle Notlage</b> – <span class="yes">mit</span> Bedürftigkeitsprüfung</li>
+          <li>Leistung individuell nach Bedürftigkeit, aus <b>Steuern</b></li>
+        </ul>
+        <div class="subp">
+          <span class="sh">Subsidiaritätsprinzip</span>
+          <span class="where">gehört zum Fürsorgeprinzip</span>
+          <p>Hilfe wird <b>nur gewährt, wenn Selbsthilfe nicht möglich ist</b>. Erst eigene Kraft, Einkommen, Vermögen – dann der Staat. Hilfe soll zur Selbsthilfe beitragen.</p>
+        </div>
+        <p class="ex">Beispiele: Grundsicherung, Sozialgeld (bei eingeschränkter Erwerbsfähigkeit), Wohngeld</p>
+      </div>
+    </div>
+
+    <div class="vs">
+      <div class="panel">
+        <h3>Äquivalenz am Beispiel (Rente, 9,3 % AN-Anteil 2026)</h3>
+        <p class="note">Lena verdient 5.000 € und zahlt <b class="mono">465 €</b>. Tim verdient 2.500 € und zahlt <b class="mono">232,50 €</b>.</p>
+        <p>→ Lena bekommt später eine <b>höhere Rente</b>.</p>
+      </div>
+      <div class="panel">
+        <h3>Solidarität am Beispiel (Krankenversicherung, 7,3 %)</h3>
+        <p class="note">Lena zahlt <b class="mono">365 €</b>, Tim <b class="mono">182,50 €</b> (+ Zusatzbeitrag).</p>
+        <p>→ Beide bekommen bei Krankheit <b>die gleiche Behandlung</b>.</p>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="cmp">
+        <thead><tr><th>Finanzierungsprinzipien (S. 34)</th><th class="c1">Versicherung</th><th class="c2">Versorgung</th><th class="c3">Fürsorge</th></tr></thead>
+        <tbody>
+          <tr><td>Sicherungsvoraussetzung</td><td>Mitgliedschaft in Versicherungen</td><td>speziell eingeräumter Rechtsanspruch</td><td>individuelle Notlage</td></tr>
+          <tr><td>Leistungsanspruch</td><td>bei Eintritt des Versicherungsfalls</td><td>bei gesetzlich bestimmten Merkmalen</td><td>bei Bedürftigkeit</td></tr>
+          <tr><td>Leistungshöhe</td><td>standardisiert (Versicherungsfall)</td><td>standardisiert (Versorgungsfall)</td><td>individuell nach Bedürftigkeit</td></tr>
+          <tr><td>Gegenleistung</td><td>Versicherungsbeiträge</td><td>nichtmaterielle Leistungen für die Gesellschaft</td><td>keine</td></tr>
+          <tr><td>Bedürftigkeitsprüfung</td><td>nein</td><td>nein</td><td class="yes">ja</td></tr>
+          <tr><td>Finanzierung</td><td>Beiträge AN + AG (+ Bundeszuschuss)</td><td>Steuern</td><td>Steuern</td></tr>
+          <tr class="sugg"><td>Ziel <span class="tag-extra">Vorschlag</span></td><td>Standardrisiken absichern, Lebensstandard halten</td><td>Ausgleich für Dienst/Opfer für die Gemeinschaft</td><td>Existenzminimum sichern („letztes Netz“)</td></tr>
+          <tr class="sugg"><td>Vorteil / Nachteil <span class="tag-extra">Vorschlag</span></td><td>+ eigener Anspruch, keine Prüfung · − an Arbeit gekoppelt, abhängig von Demografie</td><td>+ Anerkennung · − belastet den Steuerhaushalt</td><td>+ zielgenau, schützt alle · − Prüfung kann beschämen, „Hängematte“-Vorwurf</td></tr>
+          <tr><td>Beispiele</td><td>Renten-, Kranken-, Unfallversicherung</td><td>Beamtenpension, Kindergeld</td><td>Sozialhilfe (u. a. Grundsicherung)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h3>Zuordnen in zwei Fragen</h3>
+      <div class="tree">
+        <div class="qq">Hat die Person vorher Beiträge gezahlt?</div>
+        <div class="row">
+          <div class="br"><span class="yn">JA ↓</span><div class="res r1">Versicherungsprinzip</div></div>
+          <div class="br"><span class="yn">NEIN ↓</span>
+            <div class="qq">Wird geprüft, ob sie bedürftig ist?</div>
+            <div class="row">
+              <div class="br"><span class="yn">JA ↓</span><div class="res r3">Fürsorgeprinzip</div></div>
+              <div class="br"><span class="yn">NEIN ↓</span><div class="res r2">Versorgungsprinzip</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10 ============ -->
+  <section id="t10">
+    <div class="sec-head">
+      <div class="eyebrow"><b>Thema 10</b> · Folien</div>
+      <h2>Säulen des Sozialstaats</h2>
+    </div>
+    <div class="temple" role="img" aria-label="Die fünf Säulen: Pflege-, Kranken-, Renten-, Arbeitslosen- und Unfallversicherung">
+      <div class="roof">SOZIALVERSICHERUNGSSYSTEM</div>
+      <div class="pillars">
+        <div class="pillar"><b>Pflege&shy;versicherung</b><span class="rate">3,6 %</span><small>+ 0,6 % Kinderlose (nur AN) · Solidarität</small></div>
+        <div class="pillar"><b>Kranken&shy;versicherung</b><span class="rate">14,6 %</span><small>+ Ø 2,9 % Zusatzbeitrag · Solidarität</small></div>
+        <div class="pillar"><b>Renten&shy;versicherung</b><span class="rate">18,6 %</span><small>+ Bundeszuschuss · Äquivalenz</small></div>
+        <div class="pillar"><b>Arbeitslosen&shy;versicherung</b><span class="rate">2,6 %</span><small>Äquivalenz</small></div>
+        <div class="pillar ag"><b>Unfall&shy;versicherung</b><span class="rate">nur AG</span><small>Arbeitgeber zahlt allein</small></div>
+      </div>
+      <div class="base">Arbeitnehmer und Arbeitgeber teilen sich die Beiträge (je 50 %)</div>
+      <div class="base">Unfallversicherung finanziert der Arbeitgeber allein!</div>
+      <div class="base">Der Arbeitnehmeranteil wird vom Arbeitgeber direkt vom Lohn abgeführt</div>
+    </div>
+    <div class="grid2">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Beitragssatz</th><th>2023</th><th>2026</th></tr></thead>
+          <tbody>
+            <tr><td>Krankenvers. + Ø Zusatzbeitrag</td><td class="mono">14,6 + 1,6 %</td><td class="mono">14,6 + 2,9 %</td></tr>
+            <tr><td>Pflegeversicherung</td><td class="mono">3,05 %</td><td class="mono">3,6 %</td></tr>
+            <tr><td>Rentenversicherung</td><td class="mono">18,6 %</td><td class="mono">18,6 %</td></tr>
+            <tr><td>Arbeitslosenversicherung</td><td class="mono">2,6 %</td><td class="mono">2,6 %</td></tr>
+            <tr><td>Summe (ohne Kinderlosen-Zuschlag)</td><td class="mono">40,45 %</td><td class="mono"><b>42,30 %</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel">
+        <p>Beispiel 2026: <b>3.000 €</b> brutto → Rentenversicherung AN-Anteil 9,3 % = <b class="mono">279 €</b>; alle AN-Anteile 21,15 % = <b class="mono">634,50 €</b>.</p>
+        <p class="note">Die Folie sagt: „Funktioniert außer bei Krankenversicherung nach dem Solidarprinzip: Alle zahlen gleichen Prozentsatz ihres Bruttoeinkommens.“ Gemeint ist wohl die <b>private</b> KV – frag im Zweifel nach.</p>
+        <div class="merke"><b>Nicht verwechseln:</b> 5 Säulen des Sozialstaats ≠ 3 Säulen der Alterssicherung (gesetzlich – betrieblich – privat).</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 11 ============ -->
+  <section id="t11">
+    <div class="sec-head">
+      <div class="eyebrow"><b>Thema 11</b> · Buch S. 32–33</div>
+      <h2>Gegenwart und Zukunft des Sozialstaats</h2>
+    </div>
+    <p class="lead">Leitfrage im Buch: <b>„Ist unser Sozialstaat noch finanzierbar?“</b> Die Ausgaben steigen stark – absolut und im Verhältnis zur Wirtschaftsleistung.</p>
+    <div class="grid2">
+      <div class="panel">
+        <b>M2: Sozialleistungen in Mrd. € (unten: Anteil am BIP)</b>
+        <div class="chart" id="spend"></div>
+        <p class="note">Quelle: BMAS, Globus, Stand 2018 · 2017 Schätzung · bis 1987 nur Westdeutschland</p>
+      </div>
+      <div class="panel">
+        <b>M1: Größte Posten im „sozialen Netz“ 2017 (Mrd. €)</b>
+        <div class="hbars" id="posts"></div>
+        <b>M3: Wer finanziert den Sozialstaat? (2017, %)</b>
+        <div class="hbars" id="fin"></div>
+      </div>
+    </div>
+    <div class="grid3">
+      <div class="panel"><div class="stat"><span class="big">1.967</span><span class="note">Mrd. € Schulden der öffentlichen Haushalte 2017 (1957: 23 Mrd. €) · 23.797 € je Einwohner · 63,2 % beim Bund (M4)</span></div></div>
+      <div class="panel"><b>Bild „Hängematte“ (S. 32)</b><p class="note">Eine überfüllte Hängematte in Schwarz-Rot-Gold reißt, Menschen fallen durch → der Sozialstaat ist <b>überlastet</b>.</p></div>
+      <div class="panel"><b>Ursachen → Folgen</b><p class="note">Demografie, Ausbau der Leistungen, Wiedervereinigung → höhere Beiträge und Lohnnebenkosten, Steuern oder Schulden, Druck zu Kürzungen.</p></div>
+    </div>
+    <div class="panel">
+      <b>Umgang mit Statistiken (Folie)</b>
+      <div class="flow">
+        <div class="node"><b>1 Beschreiben</b><small>Art, Zeitraum, Bezugsgrößen, Gestaltung</small></div><div class="arr">→</div>
+        <div class="node"><b>2 Aussagen</b><small>Hauptaussage + Teilaussagen</small></div><div class="arr">→</div>
+        <div class="node"><b>3 Kritisch analysieren</b><small>Aktualität, Korrektheit, Maßstab, Perspektive, Manipulation?</small></div><div class="arr">→</div>
+        <div class="node"><b>4 Beurteilen</b></div>
+      </div>
+      <p class="note">Beispiel M2: Hauptaussage „Die Sozialausgaben steigen stark“; 54 → 966 Mrd. € (fast 18-mal so viel); Anteil am BIP 21,5 → 29,6 %, aber nicht gleichmäßig. Kritik: Daten von 2018, 2017 nur geschätzt, Werte nicht inflationsbereinigt, bis 1987 nur West.</p>
+    </div>
+  </section>
+
+  <div class="part" id="teilC">Teil C · Alterssicherung (Thema 12)</div>
+
+  <!-- ============ 12 ============ -->
+  <section id="t12">
+    <div class="sec-head">
+      <div class="eyebrow"><b>Thema 12</b> · Buch S. 20–21, Folien, Arbeitsblatt, Erwartungshorizont</div>
+      <h2>Alterssicherung als politisches Problem</h2>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>Generationenvertrag (M4)</h3>
+        <div class="flow">
+          <div class="node"><b>Kinder</b><small>noch nicht arbeitend</small></div><div class="arr">←</div>
+          <div class="node" style="border-color: var(--accent)"><b>Arbeitende</b><small>zahlen Beiträge</small></div><div class="arr">→</div>
+          <div class="node"><b>Rentner</b><small>nicht mehr arbeitend</small></div>
+        </div>
+        <ul class="tight">
+          <li><b>§ 1</b> Die Arbeitenden versorgen Rentner <b>und</b> Kinder.</li>
+          <li><b>§ 2</b> Rentner haben einen <b>Rechtsanspruch</b>, weil sie früher § 1 erfüllt haben.</li>
+          <li><b>§ 3</b> Die Kinder führen § 1 später fort.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Umlageverfahren</h3>
+        <div class="flow">
+          <div class="node"><b>Beiträge</b><small>AN 50 % + AG 50 %</small></div><div class="arr">+</div>
+          <div class="node"><b>Bundeszuschuss</b><small>Steuern</small></div><div class="arr">→</div>
+          <div class="node"><b>heutige Renten</b></div>
+        </div>
+        <div class="merke"><b>Nichts wird angespart.</b> Die Beiträge von heute zahlen die Renten von heute.</div>
+        <p class="note">Grundsätze: „Lohn für Lebensarbeit“, Versicherungsprinzip, Versicherungszwang, Bundesgarantie, Solidarprinzip (Familie mitversichert).</p>
+      </div>
+    </div>
+
+    <div class="step st1" style="gap:14px">
+      <span class="num">12 a · SCHRITT 1 · SITUATIONSANALYSE</span>
+      <h3>Was macht die Alterssicherung zu einem politischen Problem?</h3>
+      <div class="tn" id="tn"></div>
+      <p class="note">M2, Quelle: Globus, Deutsche Rentenversicherung/BMAS, Stand 2018 · 2031 = Prognose · 1960 und Rentenniveau 2018: Westdeutschland</p>
+      <div class="grid2">
+        <div class="panel">
+          <b>Ursachen (M3 Bevölkerungspyramiden)</b>
+          <p class="note">Die <b>Geburtenrate</b> sinkt seit den 1960ern (1,5 Kinder je Frau), die <b>Lebenserwartung</b> steigt (2060: 84,7 J. Jungen / 88,6 J. Mädchen). Pyramide (1910) → Urne (2018) → Säule (2060).</p>
+        </div>
+        <div class="panel">
+          <b>Karikatur und Plakat (1986)</b>
+          <p class="note">Schäpper: Ein kleiner Junge („Geburtenrate“) soll später den riesigen Balken „Generationenvertrag“ voller Rentner tragen. Plakat von Minister Blüm<span class="tag-extra">Zusatz</span>: „Denn eins ist sicher: Die Rente“.</p>
+        </div>
+      </div>
+      <b>So schreibst du die Situationsanalyse (Erwartungshorizont, 16 Punkte)</b>
+      <div class="eh">
+        <div><span class="pt">1 P</span><b>Einleitung</b>Thema einführen</div>
+        <div><span class="pt">3 P</span><b>Generationenvertrag</b>Umlageverfahren, Junge zahlen für Alte</div>
+        <div><span class="pt">4 P</span><b>Demografie</b>Geburten ↓, Lebenserwartung und Bezugsdauer ↑, bis zu 68 Rentner je 100 Zahler</div>
+        <div><span class="pt">4 P</span><b>Folgen</b>Beiträge ↑ oder Rentenniveau ↓ oder Rentenalter ↑ oder Steuerzuschuss ↑</div>
+        <div><span class="pt">2 P</span><b>Aufgabe</b>generationengerechte Lösung für Alt und Jung</div>
+        <div><span class="pt">2 P</span><b>Form</b>Präsens, Fachbegriffe, Übergänge</div>
+      </div>
+      <details>
+        <summary>Mustertext Situationsanalyse anzeigen</summary>
+        <div class="muster">
+          <p>Die Alterssicherung ist ein wichtiges politisches Problem, weil sie fast alle betrifft und ihre Finanzierung durch den demografischen Wandel immer schwieriger wird. Die gesetzliche Rentenversicherung beruht auf dem <b>Generationenvertrag</b> und dem <b>Umlageverfahren</b>: Die jüngere, arbeitende Generation zahlt Beiträge, mit denen direkt die Renten der Älteren bezahlt werden. Sie kann erwarten, dass später die nächste Generation ihre Renten finanziert.</p>
+          <p>Dieser Vertrag wird durch den <b>demografischen Wandel</b> infrage gestellt. Seit den 1960er-Jahren sinkt die Geburtenrate, gleichzeitig steigt die Lebenserwartung und damit die Rentenbezugsdauer (1960: 9,9 Jahre, 2016: 19,4 Jahre). Das Verhältnis von Arbeitenden und Rentnern ist nicht mehr ausgeglichen: 2017 kamen 52 Rentner auf 100 Beitragszahler, bald werden es bis zu 68 sein.</p>
+          <p>Daraus folgen <b>Belastungen für alle Generationen</b>: Entweder steigen die Beiträge stark (1960: 14,0 %, 2018: 18,6 %), oder das Rentenniveau sinkt (53,2 % → 44,7 %), oder das Rentenalter steigt, oder der Staat gleicht die Lücken mit Steuergeld aus. Die Politik muss daher eine <b>für alle Generationen möglichst gerechte Lösung</b> finden, die eine angemessene Versorgung der Älteren und tragbare Beiträge der Jüngeren berücksichtigt.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="step st2" style="gap:14px">
+      <span class="num">12 b · SCHRITT 2 · MÖGLICHKEITSANALYSE</span>
+      <h3>Was ist möglich?</h3>
+      <div class="grid2">
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Stellschraube</th><th>Wer trägt die Last?</th></tr></thead>
+            <tbody>
+              <tr><td>Beiträge ↑</td><td>Arbeitnehmer und Arbeitgeber</td></tr>
+              <tr><td>Rentenniveau ↓</td><td>Rentner (Gefahr: Altersarmut)</td></tr>
+              <tr><td>Rentenalter ↑</td><td>Arbeitende, v. a. schwere Berufe</td></tr>
+              <tr><td>Bundeszuschuss ↑</td><td>alle Steuerzahler</td></tr>
+              <tr><td>+ mehr Zahler</td><td>neue Gruppen – bekommen später auch Rente</td></tr>
+              <tr><td>+ Kapitaldeckung</td><td>AN und AG; Börsenrisiko</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel">
+          <b>Alterssicherungskommission (Arbeitsblatt M1, 24.06.2026)</b>
+          <p class="note">33 Empfehlungen, einstimmig · Koalitionsausschuss: Umsetzung bis Ende 2026</p>
+          <ul class="tight">
+            <li><b>Gesamtversorgungsniveau ≥ 70 %</b> des letzten Nettos (gesetzlich + betrieblich + privat)</li>
+            <li><b>Regelaltersgrenze</b> ab 2031 an Lebenserwartung: 2/3 Arbeit, 1/3 Rente → <b>67 → ca. 67,5</b> bis 2041</li>
+            <li><b>abschlagsfreie</b> Rente mit 63 nach 45 Beitragsjahren <b>entfällt</b></li>
+            <li>verpflichtende <b>kapitalgedeckte Zusatzrente</b>: je 1 % AG und AN (<b>paritätisch</b>), Vorbild Schweden</li>
+            <li><b>Erwerbstätigenversicherung</b>: neue Selbstständige, Abgeordnete, Vorstände zahlen ein; Minijobs versichert</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="panel">
+          <b>Vorbild Schweden? (tagesschau.de, 23.06.2026)</b>
+          <p class="note">3 Säulen; <b>2,5 %</b> der staatlichen Beiträge am Aktienmarkt (eigener Fonds oder Staatsfonds; je näher die Rente, desto vorsichtiger); Rentenalter automatisch an Lebenserwartung (67); größter Teil hängt weiter von den Löhnen ab. <b>Fazit:</b> Die Börse stärkt die Rente, löst die Alterung aber nicht.</p>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Partei</th><th>Kernposition</th></tr></thead>
+            <tbody>
+              <tr><td>CDU/CSU</td><td>Paket als Ganzes, Nachhaltigkeitsfaktor</td></tr>
+              <tr><td>SPD</td><td>gesetzliche Rente zentral, gerecht für Alt und Jung</td></tr>
+              <tr><td>Grüne</td><td>Niveau ≥ 48 %, Bürger:innenfonds</td></tr>
+              <tr><td>Linke</td><td>53 %, Mindestrente 1.400 €, „Kürzungskommission“</td></tr>
+              <tr><td>AfD</td><td>67 halten, abschlagsfrei nach 45 Jahren</td></tr>
+              <tr><td>FDP*</td><td>Aktienrente (Schweden)</td></tr>
+              <tr><td>BSW*</td><td>Österreich: alle Erwerbstätigen inkl. Beamte</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="note">* nicht im Bundestag · Parteipositionen laut deinen Unterrichtsnotizen · Rechtslage: Sozialstaatsprinzip, Bundesgarantie · Verfahren: Gesetz im Bundestag · Mehrheit: Koalition CDU/CSU + SPD</p>
+    </div>
+
+    <div class="step st3" style="gap:14px">
+      <span class="num">12 c · SCHRITT 3 · URTEILSBILDUNG</span>
+      <h3>Was soll sein?</h3>
+      <div class="chips">
+        <span class="chip">Wirksamkeit: löst es das Demografieproblem?</span>
+        <span class="chip">Gerechtigkeit: wer zahlt, wer profitiert?</span>
+        <span class="chip">Zumutbarkeit: schwere Berufe?</span>
+        <span class="chip">Frieden zwischen den Generationen</span>
+        <span class="chip">Freiheit: Wahlmöglichkeiten</span>
+        <span class="chip">Menschenwürde: Altersarmut</span>
+      </div>
+      <div class="flow">
+        <div class="node"><b>These</b></div><div class="arr">→</div>
+        <div class="node"><b>Pro</b><small>mit Kriterium</small></div><div class="arr">→</div>
+        <div class="node"><b>Contra</b><small>mit Kriterium</small></div><div class="arr">→</div>
+        <div class="node"><b>Abwägung</b></div><div class="arr">→</div>
+        <div class="node"><b>Fazit</b></div>
+      </div>
+      <details>
+        <summary>Musterurteil anzeigen: Können die Vorschläge der Kommission die Rente sichern?</summary>
+        <div class="muster">
+          <p>Die Vorschläge sind ein sinnvoller Schritt, reichen allein aber nicht. <b>Dafür</b> spricht, dass sie das Grundproblem direkt angehen: Durch die Kopplung an die Lebenserwartung werden nicht alle gewonnenen Jahre zu Rentenjahren, und die Regel „2/3 Arbeit, 1/3 Rente“ verteilt die Lasten zwischen den Generationen (<b>Gerechtigkeit</b>). Die kapitalgedeckte Zusatzrente schafft eine zweite Finanzierungsquelle, die Erwerbstätigenversicherung mehr Beitragszahler.</p>
+          <p><b>Dagegen</b> spricht, dass längeres Arbeiten für körperlich schwer Arbeitende kaum <b>zumutbar</b> ist – gerade sie verlieren die Rente nach 45 Jahren. Die Zusatzrente wirkt erst spät und hängt von der Börse ab; Schweden zeigt, dass sie die Alterung nicht löst. <b>Insgesamt</b> überwiegen die Vorteile, weil die Kosten auf mehrere Schultern verteilt werden und das den <b>Frieden</b> zwischen den Generationen sichert – nötig wären aber Ausnahmen für schwere Berufe und Schutz vor Altersarmut (<b>Menschenwürde</b>).</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ D ============ -->
+  <section id="ueben">
+    <div class="sec-head">
+      <div class="eyebrow">Selbsttest</div>
+      <h2>Üben</h2>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>Karteikarten</h3>
+        <div class="flash">
+          <div class="card3d" id="card" tabindex="0" role="button" aria-label="Karte umdrehen">
+            <div class="face front"><span class="term" id="cardFront"></span><span class="hint">Klicken zum Umdrehen</span></div>
+            <div class="face back"><span id="cardBack"></span><span class="hint">Klicken zum Zurückdrehen</span></div>
+          </div>
+        </div>
+        <div class="deckbar">
+          <button id="prevCard" type="button">← Zurück</button>
+          <button id="flipCard" type="button" class="primary">Umdrehen</button>
+          <button id="nextCard" type="button">Weiter →</button>
+          <button id="shuffleCards" type="button">Mischen</button>
+          <span class="counter" id="cardCount"></span>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Zuordnungs-Quiz</h3>
+        <div class="deckbar" id="decks"></div>
+        <div class="quizq" id="quizQ"></div>
+        <div class="opts" id="quizOpts"></div>
+        <div class="fb" id="quizFb" aria-live="polite"></div>
+        <div class="deckbar">
+          <button id="quizNext" type="button" class="primary">Nächste Frage →</button>
+          <span class="score" id="quizScore"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Grundlage: Schulbuch S. 12–21 und 32–34, Folien „Sozialstaat und soziale Sicherung“ und „Alterssicherung“, Arbeitsblatt „Rente sichern – aber wie?“, Erwartungshorizont, tagesschau.de (23.06.2026). Mit <span class="tag-extra">Zusatz</span> markierte Angaben stehen nicht in deinen Materialien.
+  </footer>
+</main>
+
+<script>
+(function () {
+  var ns = "http://www.w3.org/2000/svg";
+  function el(n, a, t) { var e = document.createElementNS(ns, n); for (var k in a) e.setAttribute(k, a[k]); if (t != null) e.textContent = t; return e; }
+  function de(x, d) { return x.toFixed(d).replace(".", ","); }
+
+  // ---------- Bar chart: Sozialleistungen ----------
+  var spend = [
+    { y: "1967", v: 54, p: "21,5 %" }, { y: "1977", v: 166, p: "26,1 %" }, { y: "1987", v: 274, p: "25,7 %" },
+    { y: "1997", v: 557, p: "28,3 %" }, { y: "2007", v: 675, p: "26,8 %" }, { y: "2017", v: 966, p: "29,6 %", est: true }
+  ];
+  var W = 560, H = 270, L = 44, R = 10, T = 22, B = 46, max = 1000;
+  var pw = W - L - R, ph = H - T - B, slot = pw / spend.length, bw = Math.min(46, slot * 0.55);
+  var host = document.getElementById("spend");
+  var svg = el("svg", { viewBox: "0 0 " + W + " " + H, role: "img", "aria-label": "Sozialleistungen 1967 bis 2017 in Milliarden Euro" });
+  [0, 250, 500, 750, 1000].forEach(function (t) {
+    var y = T + ph - t / max * ph;
+    svg.appendChild(el("line", { x1: L, x2: W - R, y1: y, y2: y, class: "ax", "stroke-dasharray": t ? "2 4" : "" }));
+    svg.appendChild(el("text", { x: L - 6, y: y + 4, "text-anchor": "end", class: "axl" }, t.toLocaleString("de-DE")));
+  });
+  var tip = document.createElement("div"); tip.className = "tip"; tip.hidden = true; host.appendChild(tip);
+  spend.forEach(function (d, i) {
+    var cx = L + slot * i + slot / 2, h = d.v / max * ph, x = cx - bw / 2, y = T + ph - h, r = 4;
+    var path = "M" + x + "," + (T + ph) + " V" + (y + r) + " Q" + x + "," + y + " " + (x + r) + "," + y +
+      " H" + (x + bw - r) + " Q" + (x + bw) + "," + y + " " + (x + bw) + "," + (y + r) + " V" + (T + ph) + " Z";
+    var bar = el("path", { d: path, class: "bar" });
+    var hit = el("rect", { x: cx - slot / 2, y: T, width: slot, height: ph, fill: "transparent" });
+    svg.appendChild(bar);
+    svg.appendChild(el("text", { x: cx, y: y - 6, "text-anchor": "middle", class: "val" }, d.v + (d.est ? "*" : "")));
+    svg.appendChild(el("text", { x: cx, y: T + ph + 16, "text-anchor": "middle", class: "axl" }, d.y));
+    svg.appendChild(el("text", { x: cx, y: T + ph + 31, "text-anchor": "middle", class: "sub2" }, d.p));
+    svg.appendChild(hit);
+    function show() {
+      bar.classList.add("hot");
+      tip.textContent = d.y + ": " + d.v + " Mrd. € · " + d.p + " des BIP" + (d.est ? " (Schätzung)" : "");
+      var box = host.getBoundingClientRect(), sb = svg.getBoundingClientRect(), k = sb.width / W;
+      tip.style.left = (cx * k + (sb.left - box.left)) + "px";
+      tip.style.top = (y * k + (sb.top - box.top)) + "px";
+      tip.hidden = false;
+    }
+    function hide() { bar.classList.remove("hot"); tip.hidden = true; }
+    hit.addEventListener("mouseenter", show); hit.addEventListener("mouseleave", hide);
+    hit.addEventListener("touchstart", show, { passive: true });
+  });
+  host.insertBefore(svg, tip);
+
+  // ---------- horizontal bars ----------
+  function hbars(id, rows, scaleMax, fmt) {
+    var h = document.getElementById(id);
+    rows.forEach(function (f) {
+      var row = document.createElement("div"); row.className = "hb";
+      row.innerHTML = '<span></span><div class="track"><div class="fill"></div></div><span class="v"></span>';
+      row.children[0].textContent = f[0];
+      row.querySelector(".fill").style.width = (f[1] / scaleMax * 100) + "%";
+      row.children[2].textContent = fmt(f[1]);
+      h.appendChild(row);
+    });
+  }
+  hbars("posts", [["Rentenversicherung", 304.1], ["Krankenversicherung", 228.6], ["Beamtenpensionen", 57.7], ["Lohnfortzahlung", 52.1], ["Grundsicherung Arbeitsuchende", 45.0], ["Kindergeld/Familie", 45.0]], 320, function (v) { return de(v, 1); });
+  hbars("fin", [["Private Haushalte", 31.4], ["Unternehmen", 27.2], ["Bund", 21.0], ["Gemeinden", 9.9], ["Länder", 8.9], ["Sonstige", 1.6]], 35, function (v) { return de(v, 1) + " %"; });
+
+  // ---------- Then/now tiles ----------
+  var tn = [
+    { t: "Rentner je 100 Beitragszahler", a: ["2017", 52, "52"], b: ["2031", 68, "68"], so: "mehr Rentner pro Zahler" },
+    { t: "Rentenniveau", a: ["1960", 53.2, "53,2 %"], b: ["2018", 44.7, "44,7 %"], so: "Rente im Verhältnis zum Lohn sinkt" },
+    { t: "Rentenbezugsdauer", a: ["1960", 9.9, "9,9 J."], b: ["2016", 19.4, "19,4 J."], so: "doppelt so lange Rente" },
+    { t: "Renteneintrittsalter", a: ["1960", 64.7, "64,7"], b: ["2016", 64.1, "64,1"], so: "nicht später in Rente" },
+    { t: "Beitragssatz RV", a: ["1960", 14.0, "14,0 %"], b: ["2018", 18.6, "18,6 %"], so: "Beiträge steigen" }
+  ];
+  var tnh = document.getElementById("tn");
+  tn.forEach(function (d) {
+    var m = Math.max(d.a[1], d.b[1]);
+    var tile = document.createElement("div"); tile.className = "tile";
+    tile.innerHTML = '<span class="t"></span><div class="pair">' +
+      '<div class="pr"><span class="yr"></span><div class="b old"></div></div>' +
+      '<div class="pr"><span class="yr"></span><div class="b new"></div></div></div><span class="so"></span>';
+    tile.querySelector(".t").textContent = d.t;
+    var yrs = tile.querySelectorAll(".yr"), bs = tile.querySelectorAll(".b");
+    yrs[0].textContent = d.a[0]; yrs[1].textContent = d.b[0];
+    bs[0].textContent = d.a[2]; bs[1].textContent = d.b[2];
+    bs[0].style.width = (d.a[1] / m * 100) + "%"; bs[1].style.width = (d.b[1] / m * 100) + "%";
+    tile.querySelector(".so").textContent = d.so;
+    tnh.appendChild(tile);
+  });
+
+  // ---------- Flashcards ----------
+  var cards = [
+    ["Kategorie", "Schlüsselbegriff, mit dem man die politische Wirklichkeit „aufschließt“. Als Frage formuliert: Schlüsselfrage."],
+    ["Doppelte Funktion der Kategorien", "① Analyseinstrument (Wirklichkeit erschließen) ② Beurteilungsinstrument (eigenes Urteil rational begründen)."],
+    ["Situationsanalyse", "„Was ist?“ – Konflikt, Beteiligte, Betroffene, Interessen, (Vor-)Geschichte, Aufgabe. Keine Meinung!"],
+    ["Möglichkeitsanalyse", "„Was ist möglich?“ – Rechtslage, Verfahren, Machtverhältnisse, Mehrheit, Ordnung."],
+    ["Urteilsbildung", "„Was soll sein?“ – Gerechtigkeit, Zumutbarkeit, Frieden, Freiheit, Menschenwürde."],
+    ["Politik im weiteren Sinne", "Menschen ringen unter gegenseitiger Respektierung um die gemeinsame Bewältigung konflikthafter Situationen."],
+    ["Politik im engeren Sinne", "Handeln, das sich auf die verbindliche Ordnung des Zusammenlebens einer ganzen Gesellschaft richtet (→ Staat)."],
+    ["polity · policy · politics", "Form (Ordnung) · Inhalt (Ziele) · Prozess (Handeln, Konflikt, Macht)."],
+    ["Politikzyklus", "Problem → Auseinandersetzung → Entscheidung → Bewertung/Reaktionen → neues Problem."],
+    ["Grundprobleme der Sozialpolitik", "Wie viel Sozialstaat? Wer bekommt wie viel? Wer zahlt? Eigenverantwortung oder Solidarität? Leistung oder Bedarf? Netz oder Hängematte?"],
+    ["Historische Wurzeln", "Familie + Kirche (bis 19. Jh.) → Bismarck’sche Sozialversicherung (Ende 19. Jh.) → Ausbau im Wirtschaftswunder (1950er)."],
+    ["Sozialstaatsprinzip", "Art. 20 Abs. 1 GG: Alle staatlichen Organe müssen für sozialen Ausgleich und soziale Sicherheit sorgen. Vage → demokratisch ausgehandelt."],
+    ["Ewigkeitsklausel", "Art. 79 Abs. 3 GG: Die Grundsätze von Art. 1 und 20 dürfen nie geändert werden."],
+    ["Individualitätsprinzip", "Nicht ganze Gruppen, sondern Bedarf und Nöte des einzelnen Bürgers stehen im Mittelpunkt."],
+    ["Versicherungsprinzip", "Pflichtversicherung gegen Standardrisiken: Beiträge zahlen → Leistung im Versicherungsfall, ohne Bedürftigkeitsprüfung."],
+    ["Äquivalenzprinzip", "Leistung hängt von Versicherungsdauer und Höhe der Einzahlung ab (Renten- und Arbeitslosenversicherung)."],
+    ["Solidaritätsprinzip", "Über die eigenen Beiträge werden auch Leistungen anderer finanziert (Kranken- und Pflegeversicherung)."],
+    ["Versorgungsprinzip", "Leistung aus Steuern für öffentlichen Dienst oder sozialrelevanten Status / Leistung für die Gemeinschaft. Z. B. Pension, Kindergeld."],
+    ["Fürsorgeprinzip", "Hilfe bei individueller Notlage, mit Bedürftigkeitsprüfung, aus Steuern. Z. B. Grundsicherung, Wohngeld."],
+    ["Subsidiaritätsprinzip", "Hilfe nur, wenn Selbsthilfe nicht möglich ist (gehört zum Fürsorgeprinzip)."],
+    ["Die 5 Säulen", "Kranken-, Pflege-, Renten-, Arbeitslosen-, Unfallversicherung. AN + AG je 50 %, Unfall zahlt nur der AG."],
+    ["Sozialausgaben (S. 33)", "1967: 54 Mrd. € (21,5 % BIP) → 2017: 966 Mrd. € (29,6 % BIP). Größter Posten: Rentenversicherung 304,1 Mrd. €."],
+    ["Generationenvertrag", "§ 1 Arbeitende versorgen Alte und Kinder · § 2 Rentner haben Rechtsanspruch · § 3 Kinder führen das fort."],
+    ["Umlageverfahren", "Laufende Beiträge finanzieren direkt die laufenden Renten. Nichts wird angespart."],
+    ["Rentnerquotient", "Rentner je 100 Beitragszahler: 52 (2017) → 68 (Prognose 2031)."],
+    ["Erwerbstätigenversicherung", "Weitere Gruppen (neue Selbstständige, Abgeordnete, Vorstände) zahlen in die gesetzliche Rente ein."],
+    ["paritätisch / abschlagsfrei", "je zur Hälfte von AG und AN finanziert / ohne Abzüge von der vollen Rente."]
+  ];
+  var order = cards.map(function (_, i) { return i; }), ci = 0;
+  var card = document.getElementById("card");
+  function showCard() {
+    card.classList.remove("flipped");
+    var c = cards[order[ci]];
+    document.getElementById("cardFront").textContent = c[0];
+    document.getElementById("cardBack").textContent = c[1];
+    document.getElementById("cardCount").textContent = (ci + 1) + " / " + cards.length;
+  }
+  function flip() { card.classList.toggle("flipped"); }
+  card.addEventListener("click", flip);
+  card.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); } });
+  document.getElementById("flipCard").addEventListener("click", flip);
+  document.getElementById("nextCard").addEventListener("click", function () { ci = (ci + 1) % cards.length; showCard(); });
+  document.getElementById("prevCard").addEventListener("click", function () { ci = (ci - 1 + cards.length) % cards.length; showCard(); });
+  document.getElementById("shuffleCards").addEventListener("click", function () {
+    for (var i = order.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = order[i]; order[i] = order[j]; order[j] = t; }
+    ci = 0; showCard();
+  });
+  showCard();
+
+  // ---------- Quiz ----------
+  var decks = {
+    "Welches Prinzip?": { opts: ["Individualität", "Äquivalenz", "Solidarität", "Versorgung", "Fürsorge", "Subsidiarität"], items: [
+      ["Die Höhe der Rente hängt davon ab, wie lange und wie viel man eingezahlt hat.", "Äquivalenz"],
+      ["Gutverdiener und Geringverdiener bekommen bei Krankheit die gleiche Behandlung.", "Solidarität"],
+      ["Staatliche Hilfe gibt es erst, wenn man sich nicht mehr selbst helfen kann.", "Subsidiarität"],
+      ["Im Mittelpunkt steht der Bedarf des einzelnen Bürgers, nicht einer ganzen Gruppe.", "Individualität"],
+      ["Eine Beamtin bekommt eine Pension aus Steuergeld, ohne Beiträge und ohne Prüfung.", "Versorgung"],
+      ["Wer in Not ist, bekommt nach einer Bedürftigkeitsprüfung Grundsicherung.", "Fürsorge"],
+      ["Über die eigenen Beiträge werden auch Leistungen für andere finanziert.", "Solidarität"],
+      ["Arbeitslosengeld richtet sich nach dem früheren Einkommen.", "Äquivalenz"],
+      ["Kindergeld als Ausgleich für eine Leistung für die Gemeinschaft.", "Versorgung"]
+    ]},
+    "Leistung zuordnen": { opts: ["Versicherung", "Versorgung", "Fürsorge"], items: [
+      ["Altersrente", "Versicherung", "vorher Beiträge gezahlt (Äquivalenz)"],
+      ["Kindergeld", "Versorgung", "aus Steuern, keine Prüfung"],
+      ["Grundsicherung", "Fürsorge", "Bedürftigkeitsprüfung"],
+      ["Pension einer Beamtin", "Versorgung", "öffentlicher Dienst, aus Steuern"],
+      ["Krankengeld", "Versicherung", "Krankenversicherung, Beiträge"],
+      ["Wohngeld", "Fürsorge", "nur bei Bedürftigkeit"],
+      ["Arbeitslosengeld", "Versicherung", "Beiträge (Äquivalenz)"],
+      ["Hinterbliebenenrente für Angehörige von Kriegsversehrten", "Versorgung", "Ausgleich für Opfer für die Gemeinschaft"],
+      ["Leistung nach einem Arbeitsunfall", "Versicherung", "Unfallversicherung, der AG zahlt"],
+      ["Sozialgeld", "Fürsorge", "eingeschränkte Erwerbsfähigkeit, Bedürftigkeit"]
+    ]},
+    "Kategorie → Schritt": { opts: ["① Situation", "② Möglichkeit", "③ Urteil"], items: [
+      ["Konflikt", "① Situation"], ["Beteiligte", "① Situation"], ["Betroffene", "① Situation"], ["Interessen", "① Situation"],
+      ["(Vor-)Geschichte", "① Situation"], ["Aufgabe", "① Situation"], ["Rechtslage", "② Möglichkeit"], ["Verfahren", "② Möglichkeit"],
+      ["Machtverhältnisse", "② Möglichkeit"], ["Mehrheit", "② Möglichkeit"], ["Ordnung", "② Möglichkeit"], ["Gerechtigkeit", "③ Urteil"],
+      ["Zumutbarkeit", "③ Urteil"], ["Frieden", "③ Urteil"], ["Freiheit", "③ Urteil"], ["Menschenwürde", "③ Urteil"]
+    ]},
+    "polity/policy/politics": { opts: ["polity", "policy", "politics"], items: [
+      ["Die Linke nennt den Bericht eine „Kürzungskommission“.", "politics", "Streit, Kritik = Prozess"],
+      ["Art. 20 GG: Deutschland ist ein sozialer Bundesstaat.", "polity", "Verfassung = Form"],
+      ["Die Regelaltersgrenze soll bis 2041 auf ca. 67,5 Jahre steigen.", "policy", "Inhalt der Reform"],
+      ["Der Koalitionsausschuss verhandelt über die Umsetzung.", "politics", "Verhandlung = Prozess"],
+      ["Ein Gesetz braucht eine Mehrheit im Bundestag.", "polity", "Regel des Verfahrens = Form"],
+      ["Ziel: Gesamtversorgungsniveau von 70 %.", "policy", "Ziel = Inhalt"]
+    ]},
+    "Richtig/Falsch": { opts: ["richtig", "falsch"], items: [
+      ["Die Unfallversicherung zahlen AN und AG je zur Hälfte.", "falsch", "nur der Arbeitgeber"],
+      ["Beim Fürsorgeprinzip gibt es eine Bedürftigkeitsprüfung.", "richtig"],
+      ["Kindergeld gehört zum Fürsorgeprinzip.", "falsch", "Versorgungsprinzip"],
+      ["Das Sozialstaatsprinzip kann mit Zweidrittelmehrheit abgeschafft werden.", "falsch", "Ewigkeitsklausel, Art. 79 Abs. 3"],
+      ["In der Situationsanalyse schreibt man schon seine Meinung.", "falsch", "erst in der Urteilsbildung"],
+      ["Die Rentenbezugsdauer hat sich von 1960 bis 2016 ungefähr verdoppelt.", "richtig", "9,9 → 19,4 Jahre"],
+      ["Im Umlageverfahren wird das Geld für die eigene Rente angespart.", "falsch", "es zahlt die heutigen Renten"],
+      ["Die Kommission will die Regelaltersgrenze bis 2041 auf 70 erhöhen.", "falsch", "auf etwa 67,5 Jahre"],
+      ["Das Äquivalenzprinzip gilt in der Kranken- und Pflegeversicherung.", "falsch", "dort gilt Solidarität; Äquivalenz bei Rente und Arbeitslosigkeit"],
+      ["Bismarcks Sozialversicherung entstand in den 1950er-Jahren.", "falsch", "Ende des 19. Jahrhunderts"]
+    ]}
+  };
+  var deckName = "Welches Prinzip?", qOrder = [], qi = 0, right = 0, asked = 0, answered = false, finished = false;
+  var decksEl = document.getElementById("decks");
+  Object.keys(decks).forEach(function (name) {
+    var b = document.createElement("button"); b.type = "button"; b.textContent = name;
+    b.setAttribute("aria-pressed", name === deckName ? "true" : "false");
+    b.addEventListener("click", function () {
+      deckName = name;
+      Array.prototype.forEach.call(decksEl.children, function (x) { x.setAttribute("aria-pressed", x.textContent === name ? "true" : "false"); });
+      startDeck();
+    });
+    decksEl.appendChild(b);
+  });
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function startDeck() {
+    finished = false;
+    qOrder = shuffle(decks[deckName].items.map(function (_, i) { return i; }));
+    qi = 0; right = 0; asked = 0; showQ();
+  }
+  function showQ() {
+    answered = false;
+    var d = decks[deckName], item = d.items[qOrder[qi]];
+    document.getElementById("quizQ").textContent = item[0];
+    var fb = document.getElementById("quizFb"); fb.textContent = ""; fb.className = "fb";
+    var oh = document.getElementById("quizOpts"); oh.innerHTML = "";
+    d.opts.forEach(function (o) {
+      var b = document.createElement("button"); b.type = "button"; b.textContent = o;
+      b.addEventListener("click", function () {
+        if (answered) return; answered = true; asked++;
+        var ok = o === item[1];
+        if (ok) right++;
+        Array.prototype.forEach.call(oh.children, function (x) {
+          if (x.textContent === item[1]) x.classList.add("right"); else if (x === b) x.classList.add("wrong");
+        });
+        fb.textContent = (ok ? "Richtig! " : "Leider falsch – richtig ist: " + item[1] + ". ") + (item[2] ? "(" + item[2] + ")" : "");
+        fb.className = "fb " + (ok ? "ok" : "no");
+        updateScore();
+      });
+      oh.appendChild(b);
+    });
+    updateScore();
+  }
+  function updateScore() {
+    document.getElementById("quizScore").textContent = right + " / " + asked + " richtig · Frage " + (qi + 1) + " von " + qOrder.length;
+  }
+  document.getElementById("quizNext").addEventListener("click", function () {
+    if (finished) { startDeck(); return; }
+    qi++;
+    if (qi >= qOrder.length) {
+      finished = true;
+      document.getElementById("quizQ").textContent = "Fertig: " + right + " von " + qOrder.length + " richtig.";
+      document.getElementById("quizOpts").innerHTML = "";
+      var fb = document.getElementById("quizFb");
+      fb.className = "fb " + (right === qOrder.length ? "ok" : "");
+      fb.textContent = right === qOrder.length ? "Perfekt – alles gewusst!" : "Klicke auf „Nächste Frage“, um das Deck neu zu mischen.";
+      return;
+    }
+    showQ();
+  });
+  startDeck();
+})();
+</script>
+</body></html>
