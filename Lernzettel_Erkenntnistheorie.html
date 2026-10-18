@@ -1,0 +1,1455 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lernzettel Erkenntnistheorie</title>
+<style>
+:root{
+  --bg:#f6f4ef; --surface:#ffffff; --surface-2:#f0ece4; --text:#1d2126; --muted:#5d636b; --border:#e1dbcf;
+  --accent:#2c5c8f; --accent-soft:#e7eff8;
+  --platon:#a5640a; --platon-soft:#fbf1e1;
+  --descartes:#2c5c8f; --descartes-soft:#e7eff8;
+  --locke:#2b7a4b; --locke-soft:#e4f3ea;
+  --foerster:#6a4ca6; --foerster-soft:#efe9f9;
+  --teacher:#0f766e; --teacher-soft:#e3f4f2;
+  --sugg:#8a5a00; --sugg-soft:#fdf3dc;
+  --warn:#a23b3b; --warn-soft:#f9e7e7;
+  --verb:#1f7a3a; --verb-soft:#e3f5e8;
+  --leaf:#d3e9cc; --sky:#e6f0f8; --rock:#dccfb9; --cave:#54463a; --sun:#f0b429; --fire:#e2702a; --water:#9cc8e6; --wall:#a08a70; --on-cave:#f6efe4;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 6px 18px rgba(0,0,0,.05);
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121417; --surface:#1b1e22; --surface-2:#23272c; --text:#e7e8ea; --muted:#a3a9b0; --border:#33383e;
+    --accent:#8db8e6; --accent-soft:#1d2b3a;
+    --platon:#f0b25a; --platon-soft:#2e2414;
+    --descartes:#8db8e6; --descartes-soft:#1b2836;
+    --locke:#7fd3a1; --locke-soft:#16281e;
+    --foerster:#b9a2ef; --foerster-soft:#251e36;
+    --teacher:#6fd3c8; --teacher-soft:#122b29;
+    --sugg:#f0c46b; --sugg-soft:#2c2414;
+    --warn:#f19a9a; --warn-soft:#331b1b;
+    --verb:#86d99e; --verb-soft:#16291c;
+    --leaf:#2f4a2c; --sky:#1a2531; --rock:#3a3329; --cave:#0d0b09; --fire:#f08a3e; --water:#3f6f91; --wall:#7d6a55; --on-cave:#efe6d8;
+    --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121417; --surface:#1b1e22; --surface-2:#23272c; --text:#e7e8ea; --muted:#a3a9b0; --border:#33383e;
+  --accent:#8db8e6; --accent-soft:#1d2b3a;
+  --platon:#f0b25a; --platon-soft:#2e2414;
+  --descartes:#8db8e6; --descartes-soft:#1b2836;
+  --locke:#7fd3a1; --locke-soft:#16281e;
+  --foerster:#b9a2ef; --foerster-soft:#251e36;
+  --teacher:#6fd3c8; --teacher-soft:#122b29;
+  --sugg:#f0c46b; --sugg-soft:#2c2414;
+  --warn:#f19a9a; --warn-soft:#331b1b;
+  --verb:#86d99e; --verb-soft:#16291c;
+  --leaf:#2f4a2c; --sky:#1a2531; --rock:#3a3329; --cave:#0d0b09; --fire:#f08a3e; --water:#3f6f91; --wall:#7d6a55; --on-cave:#efe6d8;
+  --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:16.5px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+a{color:var(--accent)}
+h1,h2,h3,h4{line-height:1.25;margin:0 0 .5em}
+h1{font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.45rem,3vw,1.85rem);margin-top:.2em}
+h3{font-size:1.22rem;margin-top:1.6em}
+h4{font-size:1.02rem;margin-top:1.2em}
+p{margin:.55em 0}
+ul,ol{padding-left:1.3em;margin:.5em 0}
+li{margin:.25em 0}
+small,.small{font-size:.86em;color:var(--muted)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px}
+
+/* Hero */
+.hero{padding:40px 0 24px;border-bottom:1px solid var(--border);background:var(--surface)}
+.eyebrow{text-transform:uppercase;letter-spacing:.08em;font-size:.78rem;color:var(--muted);font-weight:600;margin:0 0 .4em}
+.lead{font-size:1.1rem;color:var(--muted);max-width:760px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.pill{display:inline-block;padding:4px 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:.88rem}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+button{font:inherit;font-size:.9rem;cursor:pointer;border:1px solid var(--border);background:var(--surface-2);color:var(--text);padding:7px 14px;border-radius:10px}
+button:hover{border-color:var(--accent)}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Layout */
+.layout{display:block;padding-top:20px}
+@media (min-width:1100px){
+  .layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:32px;align-items:start}
+  .sidebar{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}
+  .toc>summary{display:none}
+}
+.toc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;margin-bottom:16px}
+.toc>summary{cursor:pointer;font-weight:700;list-style:none;padding:4px 0}
+.toc>summary::-webkit-details-marker{display:none}
+.toc>summary::after{content:" ▾";color:var(--muted)}
+.toc nav{font-size:.92rem}
+.toc .grp{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700;margin:12px 0 4px}
+.toc a{display:block;padding:3px 8px;border-radius:8px;text-decoration:none;color:var(--text)}
+.toc a:hover{background:var(--surface-2)}
+.toc a.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+main{min-width:0}
+
+/* Sections & cards */
+section.part{margin:10px 0 56px}
+.part-label{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.3em}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow);margin:16px 0}
+.card>h3:first-child,.card>h4:first-child{margin-top:0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.mini{background:var(--surface-2);border-radius:12px;padding:14px 16px}
+.mini h4{margin-top:0}
+
+/* Philosopher themes */
+.phil{--c:var(--accent);--c-soft:var(--accent-soft)}
+.phil.platon{--c:var(--platon);--c-soft:var(--platon-soft)}
+.phil.descartes{--c:var(--descartes);--c-soft:var(--descartes-soft)}
+.phil.locke{--c:var(--locke);--c-soft:var(--locke-soft)}
+.phil.foerster{--c:var(--foerster);--c-soft:var(--foerster-soft)}
+.phil-head{border-left:6px solid var(--c);background:var(--c-soft);border-radius:var(--radius);padding:16px 20px;margin:8px 0 18px}
+.phil-head h2{color:var(--c);margin-bottom:.2em}
+.facts{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted)}
+.facts b{color:var(--text)}
+
+/* Callouts */
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:10px;padding:12px 16px;margin:14px 0}
+.callout>:first-child{margin-top:0}.callout>:last-child{margin-bottom:0}
+.callout.teacher{border-color:var(--teacher);background:var(--teacher-soft)}
+.callout.sugg{border-color:var(--sugg);background:var(--sugg-soft)}
+.callout.warn{border-color:var(--warn);background:var(--warn-soft)}
+.callout.phil-c{border-color:var(--c);background:var(--c-soft)}
+.badge{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:6px;vertical-align:middle;margin-right:6px}
+.badge.teacher{background:var(--teacher);color:var(--surface)}
+.badge.sugg{background:var(--sugg);color:var(--surface)}
+.badge.book{background:var(--muted);color:var(--surface)}
+.merke{font-weight:700}
+
+/* Quotes */
+blockquote.zitat{margin:12px 0;padding:8px 14px;border-left:3px solid var(--c,var(--accent));background:var(--surface-2);border-radius:0 10px 10px 0}
+blockquote.zitat p{margin:.2em 0}
+.zeile{font-size:.85em;color:var(--muted);white-space:nowrap}
+
+/* Tables */
+.tbl-wrap{overflow-x:auto;margin:12px 0;border:1px solid var(--border);border-radius:12px}
+table.tbl{width:100%;border-collapse:collapse;font-size:.94rem;background:var(--surface)}
+.tbl th,.tbl td{padding:9px 12px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+.tbl th{background:var(--surface-2);font-weight:700}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td.c,.tbl th.c{text-align:center}
+.tbl .row-head td{background:var(--surface-2);font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+
+/* Steps */
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:12px 0}
+ol.steps>li{counter-increment:s;position:relative;padding:10px 12px 10px 52px;margin:8px 0;background:var(--surface-2);border-radius:12px}
+ol.steps>li::before{content:counter(s);position:absolute;left:12px;top:10px;width:28px;height:28px;border-radius:50%;background:var(--c,var(--accent));color:var(--surface);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+ol.steps>li>b:first-child{display:block}
+
+/* Flow */
+.flow{display:flex;flex-direction:column;align-items:stretch;gap:0;margin:14px 0}
+.flow .node{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:10px 14px}
+.flow .node.key{background:var(--c-soft,var(--accent-soft));border-color:var(--c,var(--accent))}
+.flow .node .lab{display:block;font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700;color:var(--c,var(--accent))}
+.flow .arr{text-align:center;color:var(--muted);font-size:1.1rem;line-height:1.6}
+.hflow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.hflow .node{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;font-size:.93rem;position:relative}
+.hflow .node .lab{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700;color:var(--c,var(--accent));margin-bottom:2px}
+
+/* Verbs */
+.v{background:var(--verb-soft);color:var(--verb);padding:0 .25em;border-radius:4px;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.chips span{padding:2px 10px;border-radius:999px;background:var(--verb-soft);color:var(--verb);font-size:.9rem}
+
+/* Korean */
+.ko{font-size:.8em;color:var(--muted);margin-left:.3em;font-weight:400}
+.no-ko .ko,.no-ko .ko-col{display:none}
+
+/* Details */
+details.loesung{margin:10px 0;border:1px solid var(--border);border-radius:12px;background:var(--surface)}
+details.loesung>summary{cursor:pointer;padding:10px 14px;font-weight:600;color:var(--accent)}
+details.loesung[open]>summary{border-bottom:1px solid var(--border)}
+details.loesung>.inner{padding:6px 16px 12px}
+.selftest details.loesung>summary{color:var(--text)}
+.selftest details.loesung>summary::before{content:"❓ "}
+
+/* Models */
+.models{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px}
+.model{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.model h4{margin:0 0 .3em;font-size:1.1rem}
+.diagram{color:var(--text);margin:6px 0 4px}
+.diagram svg{width:100%;max-width:340px;height:auto;display:block}
+.def{font-size:.92rem;color:var(--muted);border-left:3px solid var(--border);padding-left:10px;margin:8px 0}
+.kv{margin:6px 0}
+.kv b{color:var(--text)}
+
+/* Cave svg */
+.cave-svg{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--border)}
+.cave-svg text{font:12px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;fill:var(--text)}
+.cave-svg text.lt{fill:var(--on-cave)}
+
+/* Checklist */
+.check{list-style:none;padding:0}
+.check li{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed var(--border)}
+.check input{margin-top:.35em;width:18px;height:18px;flex:none;accent-color:var(--accent)}
+
+.totop{display:inline-block;margin-top:8px;font-size:.85rem;color:var(--muted)}
+hr.sep{border:0;border-top:1px solid var(--border);margin:28px 0}
+footer{color:var(--muted);font-size:.85rem;padding:30px 0 60px;border-top:1px solid var(--border);margin-top:40px}
+
+@media (max-width:640px){
+  body{font-size:16px}
+  .card{padding:16px}
+  .phil-head{padding:14px 16px}
+  ol.steps>li{padding-left:46px}
+}
+@media print{
+  .sidebar,.toolbar,.totop,.no-print{display:none!important}
+  body{background:#fff;color:#000;font-size:10.5pt}
+  .hero{background:#fff}
+  .layout{display:block}
+  .card,.model,.mini,details.loesung,ol.steps>li,.callout{box-shadow:none;break-inside:avoid}
+  a{color:inherit;text-decoration:none}
+  section.part{margin-bottom:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- Wiederverwendbare Symbole für die Diagramme -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="currentColor"/>
+    </marker>
+    <symbol id="i-tree" viewBox="0 0 40 60">
+      <circle cx="20" cy="20" r="16" fill="var(--leaf)" stroke="currentColor" stroke-width="2"/>
+      <path d="M20 58V28M20 38l-8-8M20 33l8-7" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+    </symbol>
+    <symbol id="i-head" viewBox="0 0 50 62">
+      <path d="M42 60c0-8 4-12 4-26C46 16 36 4 24 4 13 4 7 12 7 21l-4 9 5 2v6c0 4 3 6 8 6h2v16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Ethik K11 · Unterrichtsreihe Erkenntnistheorie</p>
+    <h1>Lernzettel Erkenntnistheorie</h1>
+    <p class="lead">Wie kommen wir zu Wissen über die Welt – und können wir unserer Wahrnehmung überhaupt trauen? Hier stehen alle Inhalte aus dem Ordner „Ethik 11-1“, einfach erklärt und auf die drei Klausuraufgaben ausgerichtet.</p>
+    <div class="pills">
+      <span class="pill">Klausur: Mittwoch, 21. Oktober 2026</span>
+      <span class="pill">50 % der Leistung</span>
+      <span class="pill" id="countdown" hidden></span>
+    </div>
+    <div class="callout" style="max-width:860px">
+      <p><b>Zeichen auf diesem Zettel</b></p>
+      <p><span class="badge teacher">Unterricht</span> Formulierung aus dem Tafelbild oder aus einer Lösung der Lehrkraft – so solltest du es lernen.</p>
+      <p><span class="badge sugg">Vorschlag</span> Formulierungsvorschlag auf Basis der Materialien (nicht von der Lehrkraft). Gut zum Lernen, aber in eigenen Worten schreiben.</p>
+      <p><span class="ko" style="margin:0">회색 한국어</span> = kleine koreanische Begriffshilfe (mit dem Knopf unten ein- und ausblendbar).</p>
+    </div>
+    <div class="toolbar no-print">
+      <button id="ko-toggle" type="button" aria-pressed="true">Koreanische Hilfen: an</button>
+      <button id="expand-all" type="button">Alle Lösungen aufklappen</button>
+      <button id="print-btn" type="button">Drucken / PDF</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap layout">
+<aside class="sidebar">
+  <details class="toc" id="toc">
+    <summary>Inhaltsverzeichnis</summary>
+    <nav aria-label="Inhalt">
+      <div class="grp">Teil A · Klausur</div>
+      <a href="#klausur">Die drei Aufgaben</a>
+      <a href="#aufgabe1">1 · Kernthese &amp; Kernanliegen</a>
+      <a href="#aufgabe2">2 · Argumentationsgang</a>
+      <a href="#aufgabe3">3 · Stellungnahme / Erörterung</a>
+      <a href="#lesen">5-Schritt-Lesemethode</a>
+      <div class="grp">Teil B · Grundlagen</div>
+      <a href="#grundlagen">Was ist Erkenntnistheorie?</a>
+      <a href="#begriffe">Wichtige Begriffe</a>
+      <a href="#tee">Das Tee-Beispiel</a>
+      <a href="#taeuschungen">Sinnestäuschungen</a>
+      <a href="#modelle">Die fünf Modelle</a>
+      <a href="#rat-emp">Rationalismus vs. Empirismus</a>
+      <div class="grp">Teil C · Texte</div>
+      <a href="#theaitetos">Platon: Theaitetos</a>
+      <a href="#hoehle">Platon: Höhlengleichnis</a>
+      <a href="#descartes">Descartes: Meditationen</a>
+      <a href="#locke">Locke: Empirismus</a>
+      <a href="#foerster">Foerster: Konstruktivismus</a>
+      <div class="grp">Teil D · Üben</div>
+      <a href="#vergleich">Vergleichstabelle</a>
+      <a href="#eroerterung">Erörterungsfragen</a>
+      <a href="#redemittel">Redemittel</a>
+      <a href="#checkliste">Checkliste</a>
+      <a href="#glossar">Glossar</a>
+    </nav>
+  </details>
+</aside>
+
+<main>
+
+<!-- ===================== TEIL A ===================== -->
+<section class="part" id="klausur">
+  <span class="part-label">Teil A</span>
+  <h2>Die Klausur – was wird verlangt?</h2>
+  <p>In der Klausur bekommst du einen <b>unbekannten oder bekannten philosophischen Text</b> zur Erkenntnistheorie. Dazu gibt es drei Aufgaben. Jede Aufgabe gehört zu einem <b>Anforderungsbereich (AFB)</b><span class="ko">요구 영역·난이도 단계</span>: AFB I = Wissen wiedergeben, AFB II = Wissen anwenden und analysieren, AFB III = selbst beurteilen.</p>
+  <div class="grid3">
+    <div class="card" style="margin:0">
+      <span class="badge book">AFB I</span>
+      <h3 style="margin-top:.5em">Aufgabe 1<br>Kerngedanke &amp; Kernanliegen</h3>
+      <p>Du formulierst <b>in eigenen Worten</b>, was die wichtigste Aussage des Textes ist (Kernthese) und was der Autor damit erreichen will (Kernanliegen).</p>
+      <p class="small">Typische Operatoren: formulieren, wiedergeben, darstellen</p>
+    </div>
+    <div class="card" style="margin:0">
+      <span class="badge book">AFB II</span>
+      <h3 style="margin-top:.5em">Aufgabe 2<br>Argumentationsgang analysieren</h3>
+      <p>Du zeigst <b>Schritt für Schritt</b>, wie der Autor seine These aufbaut: Womit beginnt er? Wie begründet er? Welche Beispiele, Einwände und Schlussfolgerungen gibt es?</p>
+      <p class="small">Typische Operatoren: analysieren, untersuchen, rekonstruieren</p>
+    </div>
+    <div class="card" style="margin:0">
+      <span class="badge book">AFB III</span>
+      <h3 style="margin-top:.5em">Aufgabe 3<br>Stellungnahme / Erörterung</h3>
+      <p>Du beurteilst eine erkenntnistheoretische Frage. Wichtig: <b>Argumente + Fachwissen aus dem Unterricht + eigenes, begründetes Urteil</b>.</p>
+      <p class="small">Typische Operatoren: Stellung nehmen, erörtern, diskutieren, sich auseinandersetzen</p>
+    </div>
+  </div>
+
+  <h3>Die wichtigsten Operatoren<span class="ko">지시어(과제 동사)</span></h3>
+  <p>Operatoren sind die Verben in der Aufgabenstellung. Sie sagen dir genau, <b>was</b> du tun sollst. (Aus der Operatorenliste „Fachspezifische Operatoren für Abituraufgaben“.)</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>Operator</th><th>Was du tun musst</th><th class="c">AFB</th></tr>
+    <tr><td><b>wiedergeben</b></td><td>Grundgedanken und Aussagen eines Textes darlegen</td><td class="c">I–II</td></tr>
+    <tr><td><b>darstellen / darlegen</b></td><td>eine philosophische Position, Hauptaussagen, Problemstellung bzw. Anliegen eines Textes entfalten</td><td class="c">I–II</td></tr>
+    <tr><td><b>zusammenfassen</b></td><td>Sachverhalte/Aussagen komprimiert (kurz) darstellen</td><td class="c">I–II</td></tr>
+    <tr><td><b>erläutern</b></td><td>einen Sachverhalt mit zusätzlichen Informationen und Beispielen veranschaulichen</td><td class="c">I–II</td></tr>
+    <tr><td><b>rekonstruieren</b></td><td>den Argumentations- bzw. Gedankengang eines Textes in seinem Aufbau darstellen</td><td class="c">I–II</td></tr>
+    <tr><td><b>analysieren</b></td><td>Materialien in ihren Einzelaspekten erschließen und darstellen</td><td class="c">II</td></tr>
+    <tr><td><b>untersuchen</b></td><td>unter gezielten Fragestellungen Strukturmerkmale und Zusammenhänge herausarbeiten</td><td class="c">II</td></tr>
+    <tr><td><b>vergleichen</b></td><td>Gemeinsamkeiten, Unterschiede und Ähnlichkeiten darstellen</td><td class="c">II</td></tr>
+    <tr><td><b>einordnen</b></td><td>eine Position mit Begründung in einen größeren Zusammenhang stellen (z. B. „Foerster gehört zum Konstruktivismus, weil …“)</td><td class="c">II</td></tr>
+    <tr><td><b>erörtern</b></td><td>zu einer Problemstellung eine Argumentation (Pro und Contra) entwickeln, die zu einer begründeten eigenen Beurteilung führt</td><td class="c">II–III</td></tr>
+    <tr><td><b>überprüfen</b></td><td>eine These/Argumentation nach selbst gewählten Aspekten auf Schlüssigkeit untersuchen</td><td class="c">II–III</td></tr>
+    <tr><td><b>beurteilen</b></td><td>zu Aussagen/Problemen ein fachlich begründetes Urteil entwickeln</td><td class="c">III</td></tr>
+    <tr><td><b>Stellung nehmen</b></td><td>eine Problemstellung/Position auf der Grundlage fachlicher Kenntnisse prüfen und nach Abwägung eine Einschätzung formulieren</td><td class="c">III</td></tr>
+  </table></div>
+
+  <!-- Aufgabe 1 -->
+  <div class="card" id="aufgabe1">
+    <h3>Aufgabe 1: Kernthese und Kernanliegen formulieren</h3>
+    <div class="grid2">
+      <div class="mini">
+        <h4>Kernthese<span class="ko">핵심 주장</span></h4>
+        <p>= Kerngedanke, Kernaussage, zentrale These.</p>
+        <p>Das ist die <b>wichtigste Behauptung</b> des Textes – die Antwort des Autors auf das Problem des Textes.</p>
+        <p><b>Leitfrage:</b> <i>WAS</i> behauptet der Autor?</p>
+        <p class="small">Länge: 2–4 Sätze.</p>
+      </div>
+      <div class="mini">
+        <h4>Kernanliegen<span class="ko">핵심 의도</span></h4>
+        <p>= Absicht, Ziel, Intention des Autors.</p>
+        <p>Das ist der <b>Grund</b>, warum er den Text schreibt: Was will er erreichen? Welches Problem sieht er? Was kritisiert er?</p>
+        <p><b>Leitfrage:</b> <i>WOZU / WARUM</i> schreibt er das?</p>
+        <p class="small">Oft: Er kritisiert eine andere Position (z. B. den naiven Realismus) und will etwas Neues zeigen.</p>
+      </div>
+    </div>
+    <div class="callout teacher">
+      <p><span class="badge teacher">Unterricht</span><b>Aus dem Tafelbild:</b> Fragen zum Kernanliegen: <i>Ziel? Absicht? Problem? Kritik? Was will der Philosoph erreichen?</i> – und ganz wichtig: <b>„Selber formulieren!“</b> Nicht einfach Sätze aus dem Text abschreiben, sondern eigene Worte und Fachbegriffe benutzen (Subjekt, Außenwelt, Wahrnehmung, Realismus …).</p>
+    </div>
+    <h4>Formulierungshilfen</h4>
+    <div class="grid2">
+      <ul>
+        <li>„Der Autor <span class="v">vertritt die These</span>, dass …“</li>
+        <li>„Die zentrale Aussage des Textes lautet, dass …“</li>
+        <li>„Nach Platon / Laut Foerster sei …“ (Konjunktiv!)</li>
+      </ul>
+      <ul>
+        <li>„Dem Autor geht es darum, … zu zeigen / zu kritisieren.“</li>
+        <li>„Er möchte die Position des … in Frage stellen.“</li>
+        <li>„Sein Ziel ist es, den Begriff … neu zu definieren.“</li>
+      </ul>
+    </div>
+    <h4>Der Einleitungssatz (Formulierungsübung)</h4>
+    <p>Bausteine aus der Übung: <b>Name</b> · <b>Titel</b> · <b>Erscheinungsjahr</b> · <b>Textsorte</b> (philosophischer Text, Dialog, Gleichnis) · <b>Herkunft/Beruf</b> · <b>Thema</b> · <b>Einordnung</b> in ein Erkenntnismodell („… ist der Erkenntnistheorie / dem Konstruktivismus zuzuordnen“).</p>
+    <div class="callout sugg">
+      <p><span class="badge sugg">Vorschlag</span><b>Foerster:</b> In dem philosophischen Text „Wie kommen wir zu Erkenntnissen?“ aus dem Jahr 1985 setzt sich der österreichisch-amerikanische Physiker und Biologe Heinz von Foerster mit der Frage auseinander, wie menschliche Erkenntnis zustande kommt. Sein naturwissenschaftlicher Ansatz ist dem Konstruktivismus bzw. dem konstruktivistischen Erkenntnismodell der Erkenntnistheorie zuzuordnen.</p>
+      <p><b>Descartes:</b> In dem Textauszug „Woran man nicht sinnvoll zweifeln kann“ (1641) aus seinen „Meditationen“ untersucht der französische Philosoph und Mathematiker René Descartes, ob es überhaupt eine absolut sichere Erkenntnis gibt. Der Text ist dem Rationalismus zuzuordnen.</p>
+      <p><b>Platon:</b> In dem Dialog „Theaitetos“ lässt der griechische Philosoph Platon (427–347 v. Chr.) seinen Lehrer Sokrates mit dem jungen Theaitetos über die Frage diskutieren, ob Erkenntnis nichts anderes als Wahrnehmung sei.</p>
+    </div>
+  </div>
+
+  <!-- Aufgabe 2 -->
+  <div class="card" id="aufgabe2">
+    <h3>Aufgabe 2: Den Argumentationsgang analysieren<span class="ko">논증 과정 분석</span></h3>
+    <div class="callout warn">
+      <p><b>Nicht nacherzählen!</b> Falsch: „Dann sagt er … Danach sagt er … Außerdem meint er …“.<br>
+      Richtig: Zeige die <b>Funktion</b> jedes Schritts: Ist es eine <b>These</b>? Eine <b>Begründung</b>? Ein <b>Beispiel</b>? Ein <b>Einwand</b>? Eine <b>Schlussfolgerung</b>?</p>
+    </div>
+    <h4>So gehst du vor (Methode „Den Gedankengang eines philosophischen Textes darstellen“)</h4>
+    <ol class="steps">
+      <li><b>Text erschließen</b>Lies mit der 5-Schritt-Lesemethode. Markiere Schlüsselbegriffe, Thesen und Argumente. Teile den Text in Sinnabschnitte.</li>
+      <li><b>Gliederung erstellen</b>Gib jedem Sinnabschnitt eine Überschrift mit Verb und Zeilenangabe, z. B. „Z. 5–10: beschreibt das Experiment zum blinden Fleck“.</li>
+      <li><b>Darstellung schreiben</b>Einleitung → Hauptteil → Schluss, mit den Regeln zur sprachlichen Form (unten).</li>
+    </ol>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>Teil</th><th>Inhalt</th></tr>
+      <tr><td><b>Einleitung</b></td><td>Autor, Titel, Jahr/Quelle, Thema (Einleitungssatz).</td></tr>
+      <tr><td><b>Hauptteil</b></td><td>1) Anliegen bzw. Problemstellung des Textes · 2) zentrale These (als Antwort auf das Problem) · 3) Argumentation Schritt für Schritt mit Zeilenangaben.</td></tr>
+      <tr><td><b>Schluss</b></td><td>Kurzes Fazit: <i>Wie</i> argumentiert der Autor insgesamt (z. B. „mithilfe neurobiologischer Beispiele“, „durch ein Gedankenexperiment“)? Welche Position stellt er in Frage?</td></tr>
+    </table></div>
+    <h4>Vier Regeln zur Sprache</h4>
+    <ol>
+      <li><b>Distanz zeigen:</b> Du bist nicht der Autor. Benutze den <b>Konjunktiv I</b> („Er behauptet, die Außenwelt <i>sei</i> eine Erfindung.“) oder „<i>nach</i> Foerster …“, „<i>laut</i> Descartes …“, „Platon <i>zufolge</i> …“. Nicht: „Die Außenwelt ist eine Erfindung.“</li>
+      <li><b>Performative Verben benutzen</b><span class="ko">수행 동사: 글의 기능을 나타내는 동사</span> (Liste unten) – sie zeigen, <i>was</i> der Autor gerade tut.</li>
+      <li><b>Inhalt immer nennen:</b> Nicht nur „Er nennt ein Beispiel.“, sondern „Er veranschaulicht seine These <i>am Beispiel des Windes, der den einen frieren lässt, den anderen nicht</i>.“</li>
+      <li><b>Belegen:</b> Paraphrase mit „(vgl. Z. 5–10)“, direktes Zitat in Anführungszeichen mit „(Z. 47)“. Nur die wichtigsten Stellen wörtlich zitieren.</li>
+    </ol>
+    <div class="grid2">
+      <div class="mini">
+        <h4>Konjunktiv I – Mini-Tabelle<span class="ko">접속법 1식</span></h4>
+        <div class="tbl-wrap" style="margin:6px 0"><table class="tbl">
+          <tr><th>Infinitiv</th><th>er/sie/es</th><th>sie (Plural)</th></tr>
+          <tr><td>sein</td><td>sei</td><td>seien</td></tr>
+          <tr><td>haben</td><td>habe</td><td>hätten*</td></tr>
+          <tr><td>können</td><td>könne</td><td>könnten*</td></tr>
+          <tr><td>geben</td><td>es gebe</td><td>–</td></tr>
+          <tr><td>werden</td><td>werde</td><td>würden*</td></tr>
+          <tr><td>wahrnehmen</td><td>nehme wahr</td><td>nähmen wahr*</td></tr>
+        </table></div>
+        <p class="small">* Wenn Konjunktiv I gleich aussieht wie der Indikativ (sie haben), nimmt man Konjunktiv II.</p>
+      </div>
+      <div class="mini">
+        <h4>Performative Verben nach Funktion</h4>
+        <p class="small"><b>These / Einstieg</b></p>
+        <div class="chips"><span>behaupten</span><span>feststellen</span><span>eine These aufstellen/vertreten</span><span>ausgehen von</span><span>vermuten</span><span>fragen</span></div>
+        <p class="small"><b>Begründen</b></p>
+        <div class="chips"><span>begründen</span><span>belegen</span><span>stützen</span><span>argumentieren</span><span>nachweisen</span><span>beweisen</span><span>ableiten</span></div>
+        <p class="small"><b>Veranschaulichen / Erklären</b></p>
+        <div class="chips"><span>veranschaulichen</span><span>verdeutlichen</span><span>exemplifizieren</span><span>konkretisieren</span><span>erläutern</span><span>definieren</span><span>unterscheiden</span><span>ein Gedankenexperiment durchführen</span><span>ein Gleichnis erzählen</span></div>
+        <p class="small"><b>Gegenargumente</b></p>
+        <div class="chips"><span>einwenden</span><span>einräumen</span><span>widersprechen</span><span>widerlegen</span><span>bezweifeln</span><span>kritisieren</span><span>problematisieren</span><span>einem Missverständnis vorbeugen</span></div>
+        <p class="small"><b>Schluss / Überleitung</b></p>
+        <div class="chips"><span>folgern</span><span>schlussfolgern</span><span>zu dem Schluss kommen</span><span>zusammenfassen</span><span>übertragen auf</span><span>anknüpfen an</span><span>fortsetzen</span></div>
+      </div>
+    </div>
+    <div class="callout teacher">
+      <p><span class="badge teacher">Unterricht</span><b>So sieht es in der Lösung der Lehrkraft aus</b> (Foerster, Anfang):</p>
+      <p>„Der Philosoph <span class="v">beginnt seine Argumentation</span> direkt mit der <span class="v">Ausgangsthese</span>, dass die erfahrene Außenwelt der Imagination entspringt (vgl. Z. 1). Hier handelt es sich auch um Foersters <span class="v">Kernthese</span>, deren <span class="v">Nachweis</span> er zunächst mithilfe eines <span class="v">Versuchs</span> erbringen möchte (vgl. Z. 2f.).“</p>
+      <p class="small">Die ganzen Musterlösungen findest du bei <a href="#descartes">Descartes</a> und <a href="#foerster">Foerster</a>.</p>
+    </div>
+  </div>
+
+  <!-- Aufgabe 3 -->
+  <div class="card" id="aufgabe3">
+    <h3>Aufgabe 3: Stellungnahme, Erörterung, Diskussion, Auseinandersetzung</h3>
+    <p>Alle vier Formen wollen dasselbe Grundprinzip: Du <b>prüfst</b> eine Frage oder Position, <b>wägst Argumente ab</b> und kommst zu einem <b>eigenen, begründeten Urteil</b>. Der Unterschied liegt nur im Schwerpunkt:</p>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>Form</th><th>Schwerpunkt</th></tr>
+      <tr><td><b>Stellung nehmen</b><span class="ko">입장 표명</span></td><td>Eine Position mit Fachwissen prüfen und nach Abwägung eine eigene Einschätzung formulieren.</td></tr>
+      <tr><td><b>Erörtern</b><span class="ko">찬반 논술</span></td><td>Pro- und Contra-Argumente gegenüberstellen → begründetes Urteil.</td></tr>
+      <tr><td><b>Diskutieren</b></td><td>Verschiedene Sichtweisen (z. B. mehrere Philosophen) miteinander ins Gespräch bringen und abwägen → Urteil.</td></tr>
+      <tr><td><b>Sich auseinandersetzen mit</b></td><td>Eine Position (z. B. Foersters Konstruktivismus) kritisch prüfen: Stärken und Schwächen → Urteil.</td></tr>
+    </table></div>
+    <h4>Aufbau</h4>
+    <ol class="steps">
+      <li><b>Einleitung</b>Frage oder Problem nennen, kurz erklären, warum es wichtig ist (z. B. Bezug zum Text oder zum Alltag).</li>
+      <li><b>Hauptteil</b>Argumente dafür und dagegen. Jedes Argument mit Fachwissen (Modell, Philosoph, Fachbegriff) und einem Beispiel. Tipp: erst die schwächere Seite, dann die Seite, die du am Ende vertrittst.</li>
+      <li><b>Schluss</b>Eigenes Urteil mit Begründung – gern auch ein differenziertes („teilweise ja, weil …, aber …“).</li>
+    </ol>
+    <h4>Ein gutes Argument = These + Begründung + Beispiel + Rückbezug</h4>
+    <div class="callout sugg">
+      <p><span class="badge sugg">Vorschlag</span><b>These:</b> Unsere Sinne liefern keine sichere Erkenntnis. <b>Begründung:</b> Wahrnehmungen können getäuscht werden und sind von Mensch zu Mensch verschieden. <b>Beispiel:</b> Beim Riechexperiment behaupteten etwa drei Viertel der Zuhörer, einen Geruch wahrzunehmen, obwohl nur destilliertes Wasser ausgeschüttet wurde. <b>Rückbezug:</b> Das bestätigt Descartes’ Klugheitsregel, denen nie ganz zu vertrauen, die uns auch nur einmal getäuscht haben.</p>
+    </div>
+    <div class="callout">
+      <p><b>Fachwissen-Check:</b> Habe ich (1) ein <b>Erkenntnismodell</b> genannt, (2) mindestens einen <b>Philosophen</b> aus dem Unterricht einbezogen, (3) ein <b>Beispiel</b> (Täuschung, Experiment, Alltag) benutzt und (4) die <b>Fachbegriffe</b> richtig verwendet? Fragen und Argumente zum Üben: <a href="#eroerterung">Teil D</a>.</p>
+    </div>
+  </div>
+
+  <!-- Lesemethode -->
+  <div class="card" id="lesen">
+    <h3>Die 5-Schritt-Lesemethode (für den Klausurtext)</h3>
+    <ol class="steps">
+      <li><b>Überblick</b>Überschrift lesen, Bilder ansehen, Text überfliegen. Was verrät der Arbeitsauftrag?</li>
+      <li><b>Verstehensinseln suchen</b>Mit dem anfangen, was du verstehst. Unbekannte Wörter aus dem Zusammenhang klären – nicht jedes Wort nachschlagen. Schwierige Sätze vereinfachen.</li>
+      <li><b>Sinnabschnitte bilden</b>Wo beginnt ein neuer Gedanke? Strich ziehen und eine Überschrift mit Verb finden (mindestens ein Halbsatz).</li>
+      <li><b>Wichtiges unterstreichen</b>Farbig markieren, Randnotizen: Argumente und Gegenargumente nummerieren, Zustimmung/Kritik, zentrale Zitate.</li>
+      <li><b>Arbeitsauftrag bearbeiten</b>Jetzt erst schreiben.</li>
+    </ol>
+  </div>
+  <a class="totop" href="#top">↑ nach oben</a>
+</section>
+
+<!-- ===================== TEIL B ===================== -->
+<section class="part" id="grundlagen">
+  <span class="part-label">Teil B</span>
+  <h2>Grundlagen: Was ist Erkenntnistheorie?<span class="ko">인식론</span></h2>
+  <div class="card">
+    <blockquote class="zitat"><p>„Die <b>Erkenntnistheorie</b> beschäftigt sich mit zwei Fragen: Wann kann man überhaupt von Wissen sprechen? Unter welchen Bedingungen und in welchem Sinn kann man Aussagen als ‚wahr‘ bezeichnen? Auf diese Fragen antworten verschiedene erkenntnistheoretische Modelle.“</p><p class="zeile">Schulbuch, Definition</p></blockquote>
+    <p><b>Einfach gesagt:</b> Die Erkenntnistheorie fragt, <b>was wir wissen können</b> und <b>wie</b> wir zu diesem Wissen kommen. Können wir die Welt so erkennen, wie sie wirklich ist? Oder sehen wir nur ein Bild der Welt, das unsere Sinne und unser Gehirn erzeugen? Wo liegen die <b>Möglichkeiten und Grenzen</b> unserer Erkenntnis?</p>
+    <div class="grid2">
+      <div class="mini">
+        <h4>„Ceci n’est pas une pipe“ – „Dies ist keine Pfeife“</h4>
+        <p>Das Bild von René Magritte zeigt eine Pfeife – und darunter steht: „Dies ist keine Pfeife.“ Das stimmt: Es ist nur das <b>Bild</b> einer Pfeife. Man kann es nicht rauchen.</p>
+        <p><b>Bedeutung für uns:</b> Auch das, was wir wahrnehmen, ist vielleicht nur ein <b>Abbild</b> im Kopf – nicht das Ding selbst. Und auch das Wort „Pfeife“ ist nicht die Pfeife (Zusammenhang von <b>Sprache und Denken</b>).</p>
+      </div>
+      <div class="mini">
+        <h4>Was du laut Lehrplan können sollst</h4>
+        <ul>
+          <li>Denkmodelle der Erkenntnistheorie darstellen</li>
+          <li>Möglichkeiten und Grenzen der Erkenntnis beschreiben</li>
+          <li>Erkenntnistheorie auf Fragen aus dem Alltag anwenden</li>
+          <li>den Wahrheitsanspruch wissenschaftlicher Aussagen kritisch beurteilen (mit Beispielen)</li>
+          <li>Argumentationsstrukturen erkennen und darstellen</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h3 id="begriffe">Wichtige Begriffe (Wortschatz aus dem Unterricht)</h3>
+  <p>Beispiel für alle Begriffe: Du trinkst einen <b>Thai-Ingwer-Mango-Tee</b>.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>Begriff</th><th>Einfache Erklärung</th><th>Beispiel</th></tr>
+    <tr><td><b>Subjekt</b><span class="ko">주체</span></td><td>Der Mensch, der wahrnimmt und erkennt (Erkenntnissubjekt).</td><td>Ich, die Person, die den Tee trinkt.</td></tr>
+    <tr><td><b>Objekt</b><span class="ko">대상·객체</span></td><td>Das, was erkannt wird (Erkenntnisobjekt).</td><td>Der Tee.</td></tr>
+    <tr><td><b>Außenwelt</b><span class="ko">외부 세계</span></td><td>Alles, was außerhalb meines Bewusstseins (scheinbar) existiert.</td><td>Tasse, Teebeutel, Tisch.</td></tr>
+    <tr><td><b>Wirklichkeit / Realität</b><span class="ko">현실·실재</span></td><td>Wie die Welt <i>wirklich</i> ist – vielleicht unabhängig von uns. Genau darüber streiten die Modelle!</td><td>Ist der Tee „in Wirklichkeit“ süß – oder nur für mich?</td></tr>
+    <tr><td><b>Zugang</b></td><td>Der Weg, auf dem das Subjekt an das Objekt herankommt.</td><td>Über die Sinne: sehen, riechen, schmecken, tasten.</td></tr>
+    <tr><td><b>(Sinnes-)Wahrnehmung</b><span class="ko">(감각) 지각</span></td><td>Aufnahme von Informationen durch die Sinne.</td><td>Ich rieche Mango, ich fühle die warme Tasse.</td></tr>
+    <tr><td><b>Erscheinung</b><span class="ko">현상</span></td><td>Wie mir etwas erscheint, wie es mir vorkommt.</td><td>Der Tee erscheint mir süß und etwas scharf.</td></tr>
+    <tr><td><b>Abbild</b><span class="ko">모사·본뜬 상</span></td><td>Bild oder Kopie eines Originals (im Kopf, auf Papier, auf dem Bildschirm).</td><td>Das „innere Bild“ vom Tee; Magrittes Pfeife.</td></tr>
+    <tr><td><b>Vorstellung</b><span class="ko">표상</span></td><td>Bild oder Gedanke im Geist – auch ohne dass das Ding gerade da ist.</td><td>Ich stelle mir eine Tasse Tee vor.</td></tr>
+    <tr><td><b>Erkenntnis</b><span class="ko">인식</span></td><td>Das Ergebnis des Erkennens: begründetes Wissen über etwas.</td><td>„Das ist Mango-Tee.“</td></tr>
+    <tr><td><b>Wissen</b><span class="ko">지식</span></td><td>Wahre und begründete Überzeugung – sicherer als eine Meinung.</td><td>Ich weiß, dass Tee aus heißem Wasser und Teeblättern besteht.</td></tr>
+    <tr><td><b>Meinung</b><span class="ko">의견</span></td><td>Etwas für wahr halten, ohne sichere Begründung. (Bei Platon: das Denken in der Höhle.)</td><td>„Ich glaube, das ist Pfirsich.“</td></tr>
+    <tr><td><b>Wahrheit</b><span class="ko">진리</span></td><td>Eine Aussage ist wahr, wenn sie mit der Wirklichkeit übereinstimmt (so sagt es der Realismus).</td><td>„Der Tee ist heiß“ ist wahr, wenn er wirklich heiß ist.</td></tr>
+    <tr><td><b>empirisch</b><span class="ko">경험적</span></td><td>auf Erfahrung/Beobachtung beruhend</td><td>Ich probiere den Tee.</td></tr>
+    <tr><td><b>a priori</b><span class="ko">선험적</span></td><td>unabhängig von Erfahrung, nur durch Denken wissbar</td><td>2 + 3 = 5; „Ein Dreieck hat drei Ecken.“</td></tr>
+    <tr><td><b>Prämisse</b><span class="ko">전제</span></td><td>Voraussetzung, auf der ein Argument aufbaut</td><td>Prämisse des Realismus: Subjekt und Außenwelt sind klar getrennt.</td></tr>
+  </table></div>
+
+  <h3 id="tee">Das Tee-Beispiel: „Mein Zugang zur Außenwelt“</h3>
+  <div class="card">
+    <p>Im Unterricht habt ihr gezeichnet, wie wir einen Thai-Ingwer-Mango-Tee „erkennen“. Alle Zeichnungen zeigen denselben Weg:</p>
+    <div class="hflow">
+      <div class="node"><span class="lab">1 · Sinne</span>Sehen (Verpackung, Farbe), tasten (Teebeutel, warme Tasse), riechen (Mango, Ingwer), schmecken (süß, scharf).</div>
+      <div class="node"><span class="lab">2 · Gehirn</span>Die Signale der Sinnesorgane gehen über die Nerven zum Gehirn.</div>
+      <div class="node"><span class="lab">3 · Wissen</span>„Ich weiß, was Tee ist: heißes Wasser + Aroma. Man kann es trinken.“</div>
+      <div class="node"><span class="lab">4 · Erfahrung</span>„Ich habe schon mal Mango gegessen, also erkenne ich den Geschmack.“ Dazu kommen Erinnerungen und Gefühle (Sommer, Urlaub, Ingwer → Kranksein).</div>
+      <div class="node"><span class="lab">5 · Ergebnis</span>Erscheinung / Abbild im Kopf: „Es ist ein Mango-Tee!“</div>
+    </div>
+    <div class="callout">
+      <p><b>Was lernen wir daraus?</b> Wahrnehmen ist kein passives „Fotografieren“. Das Gehirn <b>verbindet</b> Sinnesdaten mit Wissen und Erfahrung und <b>deutet</b> sie. Wir haben also <b>keinen direkten Zugang</b> zum Tee „an sich“ – nur über Sinne und Gehirn. Genau hier beginnt die Erkenntnistheorie: <i>Ist das Bild in meinem Kopf eine richtige Kopie der Wirklichkeit?</i></p>
+    </div>
+  </div>
+
+  <h3 id="taeuschungen">Sinnestäuschungen – Probleme mit dem Zugang zur Wirklichkeit<span class="ko">감각 착각</span></h3>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>Art</th><th>Beispiel aus dem Unterricht</th><th>Was zeigt das?</th></tr>
+    <tr><td><b>Blinder Fleck</b><span class="ko">맹점</span></td><td>Stern-und-Kreis-Experiment (Foerster): Der Kreis verschwindet bei 30–35 cm Abstand.</td><td>Wir sehen eine Lücke nicht – und merken es nicht einmal.</td></tr>
+    <tr><td><b>Perspektive</b></td><td>Raum mit blauen Linien: Von einem Punkt sieht man einen Rahmen mit Kreuz, von einer anderen Stelle nur einzelne Linien.</td><td>Was wir sehen, hängt vom Standpunkt ab.</td></tr>
+    <tr><td><b>Größe</b></td><td>Gleich große Figuren und Kreise wirken verschieden groß (z. B. Kreis zwischen kleinen vs. großen Kreisen; Personen-Paare in einer Säulenhalle).</td><td>Das Gehirn vergleicht mit der Umgebung.</td></tr>
+    <tr><td><b>Bewegung</b></td><td>Muster, die sich scheinbar drehen („Hier rotiert eigentlich nichts …“).</td><td>Wir sehen Bewegung, die es nicht gibt.</td></tr>
+    <tr><td><b>Helligkeit</b></td><td>Schachbrett: Feld A wirkt dunkler als Feld B – aber B liegt im Schatten und ist genauso dunkel.</td><td>Das Gehirn „korrigiert“ mit Erwartungen (Schatten).</td></tr>
+    <tr><td><b>Nachbilder</b></td><td>Flagge in falschen Farben 30 Sekunden anschauen → auf weißer Fläche erscheinen andere Farben.</td><td>Unser Sehen erzeugt Farben, die nicht da sind.</td></tr>
+    <tr><td><b>Kippbilder</b><span class="ko">반전 그림</span></td><td>Saxophonspieler / Frauengesicht; junge / alte Frau.</td><td>Dasselbe Bild – zwei Deutungen.</td></tr>
+    <tr><td><b>Ergänzung</b></td><td>Kanizsa-Dreieck, Dallenbach’sche Figur (ein Tier), Hermann-Gitter (graue Punkte).</td><td>Das Gehirn ergänzt Formen und „sieht“ Dinge, die nicht gezeichnet sind.</td></tr>
+    <tr><td><b>Kontext / Vorwissen</b></td><td>Bild mit Delfinen: Kinder sehen nur 9 Delfine, weil ihnen der Kontext für das andere Motiv fehlt.</td><td>Wir sehen, was wir kennen.</td></tr>
+    <tr><td><b>Zustand / Körper</b></td><td>Geschmack ist anders nach einer Süßigkeit; schlechtes Licht → Einbildungen; Farbenblindheit.</td><td>Wahrnehmung ist bei jedem Menschen und in jeder Situation verschieden.</td></tr>
+  </table></div>
+  <div class="grid2">
+    <div class="card">
+      <h4 style="margin-top:0">Das Riechexperiment („Täuschung des Riechsinns“)</h4>
+      <p>Ein Professor packt eine Flasche aus und sagt, er wolle testen, wie schnell sich ein Duft verbreitet. Er hofft, der Geruch sei „nicht zu unangenehm“. Dann schüttet er die Flüssigkeit auf Watte. In Wahrheit ist es nur <b>destilliertes Wasser</b>.</p>
+      <ul>
+        <li>Nach 15 Sekunden melden sich fast alle in der ersten Reihe.</li>
+        <li>Nach 40 Sekunden hat der „Duft“ das Ende des Hörsaals erreicht – in einer regelmäßigen „Wellenfront“.</li>
+        <li>Etwa <b>drei Viertel</b> der Zuhörer behaupten, etwas zu riechen. Einige wollen wegen Übelkeit den Raum verlassen.</li>
+      </ul>
+      <p><b>Was zeigt das?</b> <b>Erwartung</b> und <b>Suggestion</b><span class="ko">암시</span> (und das Verhalten der anderen) erzeugen eine Wahrnehmung ohne Reiz. Wahrnehmung ist also nicht nur Aufnahme, sondern auch Konstruktion.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">Descartes zu den Sinnen</h4>
+      <blockquote class="zitat"><p>„Alles […], was ich bis heute als ganz wahr gelten ließ, empfing ich unmittelbar oder mittelbar von den Sinnen; diese aber habe ich bisweilen auf Täuschungen ertappt, und es ist eine Klugheitsregel, niemals denen volles Vertrauen zu schenken, die uns auch nur ein einziges Mal getäuscht haben.“</p><p class="zeile">René Descartes, 1. Meditation</p></blockquote>
+      <p><b>Fazit:</b> Unsere Sinne sind <b>fehlbar</b>. Das Gehirn ergänzt, deutet und erwartet. Daraus folgt die große Frage der Erkenntnistheorie: <i>Können wir überhaupt etwas sicher wissen – und wie?</i> Die Antworten darauf sind die <a href="#modelle">Erkenntnismodelle</a>.</p>
+    </div>
+  </div>
+
+  <h3 id="modelle">Die fünf erkenntnistheoretischen Modelle im Überblick</h3>
+  <p>Auf dem Arbeitsblatt „Baum und Kopf“ stand immer ein Baum (Objekt, Außenwelt) und ein Kopf (Subjekt). Die Modelle unterscheiden sich darin, <b>wie</b> Baum und Kopf verbunden sind.</p>
+  <div class="models">
+
+    <div class="model">
+      <h4>1 · Naiver Realismus<span class="ko">소박 실재론</span></h4>
+      <div class="diagram" aria-hidden="true">
+        <svg viewBox="0 0 240 120">
+          <use href="#i-tree" x="6" y="44" width="44" height="66"/>
+          <use href="#i-head" x="176" y="52" width="52" height="64"/>
+          <ellipse cx="146" cy="28" rx="32" ry="22" fill="var(--surface-2)" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="182" cy="50" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="172" cy="44" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <use href="#i-tree" x="134" y="10" width="24" height="36"/>
+          <line x1="56" y1="82" x2="168" y2="82" stroke="currentColor" stroke-width="2.5" marker-end="url(#arrow)"/>
+          <text x="112" y="102" text-anchor="middle" font-size="11" fill="currentColor">direkt &amp; genau so</text>
+        </svg>
+      </div>
+      <p class="def">„… behauptet, dass wir die Objekte in unserer Umgebung durch unsere Sinne <b>direkt</b> wahrnehmen, <b>so wie sie wirklich sind</b>.“ (auch: direkter Realismus, Realismus des gesunden Menschenverstands)</p>
+      <p><b>Einfach gesagt:</b> Die Welt ist genau so, wie ich sie wahrnehme. Meine Sinne sind wie ein offenes Fenster. Das ist unsere normale Alltagshaltung.</p>
+      <p class="kv"><b>Tee:</b> Der Tee ist wirklich gelb und süß – für alle Menschen gleich.</p>
+      <p class="kv"><b>Im Unterricht:</b> Theaitetos’ These „Erkenntnis ist nichts anderes als Wahrnehmung“. Platon kritisiert diese Sicht.</p>
+      <p class="kv"><b>Problem:</b> Sinnestäuschungen; derselbe Wind ist für den einen kalt, für den anderen nicht.</p>
+    </div>
+
+    <div class="model">
+      <h4>2 · Realismus<span class="ko">실재론</span></h4>
+      <div class="diagram" aria-hidden="true">
+        <svg viewBox="0 0 240 120">
+          <use href="#i-tree" x="6" y="44" width="44" height="66"/>
+          <use href="#i-head" x="176" y="52" width="52" height="64"/>
+          <ellipse cx="146" cy="28" rx="32" ry="22" fill="var(--surface-2)" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="182" cy="50" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="172" cy="44" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <use href="#i-tree" x="134" y="10" width="24" height="36"/>
+          <line x1="56" y1="82" x2="168" y2="82" stroke="currentColor" stroke-width="2.5" marker-end="url(#arrow)"/>
+          <circle cx="106" cy="66" r="8" fill="var(--surface)" stroke="currentColor" stroke-width="2"/><line x1="112" y1="72" x2="119" y2="79" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <text x="112" y="102" text-anchor="middle" font-size="11" fill="currentColor">Wissenschaft prüft</text>
+        </svg>
+      </div>
+      <p class="def">„… geht von der Existenz einer <b>von uns unabhängigen Außenwelt</b> aus, die wir mithilfe der <b>Wissenschaften</b> erforschen können. Aussagen sind dann ‚wahr‘, wenn sie mit der empirischen (d. h. erfahrbaren) Wirklichkeit übereinstimmen. Erkenntnissubjekt und Erkenntnisobjekt sind klar voneinander getrennt.“</p>
+      <p><b>Einfach gesagt:</b> Die Welt gibt es auch ohne uns. Unsere Sinne sind nicht perfekt, aber mit Messungen und Experimenten können wir die Welt immer besser erkennen.</p>
+      <p class="kv"><b>Tee:</b> Ein Thermometer misst objektiv 80 °C – egal, wie heiß mir der Tee vorkommt.</p>
+      <p class="kv"><b>Im Unterricht:</b> das „Fotokamera-Modell“ des Auges (Einleitung zu Foerster); teilweise Locke (primäre Qualitäten sind real).</p>
+      <p class="kv"><b>Problem:</b> Auch Messgeräte lesen wir mit den Sinnen ab. Wie prüfen wir, ob das Abbild dem Original gleicht?</p>
+    </div>
+
+    <div class="model">
+      <h4>3 · Idealismus<span class="ko">관념론</span></h4>
+      <div class="diagram" aria-hidden="true">
+        <svg viewBox="0 0 240 120">
+          <use href="#i-tree" x="6" y="44" width="44" height="66" opacity=".35"/>
+          <rect x="62" y="36" width="12" height="76" rx="3" fill="var(--surface-2)" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <text x="28" y="38" text-anchor="middle" font-size="10" fill="currentColor">„an sich“?</text>
+          <use href="#i-head" x="176" y="52" width="52" height="64"/>
+          <ellipse cx="146" cy="28" rx="32" ry="22" fill="var(--surface-2)" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="182" cy="50" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="172" cy="44" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <use href="#i-tree" x="134" y="10" width="24" height="36"/>
+          <line x1="80" y1="82" x2="168" y2="82" stroke="currentColor" stroke-width="2.5" marker-end="url(#arrow)"/>
+          <text x="124" y="102" text-anchor="middle" font-size="11" fill="currentColor">nur Erscheinung</text>
+        </svg>
+      </div>
+      <p class="def">„Die Wirklichkeit ist die Welt, wie sie uns <b>erscheint</b>, d. h. die Wahrheit ist abhängig von den Fähigkeiten und Eigenschaften des Erkenntnissubjekts. Eine davon unabhängige Wirklichkeit mag existieren, bleibt für das erkennende Subjekt aber <b>unzugänglich</b>.“</p>
+      <p><b>Einfach gesagt:</b> Wir erkennen die Welt nur so, wie sie uns erscheint – durch unsere Sinne und unseren Verstand. Vielleicht gibt es eine Welt „an sich“, aber wir kommen nicht an sie heran.</p>
+      <p class="kv"><b>Tee:</b> Ich kenne nur den Tee „für mich“, nicht den Tee „an sich“.</p>
+      <div class="callout phil-c phil platon" style="font-size:.93rem">
+        <p><b>Achtung – Platon:</b> Im Unterricht steht Platon unter „Idealismus“. Bei ihm hat das Wort eine besondere Bedeutung: Die <b>wahre Wirklichkeit sind die Ideen</b> (geistige, ewige Urbilder). Man erkennt sie nicht mit den Augen, sondern mit dem Verstand („Augen der Seele“). Gemeinsamer Kern mit der Buchdefinition: <b>Die Welt, die uns die Sinne zeigen, ist nicht die eigentliche Wirklichkeit.</b></p>
+      </div>
+      <p class="kv"><b>Problem:</b> Wenn wir die Welt an sich nicht erkennen – woher wissen wir dann, dass es sie gibt?</p>
+    </div>
+
+    <div class="model">
+      <h4>4 · Skeptizismus<span class="ko">회의주의</span></h4>
+      <div class="diagram" aria-hidden="true">
+        <svg viewBox="0 0 240 120">
+          <use href="#i-tree" x="6" y="44" width="44" height="66" opacity=".35"/>
+          <text x="28" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="currentColor">?</text>
+          <use href="#i-head" x="176" y="52" width="52" height="64"/>
+          <ellipse cx="146" cy="28" rx="32" ry="22" fill="var(--surface-2)" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="182" cy="50" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="172" cy="44" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <text x="146" y="36" text-anchor="middle" font-size="22" font-weight="700" fill="currentColor">?</text>
+          <line x1="56" y1="82" x2="168" y2="82" stroke="currentColor" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+          <text x="112" y="102" text-anchor="middle" font-size="11" fill="currentColor">alles anzweifelbar</text>
+        </svg>
+      </div>
+      <p class="def">„Man kann nicht mit Sicherheit wissen, ob es die Welt bzw. die Wirklichkeit gibt, da sich jede Erkenntnis prinzipiell <b>anzweifeln</b> lässt.“</p>
+      <p><b>Einfach gesagt:</b> An jeder Erkenntnis kann man zweifeln. Deshalb kann man nichts (oder kaum etwas) sicher wissen – nicht einmal, ob es die Außenwelt gibt.</p>
+      <p class="kv"><b>Tee:</b> Vielleicht träume ich den Tee nur.</p>
+      <p class="kv"><b>Im Unterricht:</b> Thomas Nagel (Textauszug): Vielleicht gleichen alle unsere Erlebnisse „einem gigantischen Traum“. Jeder Beweis für die Außenwelt muss durch unser Bewusstsein – wir „argumentieren im Kreis“.</p>
+      <div class="callout phil-c phil descartes" style="font-size:.93rem">
+        <p><b>Achtung – Descartes:</b> Er benutzt den Zweifel nur als <b>Methode</b> (methodischer Zweifel). Er ist <b>kein</b> Skeptiker, denn am Ende findet er etwas absolut Sicheres: „Ich bin, ich existiere.“</p>
+      </div>
+      <p class="kv"><b>Problem:</b> Weiß der Skeptiker sicher, dass man nichts sicher wissen kann? (Selbstwiderspruch) Im Alltag kann niemand so leben.</p>
+    </div>
+
+    <div class="model">
+      <h4>5 · Radikaler Konstruktivismus<span class="ko">급진적 구성주의</span></h4>
+      <div class="diagram" aria-hidden="true">
+        <svg viewBox="0 0 240 120">
+          <path d="M8 60q8-8 16 0t16 0t16 0M8 76q8-8 16 0t16 0t16 0M8 92q8-8 16 0t16 0t16 0" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="32" y="44" text-anchor="middle" font-size="10" fill="currentColor">Wellen, Moleküle</text>
+          <use href="#i-head" x="176" y="52" width="52" height="64"/>
+          <ellipse cx="146" cy="28" rx="32" ry="22" fill="var(--surface-2)" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="182" cy="50" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="172" cy="44" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="134" y="16" width="8" height="8" fill="var(--leaf)" stroke="currentColor"/><rect x="142" y="16" width="8" height="8" fill="var(--leaf)" stroke="currentColor"/><rect x="150" y="16" width="8" height="8" fill="var(--leaf)" stroke="currentColor"/>
+          <rect x="138" y="24" width="8" height="8" fill="var(--leaf)" stroke="currentColor"/><rect x="146" y="24" width="8" height="8" fill="var(--leaf)" stroke="currentColor"/>
+          <rect x="144" y="32" width="4" height="12" fill="currentColor"/>
+          <line x1="64" y1="82" x2="168" y2="82" stroke="currentColor" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+          <text x="116" y="102" text-anchor="middle" font-size="11" fill="currentColor">Gehirn baut Wirklichkeit</text>
+        </svg>
+      </div>
+      <p class="def">„Es gibt keinen Unterschied zwischen Wirklichkeit und Vorstellung, die Welt ist somit eine <b>subjektive und soziale Konstruktion</b>.“</p>
+      <p><b>Einfach gesagt:</b> Wir bilden die Welt nicht ab – unser Gehirn <b>baut</b> (konstruiert) sie aus Sinnesdaten. Ob unsere Wirklichkeit der Welt „da draußen“ entspricht, kann man nicht prüfen. Weil Menschen sich austauschen, ist Wirklichkeit auch eine soziale Konstruktion.</p>
+      <p class="kv"><b>Tee:</b> „Da draußen“ gibt es keine Farbe Gelb und keinen Mango-Duft, nur Wellen und Moleküle. Gelb und Mango entstehen erst im Gehirn.</p>
+      <p class="kv"><b>Im Unterricht:</b> Heinz von Foerster.</p>
+      <p class="kv"><b>Problem:</b> Foerster beweist seine These mit Biologie (Netzhaut, Nervenzellen) – also mit Wissen über die Außenwelt. Ist das nicht ein Selbstwiderspruch?</p>
+    </div>
+
+    <div class="model">
+      <h4>Schnellvergleich</h4>
+      <div class="tbl-wrap" style="margin:4px 0"><table class="tbl" style="font-size:.88rem">
+        <tr><th>Modell</th><th>Gibt es eine Außenwelt?</th><th>Erkennen wir sie?</th></tr>
+        <tr><td>naiver Realismus</td><td>ja</td><td>ja, direkt und genau</td></tr>
+        <tr><td>Realismus</td><td>ja</td><td>ja, immer besser (Wissenschaft)</td></tr>
+        <tr><td>Idealismus</td><td>vielleicht</td><td>nein, nur die Erscheinung</td></tr>
+        <tr><td>Skeptizismus</td><td>unsicher</td><td>unsicher, alles ist anzweifelbar</td></tr>
+        <tr><td>rad. Konstruktivismus</td><td>nicht beantwortbar</td><td>nein, wir konstruieren sie</td></tr>
+      </table></div>
+      <p class="small"><b>Eselsbrücke:</b> Fenster (naiv) · Messgerät (Realismus) · Schleier (Idealismus) · Fragezeichen (Skeptizismus) · Baukasten (Konstruktivismus)</p>
+    </div>
+  </div>
+
+  <h3 id="rat-emp">Rationalismus vs. Empirismus – die frühe Neuzeit (17./18. Jh.)</h3>
+  <div class="grid2">
+    <div class="card phil descartes" style="margin:0">
+      <h4 style="margin-top:0;color:var(--c)">Rationalismus<span class="ko">합리론</span></h4>
+      <blockquote class="zitat"><p>„Der Rationalismus behauptet, dass unser Wissen ausschließlich oder zu einem großen Teil aus <b>apriorischem</b> Wissen besteht. Demnach ist es möglich, durch <b>Nachdenken allein</b> bestimmte Erkenntnisse über die Welt zu erlangen. Das Nachdenken wird auch als Vernunft oder Verstand (lat. <i>ratio</i>) bezeichnet. […] Ideen (Begriffe), die bereits in uns vorhanden sind, werden ‚<b>angeboren</b>‘ genannt.“</p></blockquote>
+      <p><b>Einfach gesagt:</b> Sicheres Wissen kommt aus dem <b>Denken</b>, nicht aus den Sinnen. Manche Ideen sind schon bei der Geburt in uns. Vorbild: die Mathematik.</p>
+      <p><b>Vertreter:</b> René Descartes</p>
+    </div>
+    <div class="card phil locke" style="margin:0">
+      <h4 style="margin-top:0;color:var(--c)">Empirismus<span class="ko">경험론</span></h4>
+      <blockquote class="zitat"><p>„Der klassische Empirismus behauptet, dass wir <b>keine angeborenen Ideen</b> besitzen. Ideen sind Eindrücke von den Sinnen, und alle komplexen Ideen lassen sich auf einfache Eindrücke zurückführen. Diese Eindrücke sind Resultat unserer Erfahrung. Deshalb behauptet der klassische Empirismus, dass unser Wissen von der Welt ausschließlich oder zu einem großen Teil auf <b>Erfahrung</b> (gr.: <i>empeiria</i>) zurückzuführen ist.“</p></blockquote>
+      <p><b>Einfach gesagt:</b> Am Anfang ist der Geist leer. <b>Alles</b> Wissen kommt aus der Erfahrung, also aus den Sinnen.</p>
+      <p><b>Vertreter:</b> John Locke (auch David Hume)</p>
+    </div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th></th><th>Rationalismus (Descartes)</th><th>Empirismus (Locke)</th></tr>
+    <tr><td><b>Quelle des Wissens</b></td><td>Vernunft, Verstand (ratio)</td><td>Erfahrung, Sinne (empeiria)</td></tr>
+    <tr><td><b>Angeborene Ideen?</b></td><td>Ja (z. B. Gott, das Ich, Wahrheit)</td><td>Nein – der Geist ist ein „unbeschriebenes Blatt“ (tabula rasa)</td></tr>
+    <tr><td><b>Vorbild</b></td><td>Mathematik, logisches Ableiten</td><td>Beobachtung, Naturwissenschaft</td></tr>
+    <tr><td><b>Rolle der Sinne</b></td><td>unzuverlässig, täuschen</td><td>Grundlage von allem</td></tr>
+    <tr><td><b>Leitsatz</b></td><td>„Ich denke, also bin ich.“</td><td>„Nichts ist im Verstand, was nicht vorher in den Sinnen war.“</td></tr>
+  </table></div>
+  <div class="card selftest">
+    <h4 style="margin-top:0">Selbsttest Grundlagen</h4>
+    <details class="loesung"><summary>Was ist der Unterschied zwischen naivem Realismus und Realismus?</summary><div class="inner"><p>Beide sagen: Es gibt eine Außenwelt unabhängig von uns. Der <b>naive</b> Realismus glaubt, dass wir sie <b>direkt und genau so</b> wahrnehmen, wie sie ist. Der (kritische) Realismus weiß, dass die Sinne Fehler machen, glaubt aber, dass wir die Welt mit <b>Wissenschaft</b> immer besser erkennen können.</p></div></details>
+    <details class="loesung"><summary>Warum ist Descartes kein Skeptiker, obwohl er an allem zweifelt?</summary><div class="inner"><p>Weil sein Zweifel eine <b>Methode</b> ist: Er will damit etwas absolut Sicheres finden. Und er findet es: „Ich bin, ich existiere“ ist notwendig wahr. Ein Skeptiker dagegen glaubt, dass man nichts sicher wissen kann.</p></div></details>
+    <details class="loesung"><summary>Was zeigt das Riechexperiment – und welches Modell stützt es am stärksten?</summary><div class="inner"><p>Erwartung und Suggestion können eine Wahrnehmung ohne echten Reiz erzeugen. Das stützt am stärksten den <b>radikalen Konstruktivismus</b> (das Gehirn „errechnet“ eine Wirklichkeit) und widerspricht dem naiven Realismus.</p></div></details>
+  </div>
+  <a class="totop" href="#top">↑ nach oben</a>
+</section>
+
+<!-- ===================== TEIL C: PLATON THEAITETOS ===================== -->
+<section class="part phil platon" id="theaitetos">
+  <span class="part-label">Teil C · Idealismus</span>
+  <div class="phil-head">
+    <h2>Platon: Dialog zwischen Sokrates und Theaitetos</h2>
+    <p style="margin:.2em 0 .5em"><b>Leitfrage:</b> Ist Erkenntnis nichts anderes als Wahrnehmung?</p>
+    <div class="facts"><span><b>Platon</b> 427–347 v. Chr., griechischer Philosoph</span><span><b>Text:</b> aus dem Dialog „Theaitetos“</span><span><b>Modell:</b> Idealismus (Kritik am naiven Realismus)</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Worum geht es?</h3>
+    <p>Platon schreibt <b>Dialoge</b>. Die Hauptfigur ist sein Lehrer <b>Sokrates</b> – durch ihn spricht Platon seine eigene Meinung aus (deshalb auf dem Arbeitsblatt: „Kernaussage (<i>Platon!</i>)“). Sokrates fragt den jungen Mathematiker <b>Theaitetos</b>: <i>Was ist Erkenntnis?</i></p>
+    <p>Sokrates gibt keine fertige Antwort. Er prüft die Antwort des anderen so lange, bis klar wird, ob sie trägt. Er nennt das eine Art Geburtshilfe: Ist die Antwort „eine rechte Geburt oder ein Windei“? (= <b>Hebammenkunst</b><span class="ko">산파술</span>)</p>
+  </div>
+
+  <h3>Der Gang des Gesprächs – Schritt für Schritt</h3>
+  <p class="small">Die sechs Zitate stammen vom Arbeitsblatt „Theaitetos und Sokrates Dialog zur Erkenntnis – Argumentation“.</p>
+  <ol class="steps">
+    <li><b>These des Theaitetos</b>
+      <blockquote class="zitat"><p>„Erkenntnis [ist] nichts anderes als Wahrnehmung.“</p></blockquote>
+      Wer etwas erkennt, nimmt es wahr – mehr ist Erkennen nicht. Das ist die Sicht des <b>naiven Realismus</b>: Was ich wahrnehme, ist wahr.</li>
+    <li><b>Verbindung mit Protagoras</b>
+      <blockquote class="zitat"><p>„Wie ein jedes Ding mir erscheint, ein solches ist es auch mir, und wie es dir erscheint, ein solches ist es wiederum dir. Ein Mensch aber bist du sowohl als ich.“</p></blockquote>
+      Sokrates zeigt: Theaitetos sagt dasselbe wie der Sophist Protagoras: „Der Mensch ist das <b>Maß aller Dinge</b>“<span class="ko">인간 척도설</span>. Jeder Mensch bestimmt selbst, wie die Dinge <i>für ihn</i> sind. Wahrheit wird damit <b>subjektiv</b>.</li>
+    <li><b>Das Wind-Beispiel</b>
+      <blockquote class="zitat"><p>„Und so erscheint er doch jedem von beiden?“</p></blockquote>
+      Derselbe Wind weht: Der eine friert, der andere nicht. Ist der Wind „an und für sich“ kalt? Das kann man nicht sagen. Er ist kalt <i>für</i> den Frierenden und nicht kalt <i>für</i> den anderen. → <b>Beispiel als Beleg</b>: Wahrnehmung ist bei jedem anders.</li>
+    <li><b>Erscheinen = Wahrnehmen</b>
+      <blockquote class="zitat"><p>„Dieses ›erscheint‹ ist aber eben das Wahrnehmen?“ – „Denn wie ein jeder es wahrnimmt, so scheint es für ihn auch zu sein.“</p></blockquote>
+      Sokrates setzt <b>Erscheinung und Wahrnehmung gleich</b>. Wie es mir erscheint, so nehme ich es wahr – und so „ist“ es dann für mich.</li>
+    <li><b>Die Folgerung (mit Bedingung!)</b>
+      <blockquote class="zitat"><p>„Wahrnehmung geht also wohl immer auf das Seiende und ist untrüglich, wenn sie ja Erkenntnis ist.“</p></blockquote>
+      Wichtig ist das Wort <b>„wenn“</b>: Echte Erkenntnis muss sich auf das beziehen, was <b>wirklich ist</b>, und sie muss <b>untrüglich</b><span class="ko">틀릴 수 없는</span> sein. <i>Wenn</i> Wahrnehmung Erkenntnis sein soll, müsste sie beides leisten. Das Wind-Beispiel zeigt aber: Wahrnehmungen widersprechen sich.</li>
+    <li><b>Die Konsequenz: Alles ist nur Werden</b>
+      <blockquote class="zitat"><p>„(…) denn niemals ist eigentlich irgendetwas, sondern immer nur wird es.“</p></blockquote>
+      Sokrates zeigt ironisch die „Geheimlehre“ des Protagoras: Wenn alles nur so ist, wie es jedem erscheint, dann hat <b>nichts eine feste Eigenschaft</b>. Was groß ist, zeigt sich auch klein; was schwer ist, auch leicht. Alles ist in Bewegung, Veränderung und Mischung. Es gibt kein festes <b>Sein</b>, nur <b>Werden</b>. → Dann gibt es aber auch <b>nichts Festes, das man sicher wissen kann</b>. Erkenntnis kann also nicht einfach Wahrnehmung sein.</li>
+  </ol>
+
+  <div class="grid2">
+    <div class="callout teacher" style="margin:0">
+      <p><span class="badge teacher">Unterricht</span><b>Kernthese (Tafelbild)</b></p>
+      <p>Die individuelle <b>Wahrnehmung ist nicht fehlerfrei</b> bzw. fehlbar und <b>bei jedem unterschiedlich</b>. → Die tatsächliche Wahrheit kann (so) nicht klar festgelegt bzw. erkannt werden; das, was wir als Wirklichkeit betrachten, ist <b>subjektiv</b>.</p>
+    </div>
+    <div class="callout teacher" style="margin:0">
+      <p><span class="badge teacher">Unterricht</span><b>Kernanliegen (Tafelbild)</b></p>
+      <ul>
+        <li><b>Kritik am naiven Realismus</b> üben (Entlarvung dieser Perspektive als falsche Sicht auf die Außenwelt)</li>
+        <li>den <b>Zusammenhang zwischen Wahrnehmung und Erkenntnis</b> (Wahrheit) betrachten</li>
+        <li><b>Versuch eines Zugangs zur Wahrheit</b> bzw. zu Erkenntnisinhalten</li>
+      </ul>
+    </div>
+  </div>
+
+  <details class="loesung"><summary>Musterformulierung: Argumentationsgang (Vorschlag)</summary><div class="inner">
+    <p><span class="badge sugg">Vorschlag</span>Zu Beginn <span class="v">fordert</span> Sokrates Theaitetos <span class="v">auf</span>, noch einmal zu bestimmen, was Erkenntnis sei. Theaitetos <span class="v">stellt</span> daraufhin <span class="v">die These auf</span>, Erkenntnis sei „nichts anderes als Wahrnehmung“. Sokrates <span class="v">prüft</span> diese These gemeinsam mit ihm. Zunächst <span class="v">setzt</span> er sie mit dem Satz des Protagoras <span class="v">gleich</span>, der Mensch sei „das Maß aller Dinge“: Wie ein Ding jemandem erscheine, so sei es auch für ihn. Anschließend <span class="v">veranschaulicht</span> er diesen Gedanken am Beispiel des Windes, der den einen frieren lasse, den anderen nicht. Daraus <span class="v">folgert</span> er, dass man nicht sagen könne, ob der Wind „an und für sich“ kalt sei. Im nächsten Schritt <span class="v">setzt</span> er „Erscheinen“ und „Wahrnehmen“ <span class="v">gleich</span> und <span class="v">leitet ab</span>, dass Wahrnehmung – wenn sie Erkenntnis sein solle – immer auf das Seiende gehen und untrüglich sein müsse. Zum Schluss <span class="v">deckt</span> Sokrates ironisch die Konsequenz <span class="v">auf</span>: Dann sei nichts an und für sich bestimmt, sondern alles sei in Bewegung und Veränderung; „niemals ist eigentlich irgendetwas, sondern immer nur wird es“. Damit <span class="v">zeigt</span> Platon, dass die Gleichsetzung von Erkenntnis und Wahrnehmung zu einer Welt ohne festes Sein und damit ohne sichere Erkenntnis führt.</p>
+  </div></details>
+
+  <div class="card">
+    <h4 style="margin-top:0">Verbindung zum Höhlengleichnis</h4>
+    <p>Im Theaitetos zeigt Platon, was Erkenntnis <b>nicht</b> ist: bloße Wahrnehmung. Im Höhlengleichnis zeigt er seine <b>eigene Lösung</b>: Wahres Wissen bezieht sich auf das, was sich <b>nie verändert</b> – die <b>Ideen</b>. Die wechselnde Sinnenwelt liefert nur Meinungen.</p>
+    <h4>Für die Erörterung</h4>
+    <div class="grid2">
+      <div><b>Für Platon spricht:</b><ul><li>Sinnestäuschungen, Riechexperiment</li><li>Wahrnehmung ist subjektiv (Wind, Geschmack, Farbenblindheit)</li></ul></div>
+      <div><b>Gegen Platon spricht:</b><ul><li>Im Alltag ist Wahrnehmung meist zuverlässig.</li><li>Ein Thermometer kann objektiv messen, ob der Wind kalt ist (Realismus).</li><li>Wissenschaft lebt von Beobachtung (Empirismus).</li></ul></div>
+    </div>
+  </div>
+  <a class="totop" href="#top">↑ nach oben</a>
+</section>
+
+<!-- ===================== PLATON HÖHLE ===================== -->
+<section class="part phil platon" id="hoehle">
+  <span class="part-label">Teil C · Idealismus</span>
+  <div class="phil-head">
+    <h2>Platon: Das Höhlengleichnis<span class="ko">동굴의 비유</span></h2>
+    <p style="margin:.2em 0 .5em"><b>Leitfrage:</b> Was ist wirklich – und wie kommen wir von der bloßen Meinung zur wahren Erkenntnis?</p>
+    <div class="facts"><span><b>Quelle:</b> Platon, „Politeia“ (Der Staat), Buch VII</span><span><b>Form:</b> Gleichnis – Sokrates erzählt es Glaukon</span><span><b>Modell:</b> Idealismus (Ideenlehre)</span></div>
+  </div>
+
+  <div class="card">
+    <p>Ein <b>Gleichnis</b><span class="ko">비유</span> ist eine Bildgeschichte, die einen <b>abstrakten Gedanken anschaulich</b> macht. Das Höhlengleichnis kann man dreifach deuten: als bildhafte Darstellung der <b>Ideenlehre</b>, als Beschreibung eines <b>Lern- und Bildungsprozesses</b> und als Sinnbild für die <b>Möglichkeiten und Grenzen</b> menschlichen Erkennens.</p>
+    <svg class="cave-svg" viewBox="0 0 640 300" role="img" aria-label="Schema der Höhle: Gefangene schauen auf Schatten an der Wand, hinter ihnen Mauer, Träger und Feuer, ein Weg führt nach oben zur Sonne">
+      <rect x="0" y="0" width="640" height="300" fill="var(--sky)"/>
+      <rect x="0" y="96" width="640" height="204" fill="var(--rock)"/>
+      <circle cx="598" cy="38" r="18" fill="var(--sun)"/>
+      <g stroke="var(--sun)" stroke-width="2"><line x1="598" y1="8" x2="598" y2="14"/><line x1="568" y1="38" x2="574" y2="38"/><line x1="577" y1="17" x2="581" y2="21"/><line x1="619" y1="17" x2="615" y2="21"/></g>
+      <use href="#i-tree" x="486" y="34" width="28" height="62" style="color:var(--text)"/>
+      <ellipse cx="420" cy="88" rx="44" ry="7" fill="var(--water)"/>
+      <text x="420" y="72" text-anchor="middle">Spiegelbilder</text>
+      <text x="500" y="26" text-anchor="middle">Dinge</text>
+      <text x="598" y="76" text-anchor="middle">Sonne</text>
+      <rect x="18" y="128" width="440" height="160" rx="18" fill="var(--cave)"/>
+      <polygon points="392,132 456,132 600,96 548,96" fill="var(--cave)"/>
+      <path d="M44 150c10-6 18 0 16 12-2 8-8 12-8 22h-6c0-10-8-14-8-22 0-6 2-10 6-12z" fill="#000" opacity=".55"/>
+      <path d="M78 150a7 7 0 1 1 0 .1zM70 162h16l-3 34h-10z" fill="#000" opacity=".55"/>
+      <text class="lt" x="68" y="216" text-anchor="middle">Schatten</text>
+      <text class="lt" x="68" y="230" text-anchor="middle">an der Wand</text>
+      <g fill="none" stroke="var(--on-cave)" stroke-width="2">
+        <circle cx="126" cy="246" r="6"/><path d="M126 252v14l-10 6M126 260h-8"/>
+        <circle cx="150" cy="246" r="6"/><path d="M150 252v14l-10 6M150 260h-8"/>
+        <circle cx="174" cy="246" r="6"/><path d="M174 252v14l-10 6M174 260h-8"/>
+      </g>
+      <line x1="112" y1="276" x2="190" y2="276" stroke="var(--on-cave)" stroke-width="2" stroke-dasharray="3 3"/>
+      <text class="lt" x="150" y="230" text-anchor="middle">Gefangene</text>
+      <rect x="214" y="236" width="12" height="52" fill="var(--wall)"/>
+      <text class="lt" x="220" y="228" text-anchor="middle">Mauer</text>
+      <g fill="none" stroke="var(--on-cave)" stroke-width="2">
+        <circle cx="258" cy="214" r="6"/><path d="M258 220v26l-6 14M258 246l6 14M258 228l-6-14"/>
+      </g>
+      <path d="M248 190c4-2 8 0 8 6 0 4-3 6-3 10h-4c0-4-3-6-3-10 0-3 1-5 2-6z" fill="var(--wall)"/>
+      <text class="lt" x="282" y="186" text-anchor="start">Träger mit Gegenständen</text>
+      <path d="M330 278c-12-8-10-22 0-34 2 8 6 8 8 2 8 10 8 24-8 32z" fill="var(--fire)"/>
+      <text class="lt" x="334" y="236" text-anchor="middle">Feuer</text>
+      <line x1="326" y1="252" x2="62" y2="168" stroke="var(--fire)" stroke-width="1.2" stroke-dasharray="5 5" opacity=".8"/>
+      <path d="M368 262C420 250 430 170 520 112" fill="none" stroke="var(--sun)" stroke-width="2.5" marker-end="url(#arrow)" style="color:var(--sun)"/>
+      <text x="482" y="206" text-anchor="start">Aufstieg</text>
+      <text x="482" y="222" text-anchor="start">(Bildung)</text>
+    </svg>
+  </div>
+
+  <h3>Die Geschichte in fünf Stufen</h3>
+  <p class="small">Zitate und Bildtitel wie in der Visualisierung von Eunyul und Ian; Stufe 5 aus „Höhlengleichnis – Ergänzung“.</p>
+  <ol class="steps">
+    <li><b>Gefangen im Reich der Schatten</b>Menschen leben seit ihrer Kindheit in einer unterirdischen Höhle, an Schenkeln und Hals gefesselt. Sie können nur nach vorn auf die Wand schauen. Hinter ihnen ist eine Mauer, dahinter tragen Leute Gegenstände (Statuen von Menschen und Tieren, Geräte) vorbei, und dahinter brennt ein Feuer. Die Gefangenen sehen nur die <b>Schatten</b> und hören das Echo. „Sie gleichen uns!“
+      <blockquote class="zitat"><p>„Überhaupt werden sie nichts anderes für wirklich halten als diese Schatten von Gegenständen menschlicher Arbeit.“ <span class="zeile">(Z. 33 f.)</span></p></blockquote></li>
+    <li><b>Befreiung und Blendung</b>Einer wird befreit und muss sich umdrehen. Das tut weh, das Feuer blendet ihn. Er erkennt die Gegenstände nicht und hält die Schatten weiter für „wirklicher“. Er möchte zurück zu seiner Schattenwelt.
+      <blockquote class="zitat"><p>„[…] das Licht blendet ihn so, dass er die Gegenstände, deren Schatten er bis dahin sah, nicht erkennen kann.“ <span class="zeile">(Z. 39–41)</span></p></blockquote></li>
+    <li><b>Aufstieg und Gewöhnung</b>Man zieht ihn <b>mit Gewalt</b> den steilen Weg hinauf ans Sonnenlicht. Wieder ist er geblendet. Er muss sich langsam gewöhnen: erst Schatten, dann Spiegelbilder im Wasser, dann die Dinge selbst; nachts Mond und Sterne.
+      <blockquote class="zitat"><p>„Zuerst wird er wohl am besten die Schatten erkennen, später die Spiegelungen von Menschen und anderen Gegenständen im Wasser, dann sie selber.“ <span class="zeile">(Z. 58–60)</span></p></blockquote></li>
+    <li><b>Blick in die Sonne: Erkenntnis</b>Zuletzt kann er die Sonne selbst ansehen. Er versteht: Die Sonne bringt Jahreszeiten und Jahre hervor, sie lenkt die ganze sichtbare Welt und ist in gewissem Sinn die Ursache von allem, was man sieht.
+      <blockquote class="zitat"><p>„Schließlich wird er in die Sonne selber sehen können […]. Er wird ihr Wesen begreifen.“ <span class="zeile">(Z. 62–65)</span></p></blockquote></li>
+    <li><b>Glück und Rückkehr</b>Er preist sich glücklich und bedauert die anderen. Die Ehren in der Höhle (wer die Schatten am besten vorhersagt) sind ihm egal. Kehrt er zurück, sieht er im Dunkeln schlecht. Die anderen lachen ihn aus, er sei „mit verdorbenen Augen“ zurückgekommen – und sie würden jeden <b>töten</b>, der sie befreien will. (Anspielung auf Sokrates, der 399 v. Chr. zum Tod verurteilt wurde.)
+      <blockquote class="zitat"><p>„[…] würde man ihn nicht auslachen und von ihm sagen, er sei mit verdorbenen Augen von oben zurückgekommen und es lohne nicht, dass man auch nur versuche hinaufzukommen […]?“ <span class="zeile">(Z. 75 ff.)</span></p></blockquote></li>
+  </ol>
+
+  <h3>Die Deutung: Was bedeutet was?</h3>
+  <p>Platon deutet das Gleichnis am Ende selbst: Die Höhle ist die <b>sichtbare Welt</b> („die durch das Gesicht uns erscheinende Region = Wohnung im Gefängnis“, Z. 81 f.), das Feuer ist die <b>Sonne</b>, und der Aufstieg ist der „<b>Aufschwung der Seele in die Region der Erkenntnis</b>“.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>Im Gleichnis</th><th>Bedeutung</th><th>Art des Erkennens</th></tr>
+    <tr class="row-head"><td colspan="3">In der Höhle = Sinnenwelt (sichtbar)</td></tr>
+    <tr><td>Schatten künstlicher Gegenstände</td><td>Bilder, Schatten, Abbilder (heute: Fotos, Filme, Feeds)</td><td rowspan="3">Meinungen, Vermutungen, Fürwahrhalten<span class="ko">의견(억견)</span></td></tr>
+    <tr><td>künstliche Gegenstände (Statuen, Geräte)</td><td>Lebewesen und Gegenstände der Sinnenwelt</td></tr>
+    <tr><td>Feuer</td><td>Sonne (Licht der sichtbaren Welt)</td></tr>
+    <tr class="row-head"><td colspan="3">Außerhalb = Ideenwelt (nur denkbar)</td></tr>
+    <tr><td>Schatten und Spiegelbilder natürlicher Dinge</td><td>mathematische Gegenstände (z. B. a² + b² = c², das Dreieck)</td><td>Nachdenken</td></tr>
+    <tr><td>natürliche Dinge</td><td><b>Ideen</b></td><td rowspan="2">Einsicht, wahre Erkenntnis</td></tr>
+    <tr><td>Sonne</td><td><b>Idee des Guten</b></td></tr>
+  </table></div>
+  <div class="grid3">
+    <div class="mini"><b>Gefangene</b> = wir Menschen</div>
+    <div class="mini"><b>Fesseln</b> = Gewohnheit, Vorurteile, Unwissenheit, Abhängigkeit von den Sinnen</div>
+    <div class="mini"><b>Befreier</b> = Philosoph bzw. Lehrer</div>
+    <div class="mini"><b>Weg nach oben</b> = Bildung, Philosophieren (anstrengend, schmerzhaft!)</div>
+    <div class="mini"><b>Rückkehrer</b> = Philosoph, der andere aufklären will (Sokrates)</div>
+    <div class="mini"><b>Ziel</b> = vom bloßen Meinen zur Erkenntnis der Idee des Guten</div>
+  </div>
+
+  <h3>Platons Ideenlehre – einfach erklärt<span class="ko">이데아론</span></h3>
+  <p class="small">Nach dem Dialog zwischen Philos und Sophos („Eine dialogische Erschließung des Höhlengleichnisses“).</p>
+  <div class="card">
+    <ol class="steps">
+      <li><b>Was ist eine „Idee“?</b>Nicht ein Einfall („Gute Idee!“). Für Platon ist eine Idee <b>das, was eine Sache zu dem macht, was sie ist</b> – ihr Wesen, ihr Urbild. Ideen sind <b>unabhängig von unserem Denken</b>, vollkommen, ewig und unveränderlich. Sie sind die eigentlichen Gegenstände des Wissens.</li>
+      <li><b>Warum braucht Platon Ideen? (Beispiel Schönheit)</b>Viele Dinge sind schön, aber <b>nichts ist vollkommen schön</b> – alles verändert sich und vergeht. Trotzdem verstehen wir den Ausdruck „vollkommen schön“. Woher haben wir diesen Begriff, wenn wir so etwas nie wahrnehmen? Platons Antwort: Es muss etwas <b>hinter oder über der Sinnenwelt</b> geben, auf das wir mit den „Augen des Verstandes“ zugreifen – das <b>Reich der Ideen</b>.</li>
+      <li><b>Teilhabe</b>Ein schöner Blumenstrauß ist nicht vollkommen schön, aber er „hat <b>teil</b>“ an der Idee des Schönen – er bekommt etwas von ihr ab.</li>
+      <li><b>Beispiel Rechteck (Mathematik)</b>Ein gezeichnetes Rechteck ist nie perfekt: Seine Innenwinkelsumme ist nie genau 360 Grad. Unser mathematisches Wissen bezieht sich aber auf das <b>vollkommene</b> Rechteck. → Wirkliches Wissen kommt nicht aus der Sinnenwelt.</li>
+      <li><b>Die Idee des Guten</b>Sie steht über allen Ideen – wie die Sonne über allem. Sie ist „die Herrscherin“, die <b>Wahrheit und Vernunft</b> hervorbringt, und die Ursache alles Richtigen und Schönen. Wer vernünftig handeln will (privat oder in der Politik), muss sie erkannt haben.</li>
+    </ol>
+    <div class="callout phil-c"><p><b>Kurz:</b> In der Höhle gibt es nur <b>Meinungen</b> über die Sinnendinge. Außerhalb gibt es <b>wahre Erkenntnis</b>: Nachdenken über Mathematik und Einsicht in die Ideen. Der Weg aus der Höhle ist der Weg <b>vom Meinen zum Wissen</b>.</p></div>
+  </div>
+
+  <div class="grid2">
+    <div class="callout sugg" style="margin:0">
+      <p><span class="badge sugg">Vorschlag</span><b>Kernthese</b></p>
+      <p>Die Welt, die wir mit den Sinnen wahrnehmen, ist nur ein <b>Schatten bzw. Abbild</b> der wahren Wirklichkeit. Wahre Erkenntnis erreicht man nur auf einem mühsamen Weg des Denkens (Bildung), der zu den <b>Ideen</b> und schließlich zur <b>Idee des Guten</b> führt.</p>
+    </div>
+    <div class="callout sugg" style="margin:0">
+      <p><span class="badge sugg">Vorschlag</span><b>Kernanliegen</b></p>
+      <p>Platon will zeigen, dass die meisten Menschen in <b>bloßen Meinungen gefangen</b> sind, und fordert dazu auf, sich durch Philosophie und Bildung von der Sinnenwelt zu lösen. Zugleich zeigt er, wie schwer und gefährlich es ist, andere aufzuklären.</p>
+    </div>
+  </div>
+
+  <h3>Botschaft an die Moderne: Ist das Gleichnis heute noch aktuell?</h3>
+  <p class="small">Die Zitate stammen vom Arbeitsblatt „Platons Höhlengleichnis und seine Botschaft an die Moderne“. Die Deutungen sind Vorschläge.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th style="width:40%">Zitat</th><th>Mögliche Botschaft für heute <span class="badge sugg">Vorschlag</span></th></tr>
+    <tr><td>„Sie können ja ihr Leben lang nicht den Kopf drehen.“ <span class="zeile">(Z. 23)</span></td><td>Wir sind an Gewohnheiten, an die Meinungen unserer Umgebung und an unsere Medien gebunden. Algorithmen und <b>Filterblasen</b> zeigen uns vor allem das, was wir schon kennen – und oft merken wir das nicht.</td></tr>
+    <tr><td>„Überhaupt werden sie nichts anderes für wirklich halten als diese Schatten (…).“ <span class="zeile">(Z. 33/34)</span></td><td>Wir halten <b>Abbilder</b> für die Wirklichkeit. Philos nennt das Kino, Sophos Fernsehen und Zeitung („nur ein Abbild“). Heute: Social Media, bearbeitete Fotos, Werbung, KI-Bilder und Deepfakes.</td></tr>
+    <tr><td>„(…) das alles verursacht ihm natürlich Schmerzen, und das Licht blendet ihn so (…).“ <span class="zeile">(Z. 39/40)</span></td><td>Die Wahrheit ist oft <b>unbequem</b>. Lernen und Umdenken sind anstrengend – viele wollen lieber in ihrer Komfortzone bleiben.</td></tr>
+    <tr><td>„(…) würde er sich dann nicht glücklich preisen wegen seines Ortswechsels und die anderen bedauern.“ <span class="zeile">(Z. 71/72)</span></td><td>Bildung und Einsicht machen <b>frei und glücklich</b>. Wer mehr versteht, erkennt auch, wie begrenzt die eigene frühere Sicht war.</td></tr>
+    <tr><td>„(…) würde man ihn nicht auslachen (…) und es lohne sich nicht, dass man auch nur versuche hinaufzukommen.“ <span class="zeile">(Z. 75 ff.)</span></td><td>Wer gegen die Mehrheitsmeinung spricht, wird oft <b>ausgelacht oder angegriffen</b> (Sokrates, Galilei, heute z. B. Whistleblower oder Wissenschaftler). Eine Gesellschaft verteidigt gern ihre bequemen Meinungen.</td></tr>
+  </table></div>
+  <div class="card">
+    <h4 style="margin-top:0">Kritik am Höhlengleichnis</h4>
+    <ul>
+      <li><b>Gibt es das „Draußen“ wirklich?</b> Sophos sagt: „Wenn ich ehrlich bin, kann ich mir nicht vorstellen, wohin wir aufsteigen müssten.“ Die Ideen kann man nicht beweisen.</li>
+      <li><b>Elitär:</b> Nur der Philosoph soll die Wahrheit kennen, die anderen sind „Gefangene“. Das kann arrogant und gefährlich sein – auch Verschwörungsgläubige sagen gern: „Ich bin aufgewacht, ihr lebt in der Höhle.“</li>
+      <li><b>Zwang:</b> Der Gefangene wird „mit Gewalt“ hinaufgezogen. Darf man Menschen zur Wahrheit zwingen?</li>
+      <li><b>Konstruktivistische Kritik:</b> Auch der Befreite hat nur eine neue Konstruktion der Wirklichkeit, keine „Wahrheit an sich“.</li>
+    </ul>
+  </div>
+  <div class="card selftest">
+    <h4 style="margin-top:0">Selbsttest Platon</h4>
+    <details class="loesung"><summary>Was haben der Theaitetos-Dialog und das Höhlengleichnis gemeinsam?</summary><div class="inner"><p>Beide zeigen: <b>Sinneswahrnehmung liefert keine sichere Erkenntnis.</b> Im Theaitetos ist sie subjektiv und wechselhaft (Wind), im Höhlengleichnis sind die Sinnendinge nur Schatten. Unterschied: Der Theaitetos kritisiert vor allem; das Höhlengleichnis zeigt den positiven Weg zu den Ideen.</p></div></details>
+    <details class="loesung"><summary>Wofür steht die Sonne – und warum ist sie so wichtig?</summary><div class="inner"><p>Für die <b>Idee des Guten</b>. Wie die Sonne alles Sichtbare hell macht und wachsen lässt, so bringt die Idee des Guten Wahrheit und Vernunft hervor. Sie ist die höchste Erkenntnis.</p></div></details>
+    <details class="loesung"><summary>Warum braucht Platon das Beispiel „vollkommen schön“?</summary><div class="inner"><p>Weil wir den Begriff „vollkommen schön“ verstehen, obwohl wir in der Sinnenwelt nichts vollkommen Schönes finden. Also muss der Begriff aus einer anderen Quelle kommen: aus dem Reich der Ideen, das wir mit dem Verstand erfassen.</p></div></details>
+  </div>
+  <a class="totop" href="#top">↑ nach oben</a>
+</section>
+
+<!-- ===================== DESCARTES ===================== -->
+<section class="part phil descartes" id="descartes">
+  <span class="part-label">Teil C · Rationalismus</span>
+  <div class="phil-head">
+    <h2>René Descartes: Der methodische Zweifel<span class="ko">방법적 회의</span></h2>
+    <p style="margin:.2em 0 .5em"><b>Leitfrage:</b> Gibt es etwas, woran man nicht sinnvoll zweifeln kann?</p>
+    <div class="facts"><span><b>Descartes</b> 1596–1650, französischer Philosoph und Mathematiker</span><span><b>Texte:</b> „Woran man nicht sinnvoll zweifeln kann“ (1. + 2. Meditation), „Angeborene Ideen“ (3. Meditation), 1641</span><span><b>Modell:</b> Rationalismus</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Das Ausgangsproblem</h3>
+    <blockquote class="zitat"><p>„Schon vor Jahren bemerkte ich, wie viel Falsches ich von Jugend auf als wahr hingenommen habe […]; darum war ich der Meinung, ich müsse einmal im Leben von Grund auf alles umstürzen und von den ersten Grundlagen an ganz neu anfangen, wenn ich später einmal etwas Festes und Bleibendes in den Wissenschaften errichten wollte.“</p><p class="zeile">1. Meditation, Z. 1–6</p></blockquote>
+    <p><b>Einfach gesagt:</b> Unser Wissen steht auf einem wackeligen Fundament. Descartes will es abreißen und neu bauen – auf einem <b>absolut sicheren Fundament</b>.</p>
+    <h4>Die Methode: methodischer Zweifel</h4>
+    <p>Alles, woran man auch nur ein bisschen zweifeln kann, behandelt er <b>so, als wäre es falsch</b>. Er glaubt nicht wirklich, dass die Welt nicht existiert – es ist ein <b>Test</b>: Was hält diesem radikalen Zweifel stand?</p>
+    <blockquote class="zitat"><p>„Wenn alles Erkannte aus einfachsten Prinzipien abgeleitet werden soll, muss ich mich zunächst und vor allem der Sicherheit meines Ausgangspunktes vergewissern. […] Ich werde alles anzweifeln, um zu sehen, was einem solchen radikalen Zweifel standhält.“</p><p class="zeile">Hans Joachim Störig über Descartes</p></blockquote>
+  </div>
+
+  <h3>Die Zweifelsstufen – von „Meine Sinne täuschen mich manchmal“ zu „Ich bin“</h3>
+  <div class="flow">
+    <div class="node"><span class="lab">Start</span>Meine Sinne täuschen mich <b>manchmal</b> (bei kleinen oder fernen Dingen). → <b>Klugheitsregel:</b> Wer uns einmal getäuscht hat, dem vertrauen wir nicht mehr ganz. <span class="zeile">(Z. 6–9)</span></div>
+    <div class="arr">↓</div>
+    <div class="node"><span class="lab">Einwand</span>Aber bei nahen Dingen? „Dass ich hier bin, am Ofen sitze, meinen Winterrock anhabe, dieses Papier mit den Händen berühre“ – daran zu zweifeln scheint verrückt. <span class="zeile">(Z. 10–14)</span></div>
+    <div class="arr">↓</div>
+    <div class="node"><span class="lab">1 · Traumargument</span>Im Traum erlebe ich genau dasselbe: Ich glaube am Ofen zu sitzen und liege doch im Bett. Es gibt <b>kein sicheres Merkmal</b>, um Wachen und Schlafen zu unterscheiden. → Auch nahe Dinge sind unsicher. <span class="zeile">(Z. 14–28)</span></div>
+    <div class="arr">↓</div>
+    <div class="node"><span class="lab">2 · Betrüger-Gott</span>Ein allmächtiger Gott könnte mich so geschaffen haben, dass es gar keine Erde und keinen Himmel gibt – und dass ich mich sogar beim Rechnen irre. Und wenn es keinen Gott gibt? Dann bin ich durch Zufall entstanden – dann ist es noch <b>wahrscheinlicher</b>, dass ich mich irre. <span class="zeile">(Z. 30–51)</span></div>
+    <div class="arr">↓</div>
+    <div class="node"><span class="lab">Ergebnis 1. Meditation</span>„… dass man an allem, was ich einst für wahr hielt, zweifeln könne, und zwar nicht aus Unbedachtsamkeit und Leichtsinn, sondern aus triftigen, wohlüberlegten Gründen.“</div>
+    <div class="arr">↓</div>
+    <div class="node"><span class="lab">2. Meditation</span>Er fühlt sich wie in einem tiefen <b>Strudel</b>. Er sucht wie Archimedes nur <b>einen festen, unbeweglichen Punkt</b> (<i>archimedischer Punkt</i><span class="ko">아르키메데스의 점</span>). Er nimmt an: Alles Wahrgenommene ist falsch, das Gedächtnis lügt; Körper, Gestalt, Ausdehnung, Bewegung und Ort sind „Chimären“. <span class="zeile">(Z. 55–71)</span></div>
+    <div class="arr">↓</div>
+    <div class="node key"><span class="lab">Wendepunkt</span>„Also bin doch auch ich nicht da? Nein, ganz gewiss war ich da, wenn ich mich von etwas überzeugt habe.“ Selbst wenn ein mächtiger, schlauer <b>Betrüger</b> mich immer täuscht: Um mich zu täuschen, muss ich existieren. „Er wird doch nie bewirken können, dass ich nicht sei, solange ich denke, ich sei etwas.“ <span class="zeile">(Z. 80–84)</span></div>
+    <div class="arr">↓</div>
+    <div class="node key"><span class="lab">Ziel erreicht</span>„… dass der Satz ‚<b>Ich bin, ich existiere</b>‘, sooft ich ihn ausspreche oder im Geiste auffasse, <b>notwendig wahr</b> sei.“ <span class="zeile">(Z. 84–86)</span><br><span class="small">Die Kurzformel „cogito, ergo sum“ (Ich denke, also bin ich) steht nicht in den Meditationen, sondern in den „Prinzipien der Philosophie“ und im „Discours de la Méthode“.</span></div>
+  </div>
+
+  <div class="grid2">
+    <div class="callout sugg" style="margin:0">
+      <p><span class="badge sugg">Vorschlag</span><b>Kernthese (1. + 2. Meditation)</b></p>
+      <p>Alles, was wir durch die Sinne erfahren – und sogar mathematisches Wissen – lässt sich bezweifeln. <b>Unbezweifelbar</b> ist nur, dass ich existiere, solange ich denke (zweifle). Der Satz „Ich bin, ich existiere“ ist deshalb <b>notwendig wahr</b>.</p>
+    </div>
+    <div class="callout sugg" style="margin:0">
+      <p><span class="badge sugg">Vorschlag</span><b>Kernanliegen</b></p>
+      <p>Descartes will eine <b>sichere, unerschütterliche Grundlage</b> (einen archimedischen Punkt) für alles Wissen und alle Wissenschaften finden. Dazu zweifelt er methodisch an allem, um zu prüfen, was diesem Zweifel standhält.</p>
+      <p class="small">Die Lehrkraft nennt das Anliegen im Lösungsbeispiel: „das Finden einer sicheren Basis für Erkenntnis oder Wissen“.</p>
+    </div>
+  </div>
+
+  <details class="loesung" open><summary>Musterlösung der Lehrkraft: Argumentationsgang (Ende 2. Meditation, Z. 65 – Ende)</summary><div class="inner">
+    <p><span class="badge teacher">Unterricht</span><span class="small">performative Verben grün markiert</span></p>
+    <p>Descartes <span class="v">setzt</span> seine Argumentation <span class="v">fort</span>, indem er erneut sein Anliegen <span class="v">anführt</span>, nämlich das Finden einer sicheren Basis für Erkenntnis oder Wissen (Z. 66/67, „[…] das gewiss und unerschütterlich ist.“).</p>
+    <p>Nach den bisherigen Gedanken <span class="v">geht</span> er an dieser Stelle nun methodisch davon <span class="v">aus</span>, dass jegliche Sinneserfahrung „falsch [sei]“ (Z. 67). Daher <span class="v">schlussfolgert</span> er grundsätzliche Täuschung bei jeglicher Beobachtung und bei jeglichen Sinnesinhalten und <span class="v">stellt sich die Frage</span>, was überhaupt noch korrekt gewusst werden könnte (vgl. Z. 69 ff.). Auch den Einfluss einer höheren Gewalt (Z. 73, „Gott“), die mit ihrer überirdischen Macht das, was Außenwelt sein soll, eventuell erschaffen haben und mit dieser täuschen könnte, <span class="v">zieht</span> der Philosoph <span class="v">in Erwägung</span>.</p>
+    <p>In diesem Zusammenhang <span class="v">nimmt</span> Descartes auch <span class="v">an</span>, man selbst könnte die Außenwelt nur erfunden haben oder sogar den eigenen „Körper“ (Z. 79). Schritt für Schritt bleibt nichts mehr übrig, was tatsächlich noch Teil der Wirklichkeit ist, und erst die letzte Frage in diesem Gedankengang (Z. 80, „Also bin ich doch auch nicht da?“) <span class="v">führt zu einem Wendepunkt</span>.</p>
+    <p>Descartes <span class="v">wendet</span> an dieser Stelle nämlich <span class="v">ein</span>, dass selbst ein „Betrüger“ (Z. 81), der dem Wahrnehmenden alles vortäuscht, doch genau dieses denkende Individuum braucht, um es täuschen zu können (Z. 83, „[…] so wird er nie bewirken können, dass ich nicht sei […].“).</p>
+    <p>Somit <span class="v">kommt</span> der Philosoph mit seiner Methode des Gedankenexperiments <span class="v">zu dem Schluss</span>, dass das Wissen des eigenen Denkens „notwendig wahr sei“ (Z. 86). Er hat alles ausgeschlossen, bis etwas zurückbleibt, was nicht ausgeschlossen werden kann.</p>
+  </div></details>
+
+  <h3>3. Meditation: Angeborene Ideen<span class="ko">본유 관념</span></h3>
+  <div class="card">
+    <ol class="steps">
+      <li><b>Ich bin ein denkendes Ding</b><i>res cogitans</i><span class="ko">사유하는 것</span>. Was macht diese erste Erkenntnis so sicher? Nur, dass ich sie <b>klar und deutlich</b> erkenne. → <b>Wahrheitskriterium:</b> „Alles das ist wahr, was ich ganz klar und deutlich auffasse.“ <span class="zeile">(Z. 1–11)</span></li>
+      <li><b>Was war früher „sicher“?</b>Erde, Himmel, Sterne – aber eigentlich war mir nur klar, dass solche <b>Vorstellungen in meinem Geist</b> waren, nicht, dass es die Dinge draußen gibt. <span class="zeile">(Z. 11–17)</span></li>
+      <li><b>Und die Mathematik?</b>„Zwei und drei zusammen sind fünf“ sehe ich klar ein. Aber ein Gott könnte mich trotzdem täuschen. Dieser Zweifelsgrund ist „sehr schwach und sozusagen metaphysisch“ – Descartes muss also prüfen, <b>ob es Gott gibt und ob er ein Betrüger sein kann</b>. <span class="zeile">(Z. 18–31)</span></li>
+      <li><b>Wo kann man sich nicht irren?</b>Vorstellungen an sich sind nicht falsch: Ob ich mir eine Ziege oder eine Chimäre vorstelle – es ist wahr, dass ich sie mir vorstelle. Auch beim Wollen und bei Gefühlen (Affekten) gibt es keinen Irrtum. Irrtum entsteht erst, wenn ich meine Vorstellungen auf etwas anderes außerhalb beziehe. <span class="zeile">(Z. 31–38)</span></li>
+      <li><b>Drei Arten von Ideen</b><span class="zeile">(Z. 38–44)</span>
+        <div class="tbl-wrap" style="margin:6px 0"><table class="tbl">
+          <tr><th>Art</th><th>Beispiele</th></tr>
+          <tr><td><b>angeboren</b></td><td>Was Ding, Wahrheit, Bewusstsein ist – aus meiner eigenen Natur</td></tr>
+          <tr><td><b>von außen kommend</b></td><td>Ich höre ein Geräusch, sehe die Sonne, fühle das Feuer</td></tr>
+          <tr><td><b>selbst gebildet</b></td><td>Sirenen, Hippogryphen (Fabelwesen)</td></tr>
+        </table></div></li>
+      <li><b>Die Gottesidee ist angeboren</b>Sie kommt nicht aus den Sinnen (sie überrascht mich nie wie Sinnesdinge), und ich habe sie nicht selbst gebildet (ich kann nichts wegnehmen und nichts hinzufügen). → Sie ist mir <b>angeboren</b>, wie die Vorstellung meiner selbst. <span class="zeile">(Z. 44–50)</span></li>
+    </ol>
+    <div class="callout phil-c">
+      <p><b>Hintergrund – warum ist Gott so wichtig?</b> Nach dem „Ich bin“ steht Descartes allein mit seinem Denken da. Er braucht eine Brücke zurück zur Welt. Ein vollkommener, guter Gott ist <b>kein Betrüger</b>. Er garantiert, dass das, was ich klar und deutlich erkenne, wirklich wahr ist.</p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card" style="margin:0">
+      <h4 style="margin-top:0">Warum ist Descartes Rationalist?</h4>
+      <ul>
+        <li>Sicheres Wissen kommt aus dem <b>Denken</b>, nicht aus den Sinnen (die Sinne täuschen).</li>
+        <li>Erste Gewissheit „Ich bin“ findet er <b>nur durch Nachdenken</b>.</li>
+        <li>Wahrheitskriterium: <b>klar und deutlich</b> – wie in der Mathematik.</li>
+        <li>Er glaubt an <b>angeborene Ideen</b> (Gott, Ich, Wahrheit).</li>
+      </ul>
+    </div>
+    <div class="card" style="margin:0">
+      <h4 style="margin-top:0">Ist der Zweifel übertrieben? (Gottfried Gabriel)</h4>
+      <p>Würde uns so ein Zweifel im Alltag überkommen, wirkte er „paranoid“. Aber Descartes prüft das Wissen in „ungestörter Muße“, fern von den „Sorgen“ des Alltags. Der Zweifel betrifft <b>nur theoretische Erkenntnisse</b>, nicht das praktische Leben.</p>
+      <p><b>Funktion:</b> Der Zweifel ist ein <b>Werkzeug</b> – ein Stresstest für unser Wissen, kein Lebensstil.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4 style="margin-top:0">Vergleich: Avicenna (980–1037), der „schwebende Mensch“</h4>
+    <p>Der persische Gelehrte Avicenna schlägt ein <b>Gedankenexperiment</b> vor: Stell dir vor, du wärst mit gesundem Verstand erschaffen worden, aber in der Luft schwebend, ohne deine Körperteile zu sehen oder zu spüren. Du hättest keine Sinneseindrücke – und wüsstest trotzdem, <b>dass du existierst</b>.</p>
+    <p><b>Gemeinsam mit Descartes:</b> Das Wissen um die eigene Existenz hängt nicht von Sinnen und Körper ab. <b>Unterschied:</b> Avicenna kommt durch ein Gedankenexperiment dahin, Descartes durch radikalen, schrittweisen Zweifel.</p>
+  </div>
+
+  <div class="card">
+    <h4 style="margin-top:0">Kritik – Schwachstellen in Descartes’ Argumentation</h4>
+    <ul>
+      <li><b>Wer ist „ich“?</b> Sicher ist nur: <i>Es wird gedacht.</i> Folgt daraus schon ein festes „Ich“? (Comic: „Ich denke, daher bin ich!“ – „Was bleibt mir da übrig?“)</li>
+      <li><b>Nur das Ich ist sicher:</b> Aus „Ich bin“ folgt nichts über die Außenwelt. Für den Rückweg braucht er Gott – und Gottesbeweise sind umstritten (Kreis: Gott garantiert klare Erkenntnis, aber Gott wird durch klare Erkenntnis bewiesen).</li>
+      <li><b>Traumargument:</b> Den Begriff „Traum“ verstehen wir nur, weil wir auch das Wachsein kennen. Wenn alles Traum wäre, verlöre das Wort seinen Sinn.</li>
+      <li><b>Sprache und Denken:</b> Wörter wie „ich“, „zweifeln“, „Gott“ haben wir von anderen Menschen gelernt. Setzt der Zweifel nicht schon eine Welt mit anderen Menschen voraus?</li>
+      <li><b>Pro Descartes:</b> Die Methode ist klar und konsequent. Sie schützt vor Vorurteilen – heute z. B. vor Fake News: erst prüfen, dann glauben.</li>
+    </ul>
+  </div>
+  <div class="card selftest">
+    <h4 style="margin-top:0">Selbsttest Descartes</h4>
+    <details class="loesung"><summary>Nenne die drei Zweifelsgründe der 1. Meditation.</summary><div class="inner"><p>1) Die Sinne täuschen manchmal (Klugheitsregel). 2) Traumargument: Man kann Wachen und Träumen nicht sicher unterscheiden. 3) Ein allmächtiger (Betrüger-)Gott – oder ein zufälliger Ursprung – könnte bewirken, dass ich mich sogar in der Mathematik irre.</p></div></details>
+    <details class="loesung"><summary>Warum kann der Betrüger nicht bewirken, dass ich nicht existiere?</summary><div class="inner"><p>Weil Täuschen jemanden voraussetzt, der getäuscht wird. Solange ich denke (auch zweifle oder getäuscht werde), muss ich existieren. Deshalb ist „Ich bin, ich existiere“ notwendig wahr.</p></div></details>
+    <details class="loesung"><summary>Was ist der Unterschied zwischen Descartes und Locke bei der Gottesidee?</summary><div class="inner"><p>Descartes: Die Gottesidee ist <b>angeboren</b>, weil sie weder aus den Sinnen kommt noch selbst gemacht ist. Locke: Es gibt <b>keine angeborenen Ideen</b>; bei Kindern findet man keine Gottesidee – ihr Gottesbegriff gleicht eher der Meinung ihres Lehrers.</p></div></details>
+  </div>
+  <a class="totop" href="#top">↑ nach oben</a>
+</section>
+
+<!-- ===================== LOCKE ===================== -->
+<section class="part phil locke" id="locke">
+  <span class="part-label">Teil C · Empirismus</span>
+  <div class="phil-head">
+    <h2>John Locke: Alles Wissen kommt aus der Erfahrung</h2>
+    <p style="margin:.2em 0 .5em"><b>Leitfrage:</b> Woher kommen unsere Ideen?</p>
+    <div class="facts"><span><b>Locke</b> 1632–1704, englischer Philosoph</span><span><b>Text:</b> „Versuch über den menschlichen Verstand“ (1690)</span><span><b>Modell:</b> Empirismus (Gegenposition zu Descartes)</span></div>
+  </div>
+  <div class="card">
+    <p>Lockes Ziel: „Ursprung, Gewissheit und Umfang der menschlichen Erkenntnis“ zu untersuchen. Wenn Menschen wüssten, wo die Grenzen ihres Verstandes liegen, würden sie sich nicht in unlösbaren Fragen verlieren.</p>
+    <ol class="steps">
+      <li><b>Keine angeborenen Ideen</b>Menschen können alles Wissen mit ihren natürlichen Fähigkeiten erwerben. Es wäre unsinnig, dass Farbideen angeboren sind – Gott hat uns ja Augen gegeben, um sie von außen zu empfangen. Bei Kindern findet man keine angeborene Gottesidee.</li>
+      <li><b>Der Geist als „unbeschriebenes Blatt“</b>Am Anfang ist der Geist leer, „ohne alle Schriftzeichen“ (<i>tabula rasa</i><span class="ko">백지</span>). Woher kommt das Material? „Aus der <b>Erfahrung</b>.“</li>
+      <li><b>Zwei Quellen der Erfahrung</b><b>Sensation</b><span class="ko">감각</span> = äußere Sinne: Ideen wie gelb, weiß, heiß, kalt, weich, hart, bitter, süß. <b>Reflexion</b><span class="ko">반성</span> = innere Wahrnehmung der eigenen Geistestätigkeit: wahrnehmen, denken, zweifeln, glauben, schließen, erkennen, wollen.</li>
+      <li><b>Primäre und sekundäre Qualitäten</b><span class="ko">제1성질 / 제2성질</span>
+        <div class="tbl-wrap" style="margin:6px 0"><table class="tbl">
+          <tr><th>Primäre Qualitäten</th><th>Sekundäre Qualitäten</th></tr>
+          <tr><td>Festigkeit, Ausdehnung, Gestalt, Bewegung oder Ruhe, Zahl</td><td>Farben, Töne, Geschmack, Gerüche, Wärme</td></tr>
+          <tr><td>Sind <b>im Ding selbst</b> und untrennbar von ihm. Ein Weizenkorn kann man immer weiter teilen – jedes Teilchen behält sie.</td><td>Sind im Ding nur <b>Kräfte</b>, die durch Bewegung kleiner Teilchen Empfindungen in uns erzeugen.</td></tr>
+          <tr><td>Unsere Ideen davon sind „<b>Ebenbilder</b>“ – sie ähneln den Dingen.</td><td>Unsere Ideen davon haben <b>keine Ähnlichkeit</b> mit den Dingen.</td></tr>
+        </table></div>
+        <b>Schneeball:</b> rund (primär) – weiß und kalt (sekundär). <b>Teetasse:</b> Form, Größe, Gewicht (primär) – Farbe, Wärme, Mango-Duft, süßer Geschmack (sekundär).</li>
+      <li><b>Wie sicher ist unser Wissen?</b>Das eigene Dasein kennen wir durch <b>Intuition</b>, Gottes Existenz durch die <b>Vernunft</b>, alle anderen Dinge nur durch <b>Sensation</b>. Dass ich die Idee eines Dinges habe, beweist noch nicht, dass es existiert – so wenig wie ein Bild oder ein Traumbild.</li>
+    </ol>
+    <div class="callout phil-c">
+      <p><b>Verbindung zu Foerster:</b> Locke sagt schon: Farben und Töne sind nicht „in den Dingen“, sondern entstehen in uns. Foerster geht weiter: „Da draußen“ gibt es weder Licht noch Farbe noch Schall – und auch für alles andere haben wir nur Signale. Locke bleibt aber <b>Realist</b>: Die primären Qualitäten existieren wirklich.</p>
+    </div>
+  </div>
+  <a class="totop" href="#top">↑ nach oben</a>
+</section>
+
+<!-- ===================== FOERSTER ===================== -->
+<section class="part phil foerster" id="foerster">
+  <span class="part-label">Teil C · Radikaler Konstruktivismus</span>
+  <div class="phil-head">
+    <h2>Heinz von Foerster: „Wie kommen wir zu Erkenntnissen?“</h2>
+    <p style="margin:.2em 0 .5em"><b>Leitfrage:</b> Bilden wir die Wirklichkeit ab – oder erfinden wir sie?</p>
+    <div class="facts"><span><b>Foerster</b> 1911–2002, österreichisch-amerikanischer Physiker und Biologe</span><span><b>Text:</b> 1985, naturwissenschaftlicher Ansatz</span><span><b>Modell:</b> radikaler Konstruktivismus</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Die Gegenposition: das „Fotokamera-Modell“</h3>
+    <p>Die Alltagsvorstellung (Realismus): „Draußen“ reflektieren Gegenstände Licht. Es fällt auf die Netzhaut, erzeugt dort ein Bild, das Gehirn verarbeitet es, und wir sehen z. B. einen Laptop. Das Auge funktioniert wie eine <b>biologische Fotokamera</b>; unser Erkennen richtet sich nach der Außenwelt. <b>Konstruktivisten halten das für völlig falsch.</b></p>
+    <blockquote class="zitat"><p>„Die Umwelt, so wie wir sie wahrnehmen, ist unsere <b>Erfindung</b>.“</p><p class="zeile">Z. 1 – Ausgangs- und Kernthese, von Foerster selbst „freche Behauptung“ genannt</p></blockquote>
+  </div>
+
+  <h3>Der Gedankengang</h3>
+  <ol class="steps">
+    <li><b>Experiment: der blinde Fleck</b> <span class="zeile">(Z. 4–10)</span>Buch in die rechte Hand, linkes Auge zu, mit dem rechten Auge den Stern fixieren und das Buch langsam bewegen. Bei 30–35 cm verschwindet der schwarze Kreis.</li>
+    <li><b>Biologische Erklärung + wichtiger Einwand</b> <span class="zeile">(Z. 11–21)</span>An der Stelle, wo die Nervenfasern zum Sehnerv zusammenlaufen, gibt es <b>keine Lichtsinneszellen</b> (Stäbchen oder Zapfen). Wichtig: Wir sehen dort <b>keinen dunklen Fleck</b> (dazu müsste man ja etwas „sehen“). Die Lücke ist überhaupt nicht wahrnehmbar: „Was immer man wahrnimmt, nimmt man ‚fleckenlos‘ wahr.“ → Wir merken nicht, dass etwas fehlt.</li>
+    <li><b>Wie eine Sinneszelle arbeitet</b> <span class="zeile">(Z. 22–28)</span>Ein Stäbchen in der Netzhaut absorbiert Strahlung. Das erzeugt elektrische Entladungen in Nervenzellen. Deren <b>Frequenz</b> entspricht der <b>Stärke</b> (Intensität) des Reizes – aber sie enthält <b>keinen Hinweis</b>, dass es Licht war.</li>
+    <li><b>Übertragung auf alle Sinne</b> <span class="zeile">(Z. 28–32)</span>Auch Tastzellen, Geschmacksknospen und alle anderen Rezeptoren sind „<b>blind“ für die Qualität</b> der Reize (<i>was</i> ist es?) und reagieren nur auf ihre <b>Quantität</b> (<i>wie viel</i>?)<span class="ko">질 vs. 양</span>.</li>
+    <li><b>„Da draußen“</b> <span class="zeile">(Z. 33–37)</span>
+      <div class="tbl-wrap" style="margin:6px 0"><table class="tbl">
+        <tr><th>Was wir erleben</th><th>Was es „da draußen“ gibt</th></tr>
+        <tr><td>Licht, Farbe</td><td>nur elektromagnetische Wellen</td></tr>
+        <tr><td>Schall, Musik</td><td>nur periodische Schwankungen des Luftdrucks</td></tr>
+        <tr><td>Wärme, Kälte</td><td>nur Moleküle mit mehr oder weniger Bewegungsenergie</td></tr>
+        <tr><td>Schmerz</td><td>„ganz gewiss keinen Schmerz“</td></tr>
+      </table></div></li>
+    <li><b>Das „Problem des Erkennens“</b> <span class="zeile">(Z. 37–44)</span>Wie bringt unser Gehirn die überwältigende Vielfalt dieser <b>bunten Welt</b> hervor – im Wachen und manchmal im Traum?</li>
+    <li><b>Neue Definition</b> <span class="zeile">(Z. 46 f.)</span>
+      <blockquote class="zitat"><p>„Erkennen → <b>Errechnen einer Wirklichkeit</b>“</p></blockquote></li>
+    <li><b>Vorweggenommene Einwände – mit Ironie</b> <span class="zeile">(Z. 48–56)</span>„errechnen“ und „Wirklichkeit“ sind noch unklarer als „erkennen“; der Artikel „<b>eine</b>“ bedeutet, dass es <b>viele Wirklichkeiten</b> geben kann, nicht nur „die einzige“; und alles, von der Armbanduhr bis zu den Sternen, wäre nur „errechnet“ und nicht wirklich „da“. „Unerhört!“</li>
+  </ol>
+
+  <div class="hflow">
+    <div class="node"><span class="lab">Da draußen</span>elektromagnetische Wellen, Luftdruck, Moleküle</div>
+    <div class="node"><span class="lab">Sinneszelle</span>reagiert nur auf die Stärke des Reizes</div>
+    <div class="node"><span class="lab">Nervensignal</span>elektrische Impulse: „wie viel“, nicht „was“</div>
+    <div class="node"><span class="lab">Gehirn</span>„errechnet“ Farben, Töne, Wärme, Schmerz</div>
+    <div class="node" style="border-color:var(--c);background:var(--c-soft)"><span class="lab">Ergebnis</span>unsere Wirklichkeit = eine Konstruktion</div>
+  </div>
+
+  <div class="grid2">
+    <div class="callout teacher" style="margin:0">
+      <p><span class="badge teacher">Unterricht</span><b>Kernthese (Lösung)</b></p>
+      <p>Aufgrund der eingeschränkten Verarbeitung der Informationen, die das Subjekt über die Außenwelt beim Wahrnehmen erhält, ergibt sich <b>kein objektiver Zugang</b> zu dem, was man Wirklichkeit nennt. Wie diese beschaffen ist, lässt sich nicht erkennen; das Subjekt gestaltet sich selbst eine <b>Konstruktion</b> auf der Basis rudimentärer Sinnesdaten.</p>
+    </div>
+    <div class="callout teacher" style="margin:0">
+      <p><span class="badge teacher">Unterricht</span><b>Kernanliegen (Lösung)</b></p>
+      <p>Der Philosoph argumentiert aus der Sicht des Konstruktivismus und <b>hinterfragt die Prämisse des Realismus</b>, der davon ausgeht, dass man klar zwischen dem Erkenntnissubjekt und der objektiven Außenwelt unterscheiden kann. Er möchte den <b>Akt des Erkennens neu definieren</b> bzw. charakterisieren.</p>
+    </div>
+  </div>
+  <div class="callout">
+    <p><b>Einfach gesagt:</b> Unsere Sinne liefern nur sehr grobe Signale („wie stark?“). Wie die Welt wirklich ist, können wir nicht erkennen. Unser Gehirn baut daraus seine eigene Wirklichkeit. Foerster kritisiert damit den Realismus und will zeigen: Erkennen ist kein Abbilden, sondern ein „Errechnen“.</p>
+  </div>
+
+  <details class="loesung" open><summary>Musterlösung der Lehrkraft: Analyse des Argumentationsgangs (komplett)</summary><div class="inner">
+    <p><span class="badge teacher">Unterricht</span><span class="small">performative Verben grün markiert; Rechtschreibung minimal korrigiert</span></p>
+    <p>Der Philosoph <span class="v">beginnt seine Argumentation</span> direkt mit der <span class="v">Ausgangsthese</span>, dass die erfahrene Außenwelt der Imagination entspringt (vgl. Z. 1). Hier handelt es sich auch um Foersters <span class="v">Kernthese</span>, deren <span class="v">Nachweis</span> er zunächst mithilfe eines <span class="v">Versuchs</span> erbringen möchte (vgl. Z. 2 f.).</p>
+    <p>Im Folgenden wird <span class="v">beschrieben</span>, wie die auf der vorliegenden Seite gezeigten Zeichen genutzt werden können, um den „blinden Fleck“ (Z. 5) zu erfahren (vgl. Z. 5–10).</p>
+    <p>Daraufhin wird zudem biologisch <span class="v">erklärt</span>, wie es zu diesem Phänomen kommt, wobei Foerster dabei noch <span class="v">konkretisiert</span>, dass das Verschwinden des Zeichens nicht durch eine Ersatzwahrnehmung ausgeglichen wird. Der Philosoph beugt hier mit seinem <span class="v">Einwand</span> einem wahrscheinlich immer wieder vorkommenden Missverständnis vor (vgl. Z. 16 ff.).</p>
+    <p>Die neurobiologischen Erläuterungen des Vorgangs einer visuellen Wahrnehmung durchs Auge werden des Weiteren <span class="v">beschrieben</span>, wobei der Philosoph die Reaktion der Neuronen auf Lichtreize <span class="v">veranschaulicht</span> (vgl. Z. 17–26).</p>
+    <p>Dabei <span class="v">unterscheidet</span> Foerster zwischen quantitativen und qualitativen Reizen, das heißt, die Sinneswahrnehmung registriert nur die Intensität des Stimulus, nicht seine Art und Weise (vgl. Z. 26–28).</p>
+    <p>Dieser Sachverhalt wird nun auf andere Sinne <span class="v">übertragen</span>, für welche diese Unterscheidung auch gilt; auch gustatorisch, olfaktorisch, taktil oder auditiv wird nur wahrgenommen, dass etwas ist, aber nicht, wie es genau ist (vgl. Z. 28–32).</p>
+    <p>Foerster <span class="v">begründet</span> diese Tatsache, indem er konkret die Beschaffenheit der Außenwelt (Z. 33, „da draußen“) <span class="v">charakterisiert</span>, denn dieser fehlen die Eigenschaften, die der Mensch ihren Elementen allgemein zuordnen möchte (z. B. Z. 33/34, „weder Licht noch Farbe“).</p>
+    <p><span class="v">Ableitend</span> wird zusätzlich auch die Schmerzerfahrung <span class="v">angeführt</span>, die als rein nervenbedingtes Phänomen nur subjektiv erlebt, aber nicht qualitativ bestimmt werden kann. Der Schmerzreiz beinhaltet nicht, was genau jeweils diese Empfindung auslöst, also lässt sich keine objektive Information über die Außenwelt schlussfolgern (vgl. Z. 38 ff.).</p>
+    <p>Aufgrund dieser fehlenden Informationen <span class="v">schlussfolgert</span> der Philosoph, dass der Begriff „Erkennen“ (Z. 44) nach seinen Reflexionen <span class="v">neu definiert</span> werden muss (Z. 47, „Errechnen einer Wirklichkeit“).</p>
+    <p>Abschließend <span class="v">sagt</span> der Erkenntnistheoretiker <span class="v">voraus</span>, welche möglichen Kritikpunkte diese Definition nach sich ziehen wird (oder würde). Es ergibt sich die Konsequenz, dass es zum einen nicht nur eine einzige Wirklichkeit gebe (vgl. Z. 53) sowie dass diese letztlich ein individuelles Konstrukt sei (Z. 56, „lediglich errechnet“).</p>
+    <p><b>Fazit:</b> Heinz von Foersters Argumentation <span class="v">stellt</span> also klar das Erkenntnismodell des Realismus <span class="v">in Frage</span>. Mithilfe neurobiologischer Prozesse <span class="v">begründet</span> er Schritt für Schritt, mit dem Fokus auf grundlegende alltägliche Sinneserfahrungen, eine konstruktivistische Erkenntnistheorie. Die wahrgenommene Außenwelt resultiert aus den individuellen Sinnesdaten, die eine Wirklichkeit sozusagen kreieren. Zur tatsächlichen Außenwelt hat der Wahrnehmende keinen (direkten) Zugang.</p>
+  </div></details>
+
+  <div class="card">
+    <h4 style="margin-top:0">Für die Erörterung: Stärken und Schwächen</h4>
+    <div class="grid2">
+      <div><b>Dafür spricht:</b>
+        <ul>
+          <li>blinder Fleck, optische Täuschungen, Nachbilder: Das Gehirn ergänzt und erfindet.</li>
+          <li>Riechexperiment: Geruch ohne Reiz.</li>
+          <li>Verhörer bei Liedtexten (Beispiele von Axel Hacke): Das Gehirn macht aus Lauten einen Sinn, der gar nicht gesungen wird.</li>
+          <li>Physik bestätigt: Farbe ist eine Wellenlänge, Ton ist Luftdruck.</li>
+        </ul></div>
+      <div><b>Dagegen spricht:</b>
+        <ul>
+          <li><b>Selbstwiderspruch:</b> Foerster beweist den Konstruktivismus mit Biologie (Netzhaut, Neuronen, Wellen) – also mit objektivem Wissen über die Außenwelt (Realismus!).</li>
+          <li>Wenn alles Konstruktion ist, ist auch seine Theorie nur eine Konstruktion – warum sollte sie wahrer sein?</li>
+          <li>Wir konstruieren nicht beliebig: Wer gegen eine Wand läuft, spürt Widerstand. Die Welt setzt Grenzen.</li>
+          <li>Menschen konstruieren sehr ähnlich und können sich verständigen → es gibt eine gemeinsame Welt.</li>
+        </ul></div>
+    </div>
+  </div>
+  <div class="card selftest">
+    <h4 style="margin-top:0">Selbsttest Foerster</h4>
+    <details class="loesung"><summary>Welche Funktion hat das Experiment mit dem blinden Fleck für Foersters Argumentation?</summary><div class="inner"><p>Es ist der <b>erste Beleg</b> für seine These: Wir nehmen eine Lücke im Sehfeld nicht wahr, und wir merken nicht einmal, dass etwas fehlt. Unsere Wahrnehmung ist also nicht vollständig, fühlt sich aber vollständig an → das Gehirn „macht“ unsere Wahrnehmung.</p></div></details>
+    <details class="loesung"><summary>Was meint Foerster mit „Qualität“ und „Quantität“ der Reize?</summary><div class="inner"><p>Qualität = <i>was</i> der Reiz ist (Licht, Ton, Wärme). Quantität = <i>wie stark</i> er ist. Sinneszellen melden nur die Stärke (Frequenz der elektrischen Impulse), nicht die Art. Die Art (Farbe, Ton …) „errechnet“ erst das Gehirn.</p></div></details>
+    <details class="loesung"><summary>Warum ist das Wort „eine“ in „Errechnen einer Wirklichkeit“ so wichtig?</summary><div class="inner"><p>Der unbestimmte Artikel zeigt: Es gibt nicht <i>die eine</i> Wirklichkeit für alle, sondern jeder errechnet <i>eine</i> Wirklichkeit. Es kann also viele Wirklichkeiten geben.</p></div></details>
+  </div>
+  <a class="totop" href="#top">↑ nach oben</a>
+</section>
+
+<!-- ===================== TEIL D ===================== -->
+<section class="part" id="vergleich">
+  <span class="part-label">Teil D</span>
+  <h2>Vergleichstabelle der Philosophen</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th></th><th style="color:var(--platon)">Platon</th><th style="color:var(--descartes)">Descartes</th><th style="color:var(--locke)">Locke</th><th style="color:var(--foerster)">Foerster</th></tr>
+    <tr><td><b>Zeit</b></td><td>Antike, 427–347 v. Chr.</td><td>frühe Neuzeit, 1641</td><td>frühe Neuzeit, 1690</td><td>Gegenwart, 1985</td></tr>
+    <tr><td><b>Modell</b></td><td>Idealismus (Ideenlehre)</td><td>Rationalismus</td><td>Empirismus</td><td>radikaler Konstruktivismus</td></tr>
+    <tr><td><b>Rolle der Sinne</b></td><td>liefern nur Schatten, Meinungen</td><td>täuschen, sind unsicher</td><td>einzige Quelle des Materials</td><td>liefern nur „wie viel“, nicht „was“</td></tr>
+    <tr><td><b>Sicheres Wissen durch …</b></td><td>Vernunft: Schau der Ideen</td><td>Denken: „Ich bin“, klar und deutlich</td><td>Erfahrung (Sensation + Reflexion)</td><td>keins – Wirklichkeit wird errechnet</td></tr>
+    <tr><td><b>Wichtiger Satz</b></td><td>„… niemals ist eigentlich irgendetwas, sondern immer nur wird es.“ / Höhle</td><td>„Ich bin, ich existiere“ ist notwendig wahr.</td><td>Der Geist ist ein „unbeschriebenes Blatt“.</td><td>„Die Umwelt, so wie wir sie wahrnehmen, ist unsere Erfindung.“</td></tr>
+    <tr><td><b>Schlüsselbegriffe</b></td><td>Ideen, Idee des Guten, Schatten, Meinung vs. Wissen</td><td>methodischer Zweifel, Traum, Betrüger, cogito, angeborene Ideen</td><td>tabula rasa, primäre/sekundäre Qualitäten</td><td>blinder Fleck, Quantität/Qualität, „da draußen“, Errechnen</td></tr>
+    <tr><td><b>Zum Riechexperiment</b></td><td>Sinnesdaten sind Schatten – kein Wissen.</td><td>Bestätigt: Den Sinnen nie ganz trauen!</td><td>Erfahrung bleibt Grundlage, muss aber genau geprüft werden.</td><td>Perfektes Beispiel: Das Gehirn errechnet einen Geruch.</td></tr>
+  </table></div>
+</section>
+
+<section class="part" id="eroerterung">
+  <h2>Typische Fragen für Aufgabe 3 – mit Argumenten</h2>
+  <p>Klicke eine Frage auf, um Pro- und Contra-Argumente und einen Urteilsvorschlag zu sehen. Versuche es vorher selbst!</p>
+
+  <details class="loesung"><summary>1 · Können wir unserer Wahrnehmung vertrauen?</summary><div class="inner">
+    <div class="grid2">
+      <div><b>Ja, meistens:</b><ul>
+        <li>Im Alltag funktioniert Wahrnehmung (Tasse greifen, Straße überqueren).</li>
+        <li>Verschiedene Sinne kontrollieren sich gegenseitig (sehen + tasten).</li>
+        <li>Täuschungen können wir aufdecken (z. B. mit einem Lineal) → Realismus.</li>
+        <li>Locke: Erfahrung ist die Grundlage allen Wissens.</li></ul></div>
+      <div><b>Nein, nicht sicher:</b><ul>
+        <li>Optische Täuschungen, blinder Fleck, Nachbilder.</li>
+        <li>Riechexperiment: Wahrnehmung ohne Reiz.</li>
+        <li>Platon: Der Wind ist für jeden anders – Wahrnehmung ist subjektiv.</li>
+        <li>Descartes: Traumargument, Klugheitsregel.</li>
+        <li>Foerster: Sinneszellen melden nur Quantität – das Gehirn konstruiert.</li></ul></div>
+    </div>
+    <p><span class="badge sugg">Vorschlag</span><b>Urteil:</b> Für den Alltag ist Wahrnehmung meist zuverlässig genug. Als <b>sicheres Fundament für Wahrheit</b> reicht sie aber nicht. Man sollte sie mit dem Verstand, mit Messungen und im Austausch mit anderen prüfen.</p>
+  </div></details>
+
+  <details class="loesung"><summary>2 · Ist Platons Höhlengleichnis heute noch aktuell?</summary><div class="inner">
+    <div class="grid2">
+      <div><b>Ja:</b><ul>
+        <li>Medien als „Schatten“: Kino, Social Media, bearbeitete Bilder, KI-Fakes.</li>
+        <li>Filterblasen: Wir sehen nur, was wir schon kennen („nicht den Kopf drehen“).</li>
+        <li>Bildung ist anstrengend, aber befreiend.</li>
+        <li>Wer Unbequemes sagt, wird oft angegriffen.</li></ul></div>
+      <div><b>Nur teilweise:</b><ul>
+        <li>Die Ideenwelt ist heute schwer zu glauben und nicht beweisbar.</li>
+        <li>Gefahr der Arroganz: Wer entscheidet, wer „befreit“ ist?</li>
+        <li>Zwang zur Wahrheit („mit Gewalt“) ist problematisch.</li>
+        <li>Konstruktivismus: Es gibt kein „Draußen“, nur neue Konstruktionen.</li></ul></div>
+    </div>
+    <p><span class="badge sugg">Vorschlag</span><b>Urteil:</b> Als <b>Aufforderung zum kritischen Denken</b> ist das Gleichnis sehr aktuell. Die Ideenlehre selbst überzeugt heute weniger.</p>
+  </div></details>
+
+  <details class="loesung"><summary>3 · Gibt es eine Wirklichkeit unabhängig von uns – und können wir sie erkennen? (Realismus vs. Konstruktivismus)</summary><div class="inner">
+    <div class="grid2">
+      <div><b>Realismus:</b><ul>
+        <li>Dinge existieren auch, wenn niemand hinschaut.</li>
+        <li>Wissenschaft macht erfolgreiche Vorhersagen, Technik funktioniert.</li>
+        <li>Menschen nehmen sehr ähnlich wahr → gemeinsame Welt.</li></ul></div>
+      <div><b>Konstruktivismus:</b><ul>
+        <li>Wir haben nur Sinnesdaten und kommen nie „aus dem Kopf heraus“, um zu vergleichen.</li>
+        <li>Farben und Töne gibt es „da draußen“ nicht (Foerster; schon Locke: sekundäre Qualitäten).</li>
+        <li>Das Gehirn ergänzt und deutet (blinder Fleck).</li></ul></div>
+    </div>
+    <p><span class="badge sugg">Vorschlag</span><b>Urteil (Mittelweg):</b> Wahrscheinlich gibt es eine Außenwelt – sie setzt unseren Konstruktionen Grenzen. Unser Bild von ihr ist aber immer auch von uns geprägt. Der Konstruktivismus hat recht mit den Grenzen der Wahrnehmung, widerspricht sich aber, wenn er Biologie als objektive Wahrheit benutzt.</p>
+  </div></details>
+
+  <details class="loesung"><summary>4 · Ist Descartes’ radikaler Zweifel sinnvoll oder übertrieben?</summary><div class="inner">
+    <div class="grid2">
+      <div><b>Übertrieben:</b><ul>
+        <li>Im Alltag wäre er „paranoid“ (Gabriel).</li>
+        <li>An 2 + 3 = 5 zu zweifeln wirkt künstlich.</li>
+        <li>Das Ergebnis „Ich bin“ ist sehr wenig; für den Rückweg zur Welt braucht er Gott.</li></ul></div>
+      <div><b>Sinnvoll:</b><ul>
+        <li>Er ist eine <b>Methode</b>, kein Lebensstil – nur für theoretisches Wissen.</li>
+        <li>Wie ein Stresstest: Was hält stand?</li>
+        <li>Wissenschaft braucht sichere Grundlagen.</li>
+        <li>Heute aktuell: Informationen kritisch prüfen (Fake News).</li></ul></div>
+    </div>
+    <p><span class="badge sugg">Vorschlag</span><b>Urteil:</b> Als philosophische Methode ist der Zweifel sinnvoll und konsequent. Übertrieben wäre er nur, wenn man ihn auf das praktische Leben überträgt – und das will Descartes gar nicht.</p>
+  </div></details>
+
+  <details class="loesung"><summary>5 · Wie würden Descartes, Locke, Platon und Foerster das Riechexperiment einschätzen?</summary><div class="inner">
+    <ul>
+      <li><b>Descartes:</b> Bestätigung: Die Sinne täuschen – also gilt die Klugheitsregel. Sicheres Wissen gibt es nur durch das Denken.</li>
+      <li><b>Locke:</b> Gerüche sind sekundäre Qualitäten, sie entstehen in uns. Er bliebe dabei, dass Wissen auf Erfahrung beruht – aber Erfahrungen müssen genau geprüft werden (hier fehlte der äußere Reiz).</li>
+      <li><b>Platon:</b> Sinneseindrücke sind nur Schatten in der Höhle – sie liefern Meinungen, kein Wissen.</li>
+      <li><b>Foerster:</b> Ideales Beispiel: Das Gehirn „errechnet“ einen Geruch, den es „da draußen“ nicht gibt. Die Erwartung (und die Hände der anderen) zeigen auch die <b>soziale</b> Seite der Konstruktion.</li>
+    </ul>
+  </div></details>
+
+  <details class="loesung"><summary>6 · Welche Position überzeugt dich am meisten – und hat das Folgen für dein Leben?</summary><div class="inner">
+    <p><b>Aufbau:</b> Position wählen → zwei starke Gründe → eine Schwäche nennen und darauf antworten → Folgen für das Leben.</p>
+    <ul>
+      <li><b>Konstruktivismus</b> → Toleranz (andere leben in anderen Wirklichkeiten). Gefahr: „Alles ist relativ“ – dann gäbe es auch keine Fake News mehr.</li>
+      <li><b>Realismus</b> → Vertrauen in Wissenschaft und Fakten. Gefahr: Man übersieht die Grenzen der eigenen Wahrnehmung.</li>
+      <li><b>Skeptizismus</b> → Vorsicht, wenig Vorurteile. Gefahr: Man kann nicht mehr handeln.</li>
+      <li><b>Rationalismus</b> → Vertrauen in eigenes Denken. Gefahr: Man ignoriert Erfahrungen.</li>
+    </ul>
+  </div></details>
+
+  <details class="loesung"><summary>7 · Darf man an die Außenwelt glauben, auch wenn man sie nicht beweisen kann? (Thomas Nagel)</summary><div class="inner">
+    <p><b>Problem (Nagel):</b> Jeder Beweis für die Außenwelt muss durch unser Bewusstsein – wir argumentieren im Kreis. Vielleicht ist alles ein großer Traum.</p>
+    <ul>
+      <li><b>Ja:</b> Praktisch notwendig – niemand kann ohne diesen Glauben leben. Die Außenwelt ist die einfachste Erklärung für unsere Erfahrungen (warum sonst sehen alle dieselbe Tasse?).</li>
+      <li><b>Aber:</b> Philosophisch bleibt es ein Glaube, kein bewiesenes Wissen. Man sollte die Grenzen des Wissens kennen (Locke).</li>
+    </ul>
+  </div></details>
+
+  <details class="loesung"><summary>8 · Bonus: Wie wahr sind wissenschaftliche Aussagen? (Lehrplan)</summary><div class="inner">
+    <ul>
+      <li><b>Realismus:</b> Wissenschaft prüft Aussagen an der erfahrbaren Wirklichkeit – sie kommt der Wahrheit immer näher.</li>
+      <li><b>Descartes:</b> Vorbild für Gewissheit ist die Mathematik – aber selbst sie muss erst abgesichert werden.</li>
+      <li><b>Locke:</b> Wissenschaft beruht auf Erfahrung; über die „inneren“ Eigenschaften der Dinge wissen wir wenig.</li>
+      <li><b>Foerster:</b> Auch Wissenschaft ist eine Konstruktion – aber er benutzt sie selbst als Beweis (Widerspruch).</li>
+      <li><b>Fazit:</b> Wissenschaftliche Aussagen sind die am besten geprüften Aussagen, die wir haben, aber sie sind nicht absolut sicher und können korrigiert werden.</li>
+    </ul>
+  </div></details>
+</section>
+
+<section class="part" id="redemittel">
+  <h2>Redemittel für die Erörterung</h2>
+  <div class="grid2">
+    <div class="card" style="margin:0">
+      <h4 style="margin-top:0">Einleitung</h4>
+      <ul><li>„Die Frage, ob …, ist seit der Antike umstritten.“</li><li>„Im Folgenden werde ich Argumente für und gegen … abwägen.“</li></ul>
+      <h4>Pro</h4>
+      <ul><li>„Für diese Position spricht, dass …“</li><li>„Ein wichtiges Argument ist …“</li><li>„Dies lässt sich am Beispiel … zeigen.“</li></ul>
+      <h4>Contra</h4>
+      <ul><li>„Dagegen lässt sich einwenden, dass …“</li><li>„Kritisch ist jedoch zu sehen, dass …“</li><li>„Allerdings übersieht diese Position, dass …“</li></ul>
+    </div>
+    <div class="card" style="margin:0">
+      <h4 style="margin-top:0">Fachwissen einbauen</h4>
+      <ul><li>„Aus der Sicht des radikalen Konstruktivismus …“</li><li>„Descartes würde hier einwenden, dass …“</li><li>„Dies erinnert an Platons Höhlengleichnis, in dem …“</li><li>„Im Sinne Lockes handelt es sich hier um eine sekundäre Qualität.“</li></ul>
+      <h4>Abwägen</h4>
+      <ul><li>„Einerseits …, andererseits …“</li><li>„Zwar …, aber …“</li><li>„Wägt man die Argumente ab, so …“</li></ul>
+      <h4>Schluss</h4>
+      <ul><li>„Zusammenfassend komme ich zu dem Ergebnis, dass …“</li><li>„Meiner Meinung nach überwiegen die Argumente …, weil …“</li><li>„Ich vertrete daher die Position, dass …“</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="part" id="checkliste">
+  <h2>Checkliste vor der Klausur</h2>
+  <p class="small">Deine Häkchen werden in diesem Browser gespeichert.</p>
+  <div class="card">
+    <ul class="check">
+      <li><input type="checkbox" id="c1"><label for="c1">Ich kann die <b>fünf Modelle</b> mit eigenen Worten und einem Beispiel erklären.</label></li>
+      <li><input type="checkbox" id="c2"><label for="c2">Ich kenne den Unterschied zwischen <b>Rationalismus und Empirismus</b>.</label></li>
+      <li><input type="checkbox" id="c3"><label for="c3"><b>Theaitetos:</b> These, Protagoras-Satz, Wind-Beispiel, „Sein vs. Werden“, Kernthese und Kernanliegen (Tafelbild).</label></li>
+      <li><input type="checkbox" id="c4"><label for="c4"><b>Höhlengleichnis:</b> fünf Stufen, Deutungstabelle, Ideenlehre, Aktualität, Kritik.</label></li>
+      <li><input type="checkbox" id="c5"><label for="c5"><b>Descartes:</b> Zweifelsstufen (Sinne, Traum, Betrüger-Gott), „Ich bin, ich existiere“, 3. Meditation (klar und deutlich, drei Arten von Ideen).</label></li>
+      <li><input type="checkbox" id="c6"><label for="c6"><b>Locke:</b> tabula rasa, Sensation/Reflexion, primäre/sekundäre Qualitäten.</label></li>
+      <li><input type="checkbox" id="c7"><label for="c7"><b>Foerster:</b> blinder Fleck, Quantität vs. Qualität, „da draußen“, „Errechnen einer Wirklichkeit“, Kernthese und Kernanliegen (Lösung).</label></li>
+      <li><input type="checkbox" id="c8"><label for="c8">Ich kann einen <b>Einleitungssatz</b> schreiben (Name, Titel, Jahr, Thema, Einordnung).</label></li>
+      <li><input type="checkbox" id="c9"><label for="c9">Ich benutze <b>Konjunktiv I, performative Verben und Zeilenangaben</b>.</label></li>
+      <li><input type="checkbox" id="c10"><label for="c10">Ich kann eine <b>Erörterung</b> gliedern (Einleitung – Pro/Contra mit Fachwissen – begründetes Urteil).</label></li>
+    </ul>
+  </div>
+</section>
+
+<section class="part" id="glossar">
+  <h2>Glossar</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>Begriff</th><th>Kurze Erklärung</th><th class="ko-col">한국어</th></tr>
+    <tr><td>Erkenntnistheorie</td><td>Teil der Philosophie: Was können wir wissen, und wie?</td><td class="ko-col">인식론</td></tr>
+    <tr><td>Erkenntnis</td><td>begründetes Wissen über etwas</td><td class="ko-col">인식</td></tr>
+    <tr><td>Wahrnehmung</td><td>Aufnahme der Welt durch die Sinne</td><td class="ko-col">지각</td></tr>
+    <tr><td>Subjekt / Objekt</td><td>der Erkennende / das Erkannte</td><td class="ko-col">주체 / 대상</td></tr>
+    <tr><td>Erscheinung</td><td>wie uns etwas erscheint</td><td class="ko-col">현상</td></tr>
+    <tr><td>Abbild</td><td>Kopie, Bild eines Originals</td><td class="ko-col">모사</td></tr>
+    <tr><td>Vorstellung</td><td>Bild oder Gedanke im Geist</td><td class="ko-col">표상</td></tr>
+    <tr><td>a priori</td><td>unabhängig von Erfahrung</td><td class="ko-col">선험적</td></tr>
+    <tr><td>empirisch</td><td>auf Erfahrung beruhend</td><td class="ko-col">경험적</td></tr>
+    <tr><td>angeborene Ideen</td><td>Begriffe, die von Geburt an im Geist sind (Descartes)</td><td class="ko-col">본유 관념</td></tr>
+    <tr><td>tabula rasa</td><td>„unbeschriebenes Blatt“: der Geist vor jeder Erfahrung (Locke)</td><td class="ko-col">백지</td></tr>
+    <tr><td>primäre / sekundäre Qualitäten</td><td>Eigenschaften im Ding selbst / Wirkungen in uns (Locke)</td><td class="ko-col">제1성질 / 제2성질</td></tr>
+    <tr><td>methodischer Zweifel</td><td>Zweifel als Methode, um Sicheres zu finden (Descartes)</td><td class="ko-col">방법적 회의</td></tr>
+    <tr><td>archimedischer Punkt</td><td>absolut sicherer Ausgangspunkt einer Theorie</td><td class="ko-col">아르키메데스의 점</td></tr>
+    <tr><td>Idee (Platon)</td><td>ewiges, vollkommenes Urbild/Wesen einer Sache</td><td class="ko-col">이데아</td></tr>
+    <tr><td>Idee des Guten</td><td>höchste Idee, Ursache von Wahrheit und Vernunft</td><td class="ko-col">선의 이데아</td></tr>
+    <tr><td>Gleichnis</td><td>Bildgeschichte für einen abstrakten Gedanken</td><td class="ko-col">비유</td></tr>
+    <tr><td>Homo-mensura-Satz</td><td>„Der Mensch ist das Maß aller Dinge“ (Protagoras)</td><td class="ko-col">인간 척도설</td></tr>
+    <tr><td>Konstruktion</td><td>vom Gehirn „gebaute“ Wirklichkeit</td><td class="ko-col">구성</td></tr>
+    <tr><td>Reiz (Qualität / Quantität)</td><td>Art / Stärke eines Sinnesreizes</td><td class="ko-col">자극 (질 / 양)</td></tr>
+    <tr><td>Kernthese / Kernanliegen</td><td>wichtigste Behauptung / Absicht des Autors</td><td class="ko-col">핵심 주장 / 핵심 의도</td></tr>
+    <tr><td>Prämisse</td><td>Voraussetzung eines Arguments</td><td class="ko-col">전제</td></tr>
+    <tr><td>Einwand</td><td>Gegenargument</td><td class="ko-col">반론</td></tr>
+    <tr><td>Selbstwiderspruch</td><td>eine Position widerlegt sich selbst</td><td class="ko-col">자기모순</td></tr>
+  </table></div>
+  <p class="small">Mehr Begriffe: <a href="https://www.philomag.de/lexikon" target="_blank" rel="noopener">Philosophie Magazin – Begriffslexikon</a> (Link aus dem Ordner).</p>
+</section>
+
+<footer>
+  Lernzettel erstellt aus allen Dateien im Ordner „Ethik 11-1“ (Einführung, Idealismus, Rationalismus, Konstruktivismus, Methodik, Tee-Beispiel). Formulierungen mit <span class="badge teacher">Unterricht</span> stammen aus Tafelbild und Lösungen der Lehrkraft; <span class="badge sugg">Vorschlag</span> sind ergänzende Formulierungen. Viel Erfolg am 21. Oktober!
+</footer>
+</main>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  function get(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  root.id='top';
+
+  // Koreanische Hilfen
+  var koBtn=document.getElementById('ko-toggle');
+  var ko=get('lz-ko')!=='0';
+  function applyKo(){root.classList.toggle('no-ko',!ko);koBtn.setAttribute('aria-pressed',ko?'true':'false');koBtn.textContent=ko?'Koreanische Hilfen: an':'Koreanische Hilfen: aus'}
+  applyKo();
+  koBtn.addEventListener('click',function(){ko=!ko;applyKo();set('lz-ko',ko?'1':'0')});
+
+  // Alle Lösungen auf/zu
+  var expBtn=document.getElementById('expand-all'),expanded=false;
+  expBtn.addEventListener('click',function(){expanded=!expanded;document.querySelectorAll('details.loesung').forEach(function(d){d.open=expanded});expBtn.textContent=expanded?'Lösungen zuklappen':'Alle Lösungen aufklappen'});
+
+  // Drucken: alles aufklappen
+  document.getElementById('print-btn').addEventListener('click',function(){window.print()});
+  window.addEventListener('beforeprint',function(){document.querySelectorAll('details').forEach(function(d){d.dataset.was=d.open?'1':'0';d.open=true})});
+  window.addEventListener('afterprint',function(){document.querySelectorAll('details').forEach(function(d){if(d.dataset.was)d.open=d.dataset.was==='1'})});
+
+  // Inhaltsverzeichnis
+  var toc=document.getElementById('toc'),mq=window.matchMedia('(min-width: 1100px)');
+  function syncToc(){toc.open=mq.matches}
+  syncToc();
+  if(mq.addEventListener){mq.addEventListener('change',syncToc)}else if(mq.addListener){mq.addListener(syncToc)}
+  var links=[].slice.call(toc.querySelectorAll('a[href^="#"]'));
+  links.forEach(function(a){a.addEventListener('click',function(){if(!mq.matches)toc.open=false})});
+  if('IntersectionObserver' in window){
+    var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+    var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting&&map[e.target.id]){links.forEach(function(l){l.classList.remove('active')});map[e.target.id].classList.add('active')}})},{rootMargin:'-15% 0px -75% 0px'});
+    Object.keys(map).forEach(function(id){var el=document.getElementById(id);if(el)obs.observe(el)});
+  }
+
+  // Checkliste speichern
+  document.querySelectorAll('.check input[type=checkbox]').forEach(function(cb){
+    var k='lz-'+cb.id;cb.checked=get(k)==='1';
+    cb.addEventListener('change',function(){set(k,cb.checked?'1':'0')});
+  });
+
+  // Countdown
+  var cd=document.getElementById('countdown');
+  var diff=Math.ceil((new Date(2026,9,21)-new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate()))/86400000);
+  if(diff>1){cd.textContent='noch '+diff+' Tage';cd.hidden=false}
+  else if(diff===1){cd.textContent='morgen ist es so weit!';cd.hidden=false}
+  else if(diff===0){cd.textContent='heute – viel Erfolg!';cd.hidden=false}
+})();
+</script>
+</body>
+</html>
