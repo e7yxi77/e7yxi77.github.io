@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lernzettel Reichsverfassung 1871</title>
+<style>
+  :root {
+    color-scheme: light;
+    --ink: #1f2328;
+    --muted: #57606a;
+    --line: #d0d7de;
+    --bg: #ffffff;
+    --soft: #f6f8fa;
+    --accent: #1f4e79;
+    --exe: #b7791f;   --exe-bg: #fdf3e1;
+    --leg: #2b6cb0;   --leg-bg: #e6effa;
+    --vol: #2f855a;   --vol-bg: #e7f4ec;
+    --pru: #553c9a;   --pru-bg: #eeebf7;
+    --warn: #b42318;  --warn-bg: #fdecea;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.5 "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  }
+  main { max-width: 940px; margin: 0 auto; padding: 24px 16px 48px; }
+  header { border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-bottom: 14px; }
+  .kicker { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-size: 26px; line-height: 1.2; margin: 4px 0 4px; color: var(--accent); }
+  .sub { font-size: 15px; color: var(--ink); margin: 0; }
+  .src { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+  h2 {
+    font-size: 19px; margin: 26px 0 8px; padding: 4px 10px;
+    background: var(--accent); color: #fff; border-radius: 4px;
+    break-after: avoid;
+  }
+  h3 { font-size: 16px; margin: 16px 0 6px; color: var(--accent); break-after: avoid; }
+  p { margin: 6px 0; }
+  ul, ol { margin: 4px 0 8px; padding-left: 20px; }
+  li { margin: 2px 0; }
+  strong { color: #000; }
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 10px; font-size: 14px; }
+  th, td { border: 1px solid var(--line); padding: 5px 7px; vertical-align: top; text-align: left; }
+  th { background: var(--soft); font-weight: 600; }
+  tr { break-inside: avoid; }
+  td.yr { white-space: nowrap; font-weight: 600; }
+  .box { border: 1px solid var(--line); border-left-width: 5px; border-radius: 4px; padding: 8px 12px; margin: 8px 0 10px; break-inside: avoid; }
+  .box > :first-child { margin-top: 0; }
+  .box > :last-child { margin-bottom: 0; }
+  .box-title { font-weight: 700; display: block; margin-bottom: 2px; }
+  .key { border-left-color: var(--accent); background: #eef4fa; }
+  .def { border-left-color: var(--leg); background: #f5f9fe; }
+  .merke { border-left-color: var(--vol); background: #f2faf5; }
+  .warn { border-left-color: var(--warn); background: var(--warn-bg); }
+  .exam { border-left-color: var(--pru); background: #f6f4fb; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .two > .box { margin: 0; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 8px 0; }
+  .card { border: 1px solid var(--line); border-top-width: 5px; border-radius: 4px; padding: 8px 10px; font-size: 14px; break-inside: avoid; }
+  .card h4 { margin: 0 0 4px; font-size: 15px; }
+  .c-exe { border-top-color: var(--exe); }
+  .c-leg { border-top-color: var(--leg); }
+  .c-vol { border-top-color: var(--vol); }
+  .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 0 6px; border-radius: 10px; vertical-align: 1px; }
+  .t-exe { background: var(--exe-bg); color: #7a4b0b; }
+  .t-leg { background: var(--leg-bg); color: #1d4f85; }
+  .t-pru { background: var(--pru-bg); color: var(--pru); }
+  .note { font-size: 12.5px; color: var(--muted); }
+  figure { margin: 10px 0; break-inside: avoid; }
+  figure svg { width: 100%; max-width: 760px; height: auto; display: block; margin: 0 auto; }
+  figcaption { font-size: 12.5px; color: var(--muted); text-align: center; margin-top: 4px; }
+  .pc th:first-child { background: #fbefe9; }
+  .pc th:last-child { background: #eaf5ee; }
+  .gloss { columns: 2; column-gap: 24px; font-size: 13.5px; margin: 6px 0; padding: 0; list-style: none; }
+  .gloss li { break-inside: avoid; border-bottom: 1px dotted var(--line); padding: 2px 0; }
+  .gloss .en { color: var(--muted); font-style: italic; }
+  @media (max-width: 680px) {
+    .two, .cards { grid-template-columns: 1fr; }
+    .gloss { columns: 1; }
+    table { font-size: 13px; }
+    .scroll { overflow-x: auto; }
+  }
+  @media print {
+    @page { size: A4; margin: 8mm 9mm 9mm; }
+    body { font-size: 8.7pt; line-height: 1.3; }
+    main { max-width: none; padding: 0; }
+    header { padding-bottom: 5px; margin-bottom: 7px; }
+    h1 { font-size: 15pt; margin: 2px 0; }
+    .sub { font-size: 9.5pt; }
+    .src { font-size: 7.5pt; margin-top: 3px; }
+    h2 { font-size: 10.5pt; margin: 9px 0 4px; padding: 2px 8px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    h3 { font-size: 9.5pt; margin: 6px 0 3px; }
+    p { margin: 3px 0; }
+    ul, ol { margin: 2px 0 4px; padding-left: 16px; }
+    li { margin: 0; }
+    table { font-size: 8.1pt; margin: 3px 0 5px; }
+    th, td { padding: 2px 5px; }
+    .box { padding: 4px 8px; margin: 4px 0 5px; border-left-width: 4px; }
+    .two { gap: 6px; }
+    .cards { gap: 6px; margin: 4px 0; }
+    .card { font-size: 8.1pt; padding: 4px 7px; }
+    .card h4 { font-size: 9pt; margin-bottom: 2px; }
+    .note, figcaption { font-size: 7.5pt; }
+    figure { margin: 4px 0; }
+    figure svg { max-width: 150mm; }
+    .gloss { columns: 3; column-gap: 12px; font-size: 7.6pt; }
+    .box, .card, th, .tag, figure svg { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .noprint { display: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <div class="kicker">Lernzettel Geschichte · Klasse 11</div>
+  <h1>Reichsgründung 1870/71 und Reichsverfassung 1871</h1>
+  <p class="sub">Kaiser – Reichskanzler – Reichstag · Übergewicht der Exekutive · Dominanz Preußens</p>
+  <p class="src">Grundlage sind nur deine Materialien: Lehrbuch Kap. 7.3 (S. 286–295) und S. 48–50, Methodenseite „Verfassungsschaubilder interpretieren“, bpb-Text „Der föderative Nationalstaat“, Arbeitsblatt „Verfassungstext und Verfassungswirklichkeit“, Musterlösung zu Moritz Mohl, Unterrichtsnotizen, Formelsammlung, Vokabelliste. <span class="noprint">Tipp: Mit Strg + P als PDF speichern oder drucken.</span></p>
+</header>
+
+<div class="box key">
+  <span class="box-title">Das Wichtigste in 5 Sätzen</span>
+  <ol>
+    <li>Das Deutsche Reich entstand 1870/71 <strong>„von oben“</strong>: durch <strong>drei Kriege</strong> Preußens und durch <strong>Verträge der Fürsten</strong>, nicht durch eine Revolution oder eine vom Volk gewählte Versammlung.</li>
+    <li>Die Reichsverfassung war fast eine Kopie der Verfassung des <strong>Norddeutschen Bundes von 1867</strong> und war auf <strong>Bismarck zugeschnitten</strong>.</li>
+    <li>Die Macht lag bei der <strong>Exekutive</strong>: Der Kaiser <strong>ernannte und entließ den Reichskanzler</strong>. Der Kanzler war nur vom Kaiser abhängig, <strong>nicht vom Reichstag</strong>.</li>
+    <li>Der <strong>Reichstag</strong> hatte ein sehr modernes Wahlrecht und musste Gesetzen und dem Haushalt zustimmen, aber er konnte die Regierung <strong>weder bilden noch stürzen</strong>.</li>
+    <li><strong>Preußen dominierte</strong> das Reich: Der König von Preußen war Kaiser, der preußische Ministerpräsident war fast immer Reichskanzler, und im Bundesrat konnte Preußen allein ein Veto einlegen.</li>
+  </ol>
+</div>
+
+<!-- ============ 1 ============ -->
+<h2>1 · Der Weg zur Reichsgründung</h2>
+
+<h3>1.1 Die Nation entstand zuerst „in den Köpfen“</h3>
+<p>Der Politikwissenschaftler <strong>Karl W. Deutsch</strong> beschreibt <strong>Nationenbildung</strong> als <strong>Prozess</strong>: Die <strong>Kommunikation</strong> zwischen den Menschen in einem großen Gebiet wird immer dichter. Eine <strong>Nation</strong> ist für ihn „ein Volk im Besitze eines Staates“. Mit <strong>Volk</strong> meint er keine ethnische Gruppe, sondern ein „Kommunikationsnetz“: Menschen, die schnell und gut miteinander kommunizieren können und „gewöhnlich eine Sprache und immer eine Kultur“ (gemeinsame Bedeutungen und Erinnerungen) teilen. <br>→ Mit diesem Modell sieht man: Das <strong>Nationalbewusstsein</strong> gab es schon <strong>vor 1871</strong>.</p>
+
+<div class="scroll">
+<table>
+  <tr><th style="width:18%">Integration</th><th>Was passierte?</th><th style="width:30%">Wirkung</th></tr>
+  <tr>
+    <td><strong>wirtschaftlich</strong></td>
+    <td><strong>Deutscher Zollverein (1834)</strong> unter preußischer Führung, <strong>ohne Österreich</strong>. Vorher war der Deutsche Bund in <strong>39 souveräne</strong> (= unabhängige) Wirtschaftsgebiete geteilt; allein in Preußen gab es 67 lokale Zolltarife. Der Zollverein baute die Zollgrenzen ab.</td>
+    <td>Landwirte, Kaufleute und Industrielle knüpften Netzwerke über die Grenzen der Einzelstaaten hinweg. Aus dem Wunsch nach wirtschaftlicher Freiheit wurde der Wunsch nach <strong>nationaler Einheit</strong>.</td>
+  </tr>
+  <tr>
+    <td><strong>gesellschaftlich</strong></td>
+    <td><strong>Nationalbewegung</strong>: Um 1800 nur eine kleine Bildungselite (Lehrer, Professoren, Studenten, Pfarrer, Beamte). Sie sammelte Volkslieder und Märchen und schrieb Wörterbücher. <strong>Hambacher Fest 1832</strong>: ca. 30.000 Menschen fordern Einheit, Pressefreiheit und zum Teil Demokratie. Seit den 1840ern <strong>Massenbewegungen</strong> (Turner, Sänger, je ca. 100.000 Mitglieder), nach 1848/49 auch auf dem Land.</td>
+    <td>Die Nation existierte „in den Köpfen“ von immer mehr Menschen, lange vor dem Staat.</td>
+  </tr>
+  <tr>
+    <td><strong>politisch</strong> (gespalten)</td>
+    <td><strong>Deutscher Nationalverein</strong> (1859–1867): nord- und mitteldeutsche Liberale und Demokraten für eine <strong>preußisch-kleindeutsche</strong> Lösung. <strong>Deutscher Reformverein</strong> (1862): süddeutsche Liberale für eine <strong>österreichisch-großdeutsche</strong> Lösung.</td>
+    <td>Die Frage „mit oder ohne Österreich?“ blieb offen, bis Preußen sie durch Kriege entschied.</td>
+  </tr>
+</table>
+</div>
+
+<div class="two">
+  <div class="box def">
+    <span class="box-title">Kleindeutsch oder großdeutsch?</span>
+    <strong>Kleindeutsche Lösung:</strong> Nationalstaat <strong>ohne Österreich</strong>, mit Preußen als Führungsmacht.<br>
+    <strong>Großdeutsche Lösung:</strong> Nationalstaat <strong>mit</strong> Österreich (bzw. seinen deutschsprachigen Gebieten).<br>
+    Am Ende setzte sich die kleindeutsche Lösung durch, und zwar durch die <strong>militärischen Siege Preußens 1866–1870</strong>.
+  </div>
+  <div class="box def">
+    <span class="box-title">Staatenbund oder Bundesstaat?</span>
+    <strong>Staatenbund</strong> (Deutscher Bund, 1815): Viele <strong>souveräne</strong> Staaten sind nur locker verbunden. Es gibt keinen gemeinsamen Staat.<br>
+    <strong>Bundesstaat</strong> (Norddeutscher Bund 1867, Reich 1871): Es gibt einen <strong>gemeinsamen Staat</strong> mit eigenen Organen. Die Gliedstaaten behalten nur einen Teil ihrer Aufgaben.
+  </div>
+</div>
+
+<h3>1.2 Zeitleiste: Einigung durch „Eisen und Blut“</h3>
+<div class="scroll">
+<table>
+  <tr><th style="width:13%">Wann?</th><th style="width:38%">Was?</th><th>Warum wichtig?</th></tr>
+  <tr><td class="yr">1815</td><td>Deutscher Bund (Staatenbund)</td><td>Österreich und Preußen konkurrieren um die Führung (<strong>österreichisch-preußischer Dualismus</strong>).</td></tr>
+  <tr><td class="yr">1862</td><td><strong>Otto von Bismarck</strong> wird preußischer Ministerpräsident (bis 1890)</td><td>Adliger und Konservativer; hatte 1848/49 die Revolution bekämpft. Er behandelte die Einigung als <strong>Machtfrage</strong> (Fisch).</td></tr>
+  <tr><td class="yr">1864</td><td>Deutsch-Dänischer Krieg (Deutscher Bund und Österreich gegen Dänemark)</td><td>Schleswig-Holstein wird erobert. Der Streit über die eroberten Gebiete führt zum Bruch Preußen–Österreich.</td></tr>
+  <tr><td class="yr">1866</td><td><strong>Deutscher Krieg</strong>: Preußen gegen Österreich; Sieg bei <strong>Königgrätz</strong> (3. Juli)</td><td>Ende des Dualismus und des Deutschen Bundes. Preußen <strong>annektiert</strong> Hannover, Kurhessen, Nassau und Frankfurt. Bismarck setzt gegen König und Militär einen schnellen Frieden mit Österreich durch, damit <strong>Frankreich keinen Grund zum Eingreifen</strong> hat.</td></tr>
+  <tr><td class="yr">1867</td><td><strong>Norddeutscher Bund</strong> unter Führung Preußens, mit eigener Verfassung</td><td>Ein <strong>Bundesstaat</strong>, „ein wirklicher Nationalstaat, ohne dessen Namen zu führen“ (Fisch). Die Südstaaten (Bayern, Württemberg, Baden, Hessen-Darmstadt) sind durch <strong>Militärbündnisse</strong> und den <strong>Zollverein</strong> mit Zollparlament an Preußen gebunden.</td></tr>
+  <tr><td class="yr">1870</td><td>Spanische Thronfolgekrise → <strong>französische Kriegserklärung (19. Juli)</strong> → <strong>Deutsch-Französischer Krieg</strong>; Frankreich ist bis zum 2. September besiegt (Sedan)</td><td>Bismarck förderte heimlich den Hohenzollern-Prinzen Leopold als spanischen König. Leopold verzichtete, aber Frankreich verlangte einen Verzicht „auf alle Zeiten“, und Preußen lehnte ab. Frankreich galt als <strong>Angreifer</strong>, deshalb griffen Großbritannien und Russland nicht ein, und der Süden kämpfte an Preußens Seite. Ob Bismarck den Krieg bewusst provozierte, ist <strong>umstritten</strong>.</td></tr>
+  <tr><td class="yr">Nov. 1870</td><td><strong>Novemberverträge</strong> mit Baden, Hessen, Bayern und Württemberg</td><td>Die Südstaaten treten bei, Bayern bekommt <strong>Sonderrechte</strong>. Aus diesen Verträgen entsteht die Reichsverfassung.</td></tr>
+  <tr><td class="yr">18.1.1871</td><td><strong>Kaiserproklamation in Versailles</strong>: Wilhelm I. wird „Deutscher Kaiser“</td><td>Das Reich wird „gewissermaßen von außen“ ausgerufen (Fisch), also in Frankreich und nach einem Krieg.</td></tr>
+  <tr><td class="yr">März 1871</td><td>erste Reichstagswahl</td><td>Breite Zustimmung, vor allem für die Nationalliberalen.</td></tr>
+  <tr><td class="yr">16.4.1871</td><td>Der Reichstag <strong>verabschiedet</strong> die Reichsverfassung; sie tritt am <strong>4.5.1871</strong> in Kraft</td><td>Sie gilt <strong>faktisch bis 9.11.1918</strong> (Abdankung des Kaisers) und wird <strong>formal erst am 14.8.1919</strong> durch die Weimarer Verfassung aufgehoben.</td></tr>
+  <tr><td class="yr">1888 / 1890</td><td>Wilhelm II. wird Kaiser und <strong>entlässt Bismarck</strong> 1890</td><td>Der Kaiser wollte selbst regieren. Das zeigt: Der Kanzler hängt vom Kaiser ab.</td></tr>
+</table>
+</div>
+
+<h3>1.3 Warum spricht man von einer Reichsgründung „von oben“?</h3>
+<ul>
+  <li><strong>Krieg statt Revolution:</strong> Das Reich war das Ergebnis von <strong>drei Kriegen</strong> (1864, 1866, 1870/71). Daher kommt Bismarcks bekanntes Wort von „<strong>Eisen und Blut</strong>“.</li>
+  <li><strong>Fürsten statt Volk:</strong> Das Reich entstand durch <strong>Verträge zwischen Regierungen</strong>. Laut deinen Unterrichtsnotizen wollte Ludwig II. von Bayern zuerst nicht mitmachen. Bismarck brachte ihn mit viel Geld und Druck dazu, den <strong>„Kaiserbrief“</strong> zu unterschreiben. Die Kaiserwürde kam also von den Fürsten.</li>
+  <li><strong>Die Proklamation:</strong> Auf dem Gemälde von <strong>Anton von Werner</strong> (M6, gemalt 1885) sieht man fast nur <strong>Fürsten und Offiziere in Uniform</strong>. Volk oder Parlament sind nicht zu sehen. Das zeigt den Charakter des Reiches als Fürsten- und Militärsache.</li>
+  <li><strong>„Einheit durch Teilung“</strong> (Historiker Jörg Fisch): Österreich und die deutschsprachigen Österreicher wurden <strong>ausgeschlossen</strong>, obwohl sie sich auch als Deutsche verstanden. Außenpolitisch war die kleindeutsche Lösung aber wohl die einzige, die die Großmächte <strong>duldeten</strong>.</li>
+  <li><strong>Einheit ohne Freiheit:</strong> Die Nationalbewegung wollte <strong>Einheit und Freiheit</strong>. Sie bekam die Einheit, aber nur „um den Preis erheblicher <strong>Abstriche an liberalen Prinzipien</strong>“ (Historiker Hans-Peter Ullmann). Deshalb waren viele enttäuscht. Laut Lehrbuch war das Reich „kein freiheitlich-parlamentarischer Nationalstaat, sondern ein <strong>autoritärer Macht-, Obrigkeits- und Militärstaat</strong>“, und das lag vor allem an Bismarcks Politik.</li>
+</ul>
+<div class="box merke"><span class="box-title">Merke</span>„Von oben“ bedeutet: Regierungen, Fürsten und Militär haben das Reich gemacht. Aber ohne die Vorarbeit „von unten“ (Zollverein und Nationalbewegung) wäre die Reichsgründung laut Lehrbuch „kaum möglich gewesen“.</div>
+
+<!-- ============ 2 ============ -->
+<h2>2 · Die Reichsverfassung von 1871</h2>
+
+<div class="box def"><span class="box-title">Verfassung</span>Die Verfassung ist das <strong>Grundgesetz eines Staates</strong> und steht über allen anderen Gesetzen. Sie legt die <strong>Staatsform</strong>, den Aufbau, die Aufgaben und Beziehungen der Institutionen (<strong>Verfassungsorgane</strong>) und die <strong>Rechte und Pflichten der Bürger</strong> fest.</div>
+
+<h3>2.1 Entstehung: Warum „oktroyiert“?</h3>
+<p>Die Verfassung von 1871 <strong>glich weitgehend der Verfassung des Norddeutschen Bundes von 1867</strong>. Sie entstand aus den <strong>Verträgen</strong> zwischen dem preußisch geführten Norddeutschen Bund und den Südstaaten. Sie war <strong>auf Bismarck zugeschnitten</strong>, das heißt, sie gab seinem Amt die zentrale Rolle.</p>
+<div class="two">
+  <div class="box key">
+    <span class="box-title">Warum kann man „oktroyiert“ (= von oben aufgezwungen) sagen?</span>
+    <ul>
+      <li>Anders als 1848/49 (Nationalversammlung in der Paulskirche) gab es <strong>keine verfassunggebende Versammlung</strong>, die das Volk gewählt hatte.</li>
+      <li>Der Inhalt wurde von den <strong>Regierungen und Fürsten ausgehandelt</strong> (Novemberverträge, Vorlage von 1867).</li>
+      <li>Der Reichstag bekam einen <strong>fast fertigen Text</strong>. Er konnte praktisch nur noch zustimmen.</li>
+      <li>Es gab <strong>keine Grundrechte</strong>. Die Verfassung regelt vor allem die Macht der Herrschenden.</li>
+    </ul>
+  </div>
+  <div class="box merke">
+    <span class="box-title">Aber: differenzieren (bringt Bonuspunkte!)</span>
+    Formal wurde die Verfassung am 16.4.1871 <strong>vom gewählten Reichstag beschlossen</strong>. Sie wurde also nicht einfach vom Kaiser allein erlassen. „Oktroyiert“ beschreibt deshalb vor allem die <strong>Entstehung und den Inhalt von oben</strong>, nicht das formale Verfahren.<br><br>
+    <strong>„System der umgangenen Entscheidungen“</strong> (Historiker Wolfgang J. Mommsen): Die Verfassung war ein <strong>Kompromiss</strong> zwischen monarchisch-autoritären und liberalen Kräften. Der kurze Text ließ offen, wer am Ende die Macht hat. In der Praxis entschieden das Kaiser, Kanzler und Preußen.
+  </div>
+</div>
+<p class="note">Hinweis: Das Wort „oktroyiert“ kommt in deinen Materialien nicht vor; dort heißt es „Reichsgründung von oben“. Die Wortbedeutung „aufzwingen, von oben verordnen“ ist allgemeiner Sprachgebrauch (vgl. Duden, Stichwort „oktroyieren“).</p>
+
+<h3>2.2 Das Verfassungsschaubild</h3>
+<figure>
+<svg viewBox="0 0 760 470" role="img" aria-label="Schaubild der Reichsverfassung 1871: Kaiser ernennt Reichskanzler, Reichskanzler leitet Bundesrat, Reichstag und Bundesrat beschließen Gesetze, Wähler wählen Reichstag, Bundesstaaten entsenden Vertreter in den Bundesrat." font-family="Segoe UI, system-ui, Arial, sans-serif">
+  <defs>
+    <marker id="aE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b7791f"/></marker>
+    <marker id="aL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2b6cb0"/></marker>
+    <marker id="aV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2f855a"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6e7781"/></marker>
+  </defs>
+
+  <!-- Preußen-Panel -->
+  <rect x="10" y="15" width="200" height="210" rx="8" fill="#eeebf7" stroke="#553c9a" stroke-width="1.5"/>
+  <g font-size="11" fill="#2d2350">
+    <text x="22" y="38" font-weight="700" font-size="12" fill="#553c9a">PREUSSEN IM REICH</text>
+    <text x="22" y="60">König von Preußen</text>
+    <text x="22" y="75" font-weight="600">→ ist Deutscher Kaiser</text>
+    <text x="22" y="97">Preuß. Ministerpräsident</text>
+    <text x="22" y="112" font-weight="600">→ ist (fast immer) Kanzler</text>
+    <text x="22" y="134">17 von 58 Bundesratsstimmen</text>
+    <text x="22" y="149" font-weight="600">→ Veto ab 14 Stimmen:</text>
+    <text x="22" y="164" font-weight="600">   Preußen blockiert allein</text>
+    <text x="22" y="186">ca. 2/3 der Bevölkerung</text>
+    <text x="22" y="201">und größtes Gebiet</text>
+  </g>
+
+  <!-- Legende -->
+  <g font-size="11" fill="#1f2328">
+    <text x="12" y="262" font-weight="700">Legende</text>
+    <rect x="12" y="272" width="14" height="14" rx="2" fill="#fdf3e1" stroke="#b7791f"/><text x="32" y="283">Exekutive (ausführend)</text>
+    <rect x="12" y="294" width="14" height="14" rx="2" fill="#e6effa" stroke="#2b6cb0"/><text x="32" y="305">Legislative (Gesetze)</text>
+    <rect x="12" y="316" width="14" height="14" rx="2" fill="#e7f4ec" stroke="#2f855a"/><text x="32" y="327">Volk / Bundesstaaten</text>
+    <rect x="12" y="338" width="14" height="14" rx="2" fill="#eeebf7" stroke="#553c9a"/><text x="32" y="349">Preußen</text>
+    <line x1="12" y1="368" x2="44" y2="368" stroke="#6e7781" stroke-width="2" marker-end="url(#aG)"/><text x="52" y="372">Macht / Einfluss</text>
+    <line x1="12" y1="390" x2="44" y2="390" stroke="#6e7781" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#aG)"/><text x="52" y="394">nur schwache Kontrolle</text>
+    <text x="12" y="422" fill="#b42318" font-weight="600">Nicht im Schaubild:</text>
+    <text x="12" y="437" fill="#b42318">Judikative, Grundrechte,</text>
+    <text x="12" y="452" fill="#b42318">Kabinette des Kaisers</text>
+  </g>
+
+  <!-- Boxen -->
+  <rect x="270" y="15" width="220" height="62" rx="6" fill="#fdf3e1" stroke="#b7791f" stroke-width="1.5"/>
+  <text x="380" y="36" text-anchor="middle" font-size="13.5" font-weight="700">Deutscher Kaiser</text>
+  <text x="380" y="53" text-anchor="middle" font-size="11">= König von Preußen (erblich)</text>
+  <text x="380" y="68" text-anchor="middle" font-size="11">vertritt das Reich nach außen</text>
+
+  <rect x="575" y="15" width="170" height="62" rx="6" fill="#fdf3e1" stroke="#b7791f" stroke-width="1.5"/>
+  <text x="660" y="41" text-anchor="middle" font-size="13.5" font-weight="700">Heer</text>
+  <text x="660" y="60" text-anchor="middle" font-size="11">Oberbefehl: Kaiser</text>
+
+  <rect x="270" y="135" width="220" height="62" rx="6" fill="#fdf3e1" stroke="#b7791f" stroke-width="1.5"/>
+  <text x="380" y="156" text-anchor="middle" font-size="13.5" font-weight="700">Reichskanzler</text>
+  <text x="380" y="173" text-anchor="middle" font-size="11">= meist preuß. Ministerpräsident</text>
+  <text x="380" y="188" text-anchor="middle" font-size="11">leitet die Politik</text>
+
+  <rect x="575" y="135" width="170" height="62" rx="6" fill="#fdf3e1" stroke="#b7791f" stroke-width="1.5"/>
+  <text x="660" y="156" text-anchor="middle" font-size="13.5" font-weight="700">Staatssekretäre</text>
+  <text x="660" y="173" text-anchor="middle" font-size="11">leiten die Reichsämter</text>
+  <text x="660" y="188" text-anchor="middle" font-size="11">weisungsgebunden</text>
+
+  <rect x="270" y="265" width="220" height="80" rx="6" fill="#e6effa" stroke="#2b6cb0" stroke-width="1.5"/>
+  <text x="380" y="287" text-anchor="middle" font-size="13.5" font-weight="700">Reichstag</text>
+  <text x="380" y="304" text-anchor="middle" font-size="11">397 Abgeordnete</text>
+  <text x="380" y="319" text-anchor="middle" font-size="11">Gesetze · Haushalt (Etat)</text>
+  <text x="380" y="334" text-anchor="middle" font-size="11">Gesetzesinitiative</text>
+
+  <rect x="575" y="265" width="170" height="80" rx="6" fill="#e6effa" stroke="#2b6cb0" stroke-width="1.5"/>
+  <text x="660" y="287" text-anchor="middle" font-size="13.5" font-weight="700">Bundesrat</text>
+  <text x="660" y="304" text-anchor="middle" font-size="11">58 Stimmen, Preußen 17</text>
+  <text x="660" y="319" text-anchor="middle" font-size="11">„Träger der Souveränität“</text>
+  <text x="660" y="334" text-anchor="middle" font-size="11">Veto mit 14 Stimmen</text>
+
+  <rect x="250" y="395" width="260" height="64" rx="6" fill="#e7f4ec" stroke="#2f855a" stroke-width="1.5"/>
+  <text x="380" y="416" text-anchor="middle" font-size="12.5" font-weight="700">Wähler: Männer ab 25 Jahren</text>
+  <text x="380" y="432" text-anchor="middle" font-size="11">allgemein · gleich · geheim · direkt</text>
+  <text x="380" y="448" text-anchor="middle" font-size="11">alle 3 Jahre (ab 1888: alle 5 Jahre)</text>
+
+  <rect x="575" y="395" width="170" height="64" rx="6" fill="#e7f4ec" stroke="#2f855a" stroke-width="1.5"/>
+  <text x="660" y="416" text-anchor="middle" font-size="12.5" font-weight="700">25 Bundesstaaten</text>
+  <text x="660" y="432" text-anchor="middle" font-size="11">Regierungen schicken</text>
+  <text x="660" y="448" text-anchor="middle" font-size="11">weisungsgebundene Vertreter</text>
+
+  <!-- Pfeile Exekutive -->
+  <line x1="490" y1="46" x2="573" y2="46" stroke="#b7791f" stroke-width="2" marker-end="url(#aE)"/>
+  <text x="531" y="38" text-anchor="middle" font-size="10.5" fill="#7a4b0b" font-weight="600">Oberbefehl</text>
+  <line x1="380" y1="77" x2="380" y2="133" stroke="#b7791f" stroke-width="2.5" marker-end="url(#aE)"/>
+  <text x="389" y="104" font-size="11" fill="#7a4b0b" font-weight="700">ernennt &amp; entlässt</text>
+  <line x1="490" y1="166" x2="573" y2="166" stroke="#b7791f" stroke-width="2" marker-end="url(#aE)"/>
+  <text x="531" y="158" text-anchor="middle" font-size="10.5" fill="#7a4b0b" font-weight="600">Weisung</text>
+  <line x1="480" y1="197" x2="618" y2="263" stroke="#b7791f" stroke-width="2" marker-end="url(#aE)"/>
+  <text x="588" y="236" font-size="10.5" fill="#7a4b0b" font-weight="600">Vorsitz</text>
+  <path d="M270,62 H238 V300 H268" fill="none" stroke="#b7791f" stroke-width="2" marker-end="url(#aE)"/>
+  <text x="233" y="181" text-anchor="middle" font-size="10.5" fill="#7a4b0b" font-weight="600" transform="rotate(-90 233 181)">beruft ein &amp; löst auf (mit Bundesrat)</text>
+
+  <!-- Kontrolle -->
+  <line x1="330" y1="263" x2="330" y2="200" stroke="#6e7781" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#aG)"/>
+  <text x="340" y="223" font-size="10.5" fill="#57606a">„kontrolliert“: nur Fragen</text>
+  <text x="340" y="237" font-size="10.5" fill="#57606a">und Kritik, kein Sturz</text>
+
+  <!-- Legislative -->
+  <line x1="492" y1="300" x2="573" y2="300" stroke="#2b6cb0" stroke-width="2" marker-start="url(#aL)" marker-end="url(#aL)"/>
+  <text x="532" y="318" text-anchor="middle" font-size="10" fill="#1d4f85" font-weight="600">beide müssen</text>
+  <text x="532" y="330" text-anchor="middle" font-size="10" fill="#1d4f85" font-weight="600">zustimmen</text>
+
+  <!-- Volk -->
+  <line x1="380" y1="393" x2="380" y2="347" stroke="#2f855a" stroke-width="2" marker-end="url(#aV)"/>
+  <text x="389" y="374" font-size="10.5" fill="#22643f" font-weight="600">wählen</text>
+  <line x1="660" y1="393" x2="660" y2="347" stroke="#2f855a" stroke-width="2" marker-end="url(#aV)"/>
+  <text x="669" y="374" font-size="10.5" fill="#22643f" font-weight="600">entsenden</text>
+</svg>
+<figcaption>Nach dem Verfassungsschaubild M1 (Lehrbuch S. 295), ergänzt mit dem bpb-Text und dem Arbeitsblatt.</figcaption>
+</figure>
+
+<h3>2.3 Verfassungstext und Verfassungswirklichkeit</h3>
+<p>Für die Klausur ist dieser Unterschied zentral: <strong>Verfassungstext</strong> = was auf dem Papier steht. <strong>Verfassungswirklichkeit</strong> = wie die Macht in der Praxis verteilt war.</p>
+<div class="scroll">
+<table>
+  <tr><th style="width:15%">Organ / Bereich</th><th style="width:40%">Verfassungstext</th><th>Verfassungswirklichkeit</th></tr>
+  <tr>
+    <td><strong>Kaiser</strong> <span class="tag t-exe">Exekutive</span><br>= König von Preußen</td>
+    <td>Formal nur das <strong>„Präsidium“</strong> (der Vorsitz) des Bundes. Er vertritt das Reich nach außen, hat den <strong>Oberbefehl über das Heer</strong>, erklärt mit dem Bundesrat Krieg und Frieden, beruft den Reichstag ein und kann ihn auflösen. Er <strong>ernennt und entlässt den Reichskanzler</strong>.</td>
+    <td>Sehr mächtig: Der Kanzler hängt <strong>nur von ihm</strong> ab. Er hat eigene <strong>Zivil-, Militär- und Marinekabinette</strong> (z. B. für Personal und das Offizierskorps). Wilhelm I. und noch mehr Wilhelm II. wurden zum „<strong>Reichsmonarchen</strong>“ und zur <strong>Projektionsfläche</strong> (Symbolfigur) für nationale Wünsche und Träume.</td>
+  </tr>
+  <tr>
+    <td><strong>Reichskanzler</strong> <span class="tag t-exe">Exekutive</span><br>meist = preuß. Ministerpräsident</td>
+    <td>Er leitet die Politik (im Einvernehmen mit dem Kaiser) und vertritt sie im Reichstag. Er hat den <strong>Vorsitz im Bundesrat</strong> und muss die Anordnungen des Kaisers <strong>gegenzeichnen</strong> (mit unterschreiben). Er ist der <strong>einzige Leiter</strong> der Reichspolitik (es gibt kein Kabinett mit Ministern); die Leiter der Reichsämter sind nur weisungsgebundene <strong>Staatssekretäre</strong>.</td>
+    <td>Er hatte eine <strong>Schlüsselstellung</strong> und steuerte den Bundesrat mit den preußischen Stimmen. Bismarck (Kanzler 1871–1890) nutzte das geschickt, manchmal auch manipulativ; Historiker sprechen deshalb von „<strong>Bonapartismus</strong>“ (nach Napoleon III.). Aber der Kanzler war <strong>völlig vom Kaiser abhängig</strong>, nicht vom Reichstag. Beispiel: 1890 entlässt Wilhelm II. Bismarck.</td>
+  </tr>
+  <tr>
+    <td><strong>Bundesrat</strong> <span class="tag t-leg">Legislative</span> <span class="tag t-exe">+ Exekutive</span><br>58 Vertreter, Preußen 17</td>
+    <td>Formal der <strong>„Träger der Souveränität“</strong> (die höchste Gewalt). Er muss <strong>allen Gesetzen und dem Haushalt zustimmen</strong>, beschließt mit dem Kaiser Kriegserklärungen und die Auflösung des Reichstags und kontrolliert die Exekutive. Für ein Veto reichen <strong>14 Stimmen</strong>.</td>
+    <td>Formal keine Dominanz Preußens (nur 17 von 58), aber <strong>de facto preußische Hegemonie</strong>: durch Vorverhandlungen und die Stimmen der kleinen norddeutschen Staaten. Der Bundesrat bewahrte den <strong>konservativen Status quo</strong> und „bemäntelte“ (versteckte) die Vorherrschaft Preußens. Er hatte keine eigene Verwaltung.</td>
+  </tr>
+  <tr>
+    <td><strong>Reichstag</strong> <span class="tag t-leg">Legislative</span><br>397 Abgeordnete</td>
+    <td>Er ist gewählt und hat das Recht zur <strong>Gesetzesinitiative</strong>. <strong>Alle Reichsgesetze</strong> brauchen seine Zustimmung. Er hat das <strong>Budgetrecht</strong> (er bewilligt jedes Jahr den Haushalt).</td>
+    <td>Er konnte die <strong>Regierung nicht kontrollieren</strong>: Er hatte keinen Einfluss auf die Wahl des Kanzlers, es gab <strong>kein Misstrauensvotum</strong>, und der Kanzler hatte ihm gegenüber nur eine <strong>Auskunftspflicht</strong>. Das Budgetrecht war beim <strong>Militär</strong> (ca. ¾ aller Ausgaben) stark eingeschränkt: <strong>Septennat</strong> (ab 1874 für 7 Jahre bewilligt), <strong>Quinquennat</strong> (ab 1893 für 5 Jahre). Bei Verträgen mit dem Ausland durfte er nur bei Handel, Verkehr und Zöllen mitentscheiden. Mit der Zeit wurde er aber <strong>wichtiger</strong> (→ 3.5).</td>
+  </tr>
+  <tr>
+    <td><strong>Wahlrecht</strong></td>
+    <td><strong>Allgemein, gleich, geheim und direkt</strong> für alle Männer ab 25 Jahren; Mehrheitswahlrecht (im Wahlkreis gewinnt, wer die Mehrheit der Stimmen hat).</td>
+    <td>Für die Zeit <strong>sehr fortschrittlich</strong>, fast „revolutionär“. 1867 gab es Vergleichbares nur in Frankreich, Griechenland und einigen Schweizer Kantonen; in Großbritannien durften 1911 höchstens 60 % der Männer wählen. Es stärkte die politische Beteiligung. Aber <strong>Frauen durften nicht wählen</strong>.</td>
+  </tr>
+  <tr>
+    <td><strong>Grundrechte</strong></td>
+    <td><strong>Keine Grundrechte</strong> und <strong>kein Minderheitenschutz</strong> in der Verfassung.</td>
+    <td>Trotzdem war das Reich ein <strong>Rechtsstaat</strong> mit Rechtssicherheit und einheitlicher Rechtsordnung (z. B. Strafgesetzbuch 1872, BGB 1900), also <strong>keine Diktatur</strong>. Aber es gab <strong>Zensur</strong> von Druckschriften und eine <strong>Militärgerichtsbarkeit</strong> ohne öffentliche Kontrolle. Juden waren rechtlich gleichgestellt, wurden aber sozial diskriminiert.</td>
+  </tr>
+  <tr>
+    <td><strong>Staatsaufbau</strong></td>
+    <td><strong>Konstitutionelle Monarchie</strong> und <strong>Bundesstaat</strong>: ein „ewiger Bund“ von 22 Einzelstaaten und 3 freien Städten (= 25 Bundesstaaten).</td>
+    <td>Die Einzelstaaten behielten wichtige Aufgaben: <strong>Schule, Hochschule, zum Teil Kirche und direkte Steuern</strong> (Schule ist bis heute Ländersache). Sie hatten eigene Verfassungen und ein unterschiedliches Wahlrecht, z. B. Preußen das <strong>Dreiklassenwahlrecht</strong>. Die bpb nennt das einen „<strong>föderalen Dualismus</strong>“ von Reich und Einzelstaaten.</td>
+  </tr>
+</table>
+</div>
+
+<!-- ============ 3 ============ -->
+<h2>3 · Das Machtverhältnis: Kaiser – Reichskanzler – Reichstag</h2>
+
+<h3>3.1 Wer hängt von wem ab?</h3>
+<div class="cards">
+  <div class="card c-exe"><h4>Kaiser</h4><strong>Nicht gewählt</strong>: Das Amt gehört automatisch dem <strong>König von Preußen</strong>. Der Reichstag hat darauf keinen Einfluss.</div>
+  <div class="card c-exe"><h4>Reichskanzler</h4>Braucht nur das <strong>Vertrauen des Kaisers</strong> („oberster Beamter“ des Kaisers). Der Reichstag kann ihn <strong>nicht stürzen</strong>.</div>
+  <div class="card c-leg"><h4>Reichstag</h4>Hängt von den <strong>Wählern</strong> ab. Er kann <strong>aufgelöst</strong> werden, mit Neuwahlen zu einem Zeitpunkt, der dem Kanzler passt (1878, 1887, 1893, 1907); die Auflösung war also ein <strong>Drohmittel</strong>.</div>
+</div>
+<div class="box merke"><span class="box-title">Merksatz</span>Der Reichstag konnte <strong>mitbestimmen</strong> (Gesetze, Haushalt), aber er konnte <strong>nicht regieren</strong> und die Regierung <strong>nicht absetzen</strong>. Die Regierung war ein Werkzeug des Kaisers, nicht des Parlaments.</div>
+
+<h3>3.2 Konstitutionell, aber nicht parlamentarisch</h3>
+<div class="two">
+  <div class="box def"><span class="box-title">Konstitutionelle Monarchie</span>Ein Monarch herrscht, aber seine Macht ist durch eine <strong>Verfassung</strong> (lat. <em>constitutio</em>) begrenzt. Ein gewähltes Parlament wirkt bei Gesetzen und beim Haushalt mit. → <strong>Das war das Kaiserreich.</strong></div>
+  <div class="box def"><span class="box-title">Parlamentarisches System</span>Die Regierung braucht das <strong>Vertrauen des Parlaments</strong>. Das Parlament kann sie <strong>zur Rechenschaft ziehen</strong> und <strong>stürzen</strong>. → <strong>Das war das Kaiserreich nicht</strong>, erst nach den Reformen im <strong>Oktober 1918</strong> (auf Forderung des US-Präsidenten Wilson).</div>
+</div>
+<p><strong>Zwei Gründe</strong> (bpb), warum es kein parlamentarisches System war:</p>
+<ol>
+  <li>Es gab <strong>keine Reichsregierung</strong> als Kabinett, die dem Parlament verantwortlich war. Es gab nur den Kanzler und die ihm untergeordneten Staatssekretäre, die sogenannte <strong>„Reichsleitung“</strong>. Am Anfang gab es sogar nur zwei Reichsämter: das Reichskanzleramt und das Auswärtige Amt.</li>
+  <li>Der Kanzler war <strong>nicht vom Vertrauen des Parlaments abhängig</strong>. Allein der Kaiser berief ihn und entließ ihn.</li>
+</ol>
+
+<h3>3.3 Übergewicht der Exekutive: ihre Werkzeuge</h3>
+<p><strong>Exekutive</strong> = ausführende Gewalt (hier: Kaiser, Reichskanzler, Staatssekretäre, Militär). <strong>Legislative</strong> = gesetzgebende Gewalt (Reichstag und Bundesrat). Die Verfassung gab der Exekutive mehrere Werkzeuge, mit denen sie stärker war als das Parlament:</p>
+<div class="scroll">
+<table>
+  <tr><th style="width:26%">Werkzeug</th><th>Wie funktioniert es? Beispiel</th></tr>
+  <tr><td><strong>Personalmacht</strong></td><td>Der Kaiser ernennt und entlässt den Kanzler. <em>Beispiel:</em> 1890 entlässt Wilhelm II. Bismarck, weil er selbst regieren will.</td></tr>
+  <tr><td><strong>Auflösung des Reichstags</strong></td><td>Wenn der Reichstag nicht mitmacht, kann er aufgelöst werden. <em>Beispiel:</em> 1878 nutzte Bismarck zwei Attentate auf Wilhelm I., um den Reichstag aufzulösen und danach das <strong>Sozialistengesetz</strong> durchzusetzen.</td></tr>
+  <tr><td><strong>Militär außerhalb der Kontrolle</strong></td><td>Den Oberbefehl hat der Kaiser. Der Militäretat wurde für 7 bzw. 5 Jahre festgelegt (Septennat/Quinquennat), das Militär hatte ein eigenes Kabinett und eine eigene Gerichtsbarkeit. Das Militär forderte 1874 sogar eine <strong>dauerhafte</strong> Bewilligung; das Septennat war der Kompromiss.</td></tr>
+  <tr><td><strong>Krieg und Außenpolitik</strong></td><td>Über Kriegserklärungen entscheiden nur Kaiser und Bundesrat. Der Reichstag darf nur bei Verträgen über Handel, Verkehr und Zölle mitentscheiden.</td></tr>
+  <tr><td><strong>Steuerung des Bundesrats</strong></td><td>Der Kanzler hat den Vorsitz und die preußischen Stimmen. Weil der Bundesrat <strong>jedem Gesetz zustimmen muss</strong>, können Kanzler und Preußen auch Beschlüsse des Reichstags stoppen.</td></tr>
+  <tr><td><strong>Schwache Gegenkontrolle</strong></td><td>Der Kanzler muss Anordnungen des Kaisers gegenzeichnen. Das ist aber <strong>keine starke Grenze</strong>, denn der Kaiser kann einen Kanzler, der nicht mitmacht, einfach entlassen. <span class="note">(eigene Schlussfolgerung aus dem Material)</span></td></tr>
+</table>
+</div>
+<p><strong>Warum war die Verfassung so gebaut?</strong> Sie war auf <strong>Bismarck zugeschnitten</strong>. Bismarck kam aus einer adligen Gutsbesitzer- und Offiziersfamilie und hatte 1848/49 als konservativer Abgeordneter die Revolution bekämpft. Laut Lehrbuch ist es „maßgeblich“ auf seine Politik zurückzuführen, dass das Reich ein <strong>autoritärer Obrigkeitsstaat</strong> wurde und kein parlamentarischer Staat.</p>
+
+<h3>3.4 Gewaltenteilung? Nur teilweise</h3>
+<ul>
+  <li><strong>Gewaltenteilung</strong> = Die Staatsmacht wird auf <strong>Exekutive</strong> (ausführend), <strong>Legislative</strong> (gesetzgebend) und <strong>Judikative</strong> (richterlich) verteilt, damit keine Stelle zu viel Macht hat.</li>
+  <li>Im Kaiserreich waren Exekutive und Legislative <strong>nicht klar getrennt</strong>: Der Bundesrat war Legislative <strong>und</strong> Exekutive. Der Reichskanzler (Exekutive) leitete den Bundesrat (Legislative). Der Kaiser (Exekutive) konnte den Reichstag auflösen.</li>
+  <li>Über die <strong>Judikative</strong> sagt das Schaubild <strong>nichts</strong>. Das ist ein typischer Punkt für die <strong>Kritik</strong> bei einer Schaubild-Analyse. Es fehlen auch die Grundrechte, die Kabinette des Kaisers und die Verfassungswirklichkeit.</li>
+  <li><strong>Föderalistisch</strong> (Gliedstaaten mit eigenen Kompetenzen bilden ein Ganzes) oder <strong>zentralistisch</strong> (alle Kompetenzen an einem Punkt)? Formal <strong>föderalistisch</strong> (Bundesrat, 25 Staaten); in der Praxis lag die Macht aber stark bei Kaiser, Kanzler und Preußen.</li>
+</ul>
+
+<h3>3.5 Der Reichstag wird wichtiger: „im Vorhof der Macht“</h3>
+<p>Der Reichstag und die Parteien standen „<strong>im Vorhof der Macht</strong>“ (bpb), also nah an der Macht, aber nicht im Zentrum. Vor 1914 wurde der Reichstag aber <strong>schrittweise aufgewertet</strong>:</p>
+<ol>
+  <li><strong>Sozial- und Interventionsstaat</strong> seit den 1880ern: Die Gesetze wurden komplizierter, deshalb brauchte man die <strong>Fachexperten der Fraktionen</strong>. Der Bundesrat hatte keine eigene Verwaltung.</li>
+  <li><strong>Kontrollrechte</strong> wurden genutzt: Petitionen, Anfragen und Kritik bei den Haushaltsberatungen. So wurde der Reichstag zum <strong>wichtigsten nationalen Forum</strong> der Politik.</li>
+  <li><strong>Demokratische Legitimation</strong>: Er war das einzige Organ, das vom Volk gewählt wurde, und das mit einem sehr modernen Wahlrecht.</li>
+</ol>
+<div class="box key"><span class="box-title">Bismarcks Wahlrechts-Plan ging nicht auf</span>Im preußischen Landtag waren die <strong>Liberalen</strong> stark, weil das <strong>Dreiklassenwahlrecht</strong> die Wähler mit hohen Steuern bevorzugte. Mit dem <strong>gleichen</strong> Wahlrecht im Reich wollte Bismarck die <strong>konservative Landbevölkerung</strong> gegen die Liberalen mobilisieren. Das <strong>scheiterte</strong>: Die <strong>SPD</strong> wurde zur stärksten Partei (1890: 1.427.000 Stimmen). Es gab aber einen positiven Nebeneffekt, die <strong>Integration</strong>: Auch Gegner des Reiches (z. B. Welfen in Hannover, bayerische Patrioten) nahmen an den Wahlen teil und akzeptierten so die Spielregeln.</div>
+
+<!-- ============ 4 ============ -->
+<h2>4 · Die Dominanz Preußens (preußische Hegemonie)</h2>
+<p><strong>Hegemonie</strong> = <strong>Vorherrschaft</strong>: Ein Staat hat die politische Kontrolle oder das klare Übergewicht über andere.</p>
+<div class="scroll">
+<table>
+  <tr><th style="width:18%">Bereich</th><th>So dominierte Preußen</th></tr>
+  <tr><td><strong>Größe</strong></td><td>ca. <strong>2/3 der Bevölkerung</strong> des Reiches (von ca. 40 Mio.) und das größte Gebiet (Karte M1)</td></tr>
+  <tr><td><strong>Kaiser</strong></td><td>Der Kaiser ist <strong>automatisch der König von Preußen</strong>.</td></tr>
+  <tr><td><strong>Kanzler</strong></td><td>Der Reichskanzler ist fast immer auch <strong>preußischer Ministerpräsident</strong> (einzige Ausnahme: Caprivi, 1890–94). So hatte die preußische Bürokratie großes Gewicht.</td></tr>
+  <tr><td><strong>Bundesrat</strong></td><td><strong>17 von 58</strong> Stimmen; für ein Veto reichen <strong>14</strong>, also kann Preußen <strong>allein blockieren</strong>. Den Vorsitz hat der Kanzler. Dazu kamen Vorverhandlungen und die Stimmen der kleinen norddeutschen Staaten.</td></tr>
+  <tr><td><strong>Militär</strong></td><td>Den Oberbefehl hat der Kaiser (= preußischer König). Die Südstaaten hatten schon seit 1866/67 Militärbündnisse mit Preußen.</td></tr>
+  <tr><td><strong>Entstehung</strong></td><td>Das Reich ist ein <strong>erweiterter Norddeutscher Bund</strong>, den Preußen schon vorher dominierte. Die Verfassung von 1867 wurde übernommen.</td></tr>
+</table>
+</div>
+<p><strong>Warum nur 17 Stimmen, wenn Preußen 2/3 der Bevölkerung hatte?</strong> So wirkte das Reich nach außen wie ein Bund gleichberechtigter Staaten. Die echte Vorherrschaft wurde „<strong>bemäntelt</strong>“ (versteckt), funktionierte aber trotzdem über die Ämter (Kaiser, Kanzler) und das Vetorecht.</p>
+
+<div class="two">
+  <div class="box exam"><span class="box-title">Quellenbeispiel: Moritz Mohl (1870)</span>Der württembergische Landtagsabgeordnete und Nationalökonom <strong>Moritz Mohl</strong> warnte 1870 vor dem Beitritt zum Norddeutschen Bund: Die süddeutschen Staaten würden zu „<strong>Vasallen</strong>“ eines großen Staates. Der Norddeutsche Bund sei <strong>nur dem Namen nach ein Bund</strong>, denn ein großer Staat dominiere und die kleinen hätten kaum Einfluss.<br><strong>Urteil</strong> (aus deiner Musterlösung): Diese Kritik war <strong>historisch richtig</strong> (preußische Hegemonie). Seine Angst vor wirtschaftlichen Nachteilen war dagegen falsch, denn der Zollverein förderte Handel und Wohlstand.</div>
+  <div class="box merke"><span class="box-title">Differenzierung: kein „Groß-Preußen“</span>Das Reich war trotzdem kein reiner preußischer Einheitsstaat: Die Einzelstaaten behielten <strong>eigene Aufgaben</strong> (Schule, Kirche, direkte Steuern) und eigene Verfassungen, <strong>Bayern</strong> hatte <strong>Sonderrechte</strong>, und Preußen musste im Bundesrat verhandeln. Laut deinen Notizen wollte Bismarck am Anfang gar kein großes Reich, weil Preußen dadurch Macht abgeben musste. Die Begeisterung nach dem Sieg über Frankreich trieb die Einigung aber voran.</div>
+</div>
+
+<!-- ============ 5 ============ -->
+<h2>5 · Folgen: Wer war für, wer gegen das neue Reich?</h2>
+<p>Laut Ullmann war die <strong>Integration</strong> das „drängendste Problem“ des Reiches, denn die Bevölkerung stand nicht geschlossen hinter ihm.</p>
+<div class="scroll">
+<table>
+  <tr><th style="width:20%">Haltung</th><th>Gruppen (nach Ullmann, M7)</th></tr>
+  <tr><td><strong>dafür</strong></td><td><strong>Nationalliberale</strong> (große Zustimmung bei der Reichstagswahl im März 1871), <strong>Freikonservative</strong></td></tr>
+  <tr><td><strong>mit Vorbehalten</strong></td><td>Teile der <strong>Linksliberalen</strong>; viele <strong>Katholiken</strong> (wegen des preußisch-protestantischen Charakters); die meisten <strong>Konservativen in Preußen</strong> (für sie war die Einigung ein Sieg der liberalen Nationalbewegung)</td></tr>
+  <tr><td><strong>dagegen</strong> (Deutsche)</td><td><strong>Großdeutsche</strong> (Teile der süddeutschen Liberalen und Konservativen), <strong>Partikularisten</strong> (Welfen in Hannover, bayerische Patrioten), <strong>sozialdemokratische Arbeiter</strong> (gegen die kleindeutsch-preußische Form)</td></tr>
+  <tr><td><strong>dagegen</strong> (Minderheiten)</td><td><strong>Polen</strong> (preußische Ostprovinzen), <strong>Elsässer und Lothringer</strong>, <strong>Dänen</strong>. Sie beriefen sich auf das <strong>Nationalitätsprinzip</strong>: Sie wollten nicht zu einem <em>deutschen</em> Nationalstaat gehören.</td></tr>
+</table>
+</div>
+<ul>
+  <li><strong>Kampf gegen „Reichsfeinde“</strong> (Folgezeit): <strong>Kulturkampf</strong> gegen die katholische Kirche und die Zentrumspartei; <strong>Sozialistengesetz</strong> 1878–1890 (verbot Vereine, Versammlungen und Schriften der Sozialdemokraten, aber <strong>nicht das Wahlrecht</strong>, deshalb wurde die SPD stärker); <strong>Germanisierungspolitik</strong> gegen Minderheiten (Deutsch als Schul- und Amtssprache). Weil die Verfassung <strong>keinen Minderheitenschutz</strong> hatte, wurde das Nationalitätenproblem schärfer.</li>
+  <li><strong>„Erbfeindschaft“ mit Frankreich:</strong> Die Kaiserproklamation in <strong>Versailles</strong>, die <strong>Annexion von Elsass-Lothringen</strong> („Reichsland“) und hohe <strong>Reparationen</strong> führten in Frankreich zu Hass und dem Wunsch nach <strong>Revanche</strong>, in Deutschland zu Überheblichkeit. Die Reichsgründung säte also Konflikte für die Zukunft.</li>
+</ul>
+
+<!-- ============ 6 ============ -->
+<h2>6 · Beurteilen: typische Klausurfragen</h2>
+
+<h3>6.1 „Die Verfassung von 1871: nur ein Feigenblatt für den Absolutismus?“</h3>
+<p class="note">Leitfrage aus deiner Vokabelliste („The 1871 Constitution – a fig leaf for absolutism?“). Feigenblatt = etwas, das gut aussieht und das Eigentliche versteckt. Absolutismus = ein Herrscher regiert ohne Kontrolle.</p>
+<div class="scroll">
+<table class="pc">
+  <tr><th style="width:50%">Eher JA (Fassade für Monarchie und Exekutive)</th><th>Eher NEIN (echte Verfassung mit Grenzen)</th></tr>
+  <tr>
+    <td><ul>
+      <li>Kanzler nur vom Kaiser abhängig, kein Misstrauensvotum</li>
+      <li>keine parlamentarische Regierung bis Oktober 1918</li>
+      <li>Militär (¾ der Ausgaben) durch Septennat der jährlichen Kontrolle entzogen</li>
+      <li>Krieg und Frieden ohne Reichstag</li>
+      <li>Auflösung des Reichstags als Drohmittel</li>
+      <li>keine Grundrechte, Zensur, Militärgerichtsbarkeit</li>
+      <li>preußische Hegemonie über Kaiser, Kanzler und Bundesrat</li>
+      <li>Lehrbuch: „autoritärer Macht-, Obrigkeits- und Militärstaat“</li>
+    </ul></td>
+    <td><ul>
+      <li>kein Absolutismus: Der Kaiser war an die Verfassung gebunden</li>
+      <li>kein Gesetz und kein Haushalt ohne den Reichstag</li>
+      <li>sehr modernes Männerwahlrecht, moderner als in Großbritannien</li>
+      <li>Rechtsstaat und Rechtssicherheit, „keine Diktatur“ (bpb)</li>
+      <li>föderale Elemente: Bundesrat, Rechte der Einzelstaaten</li>
+      <li>Der Reichstag wurde mit der Zeit zum wichtigsten Forum.</li>
+      <li>Die SPD konnte trotz Verbot wachsen, weil das Wahlrecht blieb.</li>
+    </ul></td>
+  </tr>
+</table>
+</div>
+<div class="box merke"><span class="box-title">Mögliches differenziertes Fazit</span>Die Reichsverfassung war <strong>kein reines Feigenblatt</strong>, denn sie begrenzte den Monarchen, und der Reichstag hatte durch Wahlrecht, Gesetzgebung und Budgetrecht echte Mitsprache. Sie schuf aber auch <strong>keine parlamentarische Demokratie</strong>: Sie war eine <strong>konstitutionelle Monarchie mit starkem Übergewicht der Exekutive</strong> und <strong>preußischer Hegemonie</strong>, in der das Parlament „im Vorhof der Macht“ blieb.</div>
+
+<h3>6.2 „Einigung von oben, unterstützt von unten?“ und „Bismarck, der Architekt?“</h3>
+<div class="scroll">
+<table class="pc">
+  <tr><th style="width:50%">Von oben / Bismarcks Werk</th><th>Von unten / andere Faktoren</th></tr>
+  <tr>
+    <td><ul>
+      <li>drei Kriege („Eisen und Blut“), Einigung als Machtfrage</li>
+      <li>Verträge der Fürsten, Kaiserbrief, Proklamation durch Fürsten und Militär</li>
+      <li>keine gewählte Verfassungsversammlung; Verfassung auf Bismarck zugeschnitten</li>
+      <li>Bismarck steuerte 1866 (schneller Frieden) und 1870 (Thronfolgekrise) die Außenpolitik</li>
+    </ul></td>
+    <td><ul>
+      <li>Zollverein und Nationalbewegung als Vorarbeit („ohne … kaum möglich“)</li>
+      <li>Hambacher Fest, Turner- und Sängervereine, Nationalverein</li>
+      <li>Begeisterung nach dem Sieg über Frankreich; breite Zustimmung bei der Wahl 1871</li>
+      <li>Frankreichs Kriegserklärung und die Duldung durch die Großmächte</li>
+      <li>aber: Großdeutsche, Partikularisten, Katholiken, Arbeiter und Minderheiten waren skeptisch oder dagegen</li>
+    </ul></td>
+  </tr>
+</table>
+</div>
+
+<!-- ============ 7 ============ -->
+<h2>7 · Klausur-Werkzeug (aus deiner Formelsammlung)</h2>
+<div class="box exam">
+  <strong>1. Wiedergeben (30 BE)</strong>: Quellenkritik und Inhalt in Sinnabschnitten mit Zeilen. <strong>2. Einordnen (50 BE)</strong>: <strong>Vorgeschichte – Kerngeschichte – Folgezeit</strong>, dann Aussagen der Quelle konkretisieren, erläutern, ergänzen, widerlegen. <em>Beispiel für eine Quelle von 1870 (Mohl):</em> Vorgeschichte = Zollverein 1834, Nationalbewegung, 1866, Norddeutscher Bund 1867 · Kerngeschichte = Krieg 1870, Novemberverträge · Folgezeit = Reichsgründung, Verfassung, „Reichsfeinde“.<br>
+  <strong>3. Beurteilen (20 BE)</strong>: <strong>Sachurteil</strong>: Quelle/Tatsache „historisch <strong>wichtig/unwichtig</strong> für den Verlauf ODER unser Verständnis“, Darstellung „historisch <strong>richtig/unrichtig</strong>“; die Begründung zählt am meisten (8 von 10 BE). <strong>Werturteil</strong>: „<strong>Wenn</strong> gleichberechtigte demokratische Teilhabe moralisch gut ist, <strong>dann</strong> ist die Reichsverfassung moralisch eher schlecht, <strong>denn</strong> die Regierung hing nicht vom gewählten Reichstag ab, Frauen durften nicht wählen, und es gab keine Grundrechte.“ <strong>Differenzierung</strong> („Allerdings war das Männerwahlrecht sehr fortschrittlich …“) bringt nur Bonuspunkte, wenn ein <strong>stimmiges Gesamtbild</strong> entsteht.<br>
+  <strong>Quelle</strong> = aus der Zeit selbst (Mohl 1870, Siebenpfeiffer 1832, Verfassungstext). <strong>Darstellung</strong> = später und rückblickend (Fisch 2002, Ullmann 1999, bpb-Text, Lehrbuch).
+</div>
+
+<!-- ============ 8 ============ -->
+<h2>8 · Fachbegriffe Deutsch – Englisch (aus deiner Vokabelliste)</h2>
+<ul class="gloss">
+  <li><strong>Deutsches Kaiserreich</strong> – <span class="en">Second Empire</span></li>
+  <li><strong>Norddeutscher Bund</strong> – <span class="en">North German Confederation</span></li>
+  <li><strong>Zollverein / Zollparlament</strong> – <span class="en">Customs Union / Customs Union Parliament</span></li>
+  <li><strong>klein-/großdeutsche Lösung</strong> – <span class="en">Smaller / Greater German Solution</span></li>
+  <li><strong>österr.-preuß. Dualismus</strong> – <span class="en">Austro-Prussian dualism</span></li>
+  <li><strong>Einigungskriege</strong> – <span class="en">Wars of Unification</span></li>
+  <li><strong>Deutsch-Dänischer Krieg</strong> – <span class="en">German-Danish War</span></li>
+  <li><strong>Deutscher Krieg; Königgrätz</strong> – <span class="en">Austro-Prussian War; Battle of Königgrätz</span></li>
+  <li><strong>Deutsch-Französischer Krieg</strong> – <span class="en">Franco-Prussian War</span></li>
+  <li><strong>Schlacht bei Sedan</strong> – <span class="en">Battle of Sedan</span></li>
+  <li><strong>Emser Depesche</strong> – <span class="en">Ems Telegram/Dispatch</span></li>
+  <li><strong>Frieden zu Frankfurt</strong> – <span class="en">Treaty of Frankfurt</span></li>
+  <li><strong>ausrufen; Ausrufung</strong> – <span class="en">to proclaim; proclamation</span></li>
+  <li><strong>Reparationen</strong> – <span class="en">indemnity</span></li>
+  <li><strong>Verfassung; verfassungswidrig</strong> – <span class="en">constitution; unconstitutional</span></li>
+  <li><strong>verfassunggebende Versammlung</strong> – <span class="en">constituent assembly</span></li>
+  <li><strong>Bundesstaat</strong> – <span class="en">federal state</span></li>
+  <li><strong>Erbmonarchie</strong> – <span class="en">hereditary monarchy</span></li>
+  <li><strong>Vorherrschaft</strong> – <span class="en">hegemony</span></li>
+  <li><strong>Souveränität</strong> – <span class="en">sovereignty</span></li>
+  <li><strong>Wahlrecht</strong> – <span class="en">suffrage, franchise</span></li>
+  <li><strong>Dreiklassenwahlrecht</strong> – <span class="en">three-class voting system</span></li>
+  <li><strong>rechenschaftspflichtig sein</strong> – <span class="en">to be accountable to</span></li>
+  <li><strong>(Parlament) einberufen</strong> – <span class="en">to summon (parliament)</span></li>
+  <li><strong>ernennen / entlassen</strong> – <span class="en">to appoint / to dismiss</span></li>
+  <li><strong>abdanken</strong> – <span class="en">to abdicate</span></li>
+  <li><strong>Rechtsstaatlichkeit</strong> – <span class="en">rule of law</span></li>
+  <li><strong>Rechtsgleichheit</strong> – <span class="en">equality before the law</span></li>
+  <li><strong>Zensur</strong> – <span class="en">censorship</span></li>
+  <li><strong>Reichsfeinde</strong> – <span class="en">enemies of the Reich</span></li>
+  <li><strong>Zentrum</strong> – <span class="en">Centre Party</span></li>
+  <li><strong>Nationalliberale Partei</strong> – <span class="en">National Liberal Party</span></li>
+  <li><strong>Deutschkonservative Partei</strong> – <span class="en">German Conservative Party</span></li>
+  <li><strong>Deutsche Fortschrittspartei</strong> – <span class="en">German Progressive Party</span></li>
+  <li><strong>Sozialdemokratische Partei</strong> – <span class="en">Social Democratic Party</span></li>
+</ul>
+
+<div class="box warn"><span class="box-title">Achtung: Das steht nicht (genau) in deinen Materialien</span>
+  Das Wort <strong>„oktroyiert“</strong> kommt nicht vor (dort: „von oben“). <strong>Emser Depesche</strong>, <strong>Frieden zu Frankfurt</strong> und die Parteinamen stehen nur in der Vokabelliste und werden nicht genauer erklärt; frag bei Bedarf deine Lehrkraft. Zur <strong>Judikative</strong> gibt es keine Informationen. Die Seiten zu <strong>Imperialismus und Außenpolitik</strong> (S. 296–299) gehören zu einem anderen Thema; genutzt wurde nur die Entlassung Bismarcks 1890.
+</div>
+
+</main>
+</body>
+</html>
