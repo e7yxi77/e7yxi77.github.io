@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Lernzettel Chemie – Aminosäuren & Kohlenhydrate</title>
+<style>
+  :root{
+    --bg:#fafafa; --panel:#fff; --ink:#1a1a1a; --muted:#555; --accent:#1F4E79;
+    --accent2:#2E74B5; --soft:#eef3f9; --soft2:#f6f8fc; --border:#dde3ec;
+    --pos:#c0392b; --neg:#2471a3; --ok:#1e8449;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.5}
+  .wrap{max-width:980px;margin:0 auto;padding:40px 28px 80px}
+  header{border-bottom:3px solid var(--accent);padding-bottom:18px;margin-bottom:28px}
+  h1{font-size:34px;color:var(--accent);margin:0 0 6px 0}
+  h2{font-size:24px;color:var(--accent2);margin:40px 0 12px;border-left:4px solid var(--accent2);padding-left:12px}
+  h3{font-size:19px;color:#1F3864;margin:24px 0 8px}
+  h4{font-size:16px;color:#333;margin:18px 0 6px}
+  p{margin:8px 0}
+  .lead{color:var(--muted);font-style:italic;margin-top:0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  @media (max-width:760px){.grid,.grid3{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px 18px;
+    box-shadow:0 1px 2px rgba(0,0,0,.03)}
+  .box{background:var(--soft);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin:10px 0}
+  .box.warn{background:#fff5e6;border-color:#f4c38a}
+  .box.ok{background:#eaf5ee;border-color:#a5d4b5}
+  .box.info{background:#eaf2fa;border-color:#a8c7e8}
+  table{border-collapse:collapse;width:100%;margin:12px 0;background:#fff;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+  th,td{border:1px solid var(--border);padding:8px 10px;vertical-align:top;text-align:left;font-size:14.5px}
+  th{background:#D9E2F3;color:#1F3864;font-weight:600}
+  tr:nth-child(2n) td{background:#fbfcfe}
+  code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#f2f2f2;border-radius:4px;padding:2px 5px;font-size:13.5px}
+  pre{padding:10px 12px;border:1px solid var(--border)}
+  figure{margin:14px 0;text-align:center}
+  figcaption{color:var(--muted);font-size:13px;margin-top:6px}
+  .svg-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;display:inline-block}
+  ul{margin:6px 0 10px 22px;padding:0}
+  li{margin:3px 0}
+  .pill{display:inline-block;padding:2px 8px;border-radius:12px;background:var(--soft);color:var(--accent);font-size:12px;font-weight:600;margin-right:6px}
+  .pos{color:var(--pos);font-weight:700}
+  .neg{color:var(--neg);font-weight:700}
+  .zero{color:#555;font-weight:700}
+  .note{font-size:13.5px;color:var(--muted)}
+  nav.toc{background:var(--soft2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:28px}
+  nav.toc a{color:var(--accent);text-decoration:none;display:inline-block;margin:3px 10px 3px 0}
+  nav.toc a:hover{text-decoration:underline}
+  .center{text-align:center}
+  svg text{font-family:"Times New Roman",Georgia,serif}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Lernzettel Chemie – Klausur 11</h1>
+  <p class="lead">Aminosäuren &amp; Kohlenhydrate · Grundlage: Fokus Chemie Sek II, S. 284–315 + Arbeitsblatt GIDA 2016</p>
+</header>
+
+<nav class="toc">
+  <strong>Inhalt:</strong>
+  <a href="#a1">A1 Grundaufbau</a>
+  <a href="#a2">A2 Zwitterion &amp; ieP</a>
+  <a href="#a3">A3 Elektrophorese</a>
+  <a href="#a4">A4 Peptidbindung</a>
+  <a href="#a5">A5 Proteinstrukturen</a>
+  <a href="#b1">B1 Einteilung</a>
+  <a href="#b2">B2 Glucose</a>
+  <a href="#b3">B3 Fructose</a>
+  <a href="#b4">B4 Mutarotation</a>
+  <a href="#b5">B5 Disaccharide</a>
+  <a href="#b6">B6 Polysaccharide</a>
+  <a href="#check">Checkliste</a>
+</nav>
+
+<!-- ======================= TEIL A ======================= -->
+<h2>TEIL A – Aminosäuren</h2>
+
+<section id="a1" class="card">
+<h3>A1 · Grundaufbau &amp; allgemeine Strukturformel (S. 310)</h3>
+
+<p>Alle <strong>α-Aminosäuren (AS)</strong> haben denselben Grundaufbau: An einem zentralen Kohlenstoff-Atom (<strong>α-C-Atom</strong>) sind vier Gruppen gebunden.</p>
+
+<figure>
+<div class="svg-wrap">
+<svg viewBox="0 0 420 220" width="380" height="200" aria-label="Allgemeine Strukturformel einer Aminosäure">
+  <!-- NH2 -->
+  <text x="30" y="115" font-size="22">H<tspan dy="6" font-size="14">2</tspan><tspan dy="-6">N</tspan></text>
+  <line x1="80" y1="110" x2="130" y2="110" stroke="#000" stroke-width="2"/>
+  <!-- central C -->
+  <text x="140" y="115" font-size="26" font-weight="bold">C</text>
+  <text x="140" y="50" font-size="22">H</text>
+  <line x1="152" y1="60" x2="152" y2="98" stroke="#000" stroke-width="2"/>
+  <text x="140" y="190" font-size="22">R</text>
+  <line x1="152" y1="125" x2="152" y2="170" stroke="#000" stroke-width="2"/>
+  <!-- COOH -->
+  <line x1="170" y1="110" x2="220" y2="110" stroke="#000" stroke-width="2"/>
+  <text x="225" y="115" font-size="22">COOH</text>
+  <!-- labels -->
+  <text x="25" y="150" font-size="12" fill="#c0392b">Amino-Gruppe (basisch)</text>
+  <text x="225" y="150" font-size="12" fill="#2471a3">Carboxy-Gruppe (sauer)</text>
+  <text x="105" y="40" font-size="12" fill="#555">Wasserstoff</text>
+  <text x="115" y="210" font-size="12" fill="#555">Rest R (Seitenkette)</text>
+  <text x="90" y="100" font-size="11" fill="#1e8449">α-C-Atom</text>
+</svg>
+</div>
+<figcaption>Allgemeine Strukturformel einer α-Aminosäure</figcaption>
+</figure>
+
+<h4>Die vier funktionellen Gruppen am α-C-Atom</h4>
+<table>
+<tr><th>Gruppe</th><th>Name</th><th>Eigenschaft</th></tr>
+<tr><td><code>–NH₂</code></td><td><strong>Amino-Gruppe</strong></td><td>basisch (nimmt H⁺ auf)</td></tr>
+<tr><td><code>–COOH</code></td><td><strong>Carboxy-Gruppe</strong></td><td>sauer (gibt H⁺ ab)</td></tr>
+<tr><td><code>–H</code></td><td>Wasserstoff-Atom</td><td>—</td></tr>
+<tr><td><code>–R</code></td><td><strong>Rest / Seitenkette</strong></td><td>unterscheidet die AS voneinander</td></tr>
+</table>
+
+<div class="box warn">
+<strong>Wichtig:</strong> Eine AS enthält gleichzeitig eine saure und eine basische Gruppe → sie ist <strong>amphoter</strong> und kann mit Säuren und Basen reagieren.
+</div>
+
+<h4>Einteilung nach dem Rest R</h4>
+<ul>
+<li><strong>unpolar (hydrophob):</strong> z. B. Glycin (R = H), Alanin (R = CH₃), Valin, Leucin</li>
+<li><strong>polar, ungeladen:</strong> z. B. Serin (–OH), Cystein (–SH), Threonin</li>
+<li><strong>sauer:</strong> Rest enthält zusätzliche –COOH, z. B. Asparaginsäure, Glutaminsäure</li>
+<li><strong>basisch:</strong> Rest enthält zusätzliche –NH₂, z. B. Lysin, Arginin</li>
+</ul>
+<p><strong>Proteinogen:</strong> Es gibt genau <strong>20 proteinogene Aminosäuren</strong>, aus denen alle körpereigenen Proteine aufgebaut werden.</p>
+</section>
+
+
+<section id="a2" class="card">
+<h3>A2 · Zwitterion, ieP &amp; pH-Abhängigkeit (S. 311/312)</h3>
+
+<h4>a) Zwitterion</h4>
+<p>In wässriger Lösung findet eine <strong>innermolekulare Protonen-Wanderung</strong> statt: Die –COOH-Gruppe gibt ihr H⁺ an die –NH₂-Gruppe ab. Es entsteht ein <strong>Zwitterion</strong> – ein Teilchen mit <strong>je einer positiven und einer negativen Ladung</strong>, nach außen aber <strong>elektrisch neutral</strong>.</p>
+
+<figure>
+<div class="svg-wrap">
+<svg viewBox="0 0 620 160" width="600" height="160">
+  <!-- links: neutral -->
+  <text x="20" y="90" font-size="20">H<tspan dy="6" font-size="12">2</tspan><tspan dy="-6">N – CHR – COOH</tspan></text>
+  <!-- Pfeil -->
+  <line x1="220" y1="85" x2="290" y2="85" stroke="#333" stroke-width="2"/>
+  <polygon points="290,85 282,80 282,90" fill="#333"/>
+  <text x="225" y="75" font-size="12" fill="#555">H⁺-Wanderung</text>
+  <!-- rechts: Zwitterion -->
+  <text x="310" y="90" font-size="20"><tspan fill="#c0392b" font-weight="bold">⁺</tspan>H<tspan dy="6" font-size="12">3</tspan><tspan dy="-6">N – CHR – COO</tspan><tspan fill="#2471a3" font-weight="bold">⁻</tspan></text>
+  <text x="370" y="130" font-size="13" fill="#1e8449">= Zwitterion (nach außen neutral)</text>
+</svg>
+</div>
+<figcaption>Bildung des Zwitterions durch innermolekulare Protonen-Wanderung</figcaption>
+</figure>
+
+<h4>b) Verhalten in saurer, neutraler und basischer Umgebung</h4>
+
+<figure>
+<div class="svg-wrap">
+<svg viewBox="0 0 820 220" width="800" height="220">
+  <!-- sauer -->
+  <rect x="10" y="10" width="240" height="180" fill="#fdecea" stroke="#e7a9a2" rx="8"/>
+  <text x="130" y="35" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold">Im Sauren (viel H⁺)</text>
+  <text x="130" y="110" text-anchor="middle" font-size="20"><tspan fill="#c0392b" font-weight="bold">⁺</tspan>H<tspan dy="6" font-size="12">3</tspan><tspan dy="-6">N – CHR – COOH</tspan></text>
+  <text x="130" y="165" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold">Kation ⊕ → positiv</text>
+
+  <!-- neutral -->
+  <rect x="270" y="10" width="270" height="180" fill="#eaf5ee" stroke="#a5d4b5" rx="8"/>
+  <text x="405" y="35" text-anchor="middle" font-size="14" fill="#1e8449" font-weight="bold">Am ieP (Zwitterion)</text>
+  <text x="405" y="110" text-anchor="middle" font-size="20"><tspan fill="#c0392b" font-weight="bold">⁺</tspan>H<tspan dy="6" font-size="12">3</tspan><tspan dy="-6">N – CHR – COO</tspan><tspan fill="#2471a3" font-weight="bold">⁻</tspan></text>
+  <text x="405" y="165" text-anchor="middle" font-size="14" fill="#1e8449" font-weight="bold">neutral (±0)</text>
+
+  <!-- basisch -->
+  <rect x="560" y="10" width="240" height="180" fill="#eaf2fa" stroke="#a8c7e8" rx="8"/>
+  <text x="680" y="35" text-anchor="middle" font-size="14" fill="#2471a3" font-weight="bold">Im Basischen (wenig H⁺)</text>
+  <text x="680" y="110" text-anchor="middle" font-size="20">H<tspan dy="6" font-size="12">2</tspan><tspan dy="-6">N – CHR – COO</tspan><tspan fill="#2471a3" font-weight="bold">⁻</tspan></text>
+  <text x="680" y="165" text-anchor="middle" font-size="14" fill="#2471a3" font-weight="bold">Anion ⊖ → negativ</text>
+</svg>
+</div>
+<figcaption>Die Aminosäure liegt je nach pH in drei verschiedenen Formen vor.</figcaption>
+</figure>
+
+<p><strong>Erklärung:</strong> Im Sauren wird die COO⁻-Gruppe zu COOH protoniert (positiv geladen). Im Basischen wird die ⁺H₃N-Gruppe deprotoniert (negativ geladen).</p>
+
+<h4>c) Isoelektrischer Punkt (ieP)</h4>
+<div class="box info">
+<strong>Definition:</strong> Der <strong>isoelektrische Punkt (ieP)</strong> ist der pH-Wert, bei dem eine Aminosäure <strong>nur</strong> als Zwitterion vorliegt und damit nach außen <strong>elektrisch neutral</strong> ist.
+</div>
+
+<table>
+<tr><th>AS-Typ</th><th>Beispiel</th><th>ieP (ca.)</th></tr>
+<tr><td>neutral</td><td>Glycin</td><td>6,0</td></tr>
+<tr><td>sauer (zusätzliche –COOH)</td><td>Asparaginsäure</td><td>2,8 (niedrig)</td></tr>
+<tr><td>basisch (zusätzliche –NH₂)</td><td>Lysin</td><td>9,7 (hoch)</td></tr>
+</table>
+
+<h4>d) Pufferwirkung</h4>
+<p>Ein <strong>Säure-Base-Puffer</strong> ist eine Lösung, die den pH-Wert bei Zugabe kleiner Mengen einer Säure oder Base <strong>weitgehend konstant hält</strong>. Aminosäuren wirken als Puffer, weil sie je nach Bedarf H⁺ aufnehmen (Amino-Gruppe) oder abgeben (Carboxy-Gruppe) können.</p>
+</section>
+
+
+<section id="a3" class="card">
+<h3>A3 · Gelelektrophorese (Arbeitsblatt 3a)</h3>
+<p>Mit der <strong>Elektrophorese</strong> werden Aminosäuren (oder Proteine) nach Ladung getrennt. Das Gel hat einen bestimmten <strong>pH-Wert</strong>. An den beiden Enden liegen <strong>Minuspol (–)</strong> und <strong>Pluspol (+)</strong> an. Die AS wandern aufgrund ihrer Ladung.</p>
+
+<figure>
+<div class="svg-wrap">
+<svg viewBox="0 0 720 260" width="700" height="260">
+  <!-- Rahmen -->
+  <rect x="60" y="30" width="600" height="180" fill="#f8f8f8" stroke="#888" rx="6"/>
+  <!-- pH-Verlauf farbig -->
+  <defs>
+    <linearGradient id="phgrad" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#8b57c4"/>
+      <stop offset=".25" stop-color="#4a90d9"/>
+      <stop offset=".5" stop-color="#5fb84a"/>
+      <stop offset=".75" stop-color="#f1c40f"/>
+      <stop offset="1" stop-color="#e74c3c"/>
+    </linearGradient>
+  </defs>
+  <rect x="80" y="60" width="560" height="110" fill="url(#phgrad)" opacity=".55"/>
+  <!-- Startlinie -->
+  <line x1="360" y1="60" x2="360" y2="170" stroke="#333" stroke-dasharray="4 3" stroke-width="2"/>
+  <text x="360" y="195" text-anchor="middle" font-size="12">Startlinie (neutral pH ≈ 7)</text>
+  <!-- Pole -->
+  <circle cx="60" cy="115" r="18" fill="#2c3e50"/>
+  <text x="60" y="121" text-anchor="middle" fill="#fff" font-size="22" font-weight="bold">−</text>
+  <text x="60" y="20" text-anchor="middle" font-size="13" fill="#2c3e50" font-weight="bold">Minuspol</text>
+  <circle cx="660" cy="115" r="18" fill="#c0392b"/>
+  <text x="660" y="122" text-anchor="middle" fill="#fff" font-size="22" font-weight="bold">+</text>
+  <text x="660" y="20" text-anchor="middle" font-size="13" fill="#c0392b" font-weight="bold">Pluspol</text>
+  <!-- pH Werte -->
+  <text x="100" y="55" font-size="12">pH 12</text>
+  <text x="620" y="55" font-size="12">pH 2</text>
+  <!-- Banden -->
+  <ellipse cx="180" cy="115" rx="22" ry="8" fill="#2471a3"/>
+  <text x="180" y="140" text-anchor="middle" font-size="12" fill="#2471a3" font-weight="bold">Lysin ⊕</text>
+  <ellipse cx="360" cy="115" rx="22" ry="8" fill="#1e8449"/>
+  <text x="360" y="140" text-anchor="middle" font-size="12" fill="#1e8449" font-weight="bold">Glycin (0)</text>
+  <ellipse cx="560" cy="115" rx="22" ry="8" fill="#c0392b"/>
+  <text x="560" y="140" text-anchor="middle" font-size="12" fill="#c0392b" font-weight="bold">Asparaginsäure ⊖</text>
+  <!-- Pfeile -->
+  <line x1="340" y1="115" x2="210" y2="115" stroke="#2471a3" stroke-width="2"/>
+  <polygon points="210,115 220,110 220,120" fill="#2471a3"/>
+  <line x1="380" y1="115" x2="540" y2="115" stroke="#c0392b" stroke-width="2"/>
+  <polygon points="540,115 530,110 530,120" fill="#c0392b"/>
+  <!-- Erklärung -->
+  <text x="360" y="235" text-anchor="middle" font-size="12" fill="#555">Gel bei pH ≈ 7 – Aminosäuren wandern zum entgegengesetzten Pol ihrer Ladung.</text>
+</svg>
+</div>
+<figcaption>Trennung von Lysin, Glycin und Asparaginsäure bei pH 7</figcaption>
+</figure>
+
+<table>
+<tr><th>AS (ieP)</th><th>pH der Lösung</th><th>Ladung</th><th>Wanderung</th></tr>
+<tr><td><strong>Lysin</strong> (9,7)</td><td>7 (&lt; ieP)</td><td class="pos">positiv ⊕</td><td>zum <strong>Minuspol</strong></td></tr>
+<tr><td><strong>Glycin</strong> (6,0)</td><td>7 (≈ ieP)</td><td class="zero">neutral (0)</td><td><strong>bleibt am Start</strong></td></tr>
+<tr><td><strong>Asparaginsäure</strong> (2,8)</td><td>7 (&gt; ieP)</td><td class="neg">negativ ⊖</td><td>zum <strong>Pluspol</strong></td></tr>
+</table>
+
+<div class="box ok">
+<strong>Merksatz:</strong> Ist der pH-Wert <em>kleiner</em> als der ieP → AS positiv. Ist der pH-Wert <em>größer</em> als der ieP → AS negativ. Am ieP bleibt sie liegen.
+</div>
+</section>
+
+
+<section id="a4" class="card">
+<h3>A4 · Peptidbindung (S. 313)</h3>
+<p>Zwei Aminosäuren verknüpfen sich unter <strong>Abspaltung von Wasser</strong> (Kondensation): Die <strong>COOH-Gruppe</strong> der einen reagiert mit der <strong>NH₂-Gruppe</strong> der anderen. Es entsteht die <strong>Peptidbindung (–CO–NH–)</strong>.</p>
+
+<figure>
+<div class="svg-wrap">
+<svg viewBox="0 0 820 220" width="800" height="200">
+  <!-- AS1 -->
+  <text x="20" y="100" font-size="18">H<tspan dy="6" font-size="12">2</tspan><tspan dy="-6">N – CHR</tspan><tspan dy="6" font-size="12">1</tspan><tspan dy="-6"> – C</tspan></text>
+  <text x="195" y="85" font-size="16">O</text>
+  <line x1="190" y1="90" x2="190" y2="100" stroke="#000" stroke-width="2"/>
+  <line x1="193" y1="90" x2="193" y2="100" stroke="#000" stroke-width="2"/>
+  <text x="200" y="105" font-size="18" fill="#c0392b">OH</text>
+  <text x="250" y="105" font-size="20">+</text>
+  <text x="275" y="100" font-size="18" fill="#c0392b">H</text>
+  <text x="290" y="100" font-size="18">N – CHR</text>
+  <text x="375" y="106" font-size="12">2</text>
+  <text x="383" y="100" font-size="18"> – COOH</text>
+  <text x="300" y="80" font-size="14">H</text>
+
+  <!-- Pfeil -->
+  <line x1="420" y1="140" x2="420" y2="170" stroke="#333" stroke-width="2"/>
+  <polygon points="420,170 415,162 425,162" fill="#333"/>
+  <text x="430" y="160" font-size="12" fill="#555">− H₂O</text>
+
+  <!-- Dipeptid -->
+  <text x="20" y="195" font-size="18">H<tspan dy="6" font-size="12">2</tspan><tspan dy="-6">N – CHR</tspan><tspan dy="6" font-size="12">1</tspan><tspan dy="-6"> – C</tspan></text>
+  <text x="195" y="180" font-size="16">O</text>
+  <line x1="190" y1="185" x2="190" y2="195" stroke="#000" stroke-width="2"/>
+  <line x1="193" y1="185" x2="193" y2="195" stroke="#000" stroke-width="2"/>
+  <rect x="205" y="178" width="100" height="26" fill="#fff5e6" stroke="#f4c38a" rx="4"/>
+  <text x="210" y="197" font-size="18" fill="#c0392b" font-weight="bold">– NH –</text>
+  <text x="310" y="197" font-size="18">CHR</text>
+  <text x="352" y="203" font-size="12">2</text>
+  <text x="360" y="197" font-size="18"> – COOH</text>
+  <text x="255" y="170" font-size="12" fill="#c0392b" font-weight="bold">Peptidbindung</text>
+</svg>
+</div>
+<figcaption>Bildung eines Dipeptids: C=O der ersten AS verbindet sich mit N–H der zweiten AS, H₂O wird frei.</figcaption>
+</figure>
+
+<ul>
+<li><strong>Dipeptid:</strong> 2 AS verknüpft</li>
+<li><strong>Oligopeptid:</strong> bis ca. 10 AS</li>
+<li><strong>Polypeptid / Protein:</strong> viele AS (bei Proteinen meist &gt; 100)</li>
+</ul>
+</section>
+
+
+<section id="a5" class="card">
+<h3>A5 · Struktur der Proteine (S. 314/315)</h3>
+
+<figure>
+<div class="svg-wrap">
+<svg viewBox="0 0 820 230" width="800" height="230">
+  <!-- Primär -->
+  <text x="90" y="25" text-anchor="middle" font-size="13" font-weight="bold" fill="#1F3864">Primär</text>
+  <g>
+    <circle cx="30" cy="110" r="10" fill="#a8c7e8"/>
+    <circle cx="60" cy="110" r="10" fill="#f4c38a"/>
+    <circle cx="90" cy="110" r="10" fill="#a5d4b5"/>
+    <circle cx="120" cy="110" r="10" fill="#e7a9a2"/>
+    <circle cx="150" cy="110" r="10" fill="#c8b6e2"/>
+    <line x1="30" y1="110" x2="150" y2="110" stroke="#333" stroke-width="2" stroke-dasharray="2 2"/>
+  </g>
+  <text x="90" y="160" text-anchor="middle" font-size="11" fill="#555">Sequenz der AS</text>
+
+  <!-- Sekundär: Helix -->
+  <text x="290" y="25" text-anchor="middle" font-size="13" font-weight="bold" fill="#1F3864">Sekundär</text>
+  <path d="M 230 60 Q 260 80 290 60 T 350 60 T 410 60" stroke="#2E74B5" stroke-width="3" fill="none"/>
+  <path d="M 230 80 Q 260 100 290 80 T 350 80 T 410 80" stroke="#2E74B5" stroke-width="3" fill="none"/>
+  <path d="M 230 100 Q 260 120 290 100 T 350 100 T 410 100" stroke="#2E74B5" stroke-width="3" fill="none"/>
+  <path d="M 230 120 Q 260 140 290 120 T 350 120 T 410 120" stroke="#2E74B5" stroke-width="3" fill="none"/>
+  <text x="290" y="160" text-anchor="middle" font-size="11" fill="#555">α-Helix / β-Faltblatt</text>
+  <text x="290" y="178" text-anchor="middle" font-size="10" fill="#555">H-Brücken</text>
+
+  <!-- Tertiär: gefaltet -->
+  <text x="520" y="25" text-anchor="middle" font-size="13" font-weight="bold" fill="#1F3864">Tertiär</text>
+  <path d="M 470 90 C 490 60, 520 120, 540 90 S 580 70, 570 120 S 490 130, 520 150 S 580 100, 560 70"
+        stroke="#1F4E79" stroke-width="3" fill="none"/>
+  <text x="520" y="160" text-anchor="middle" font-size="11" fill="#555">3D-Faltung einer Kette</text>
+  <text x="520" y="178" text-anchor="middle" font-size="10" fill="#555">H-Brücken, Ionen, –S–S–, hydrophob</text>
+
+  <!-- Quartär: mehrere -->
+  <text x="730" y="25" text-anchor="middle" font-size="13" font-weight="bold" fill="#1F3864">Quartär</text>
+  <circle cx="710" cy="80" r="22" fill="#a8c7e8" stroke="#1F4E79"/>
+  <circle cx="750" cy="80" r="22" fill="#f4c38a" stroke="#1F4E79"/>
+  <circle cx="710" cy="125" r="22" fill="#a5d4b5" stroke="#1F4E79"/>
+  <circle cx="750" cy="125" r="22" fill="#e7a9a2" stroke="#1F4E79"/>
+  <text x="730" y="160" text-anchor="middle" font-size="11" fill="#555">Mehrere Ketten (z. B. Hämoglobin)</text>
+</svg>
+</div>
+<figcaption>Die vier Strukturebenen eines Proteins</figcaption>
+</figure>
+
+<table>
+<tr><th>Struktur</th><th>Was ist das?</th><th>Bindungen / Kräfte</th></tr>
+<tr><td><strong>Primärstruktur</strong></td><td>Abfolge (Sequenz) der Aminosäuren in der Kette</td><td>Peptidbindungen (kovalent)</td></tr>
+<tr><td><strong>Sekundärstruktur</strong></td><td>Regelmäßige Faltung: <strong>α-Helix</strong> (Spirale) oder <strong>β-Faltblatt</strong></td><td>Wasserstoff-Brücken zwischen C=O und N–H</td></tr>
+<tr><td><strong>Tertiärstruktur</strong></td><td>Räumliche 3D-Gestalt der gesamten Kette</td><td>H-Brücken, Ionen-Bindungen, <strong>Disulfid-Brücken (–S–S–)</strong>, hydrophobe WW, Van-der-Waals</td></tr>
+<tr><td><strong>Quartärstruktur</strong></td><td>Zusammenlagerung mehrerer Ketten (Untereinheiten)</td><td>Dieselben Kräfte wie bei der Tertiärstruktur</td></tr>
+</table>
+
+<div class="box warn">
+<strong>Denaturierung:</strong> Durch Hitze, Säuren oder Alkohol werden Sekundär-, Tertiär- und Quartärstruktur zerstört. Die Primärstruktur bleibt erhalten, das Protein ist aber nicht mehr funktionsfähig (z. B. Ei wird fest).
+</div>
+</section>
+
+
+<!-- ======================= TEIL B ======================= -->
+<h2>TEIL B – Kohlenhydrate</h2>
+
+<section id="b1" class="card">
+<h3>B1 · Einteilung der Kohlenhydrate</h3>
+<p>Kohlenhydrate sind <strong>Polyhydroxy-Aldehyde oder -Ketone</strong> mit der allgemeinen Summenformel <strong>(CH₂O)<sub>n</sub></strong>.</p>
+
+<div class="grid">
+<div>
+<h4>Nach Baueinheiten</h4>
+<table>
+<tr><th>Typ</th><th>Vertreter</th></tr>
+<tr><td><strong>Monosaccharide</strong></td><td>Glucose, Fructose</td></tr>
+<tr><td><strong>Disaccharide</strong></td><td>Maltose, Saccharose, Lactose</td></tr>
+<tr><td>Oligosaccharide</td><td>(3–10 AS, nicht lernen)</td></tr>
+<tr><td><strong>Polysaccharide</strong></td><td>Stärke, Glykogen, Cellulose</td></tr>
+</table>
+</div>
+<div>
+<h4>Nach funktioneller Gruppe</h4>
+<table>
+<tr><th>Typ</th><th>Gruppe</th><th>Beispiel</th></tr>
+<tr><td><strong>Aldose</strong></td><td>Aldehyd (–CHO) am Ende</td><td>Glucose</td></tr>
+<tr><td><strong>Ketose</strong></td><td>Keton (C=O in der Kette)</td><td>Fructose</td></tr>
+</table>
+<p class="note"><strong>Hexose</strong> = Zucker mit 6 C-Atomen · <strong>Pentose</strong> = 5 C-Atome (z. B. Ribose).</p>
+</div>
+</div>
+</section>
+
+
+<section id="b2" class="card">
+<h3>B2 · Glucose – Fischer- und Haworth-Projektion (S. 284/285)</h3>
+<p><strong>Summenformel:</strong> C₆H₁₂O₆ · <strong>Aldohexose</strong> (Aldehyd + 6 C-Atome). In der Natur kommt fast nur <strong>D-Glucose</strong> vor.</p>
+
+<div class="grid">
+<div>
+<h4>Fischer-Projektion (offen)</h4>
+<figure>
+<div class="svg-wrap">
+<svg viewBox="0 0 230 360" width="220" height="340">
+  <!-- CHO -->
+  <text x="115" y="30" text-anchor="middle" font-size="18" fill="#c0392b" font-weight="bold">CHO</text>
+  <text x="200" y="33" font-size="11" fill="#555">C1</text>
+  <line x1="115" y1="35" x2="115" y2="55" stroke="#000" stroke-width="2"/>
+  <!-- C2 -->
+  <text x="40" y="78" font-size="16">H</text>
+  <text x="115" y="78" text-anchor="middle" font-size="16">C</text>
+  <text x="155" y="78" font-size="16">OH</text>
+  <line x1="55" y1="72" x2="110" y2="72" stroke="#000" stroke-width="2"/>
+  <line x1="120" y1="72" x2="150" y2="72" stroke="#000" stroke-width="2"/>
+  <line x1="115" y1="82" x2="115" y2="105" stroke="#000" stroke-width="2"/>
+  <text x="200" y="78" font-size="11" fill="#555">C2</text>
+  <!-- C3 (OH left) -->
+  <text x="40" y="125" font-size="16">HO</text>
+  <text x="115" y="125" text-anchor="middle" font-size="16">C</text>
+  <text x="155" y="125" font-size="16">H</text>
+  <line x1="65" y1="119" x2="110" y2="119" stroke="#000" stroke-width="2"/>
+  <line x1="120" y1="119" x2="150" y2="119" stroke="#000" stroke-width="2"/>
+  <line x1="115" y1="129" x2="115" y2="152" stroke="#000" stroke-width="2"/>
+  <text x="200" y="125" font-size="11" fill="#555">C3</text>
+  <!-- C4 -->
+  <text x="40" y="172" font-size="16">H</text>
+  <text x="115" y="172" text-anchor="middle" font-size="16">C</text>
+  <text x="155" y="172" font-size="16">OH</text>
+  <line x1="55" y1="166" x2="110" y2="166" stroke="#000" stroke-width="2"/>
+  <line x1="120" y1="166" x2="150" y2="166" stroke="#000" stroke-width="2"/>
+  <line x1="115" y1="176" x2="115" y2="199" stroke="#000" stroke-width="2"/>
+  <text x="200" y="172" font-size="11" fill="#555">C4</text>
+  <!-- C5 -->
+  <text x="40" y="219" font-size="16">H</text>
+  <text x="115" y="219" text-anchor="middle" font-size="16">C</text>
+  <text x="155" y="219" font-size="16" fill="#1e8449" font-weight="bold">OH</text>
+  <line x1="55" y1="213" x2="110" y2="213" stroke="#000" stroke-width="2"/>
+  <line x1="120" y1="213" x2="150" y2="213" stroke="#000" stroke-width="2"/>
+  <line x1="115" y1="223" x2="115" y2="246" stroke="#000" stroke-width="2"/>
+  <text x="200" y="219" font-size="11" fill="#1e8449" font-weight="bold">C5 ★</text>
+  <!-- CH2OH -->
+  <text x="115" y="265" text-anchor="middle" font-size="18">CH<tspan dy="6" font-size="12">2</tspan><tspan dy="-6">OH</tspan></text>
+  <text x="200" y="268" font-size="11" fill="#555">C6</text>
+  <!-- Note -->
+  <text x="115" y="310" text-anchor="middle" font-size="12" fill="#1e8449">D-Glucose: OH am C5 rechts</text>
+  <text x="115" y="328" text-anchor="middle" font-size="11" fill="#555">★ bestimmt D/L</text>
+</svg>
+</div>
+<figcaption>D-Glucose, offene Kettenform (Fischer)</figcaption>
+</figure>
+</div>
+
+<div>
+<h4>Ringbildung &amp; Haworth-Projektion</h4>
+<p>In Wasser liegt Glucose zu <strong>&gt; 99 % als 6-Ring (Pyranose)</strong> vor. Die <strong>OH-Gruppe am C5</strong> greift die <strong>Aldehyd-Gruppe am C1</strong> an → am C1 entsteht eine neue OH-Gruppe, die <strong>halbacetalische OH</strong> am <strong>anomeren C-Atom</strong>.</p>
+
+<figure>
+<div class="svg-wrap">
+<svg viewBox="0 0 440 240" width="420" height="230">
+  <!-- α-Form -->
+  <g>
+    <!-- Sechsring -->
+    <polygon points="60,100 110,70 170,70 210,100 170,150 110,150" fill="none" stroke="#000" stroke-width="2"/>
+    <text x="52" y="105" font-size="14" fill="#c0392b" font-weight="bold">O</text>
+    <text x="215" y="105" font-size="11" fill="#555">C1</text>
+    <!-- CH2OH oben -->
+    <line x1="110" y1="70" x2="110" y2="40" stroke="#000" stroke-width="2"/>
+    <text x="100" y="35" font-size="14">CH₂OH</text>
+    <!-- H und OH an Positionen -->
+    <text x="165" y="65" font-size="12">H</text>
+    <text x="165" y="170" font-size="12" fill="#c0392b" font-weight="bold">OH</text>
+    <text x="110" y="170" font-size="12">OH</text>
+    <text x="55" y="135" font-size="12">OH</text>
+    <text x="135" y="65" font-size="12">OH</text>
+    <text x="110" y="200" text-anchor="middle" font-size="13" fill="#c0392b" font-weight="bold">α-D-Glucose</text>
+    <text x="110" y="218" text-anchor="middle" font-size="11" fill="#555">OH an C1 nach unten</text>
+  </g>
+  <!-- β-Form -->
+  <g transform="translate(220,0)">
+    <polygon points="60,100 110,70 170,70 210,100 170,150 110,150" fill="none" stroke="#000" stroke-width="2"/>
+    <text x="52" y="105" font-size="14" fill="#c0392b" font-weight="bold">O</text>
+    <text x="215" y="105" font-size="11" fill="#555">C1</text>
+    <line x1="110" y1="70" x2="110" y2="40" stroke="#000" stroke-width="2"/>
+    <text x="100" y="35" font-size="14">CH₂OH</text>
+    <text x="165" y="65" font-size="12" fill="#2471a3" font-weight="bold">OH</text>
+    <text x="165" y="170" font-size="12">H</text>
+    <text x="110" y="170" font-size="12">OH</text>
+    <text x="55" y="135" font-size="12">OH</text>
+    <text x="135" y="65" font-size="12">OH</text>
+    <text x="110" y="200" text-anchor="middle" font-size="13" fill="#2471a3" font-weight="bold">β-D-Glucose</text>
+    <text x="110" y="218" text-anchor="middle" font-size="11" fill="#555">OH an C1 nach oben</text>
+  </g>
+</svg>
+</div>
+<figcaption>Die beiden Anomere der Glucose unterscheiden sich nur in der Stellung der OH-Gruppe am C1.</figcaption>
+</figure>
+</div>
+</div>
+</section>
+
+
+<section id="b3" class="card">
+<h3>B3 · Fructose – Fischer und Haworth (S. 286)</h3>
+<p><strong>Summenformel:</strong> C₆H₁₂O₆ (wie Glucose!). <strong>Unterschied:</strong> Fructose hat eine <strong>Keton-Gruppe am C2</strong> statt einer Aldehyd-Gruppe am C1 → <strong>Ketohexose</strong>.</p>
+
+<div class="grid">
+<div>
+<h4>Fischer-Projektion</h4>
+<figure>
+<div class="svg-wrap">
+<svg viewBox="0 0 230 360" width="220" height="340">
+  <text x="115" y="30" text-anchor="middle" font-size="18">CH<tspan dy="6" font-size="12">2</tspan><tspan dy="-6">OH</tspan></text>
+  <text x="200" y="33" font-size="11" fill="#555">C1</text>
+  <line x1="115" y1="35" x2="115" y2="55" stroke="#000" stroke-width="2"/>
+
+  <text x="115" y="75" text-anchor="middle" font-size="16" fill="#c0392b" font-weight="bold">C=O</text>
+  <text x="200" y="75" font-size="11" fill="#c0392b" font-weight="bold">C2 (Keton)</text>
+  <line x1="115" y1="82" x2="115" y2="105" stroke="#000" stroke-width="2"/>
+
+  <text x="40" y="125" font-size="16">HO</text>
+  <text x="115" y="125" text-anchor="middle" font-size="16">C</text>
+  <text x="155" y="125" font-size="16">H</text>
+  <line x1="65" y1="119" x2="110" y2="119" stroke="#000" stroke-width="2"/>
+  <line x1="120" y1="119" x2="150" y2="119" stroke="#000" stroke-width="2"/>
+  <line x1="115" y1="129" x2="115" y2="152" stroke="#000" stroke-width="2"/>
+  <text x="200" y="125" font-size="11" fill="#555">C3</text>
+
+  <text x="40" y="172" font-size="16">H</text>
+  <text x="115" y="172" text-anchor="middle" font-size="16">C</text>
+  <text x="155" y="172" font-size="16">OH</text>
+  <line x1="55" y1="166" x2="110" y2="166" stroke="#000" stroke-width="2"/>
+  <line x1="120" y1="166" x2="150" y2="166" stroke="#000" stroke-width="2"/>
+  <line x1="115" y1="176" x2="115" y2="199" stroke="#000" stroke-width="2"/>
+  <text x="200" y="172" font-size="11" fill="#555">C4</text>
+
+  <text x="40" y="219" font-size="16">H</text>
+  <text x="115" y="219" text-anchor="middle" font-size="16">C</text>
+  <text x="155" y="219" font-size="16" fill="#1e8449" font-weight="bold">OH</text>
+  <line x1="55" y1="213" x2="110" y2="213" stroke="#000" stroke-width="2"/>
+  <line x1="120" y1="213" x2="150" y2="213" stroke="#000" stroke-width="2"/>
+  <line x1="115" y1="223" x2="115" y2="246" stroke="#000" stroke-width="2"/>
+  <text x="200" y="219" font-size="11" fill="#1e8449" font-weight="bold">C5</text>
+
+  <text x="115" y="265" text-anchor="middle" font-size="18">CH<tspan dy="6" font-size="12">2</tspan><tspan dy="-6">OH</tspan></text>
+  <text x="200" y="268" font-size="11" fill="#555">C6</text>
+  <text x="115" y="315" text-anchor="middle" font-size="12" fill="#555">D-Fructose, offen</text>
+</svg>
+</div>
+</figure>
+</div>
+
+<div>
+<h4>Haworth-Projektion (5-Ring, Furanose)</h4>
+<p>Die <strong>OH am C5</strong> greift die <strong>Keton-Gruppe am C2</strong> an → Es entsteht ein <strong>5-Ring (Furanose)</strong> mit einem <strong>Halbketal</strong> am C2.</p>
+<figure>
+<div class="svg-wrap">
+<svg viewBox="0 0 280 230" width="260" height="220">
+  <!-- Fünfring -->
+  <polygon points="60,110 100,70 180,70 220,110 140,150" fill="none" stroke="#000" stroke-width="2"/>
+  <text x="140" y="165" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold">O</text>
+  <text x="140" y="60" text-anchor="middle" font-size="11" fill="#555">(oben: C2 und C5)</text>
+  <!-- CH2OH links (C1) -->
+  <line x1="100" y1="70" x2="100" y2="40" stroke="#000" stroke-width="2"/>
+  <text x="90" y="33" font-size="13">CH₂OH</text>
+  <text x="70" y="25" font-size="10" fill="#555">C1</text>
+  <!-- OH C2 unten -->
+  <line x1="100" y1="70" x2="100" y2="105" stroke="#000" stroke-width="2"/>
+  <text x="80" y="115" font-size="12" fill="#c0392b" font-weight="bold">OH</text>
+  <text x="65" y="128" font-size="10" fill="#555">C2 anomer</text>
+  <!-- OH rechts (C5) -->
+  <line x1="180" y1="70" x2="200" y2="50" stroke="#000" stroke-width="2"/>
+  <text x="200" y="45" font-size="13">CH₂OH</text>
+  <text x="215" y="33" font-size="10" fill="#555">C6</text>
+  <!-- C3 OH -->
+  <line x1="60" y1="110" x2="40" y2="130" stroke="#000" stroke-width="2"/>
+  <text x="25" y="145" font-size="12">OH</text>
+  <!-- C4 OH -->
+  <line x1="220" y1="110" x2="240" y2="130" stroke="#000" stroke-width="2"/>
+  <text x="235" y="145" font-size="12">OH</text>
+  <text x="140" y="200" text-anchor="middle" font-size="13" fill="#2E74B5" font-weight="bold">β-D-Fructofuranose</text>
+</svg>
+</div>
+<figcaption>Fructose bildet einen 5-Ring (Furanose).</figcaption>
+</figure>
+</div>
+</div>
+
+<div class="box info">
+Glucose und Fructose sind <strong>Isomere</strong>: gleiche Summenformel (C₆H₁₂O₆), aber unterschiedliche Struktur und Eigenschaften (Fructose schmeckt süßer).
+</div>
+</section>
+
+
+<section id="b4" class="card">
+<h3>B4 · Mutarotation (S. 285)</h3>
+<p><strong>Definition:</strong> Unter <strong>Mutarotation</strong> versteht man die <strong>ständige Umwandlung</strong> der α- und β-Form (Anomere) der Glucose ineinander in wässriger Lösung. Dies geschieht über die <strong>offene Kettenform</strong> als Zwischenstufe.</p>
+
+<figure>
+<div class="svg-wrap">
+<svg viewBox="0 0 760 180" width="740" height="170">
+  <!-- α -->
+  <g transform="translate(20,20)">
+    <polygon points="40,70 70,45 115,45 145,70 115,110 70,110" fill="none" stroke="#c0392b" stroke-width="2"/>
+    <text x="32" y="75" font-size="12">O</text>
+    <line x1="115" y1="110" x2="130" y2="125" stroke="#000"/>
+    <text x="130" y="138" font-size="11" fill="#c0392b" font-weight="bold">OH ↓</text>
+    <text x="90" y="160" text-anchor="middle" font-size="13" fill="#c0392b" font-weight="bold">α-D-Glucose</text>
+    <text x="90" y="178" text-anchor="middle" font-size="11">~ 36 %</text>
+  </g>
+  <!-- Pfeile -->
+  <g transform="translate(180,75)">
+    <line x1="0" y1="0" x2="60" y2="0" stroke="#333" stroke-width="2"/>
+    <polygon points="60,0 52,-4 52,4" fill="#333"/>
+    <line x1="60" y1="20" x2="0" y2="20" stroke="#333" stroke-width="2"/>
+    <polygon points="0,20 8,16 8,24" fill="#333"/>
+  </g>
+  <!-- offene Form -->
+  <g transform="translate(260,30)">
+    <text x="55" y="20" text-anchor="middle" font-size="12" fill="#555">offene Kette</text>
+    <text x="55" y="45" text-anchor="middle" font-size="14" fill="#c0392b" font-weight="bold">CHO</text>
+    <text x="55" y="65" text-anchor="middle" font-size="12">|</text>
+    <text x="55" y="80" text-anchor="middle" font-size="12">(CHOH)₄</text>
+    <text x="55" y="100" text-anchor="middle" font-size="12">|</text>
+    <text x="55" y="115" text-anchor="middle" font-size="12">CH₂OH</text>
+    <text x="55" y="145" text-anchor="middle" font-size="11">&lt; 1 %</text>
+  </g>
+  <!-- Pfeile -->
+  <g transform="translate(380,75)">
+    <line x1="0" y1="0" x2="60" y2="0" stroke="#333" stroke-width="2"/>
+    <polygon points="60,0 52,-4 52,4" fill="#333"/>
+    <line x1="60" y1="20" x2="0" y2="20" stroke="#333" stroke-width="2"/>
+    <polygon points="0,20 8,16 8,24" fill="#333"/>
+  </g>
+  <!-- β -->
+  <g transform="translate(460,20)">
+    <polygon points="40,70 70,45 115,45 145,70 115,110 70,110" fill="none" stroke="#2471a3" stroke-width="2"/>
+    <text x="32" y="75" font-size="12">O</text>
+    <line x1="115" y1="45" x2="130" y2="30" stroke="#000"/>
+    <text x="130" y="28" font-size="11" fill="#2471a3" font-weight="bold">OH ↑</text>
+    <text x="90" y="160" text-anchor="middle" font-size="13" fill="#2471a3" font-weight="bold">β-D-Glucose</text>
+    <text x="90" y="178" text-anchor="middle" font-size="11">~ 64 %</text>
+  </g>
+</svg>
+</div>
+<figcaption>Mutarotations-Gleichgewicht der Glucose</figcaption>
+</figure>
+
+<p><strong>Nachweis:</strong> Der <strong>spezifische Drehwinkel</strong> der Lösung ändert sich mit der Zeit und erreicht einen Gleichgewichtswert – daher der Name „Mutarotation" (lat. <em>mutare</em> = ändern).</p>
+</section>
+
+
+<section id="b5" class="card">
+<h3>B5 · Disaccharide (S. 290/291)</h3>
+<p>Zwei Monosaccharide werden durch eine <strong>glykosidische Bindung</strong> verknüpft. Dabei wird <strong>Wasser abgespalten</strong> (Kondensation).</p>
+
+<table>
+<tr><th>Disaccharid</th><th>Bausteine</th><th>Bindung</th><th>Vorkommen</th><th>reduzierend?</th></tr>
+<tr><td><strong>Maltose</strong> (Malzzucker)</td><td>Glucose + Glucose</td><td>α-1,4-glykosidisch</td><td>Malz, Bier</td><td>ja</td></tr>
+<tr><td><strong>Saccharose</strong> (Haushaltszucker)</td><td>Glucose + Fructose</td><td>α-1,β-2-glykosidisch</td><td>Zuckerrübe, Zuckerrohr</td><td><strong>nein</strong></td></tr>
+<tr><td><strong>Lactose</strong> (Milchzucker)</td><td>Galactose + Glucose</td><td>β-1,4-glykosidisch</td><td>Milch</td><td>ja</td></tr>
+</table>
+
+<figure>
+<div class="svg-wrap">
+<svg viewBox="0 0 460 190" width="440" height="180">
+  <!-- Ring 1 -->
+  <polygon points="40,90 80,65 135,65 165,90 135,135 80,135" fill="none" stroke="#1F4E79" stroke-width="2"/>
+  <text x="32" y="95" font-size="12">O</text>
+  <line x1="80" y1="65" x2="80" y2="40" stroke="#000"/>
+  <text x="65" y="35" font-size="11">CH₂OH</text>
+  <!-- O-Brücke -->
+  <line x1="165" y1="90" x2="205" y2="90" stroke="#c0392b" stroke-width="2"/>
+  <text x="178" y="82" font-size="13" fill="#c0392b" font-weight="bold">O</text>
+  <text x="178" y="112" font-size="10" fill="#555">1,4-Bindung</text>
+  <!-- Ring 2 -->
+  <polygon points="205,90 245,65 300,65 330,90 300,135 245,135" fill="none" stroke="#1F4E79" stroke-width="2"/>
+  <text x="315" y="95" font-size="12">O</text>
+  <line x1="245" y1="65" x2="245" y2="40" stroke="#000"/>
+  <text x="230" y="35" font-size="11">CH₂OH</text>
+  <text x="330" y="90" font-size="12">OH</text>
+  <text x="90" y="170" text-anchor="middle" font-size="12">Glucose</text>
+  <text x="275" y="170" font-size="12">Glucose</text>
+  <text x="200" y="20" text-anchor="middle" font-size="13" fill="#c0392b" font-weight="bold">Maltose (α-1,4)</text>
+</svg>
+</div>
+<figcaption>Maltose = Glucose + Glucose, verknüpft über eine α-1,4-glykosidische Bindung.</figcaption>
+</figure>
+
+<div class="box warn">
+<strong>Saccharose besonders:</strong> Beide anomeren C-Atome (C1 der Glucose und C2 der Fructose) sind an der Bindung beteiligt → <strong>kein freies anomeres C mehr</strong> → <strong>nicht reduzierend</strong> (negative Fehling-Probe). Maltose hat noch ein freies anomeres C → reduzierend.
+</div>
+</section>
+
+
+<section id="b6" class="card">
+<h3>B6 · Polysaccharide: Stärke &amp; Cellulose (S. 296–298)</h3>
+
+<table>
+<tr><th>Polysaccharid</th><th>Baustein</th><th>Bindung / Struktur</th><th>Funktion</th></tr>
+<tr><td><strong>Stärke</strong> (Amylose + Amylopektin)</td><td>α-D-Glucose</td><td>α-1,4; Amylopektin zusätzlich α-1,6-Verzweigungen; <strong>Helix-Form</strong></td><td>Energie-Speicher der Pflanzen</td></tr>
+<tr><td><strong>Glykogen</strong></td><td>α-D-Glucose</td><td>wie Amylopektin, stärker verzweigt</td><td>Energie-Speicher bei Tier/Mensch (Leber, Muskel)</td></tr>
+<tr><td><strong>Cellulose</strong></td><td>β-D-Glucose</td><td>β-1,4; <strong>gerade Ketten</strong>, H-Brücken zwischen den Ketten → Fasern</td><td>Baustoff (pflanzliche Zellwand)</td></tr>
+</table>
+
+<figure>
+<div class="svg-wrap">
+<svg viewBox="0 0 760 220" width="740" height="210">
+  <!-- Stärke: Helix / gebogene Kette -->
+  <g>
+    <text x="180" y="25" text-anchor="middle" font-size="14" font-weight="bold" fill="#c0392b">Stärke (α-1,4) – Helix</text>
+    <path d="M 20 100 Q 60 60 100 100 T 180 100 T 260 100 T 340 100" stroke="#c0392b" stroke-width="3" fill="none"/>
+    <circle cx="20" cy="100" r="8" fill="#f4c38a"/>
+    <circle cx="100" cy="100" r="8" fill="#f4c38a"/>
+    <circle cx="180" cy="100" r="8" fill="#f4c38a"/>
+    <circle cx="260" cy="100" r="8" fill="#f4c38a"/>
+    <circle cx="340" cy="100" r="8" fill="#f4c38a"/>
+    <text x="180" y="140" text-anchor="middle" font-size="11" fill="#555">α-Bindung → Kette dreht sich spiralig</text>
+    <text x="180" y="160" text-anchor="middle" font-size="11" fill="#555">verdaubar (vom Menschen)</text>
+  </g>
+  <!-- Cellulose: gerade Kette -->
+  <g transform="translate(380,0)">
+    <text x="180" y="25" text-anchor="middle" font-size="14" font-weight="bold" fill="#2471a3">Cellulose (β-1,4) – gerade</text>
+    <line x1="20" y1="100" x2="340" y2="100" stroke="#2471a3" stroke-width="3"/>
+    <circle cx="20" cy="100" r="8" fill="#a8c7e8"/>
+    <circle cx="100" cy="100" r="8" fill="#a8c7e8"/>
+    <circle cx="180" cy="100" r="8" fill="#a8c7e8"/>
+    <circle cx="260" cy="100" r="8" fill="#a8c7e8"/>
+    <circle cx="340" cy="100" r="8" fill="#a8c7e8"/>
+    <!-- H-Brücken Hinweis -->
+    <line x1="20" y1="100" x2="20" y2="130" stroke="#2471a3" stroke-dasharray="2 2"/>
+    <line x1="100" y1="100" x2="100" y2="130" stroke="#2471a3" stroke-dasharray="2 2"/>
+    <line x1="180" y1="100" x2="180" y2="130" stroke="#2471a3" stroke-dasharray="2 2"/>
+    <line x1="260" y1="100" x2="260" y2="130" stroke="#2471a3" stroke-dasharray="2 2"/>
+    <line x1="340" y1="100" x2="340" y2="130" stroke="#2471a3" stroke-dasharray="2 2"/>
+    <line x1="20" y1="130" x2="340" y2="130" stroke="#2471a3" stroke-width="3"/>
+    <text x="180" y="160" text-anchor="middle" font-size="11" fill="#555">H-Brücken zwischen den Ketten → Fasern</text>
+    <text x="180" y="178" text-anchor="middle" font-size="11" fill="#555">für Menschen <strong>nicht</strong> verdaubar → Ballaststoff</text>
+  </g>
+</svg>
+</div>
+<figcaption>Nur die Bindungsart (α oder β) ist verschieden – mit großer Wirkung.</figcaption>
+</figure>
+
+<div class="box ok">
+<strong>Merke:</strong> Gleicher Baustein (Glucose), aber unterschiedliche Verknüpfung → völlig unterschiedliche Funktion. Der Mensch besitzt nur das Enzym für α-Bindungen, nicht für β-Bindungen.
+</div>
+</section>
+
+
+<!-- ======================= Checkliste ======================= -->
+<h2 id="check">Prüfungs-Checkliste</h2>
+<div class="card">
+<ul>
+<li>Allgemeine Strukturformel einer AS zeichnen und <strong>alle funktionellen Gruppen</strong> benennen.</li>
+<li><strong>Zwitterion</strong> zeichnen und erklären.</li>
+<li>AS im <strong>Sauren / Basischen / am ieP</strong> zeichnen (richtige Ladungen!).</li>
+<li><strong>Isoelektrischen Punkt</strong> definieren und auf ein Elektrophorese-Bild anwenden (Glycin, Asparaginsäure, Lysin richtig einzeichnen).</li>
+<li><strong>Peptidbindung</strong> zeichnen (unter H₂O-Abspaltung).</li>
+<li><strong>Primär-, Sekundär-, Tertiär-, Quartärstruktur</strong> definieren und zugehörige Bindungen nennen.</li>
+<li><strong>Glucose</strong> in Fischer- und Haworth-Projektion zeichnen (α- und β-Form).</li>
+<li><strong>Fructose</strong> in Fischer- und Haworth-Projektion zeichnen.</li>
+<li><strong>Ringbildung</strong> erklären (OH am C5 greift C1 bzw. C2 an → Halbacetal / Halbketal).</li>
+<li><strong>Mutarotation</strong> erklären.</li>
+<li>Einteilung: <strong>Aldose/Ketose</strong>, <strong>Mono-/Di-/Polysaccharid</strong> – Beispiele zuordnen.</li>
+<li>Unterschied <strong>Stärke ↔ Cellulose</strong> (α- vs. β-1,4) erklären.</li>
+</ul>
+</div>
+
+<p class="note" style="text-align:center;margin-top:30px">Viel Erfolg bei der Klausur! 🍀</p>
+
+</div>
+</body>
+</html>
